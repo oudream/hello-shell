@@ -1,0 +1,96 @@
+.TH KEYGEN  "1" "Version 0.2"
+.SH NAME
+.B keygen
+\- Generates a random key file for 'cruft' encryption command.
+.SH SYNOPSIS
+
+.B keygen
+This command generates a key file of random displacements, 
+.I ~/.key,
+used by cruft.
+
+.SH DESCRIPTION
+.B keygen
+is a stand-alone utility that generates a key file of random displacements in
+the user's home directory (
+.I ~/.key
+), for use by cruft.
+
+The 
+.I ~/.key
+file is a set of random integers, in the range of 0 to 255,
+that define the "shift" of each character in the file to be encoded,
+and the reverse shift of each character in the encoded file, in order
+for it to be decoded.  The 'keygen' program may be invoked either with
+a target "plaintext" file or a number as an argument.
+
+
+.I "keygen filename"
+generates a
+.I .key
+file exactly the length of
+.I filename.
+
+.I "keygen 1500"
+generates a
+.I .key
+file
+.I 1500
+bytes in size.
+
+.I keygen
+(no argument) generates a
+.I .key
+file
+.I 1024
+bytes in size (the default).
+
+
+Using
+.I keygen
+with a
+.I filename
+argument generates a key just as long as the unenciphered "plaintext"
+file, in accordance with the principle of the "onetime pad" cipher.
+Using a unique
+.I .key
+file with each different plaintext message to be encrypted makes
+decipherment virtually impossible by any method. Of course, normal usage
+does not require security quite this strict, and a daily, or even weekly
+change of the
+.I .key
+file should suffice for ordinary purposes. Note that if the
+.I .key
+file is kept in place for any length of time, a minimum
+.I .key
+file length of at least 10k bytes is recommended.
+
+
+.SH OPTIONS
+None.
+
+
+.SH ENVIRONMENT
+.B $HOME
+
+The
+.I $HOME
+environment variable, referenced by this utility, is normally set to
+each user's home directory in any standard Linux or generic UNIX system.
+No changes should be necessary.
+
+
+
+
+.SH AUTHOR
+Mendel Leo Cooper - <thegrendel@theriver.com>
+
+.SH BUGS
+When
+.I filename
+is used as an argument (to generate a .key file the length of
+.I filename),
+the name of the file may not begin with a digit.
+
+.SH SEE ALSO
+cruft(1)

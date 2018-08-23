@@ -1,0 +1,18 @@
+                       Installation Instructions
+                       ============ ============
+
+
+1) Check the Makefile, and see whether any changes are necessary (they
+   shouldn't be on any standard Linux or generic UNIX system).
+
+   You may wish to add the -mpentium optimization to the CFLAGS line if
+   you have a Pentium system.
+
+2) make
+
+3) make install (as root, of course)
+
+
+Neither 'cruft' nor 'keygen' requires any special libraries, and they
+should compile, link, and run correctly on any Linux or generic UNIX
+system, including legacy ones.

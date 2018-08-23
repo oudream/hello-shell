@@ -1,0 +1,217 @@
+                CRUFT, A REPLACEMENT FOR THE UNIX 'CRYPT' COMMAND
+
+
+      cruft /kruhft/
+      1. /n./ An unpleasant substance. The dust that gathers under your
+      bed is cruft; the TMRC Dictionary correctly noted that attacking it
+      with a broom only produces more.  .... 4. /n./ Excess; superfluous
+      junk; used esp. of redundant or superseded code.
+                     ---"The Jargon Dictionary"
+                         (http://www.netmeg.net/jargon/terms/c/cruft.html)
+
+
+
+                                 i
+                            What is it?
+
+
+The 'crypt' command is missing from some UNIX implementations due to
+Department of Commerce restrictions on exporting anything that in any
+way resembles "strong" encryption.  It is ironic that 'crypt' uses a
+flawed algorithm, and that files encyphered with it may be broken by
+Robert Baldwin's 'cbw' package.  This makes the need for a simple,
+yet at least moderately secure utility for local file encryption all
+the more acute. The 'cruft' command is intended as a replacement for
+the missing UNIX 'crypt' command.
+
+Note that this package is version 0.2 of 'cruft'.
+
+
+
+                                ii
+                            Background
+
+The encryption engine for 'cruft' takes its inspiration from the
+theoretically unbreakable "onetime pad" cipher system invented over
+70 years ago by Major Joseph Mauborgne of the U.S. Army Signal Corps.
+The idea is to use a completely random code key at least as long as the
+message to be enciphered, and to use each code key *only once*. This
+prevents any patterns from occurring in the encrypted message. This also
+explains the origin of this gimmick's name - the "Onetime" System.
+
+Cryptographers call it a symmetrical block cipher. This means that the
+sending and receiving parties must both have a copy of the same key,
+and that the key has been generated in advance of the message being sent.
+
+Simplicity itself, the idea of a "code key" is to define the "alphabetic
+shift" of each character in the message to be enciphered. For example, the
+message SEND AID encoded with the key 1352479 would result in THSFE PM
+(grouping in sets of 5 is standard for encoded text). The S is shifted 1
+letter forward, the E 3 letters forward, the N 5 letters forward, the D 2
+letters forward, and so on in exact correspondence to the digits in the key.
+If a letter shifts past the end of the alphabet, then it "wraps around" to
+the beginning. For example a Y shifted with a key of 11 would become a J [ Y
+-> Z A B C D E F G H I J, 11 shifts forward ]. Decoding performs exactly the
+reverse operation, shifting backward.
+
+In the main source code file, cruft.c, the algorithm is implemented in
+an extremely simple and straightforward manner.
+
+           -------------------------------------------------------------
+           c = fgetc( fptr ); /*Get a character to encode or decode...*/
+
+           ...
+
+           ck = fgetc( codekey ); /*Get shift value from the key file.*/
+
+           if( Operation == ENCODE )
+                 c += ck; /*If encoding, shift right.*/
+           else /*If decoding...*/
+                 c -= ck; /*shift left.*/
+
+           EMITCHAR(t); /*Output a char, whether to file or stdout.*/
+           -------------------------------------------------------------
+
+
+
+This system has been used in one form or another by many intelligence
+agencies in the 70 years since its invention.  A paper-and-pencil
+implementation, the so-called the "one-time pad" was used by Soviet spies in
+years past. The famous spy Rudolph Abel was caught with a one-time pad in
+his possession. Because of its ease of use and almost total security, it is
+no doubt still in use by espionage services.
+
+Used correctly, with a single-use random code key at least as long
+as the message to encode, the system is theoretically unbreakable by
+any method.  The great advantage of the system is that even if 99% of
+any given message is compromised, the remainder of the message still
+cannot be deciphered. The weakness is that the sets of code keys must be
+given, sent, or transmitted to all the parties wishing to communicate
+in code. If the code keys are intercepted or stolen, then the messages
+will be easily deciphered.  On a single-user system or an efficiently
+administered network, this need not be a consideration.
+
+
+
+
+                                      iii
+                                  Installation
+
+
+Check the "Makefile" (no changes should be necessary for any standard
+Linux or UNIX system).  Building 'cruft' is simply a matter of running
+'make', then 'make install' (as root).
+
+
+                                iv
+                              Usage
+
+
+'Cruft' runs either as a filter
+                               cruft < infile > outfile
+or in file mode.
+                               cruft infile outfile
+                                         or
+                               cruft infile > outfile
+
+
+
+'Cruft' will autodetect whether the target file ("infile", above) needs
+to be encrypted or decrypted. A file encrypted by 'cruft' always has
+at its start a sequence of exactly 9 marker characters, which happen to
+be defined as as '253', or '0xFD'. This makes it unnecessary to specify
+whether the target file is to be encrypted or decrypted, indeed, there is
+no provision for doing so. The odds against an error in this procedure
+are astronomical, about 1 in 4.6E+21. While adding to its convenience
+in usage, the characteristic signature does compromise the level of
+security of the cipher by indicating to cryptographers exactly what code
+they are dealing with (and that is half the game).
+
+
+Note that 'cruft' requires a ".key" file in the user's home directory.
+The ".key" file is a set of random integers, in the range of 0 to 255,
+that define the "shift" of each character in the file to be encoded, and
+the reverse shift of each character in the encoded file, in order for it
+to be decoded.  The 'keygen' utility supplied with 'cruft' creates just
+such a file. The 'keygen' program may be invoked either with a target
+"plaintext" file or a number as an argument.
+     'keygen filename' generates a .key file exactly the length of "filename".
+     'keygen 1500' generates a .key file 1500 bytes in size.
+     'keygen' (no argument) generates a .key file 1024 files in size (the default).
+
+Using 'keygen' with a "filename" argument generates a key just as long as
+the "plaintext" file, in accordance with the principle of the "onetime
+pad" cipher.  Using a unique ".key" file with each different plaintext
+message to be encrypted makes decipherment virtually impossible by any
+method. Of course, normal usage does not require security quite this
+strict, and a daily, or even weekly change of the ".key" file should
+suffice for ordinary purposes. Note that if the ".key" file is kept
+in place for any length of time, a minimum ".key" length of 10k bytes
+is recommended.
+
+The 'keygen' utility included in this package uses the 'gcc' random
+function, which is not, in fact, all that random. This can provide a
+hook for cryptographers to attempt to decrypt cruft-encoded files.
+
+
+It is, of course, very important to securely delete plaintext files from
+the system after encryption. This likewise holds true for stale ".key"
+files. For this purpose, a utility such as "shred" (shred-1.0.tar.gz)
+or "wipe", by Tom Vier, should suffice.
+
+
+
+
+                                       v
+                                  Legal Notes
+
+The 'cruft' package is released as a noncommercial Open Source cipher
+under the terms of the new U.S. Bureau of Export Administration encryption
+regulations in effect as of 14 January, 2000. A copy of the 'cruft'
+package has been sent to the BXA to comply with the requirements for
+releasing it on the Internet.
+
+Note that the 'cruft' cipher is to be used for legal and ethical purposes
+only! The author of this package is fully prepared to cooperate with
+the NSA, FBI, and law enforcement agencies to help decrypt messages
+enciphered with 'cruft' in order to apprehend terrorists, criminals,
+and miscellaneous miscreants and nogoodniks. In any event, 'cruft'
+provides at least two avenues of attack for decryption. It may be
+classified as a medium security cipher, strong enough, in proper use,
+to deter casual attempts to break it, but not sufficiently secure to
+withstand a concerted effort by professionals.
+
+
+
+                 This package is released under the GNU GPL.
+                 -------------------------------------------
+
+
+
+
+
+
+
+                              FURTHER READING
+
+Foster, Caxton C.: PROGRAMMING A MICROCOMPUTER: 6502, Addison Wesley, 1978,
+ISBN 0-201-01995-7, $8.95, pp. 37-45. <out of print>
+
+Gaines, Helen Fouche: CRYPTOANALYSIS, Dover Publications, 1956, ISBN
+0-486-20097-3, $4.50. <probably out of print>
+
+Kahn, David: THE CODEBREAKERS (abridged edition), New American Library, 1973,
+LC# 63-16109, $1.95. <Both the abridged and the much better original version
+are out of print, durn it!>
+
+Peek, Jerry and Tim O'Reilly and Mike Loukides: UNIX POWER TOOLS [First Ed.],
+O'Reilly / Random House, ISBN 0-679-79073-X, $60.00, pp. 407-8 (article
+detailing the insecurity of the standard UNIX 'crypt' utility).
+
+Schild, Herbert: ADVANCED C [2nd Ed.], Osborne McGraw Hill, 1988, ISBN
+0-07-881348-4, $21.95, pp. 211-243.
+
+Schneier, Bruce: APPLIED CRYPTOGRAPHY: PROTOCOLS, ALGORITHMS, AND SOURCE CODE
+IN C, John Wiley & Sons, 1995, ISBN 0-471-59756-2, $44.95.
+[This book is now obtainable on CD ROM along with other cryptography reference
+works from Dr. Dobb's Journal, www.ddj.com.]

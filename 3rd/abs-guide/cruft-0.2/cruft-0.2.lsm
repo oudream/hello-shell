@@ -1,0 +1,39 @@
+Begin4
+Title:		cruft - a replacement for the missing UNIX 'crypt' command
+Version: 	0.2
+Entered-date: 2000-01-14
+Description:  Linux and other free UNIX systems often ship with the 'crypt'
+	      command deleted because of Dept. of Commerce restrictions
+	      on anything that even hints at strong encryption. The
+	      'cruft' package is intended as a drop-in replacement for
+	      'crypt', being equivalent in functionality and even easier
+	      to use than the original. It is unnecessary to specify
+	      whether the target file is to be encrypted or decrypted,
+	      as this is autodetected. The length of the key chosen and
+	      the frequency with which the (random) key file is changed
+	      determines the encryption "strength" of 'crypt'. Despite
+	      being theoretically unbreakable, this implementation of
+	      the onetime pad cipher should be regarded as only medium
+	      in its security level because a) it writes a nine byte
+	      characteristic signature as a header to encrypted files,
+	      and b) the keys generated use the 'gcc' random function,
+	      which is not, in fact, all that random. This is more than
+	      sufficient security for non-critical files on a network
+	      or workstation, but don't trust the crown jewels to it.
+	      This package is released in full compliance with the revised
+	      BXA regulations on encryption software, as of 01/14/00.
+
+Keywords: 	crypt, encrypt, encryption, code, cryptography, secret
+
+Author: 	thegrendel@theriver.com (Mendel Leo Cooper)
+Maintained-by: 	thegrendel@theriver.com (Mendel Leo Cooper)
+Primary-site: 	ftp://metalab.unc.edu /pub/Linux/utils/file
+	      	16k cruft-0.2.tar.gz
+                1.7k cruft-0.2.lsm
+
+Alternate-site: http://members.tripod.com/~the_grendel/cruft.0.2.tar.gz
+Original-site:  
+Platforms: 	Linux
+	   	Generic UNIX
+Copying-policy: GPL 
+End

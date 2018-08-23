@@ -1,0 +1,14 @@
+                          FILES IN THIS ARCHIVE
+
+
+COPYING         The GNU GPL.
+INSTALL         Installation instructions (simple!).
+Makefile
+cruft-0.2.lsm   The "Linux Software Map" descriptor file
+cruft.1         The (unformatted) man page for 'cruft'.
+cruft.c         Source code for 'cruft'.
+cruft.doc       The doc file for 'cruft' and 'keygen'. Read this first!
+cruft.h         Souce code "include" file.
+keygen.1        The (unformatted) man page for 'keygen'.
+keygen.c        Source code for 'keygen'.
+
