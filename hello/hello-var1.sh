@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 vip3="vip3333"
 m=3
 val=`eval echo '$'vip$m`

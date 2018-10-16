@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 function testSelect1() {
     select i in a b c d
