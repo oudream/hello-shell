@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function modifyAttr1() {
-    local dir="/ddd/algorithm/struct-c"
+    local dir=$1
 #    for filepath in ${dir}/*.h; do
     for filepath in ${dir}/*.{h,c}; do
 #        for ((i=0; i<=3; i++)); do
@@ -19,5 +19,12 @@ function modifyAttr1() {
     done
 }
 
-modifyAttr1 "/ddd/algorithm/struct-c"
+function modifyAttr2() {
+    local dir=$1
+    for filepath in ${dir}/*.{h,c}; do
+        chmod -x ${filepath}
+        echo ${filepath}" chmod result: "$?
+    done
+}
 
+modifyAttr2 "/ddd/algorithm/struct-c"
