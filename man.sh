@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+### init
+## 一次性安装
+apt-get update -y ; apt-get upgrade -y && \
+apt-get install apt-utils wget openssh-server telnet vim passwd ifstat unzip iftop telnet samba net-tools lsof rsync gcc g++ cmake build-essential gdb gdbserver unixodbc unixodbc-dev -y && \
+# rm -rf /var/lib/apt/lists/*
+## 创建目录
+sudo mkdir /ddd; sudo mkdir /eee; sudo mkdir /fff; sudo chown oudream /ddd; sudo chown oudream /eee; sudo chown oudream /fff
+
+scp /fff
+
 ### etc 环境变量配置文件加载优先级，三个阶段：系统运行、用户登录、软件运行
 # linux
 /etc/environment    /etc/profile    ~/.bash_profile    ~/.bashrc    /etc/bashrc
@@ -52,211 +62,6 @@ unsetenv() # 清除一个环境变量。
 
 
 
-### git
-git submodule add https://github.com/chaconinc/DbConnector
-git clone --recursive https://github.com/chaconinc/MainProject
-git submodule update --remote DbConnector
-git submodule update --remote
-
-
-
-### svn
-# svn checkout path # 1、将文件checkout到本地目录（path是服务器上的目录） 简写：svn co
-svn checkout svn://192.168.1.1/pro/domain /ddd/localpath
-# svn add file # 2、往版本库中添加新的文件
-svn add test.php # (添加test.php)
-svn add *.php # (添加当前目录下所有的php文件)
-# svn commit -m "LogMessage" [-N] [--no-unlock] PATH # 3、将改动的文件提交到版本库 (如果选择了保持锁，就使用--no-unlock开关) 简写：svn ci
-svn commit -m "add test file for my test" test.php
-# svn lock -m "LockMessage" [--force] PATH # 4、加锁/解锁
-svn lock -m "lock test file" test.php
-svn unlock PATH
-# svn update -r m path # 5、更新到某个版本 简写：svn up
-svn update # 如果后面没有目录，默认将当前目录以及子目录下的所有文件都更新到最新版本。
-svn update -r 200 test.php # (将版本库中的文件test.php还原到版本200)
-svn update test.php # (更新，于版本库同步。如果在提交的时候提示过期的话，是因为冲突，需要先update，修改文件，然后清除svn resolved，最后再提交commit)
-# 1）svn status path # 6、查看文件或者目录状态（目录下的文件和子目录的状态，正常状态不显示）【?：不在svn的控制中；M：内容被修改；C：发生冲突；A：预定加入到版本库；K：被锁定】
-# 2）svn status -v path # (显示文件和子目录状态) 简写：svn st
-# 第一列保持相同，第二列显示工作版本号，第三和第四列显示最后一次修改的版本号和修改人。
-# 注：svn status、svn diff和 svn revert这三条命令在没有网络的情况下也可以执行的，原因是svn在本地的.svn中保留了本地版本的原始拷贝。
-# svn delete path -m "delete test fle" # 7、删除文件 简写：svn (del, remove, rm)
-svn delete svn://192.168.1.1/pro/domain/test.php -m "delete test file" # 或者直接svn delete test.php 然后再svn ci -m 'delete test file‘，推荐使用这种
-# svn log path # 8、查看日志
-svn log test.php # 显示这个文件的所有修改记录，及其版本号的变化
-# svn info path # 9、查看文件详细信息
-svn info test.php
-# svn diff path # 10、比较差异 (将修改的文件与基础版本比较) 简写：svn di
-svn diff test.php
-# svn diff -r m:n path # (对版本m和版本n比较差异)
-svn diff -r 200:201 test.php
-# svn merge -r m:n path # 11、将两个版本之间的差异合并到当前文件
-svn merge -r 200:205 test.php #（将版本200与205之间的差异合并到当前文件，但是一般都会产生冲突，需要处理一下）
-svn help # 12、SVN 帮助
-svn help ci
-
-
-
-### nginx
-nginx -c "/ddd/web/nginx/conf-hello-svg/nginx.conf"
-nginx -t -c "/ddd/web/nginx/conf-hello-svg/nginx.conf" # 只测试配置文件
-
-
-
-### java
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-export JRE_HOME=${JAVA_HOME}/jre
-export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
-export HADOOP_HOME=/usr/local/hadoop
-export PATH=$PATH:$HADOOP_HOME/bin
-
-
-
-### cmake
-cmake . -G "Xcode" --build "/ddd/communication/protobuf/protobuf/cmake" -B"/ddd/communication/protobuf/protobuf/cmake-xcode"
-
-
-
-### grpc
-# hellostreamingworld -> helloworld -> route_guide
-CMAKE_CURRENT_BINARY_DIR=/ddd/middle/hello-protobuf-grpc/cmake-build-debug/grpc-hellostreamingworld
-hw_proto_path=/ddd/middle/hello-protobuf-grpc/grpc-helloworld/protos
-_GRPC_CPP_PLUGIN_EXECUTABLE=/usr/local/bin/grpc_cpp_plugin
-hw_proto=/ddd/middle/hello-protobuf-grpc/grpc-helloworld/protos/hellostreamingworld.proto
-
-protoc --grpc_out "${CMAKE_CURRENT_BINARY_DIR}" --cpp_out "${CMAKE_CURRENT_BINARY_DIR}" -I "${hw_proto_path}" --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}" "${hw_proto}"
-
-Official GitHub mirror: github.com/justinfrankel/licecap
-
-
-
-### gcc
-./configure --build=i386-linux --host=arm-linux --target=mipsel-linux --prefix=$(pwd)/_install
-export LD_LIBRARY_PATH=/.../bin_d:$LD_LIBRARY_PATH
-
-
-
-### proxy
-git config --global http.proxy http://10.31.58.5:1080
-git config --global https.proxy https://10.31.58.5:1080
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-
-http_proxy="http://10.31.58.78:1080/"
-https_proxy="https://10.31.58.78:1080/"
-no_proxy=localhost,127.0.0.0,127.0.0.1,127.0.1.1,local.home,10.31.58.86,10.31.58.99,10.31.58.101
-
-127.0.0.1,localhost,10.31.58.*,10.32.50.*,10.31.16.*,10.30.0.*,hadoop-master,hadoop-slave1,hadoop-slave2,192.168.99.*
-
-Scheme: https
-Proxy Host: www.51netflix.com
-Port: 1443
-
-minikube start --docker-env http_proxy=$http_proxy --docker-env https_proxy=$https_proxy --docker-env no_proxy=$no_proxy
-
-### go golang proxy
-alias go='http_proxy=http://127.0.0.1:1080/ https_proxy=http://127.0.0.1:1080/ go'
-export https_proxy=http://127.0.0.1:1080/
-export http_proxy=http://127.0.0.1:1080/
-export GO111MODULE=off
-
-### oudream-ubuntu1
-cd /fff/shadowsocksr
-python3 ./shadowsocks/local.py
-
-#export local_ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1)
-export local_ip=127.0.0.1
-export http_proxy=http://${local_ip}:1080
-export HTTP_PROXY=$http_proxy
-export https_proxy=https://${local_ip}:1080
-export HTTPS_PROXY=$https_proxy
-#export ftp_proxy=socks5://${local_ip}:1086
-export ftp_proxy=socks5://${local_ip}:8118
-export FTP_PROXY=${ftp_proxy}
-export all_proxy=${ftp_proxy}
-export ALL_PROXY=${all_proxy}
-export no_proxy=127.0.0.1,localhost,192.168.0.*,192.168.1.*,192.168.99.*,10.31.58.*,10.32.50.*,10.31.16.*,10.30.0.*,hadoop-master,hadoop-slave1,hadoop-slave2
-export NO_PROXY=$no_proxy
-
-ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1
-ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
-
-$go env
-GOPATH="/home/ferghs/gowork:/home/ferghs/gowork/src/project1"
-Windows使用分号分割(;)
-
-
-
-### docker
-# docker-server control
-service docker start
-systemctl start docker
-service docker stop
-systemctl stop docker
-docker run -t -i ubuntu /bin/bash # start ubuntu in interaction
-docker exec -it $ContainerID /bin/bash
-docker ps -a
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $INSTANCE_ID # Get an instance’s IP address
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.MacAddress}}{{end}}' $INSTANCE_ID # Get an instance’s MAC address
-docker inspect --format='{{.LogPath}}' $INSTANCE_ID # Get an instance’s log path
-docker system prune -a # clean cache
-docker volume create portainer_data
-docker run -d -p 9000:9000 --restart=always --name portainer -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
-# Folder Directory
-#~/Library/Containers/com.docker.docker
-#/var/lib/docker
-
-
-
-### kubernetes
-minikube start --docker-env http_proxy=$http_proxy --docker-env https_proxy=$https_proxy --docker-env no_proxy=$no_proxy --docker-env HTTP_PROXY=$http_proxy --docker-env HTTPS_PROXY=$https_proxy --docker-env NO_PROXY=$no_proxy
-minikube start --docker-env HTTP_PROXY=$http_proxy --docker-env HTTPS_PROXY=$https_proxy --docker-env NO_PROXY=$no_proxy
-minikube ssh
-
-export no_proxy=$no_proxy,$(minikube ip)
-export NO_PROXY=$no_proxy
-
-kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080
-kubectl expose deployment hello-minikube --type=NodePort
-kubectl get pod
-curl $(minikube service hello-minikube --url)
-kubectl delete services hello-minikube
-kubectl delete deployment hello-minikube
-minikube stop
-
-
-
-### vmware
-#https://docs.vmware.com/cn/VMware-Fusion/11/com.vmware.fusion.using.doc/GUID-3E063D73-E083-40CD-A02C-C2047E872814.html
-vmrun -T ws start "/opt/VMware/win2k8r2.vmx" nogui
-# 启动无图形界面虚拟机
-#（-T 是区分宿主机的类型，ws|server|server1|fusion|esx|vc|player，比较常用的是ws、esx和player）
-vmrun start "/opt/VMware/win2k8r2.vmx" gui
-# 启动带图形界面虚拟机
-vmrun stop "/opt/VMware/win2k8r2.vmx" hard | soft
-# 强制关闭虚拟机(相当于直接关电源) | 正常关闭虚拟机
-vmrun reset "/opt/VMware/win2k8r2.vmx" hard | soft
-# 冷重启虚拟机 | 热重启虚拟机
-vmrun suspend  "/opt/VMware/win2k8r2.vmx" hard | soft
-# 挂起虚拟机（可能相当于休眠）
-vmrun pause  "/opt/VMware/win2k8r2.vmx"
-# 暂停虚拟机
-vmrun unpause  "/opt/VMware/win2k8r2.vmx"
-# 停止暂停虚拟机
-vmrun list
-# 列出正在运行的虚拟机
-ps aux | grep vmx
-# 另一种查看正在运行虚拟机的方法
-vmrun -T ws snapshot "/opt/VMware/win2k8r2.vmx" snapshotName
-# 创建一个快照（snapshotName 快照名）
-vmrun -T ws reverToSnapshot "/opt/VMware/win2k8r2.vmx" snapshotName
-# 从一个快照中恢复虚拟机（snapshotName 快照名）
-vmrun -T ws listSnapshots "/opt/VMware/win2k8r2.vmx"
-# 列出虚拟机快照数量及名称
-vmrun -T ws deleteSnapshot "/opt/VMware/win2k8r2.vmx" snapshotName
-# 删除一个快照（snapshotName 快照名）
-
-
-
 ### node.js
 node xxx.js
 node percent.js m75.07796,155c0,-42.49836 34.42367,-76.92204 76.92204,-76.92204c42.49836,0 76.92204,34.42367 76.92204,76.92204c0,42.49836 -34.42367,76.92204 -76.92204,76.92204c-42.49836,0 -76.92204,-34.42367 -76.92204,-76.92204z
@@ -288,77 +93,6 @@ sudo sed -i 's/#HandleLidSwitch=suspend/HandleLidSwitch=ignore/g' /etc/systemd/l
 systemctl restart systemd-logind
 # 该方法除了适用于Ubuntu 18.04外，还适用于Ubuntu 16.04版本，其它的版本没有测试，应该问题不大。
 
-
-
-### find
-macos:
-touch -t "201802210444" /tmp/start
-touch -t "201802210445" /tmp/end
-find /usr/local/bin -newer /tmp/start -not -newer /tmp/end
-linux:
-touch --date "2007-01-01" /tmp/start
-touch --date "2008-01-01" /tmp/end
-find /data/images -type f -newer /tmp/start -not -newer /tmp/end
-
-find . -iname "*" -type f -exec ln -s /home/oudream/untitled2/{} /fff/a \;
-
-find . -maxdepth 1 -type d | while read dir; do count=$(find "$dir" -type f | wc -l); echo "$dir : $count"; done
-
-# I'm trying to find files with multiple extensions in a shell script
-find $DIR -name \*.jpg -o -name \*.png -o -name \*.gif -print
-
-
-
-### ls
-# -X 根据扩展名排序
-# -S 根据文件大小排序
-# -t 以文件修改时间排序
-# -v 根据版本进行排序
-# -U 不进行排序;依文件系统原有的次序列出项目
-ls -a # –all 列出目录下的所有文件，包括以 . 开头的隐含文件
-ls -R # 显示子目录结构
-ls -F # 追加文件的类型标识符，具体含义：“*”表示具有可执行权限的普通文件，“/”表示目录，“@”表示符号链接，“|”表示命令管道FIFO，“=”表示sockets套接字。
-ls -S # 由大到小排序
-ls -Sr # 从小到大排序
-ls -t # 从新到旧
-ls -tr # 从旧到新
-ls -h # –human-readable
-ls -T # 长日期格式
-ls -lR | grep "^-" | wc -l # 统计目录数量
-tree -L 2
-find . -maxdepth 1 -type d | while read dir; do count=$(find "$dir" -type f | wc -l); echo "$dir : $count"; done
-ls | sed "s:^:`pwd`/:"   # full path
-ls | sed "s:^:`pwd`/:" | sed "s/^/$HOSTNAME:/g"
-find $PWD -maxdepth 1  | xargs ls -ld
-
-
-
-### sort
-# sort的工作原理
-# sort将文件的每一行作为一个单位，相互比较，比较原则是从首字符向后，依次按ASCII码值进行比较，最后将他们按升序输出。
-# -u: 它的作用很简单，就是在输出行中去除重复行
-# -r: sort默认的排序方式是升序，如果想改成降序，就加个-r就搞定了。
-# -o: sort -r number.txt -o number.txt 把结果写入到原文件中。如果写新文件直接用重定向可就行了。
-# -n: 要以数值来排序
-# -t: 设定间隔符。sort -n -k 2 -t : facebook.txt
-# -f: 会将小写字母都转换为大写字母来进行比较，亦即忽略大小写
-# -c: 会检查文件是否已排好序，如果乱序，则输出第一个乱序的行的相关信息，最后返回1
-# -C: 会检查文件是否已排好序，如果乱序，不输出内容，仅返回1
-# -M: 会以月份来排序，比如JAN小于FEB等等
-# -b: 会忽略每一行前面的所有空白部分，从第一个可见字符开始比较。
-# -k: ***重点***. sort -t ‘ ‘ -k 1 facebook.txt 按第一个域进行排序
-# -k: sort -n -t ‘ ‘ -k 3r -k 2 facebook.txt 按第三个域进行降序排序
-# -k选项的具体语法格式
-# 要继续往下深入的话，就不得不来点理论知识。你需要了解-k选项的语法格式，如下：
-# [ FStart [ .CStart ] ] [ Modifier ] [ , [ FEnd [ .CEnd ] ][ Modifier ] ]
-# 这个语法格式可以被其中的逗号（“，”）分为两大部分，Start部分和End部分。
-# 先给你灌输一个思想，那就是“如果不设定End部分，那么就认为End被设定为行尾”。这个概念很重要的，但往往你不会重视它。
-# Start部分也由三部分组成，其中的Modifier部分就是我们之前说过的类似n和r的选项部分。我们重点说说Start部分的FStart和C.Start。
-# C.Start也是可以省略的，省略的话就表示从本域的开头部分开始。之前例子中的-k 2和-k 3就是省略了C.Start的例子喽。
-# FStart.CStart，其中FStart就是表示使用的域，而CStart则表示在FStart域中从第几个字符开始算“排序首字符”。
-# 同理，在End部分中，你可以设定FEnd.CEnd，如果你省略.CEnd，则表示结尾到“域尾”，即本域的最后一个字符。或者，如果你将CEnd设定为0(零)，也是表示结尾到“域尾”。
-sort -t ' ' -k 1.2 facebook.txt # 第二个字母开始进行排序
-sort -t ' ' -k 1.2,1.2 -k 3,3nr facebook.txt # 第二个字母进行排序，如果相同的按照员工工资进行降序排序
 
 
 # ln
@@ -640,203 +374,37 @@ netstat -nap | grep 8081
 
 
 
-### 用户
-# 管理员：root, 0；普通用户：1-65535；系统用户：1-499, 1-999(centos7) 作用：对守护进程获取资源进行权限分配；
-#    登录用户:500+, 1000+
-# 用户组GID：管理员组：root, 0；系统组：1-499, 1-999(centos7)；普通组：500+, 1000+
-# Linux安全上下文：运行中的程序：进程 (process)，以进程发起者的身份运行；
-#    进程所能够访问的所有资源的权限取决于进程的发起者的身份；
-w # 查看活动用户
-id <用户名> # 查看指定用户信息
-last # 查看用户登录日志
-cut -d: -f1 /etc/passwd # 查看系统所有用户
-cut -d: -f1 /etc/group # 查看系统所有组
-crontab -l # 查看当前用户的计划任务
-# 列出用户信息，文件列表，警告: 不要手动编辑这些文件。有些工具可以更好的处理锁定、避免数据库错误。
-cat /etc/shadow	# 保存用户安全信息
-cat /etc/passwd	# 用户账户信息
-cat /etc/gshadow # 保存组账号的安全信息
-cat /etc/group # 定义用户所属的组
-cat /etc/sudoers # 可以运行 sudo 的用户
-cat /home/* # 主目录
-### 用户组名
-# adm     类似 wheel 的管理器群组.
-# ftp     /srv/ftp/	访问 FTP 服务器.
-# games	  /var/games	访问一些游戏。
-# log     访问 syslog-ng 创建的 /var/log/ 日志文件.
-# http    /srv/http/	访问 HTTP 服务器文件.
-# sys     Right to administer printers in CUPS.
-# systemd-journal  /var/log/journal/* 以只读方式访问系统日志，和 adm 和 wheel 不同. 不在此组中的用户仅能访问自己生成的信息。
-# users   标准用户组.
-# uucp    /dev/ttyS[0-9]+, /dev/tts/[0-9]+, /dev/ttyUSB[0-9]+, /dev/ttyACM[0-9]+	串口和 USB 设备，例如猫、手柄 RS-232/串口。
-# wheel   管理组，通常用于　sudo　和 su 命令权限。systemd 会允许非　root 的 wheel 组用户启动服务。
-### 用户管理 useradd usermod userdel ，useradd 与 usermod 参数一样
-useradd [options] login
-usermod [OPTION] login
-# -u UID: 新UID
-# -g GID: 新基本组
-# -G GROUP1[,GROUP2,...[,GROUPN]]]：新附加组，原来的附加组将会被覆盖；若保留原有，则要同时使用-a选项，表示append；
-# -a（追加到新组时）开关是必不可少的。否则，将从任何组中删除用户
-# -s SHELL：新的默认SHELL；
-# -c 'COMMENT'：新的注释信息；
-# -d HOME: 新的家目录；原有家目录中的文件不会同时移动至新的家目录；若要移动，则同时使用-m选项；
-# -l login_name: 新的名字；
-# -L: lock指定用户
-# -U: unlock指定用户
-# -e YYYY-MM-DD: 指明用户账号过期日期；
-# -f INACTIVE: 设定非活动期限；
-userdel [OPTION] login # -r: 删除用户家目录；
-# 例如：
-useradd testuser # 创建用户testuser
-passwd testuser # 给已创建的用户testuser设置密码
-# 说明：新创建的用户会在/home下创建一个用户目录testuser
-usermod --help 修改用户这个命令的相关参数
-userdel testuser # 删除用户testuser   rm -rf testuser 删除用户testuser所在目录
-id user # 查看用户
-su <用户名> # 命令行用户切换，su是switch user的缩写，
-# 用户组管理： groupadd groupmod groupdel，groupadd 与 groupmod 参数一样
-groupadd (选项)(参数) # -g：指定新建工作组的id；-r：创建系统工作组，系统工作组的组ID小于500；
-#    -K：覆盖配置文件“/ect/login.defs”； -o：允许添加组ID号不唯一的工作组。
-groupadd -g 344 linuxde
-groupmod (选项)(参数)
-groupdel (参数)
-sudo usermod -a -G groupName userName # 增加用户到组，-a（追加）开关是必不可少的。否则，将从任何组中删除用户
-# 批量管理用户：
-#    成批添加/更新一组账户：newusers
-#    成批更新用户的口令：chpasswd
-gpasswd -a <用户账号名> <组账号名> # 向标准组中添加用户
-usermod -G <组账号名> <用户账号名> # 向标准组中添加用户
-gpasswd -d <用户账号名> <组账号名> # 从标准组中删除用户
-passwd [<用户账号名>]  # 设置用户口令：
-passwd -l <用户账号名> # 禁用用户账户口令
-passwd -S <用户账号名> # 查看用户账户口令状态
-passwd -u <用户账号名> # 恢复用户账户口令
-passwd -d <用户账号名> # 清除用户账户口令
-# 口令时效设置：修改 /etc/login.defs 的相关配置参数
-# id：显示用户当前的uid、gid和用户所属的组列表
-# groups：显示指定用户所属的组列表
-# whoami：显示当前用户的名称
-# w/who：显示登录用户及相关信息
-# newgrp：用于转换用户的当前组到指定的组账号，用户必须属于该组才可以正确执行该命令
+### pmap 命令用于报告进程的内存映射关系，是Linux调试及运维一个很好的工具
+pmap <选项> (参数) pid
+# -x 显示扩展格式；
+# -d 显示设备格式；
+# -q 不显示头尾行；
+# -V 显示指定版本。
+pmap 1315
 
 
-### chown chmod 权限
 
-# drwxrwxrwx 是10个空间保持值。你可以忽略第一个，然后有 3组 3。第一集为所有者，第二个集为该组，最后一集为世界。
-# 第一个字符表示文件类型。
-# - 表示该文件是一个普通文件
-# d 表示该文件是一个目录，字母"d"，是dirtectory(目录)的缩写。注意：目录或者是特殊文件，这个特殊文件存放其他文件或目录的相关信息
-# l 表示该文件是一个链接文件。字母"l"是link(链接)的缩写，类似于windows下的快捷方式
-# b 的表示块设备文件(block)，一般置于/dev目录下，设备文件是普通文件和程序访问硬件设备的入口，是很特殊的文件。没有文件大小，只有一个主设备号和一个辅设备号。一次传输数据为一整块的被称为块设备，如硬盘、光盘等。最小数据传输单位为一个数据块(通常一个数据块的大小为512字节)
-# c 表示该文件是一个字符设备文件(character)，一般置于/dev目录下，一次传输一个字节的设备被称为字符设备，如键盘、字符终端等，传输数据的最小单位为一个字节
-# p 表示该文件为命令管道文件。与shell编程有关的文件
-# s 表示该文件为sock文件。与shell编程有关的文件
-# r 表是读 (Read) 、w表示写(Write) 、x表示执行 (eXecute)
-
-chmod [class] [operator] [permission] 文件
-chmod ［who］ ［+ | - | =］ ［mode］ 文件名
-chmod [ugoa] [+ or -] [rwx] 文件
-# 权限范围：u ：目录或者文件的当前的用户；g ：目录或者文件的当前的群组；
-#    o ：除了目录或者文件的当前用户或群组之外的用户或者群组；a ：所有的用户及群组
-# 权限代号：r ：读权限，用数字4表示；w ：写权限，用数字2表示；x ：执行权限，用数字1表示
-#    - ：删除权限，用数字0表示；s ：特殊权限；r=4，w=2，x=1; 若要rw-属性则4+2=6；
-chmod u+x，g-w，o todo.txt
-
-chown [选项] 用户或组 文件
-- R 递归式地改变指定目录及其下的所有子目录和文件的属组。
-chgrp [选项] group filename?
-- R 递归式地改变指定目录及其下的所有子目录和文件的属组。
-
-### 服务 Systemd
-service --status-all systemctl
-systemctl list-units --type=service
-chkconfig --list # 列出所有系统服务
-chkconfig --list | grep on # 列出所有启动的系统服务
-sysv-rc-conf
-sudo systemctl set-default multi-user.target # 开机后进入命令行界面：
-sudo systemctl set-default graphical.target # 开机后进入图形界面
-systemctl list-units --all --type=service --no-pager # List all services
-sudo systemctl enable httpd # systemctl enable test.service # 开机启动
-sudo systemctl disable httpd # systemctl disable test.service # 开机不启动
-sudo systemctl start httpd # 启动服务
-sudo systemctl status httpd # 查看服务的状态
-sudo systemctl stop httpd.service # 停止服务
-sudo systemctl kill httpd.service # 服务停不下来。这时候就不得不"杀进程"了
-# 配置文件主要放在 /usr/lib/systemd/system 目录，也可能在 /etc/systemd/system
-systemctl cat sshd.service # 查看配置文件
-# [Unit] 区块：启动顺序与依赖关系
-#    Description 字段给出当前服务的简单描述，Documentation 字段给出文档位置
-#    After 和 Before 字段只涉及启动顺序，不涉及依赖关系
-#    Wants 字段：表示"弱依赖"关系，Requires 字段则表示"强依赖"关系
-# [Service] 区块：启动行为
-#    ExecStart 字段：定义启动进程时执行的命令；ExecReload 字段：重启服务时执行的命令; ExecStop 字段：停止服务时执行的命令;
-#    ExecStartPre 字段：启动服务之前执行的命令；ExecStartPost 字段：启动服务之后执行的命令；ExecStopPost 字段：停止服务之后执行的命令
-#    Type：simple（默认值）：ExecStart字段启动的进程为主进程; oneshot（值）：类似于simple，但只执行一次
-#    Restart：no（默认值）：退出后不会重启；always：不管是什么退出原因，总是重启
-# [Install] 区块：Install区块，定义如何安装这个配置文件，即怎样做到开机启动。
-#    WantedBy：服务组，执行 systemctl enable sshd.service 命令后，就会在 /etc/systemd/system/multi-user.target.wants目录中存放 service 文件。
-
-
-[Unit]
-Description=Frp Server Service
-After=systemd-networkd.service network.target sshd.service
-
-[Service]
-Type=simple
-User=nobody
-Restart=on-failure
-RestartSec=5s
-ExecStart=/bin/bash -c '/fff/frp/frps -c /fff/frp/frps.ini'
-
-[Install]
-WantedBy=multi-user.target
-
-
-[Unit]
-Description=Frp Client Service
-After=systemd-networkd.service network.target sshd.service
-
-[Service]
-Type=simple
-User=nobody
-Restart=on-failure
-RestartSec=5s
-ExecStart=/bin/bash -c '/fff/frp/frpc -c /fff/frp/frpc.ini'
-ExecReload=/usr/bin/frpc reload -c /etc/frp/frpc.ini
-
-[Install]
-WantedBy=multi-user.target
-
-
-[Unit]
-Description=frp deamon
-After=network.target network-online.target sshd.service
-
-[Service]
-Type=simple
-WorkingDirectory=/fff/frp
-ExecStart=/bin/bash -c '/fff/frp/frps -c /fff/frp/frps-remote.ini'
-ExecStartPre=/bin/sh -c 'until nc -zv 13.112.200.162 7000; do sleep 3; done;'
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-
-### Journalctl 查看和操作 Systemd 日志
-journalctl -b   # 当前引导的日志, 显示自最近重新引导以来收集的所有日记帐分录。
-journalctl --since "2015-01-10" --until "2015-01-11 03:00"
-journalctl --since yesterday
-journalctl --since 09:00 --until "1 hour ago"
-journalctl -u nginx.service --since today # 按单位, 按消息兴趣过滤
-journalctl _PID=8088 # 按进程，用户或组ID
-journalctl /usr/bin/bash # 按组件路径
-journalctl -k # 显示内核消息
-journalctl -n 20 # 工作原理完全一样 tail -n
-journalctl -f # 要积极跟踪日志，因为他们正在写的。你可能期望tail -f
-journalctl --disk-usage # 该杂志目前使用占用的磁盘空间量
-sudo journalctl --vacuum-size=1G # 将删除旧条目，直到磁盘上占用的总日志空间为所请求的大小
-
-
+### ulimit (选项), core文件
+# -a 显示目前资源限制的设定；
+# -c <core 文件上限 & gt;：设定 core 文件的最大值，单位为区块；
+# -d < 数据节区大小 & gt;：程序数据节区的最大值，单位为 KB；
+# -f < 文件大小 & gt;：shell 所能建立的最大文件，单位为区块；
+# -H 设定资源的硬性限制，也就是管理员所设下的限制；
+# -m < 内存大小 & gt;：指定可使用内存的上限，单位为 KB；
+# -n < 文件数目 & gt;：指定同一时间最多可开启的文件数；
+# -p < 缓冲区大小 & gt;：指定管道缓冲区的大小，单位 512 字节；
+# -s < 堆叠大小 & gt;：指定堆叠的上限，单位为 KB；
+# -S 设定资源的弹性限制；
+# -t <CPU 时间 & gt;：指定 CPU 使用时间的上限，单位为秒；
+# -u < 程序数目 & gt;：用户最多可开启的程序数目；
+# -v < 虚拟内存大小 & gt;：指定可使用的虚拟内存上限，单位为 KB。
+ulimit -a
+ulimit -c unlimited # core文件的大小不受限制
+ulimit -c 0 # 阻止系统生成core文件
+#a) ulimit命令设置后只对一个终端有效，所以另起终端后需要重新设置。
+#b) 要在整个系统中生效，可以通过如下方法(当然此方法未必管用和linux版本相关)：
+#b.1) 编辑/root/.bash_profile文件，在其中加入：ulimit -S -c unlimited (需要注意的是:不是每个版本的系统都有这个文件(Suse下面就没有)，可以手工创建)
+#b.2) 重启系统或者执行:soruce /root/.bash_profile
 
 
 
@@ -851,60 +419,6 @@ sudo enforce <application_name> # 把某个profile置为enforce状态
 sudo complain <application_name> # 把某个profile置为complain状态
 # 在修改了某个profile的状态后，执行如下命令使之生效：
 sudo /etc/init.d/apparmor restart
-
-
-
-### 程序
-rpm -qa # 查看所有安装的软件包
-## dpkg
-dpkg -L unixodbc | xargs -I {} cp {} ~/oudream/1 # 列出 unixodbc 并拷贝到目录……
-dpkg -i package.deb #安装包
-dpkg -r package #删除包
-dpkg -P package #删除包（包括配置文件）
-dpkg -L package #列出与该包关联的文件
-dpkg -l package #显示该包的版本
-dpkg --unpack package.deb #解开 deb 包的内容
-dpkg -S keyword #搜索所属的包内容
-dpkg -l #列出当前已安装的包
-dpkg -c package.deb #列出 deb 包的内容
-dpkg --configure package #配置包
-# example
-dpkg -i package #安装包
-dpkg -R /usr/local/src #安装一个目录下面所有的软件包
-dpkg --unpack package #解开一个包，如果和-R一起使用，参数可以是一个目录
-dpkg --configure package #重新配置和释放软件包
-dpkg -r package #删除包
-dpkg --merge-avail #合并包
-dpkg -P #删除包，包括配置文件
-dpkg -A package #从软件包里面读取软件的信息
-dpkg --update-avail #替代软件包的信息
-dpkg --forget-old-unavail #删除Uninstall的软件包信息
-dpkg --clear-avail #删除软件包的Avaliable信息
-dpkg -C #查找只有部分安装的软件包信息
-dpkg --compare-versions ver1 op ver2 #比较同一个包的不同版本之间的差别
-dpkg -b directory [filename] #建立一个deb文件
-dpkg -c filename #显示一个Deb文件的目录
-dpkg -p package #显示包的具体信息
-dpkg -S filename-search-pattern #搜索指定包里面的文件（模糊查询）
-dpkg -L package #显示一个包安装到系统里面的文件目录信息
-dpkg -s package #报告指定包的状态信息
-dpkg -l #显示所有已经安装的Deb包，同时显示版本号以及简短说明
-## apt-get , apt
-# apt-get是一条linux命令，适用于deb包管理式的操作系统，主要用于自动从互联网的软件仓库中搜索、安装、升级、卸载软件或操作系统。
-apt-get update # 升级安装包相关的命令,刷新可安装的软件列表(但是不做任何实际的安装动作)
-apt-get upgrade # 进行安装包的更新(软件版本的升级)
-apt-get dist-upgrade # 进行系统版本的升级(Ubuntu版本的升级)；如果系统提示某些软件包会被“保留”而不能被升级，则可以用 apt-get dist-upgrade 命令来升级所有软件包：
-do-release-upgrade # Ubuntu官方推荐的系统升级方式,若加参数-d还可以升级到开发版本,但会不稳定
-apt-get install [软件名称] # 安装一个新软件包
-apt-get remove [软件名称] # 卸载一个已安装的软件包（保留配置文档）
-apt-get remove --purge [软件名称] # 卸载一个已安装的软件包（删除配置文档）
-apt-get autoremove [软件名称] # 删除包及其依赖的软件包
-apt-get autoremove --purge [软件名称] # 删除包及其依赖的软件包+配置文件，比上面的要删除的彻底一点
-dpkg --force-all --purge [软件名称] # 有些软件很难卸载，而且还阻止了别的软件的应用，就能够用这个，但是有点冒险。
-## 一次性安装
-apt-get update -y ; apt-get upgrade -y && \
-apt-get install apt-utils wget openssh-server telnet vim passwd ifstat unzip iftop telnet samba net-tools lsof rsync gcc g++ cmake build-essential gdb gdbserver unixodbc unixodbc-dev -y && \
-# rm -rf /var/lib/apt/lists/*
 
 
 
@@ -923,6 +437,7 @@ telnet 192.168.1.1 25
 # 最后的方法就是关掉telnet的窗口。
 # 监听本地端口
 nc -l -p 80   # 开启本机 80 端口 TCP 监听
+nc -l 5555    # macos
 nc -l -p 80 > /tmp/log
 # 扫描端口
 nc -zv host.example.com 22           # 扫描 22 端口是否开放
@@ -956,63 +471,6 @@ asciinema play https://asciinema.org/a/difqlgx86ym6emrmd8u62yqu8
 asciicast2gif -t solarized-dark -s 2 -S 1 118274.json demo.gif
 -t：自定义名称，如 asciinema rec -t "run first blade app"
 -w：暂停时间最多多少秒，如 asciinema rec -w 2.5 demo.json，录制终端保存到本地，暂停时间最多2.5秒
-
-
-
-### remote sftp scp ssh ssh-keygen ssh-copy-id
-## SSH 的配置文件在 /etc/ssh/sshd_config 中，你可以看到端口号, 空闲超时时间等配置项。
-# 使用-p选项指定端口号, 直接连接并在后面加上要执行的命令就可以了
-sudo vim /etc/ssh/sshd_config
-# 找到PermitRootLogin prohibit-password一行，改为PermitRootLogin yes
-sed -i 's/#PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-# 服务器端的心跳机制，添加 # ClientAliveInterval表示每隔多少秒，服务器端向客户端发送心跳 # 表示上述多少次心跳无响应之后，会认为Client已经断开
-ClientAliveInterval 30
-ClientAliveCountMax 6
-sudo service ssh restart
-sftp get -r /usr/local/hadoop/tmp /ddd/hadoop/hadoop-3.1.0
-scp -r local_folder remote_username@remote_ip:remote_folder
-scp -r /home/space/music/ root@vm-ubuntu1:/home/root/others/ # copy local to remote
-scp -r root@vm-ubuntu1:/home/root/others/ /home/space/music/ # copy remote to local
-# clipboard
-# From a X(7) man page:
-cat /fff/tmp/000.txt | ssh -X 10.35.191.11 "DISPLAY=:0.0 pbcopy -i"
-ssh -p 56743 oudream@frp1.chuantou.org ls -l
-# 另外一个很赞的基于 SSH 的工具叫 sshfs. sshfs 可以让你在本地直接挂载远程主机的文件系统.
-# sshfs -o idmap=user user@hostname:/home/user ~/Remote
-sshfs -o idmap=user pi@10.42.0.47:/home/pi ~/Pi
-# 打开调试模式
-ssh -v 192.168.0.103
-# 把服务端的 X11 应用程序显示到客户端计算机上
-ssh -X oudream@10.31.58.75 xclock
-
-# ssh-keygen 用于：生成、管理和转换认证密钥
-# 通常，这个程序产生一个密钥对，并要求指定一个文件存放私钥，同时将公钥存放在附加了".pub"后缀的同名文件中。
-#      程序同时要求输入一个密语字符串(passphrase)，空表示没有密语(主机密钥的密语必须为空)。
-#      密语和口令(password)非常相似，但是密语可以是一句话，里面有单词、标点符号、数字、空格或任何你想要的字符。
-#      好的密语要30个以上的字符，难以猜出，由大小写字母、数字、非字母混合组成。密语可以用 -p 选项修改。
-#      丢失的密语不可恢复。如果丢失或忘记了密语，用户必须产生新的密钥，然后把相应的公钥分发到其他机器上去。
-#      RSA1的密钥文件中有一个"注释"字段，可以方便用户标识这个密钥，指出密钥的用途或其他有用的信息。
-#      创建密钥的时候，注释域初始化为"user@host"，以后可以用 -c 选项修改。
-#      密钥产生后，下面的命令描述了怎样处置和激活密钥。可用的选项有：
-# -t type:指定要生成的密钥类型，有rsa1(SSH1),dsa(SSH2),ecdsa(SSH2),rsa(SSH2)等类型，较为常用的是rsa类型
-# -C comment：提供一个新的注释
-# -b bits：指定要生成的密钥长度 (单位:bit)，对于RSA类型的密钥，最小长度768bits,默认长度为2048bits。DSA密钥必须是1024bits
-# -f filename:指定生成的密钥文件名字
-ssh-keygen -t rsa -p "" # 此时在本机上生成如下一个公钥和一个私钥文件：
-cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
-# 执行 # ssh localhost # 可以发现此时无需输入密码
-ssh-copy-id -i $HOME/.ssh/id_rsa.pub hadoop@192.168.24.129
-ssh-copy-id -i $HOME/.ssh/id_rsa.pub hadoop@192.168.24.130
-ssh-copy-id -i ~/.ssh/id_rsa.pub “-p 3330 liujiakun@192.168.3.105“ # 拷贝公钥到服务器上，服务器端ssh的端口(比如为3330)
-ssh-keygen -F 222.24.51.147 # 查看是否已经添加了对应主机的密钥
-ssh-keygen -R 222.24.51.147 # 删除主机密钥 ~/.ssh/known_hosts
-# $HOME/.ssh/identity: 使用SSH协议版本1时，$HOME/.ssh/identity文件包含RSA私钥。
-# $HOME/.ssh/identity.pub: 当你使用SSH协议版本一时，$HOME/.ssh/identity.pub文件包含用于进行身份验证的RSA公钥。用户应将其内容复制到用户希望使用RSA身份验证登录的远程系统的$HOME/.ssh/authorized_keys文件中。
-# $HOME/.ssh/id_dsa: $HOME/.ssh/id_dsa文件包含用户的协议版本2 DSA身份验证标识。
-# $HOME/.ssh/id_dsa.pub: 当您使用SSH协议版本2时，$HOME/.ssh/id_dsa.pub文件包含用于身份验证的DSA公钥。 用户应将其内容复制到用户希望使用DSA身份验证登录的远程系统的$HOME/.ssh/authorized_keys文件中。
-# $HOME/.ssh/id_rsa: $HOME/.ssh/id_rsa文件包含用户的协议版本2 RSA身份验证标识。 除了用户之外，任何人都不应该有读取此文件的权限。
-# $HOME/.ssh/id_rsa.pub: $HOME/.ssh/id_rsa.pub文件包含用于身份验证的协议版本2 RSA公钥。 应在用户希望使用公钥认证登录的所有计算机上将此文件的内容添加到$HOME/.ssh/authorized_keys。
 
 
 
@@ -1053,80 +511,6 @@ spawn sudo ls -l
 expect "Password:"
 send "oudream\r"
 interact
-
-
-### tar unzip
-## .tar
-# 解包：
-tar xvf FileName.tar
-# 打包：
-tar cvf FileName.tar DirName
-# （注：tar是打包，不是压缩！）
-
-## .gz
-# 解压1：
-gunzip FileName.gz
-# 解压2：
-gzip -d FileName.gz
-# 压缩：
-gzip FileName
-
-## .tar.gz 和 .tgz
-# 解压：
-tar zxvf FileName.tar.gz
-# 压缩：
-tar zcvf FileName.tar.gz DirName
-
-## .bz2
-# 解压1：
-bzip2 -d FileName.bz2
-# 解压2：
-bunzip2 FileName.bz2
-# 压缩：
-bzip2 -z FileName
-
-## .tar.bz2
-# 解压：
-tar jxvf FileName.tar.bz2
-# 压缩：
-tar jcvf FileName.tar.bz2 DirName
-
-## .bz
-# 解压1：
-bzip2 -d FileName.bz
-# 解压2：
-bunzip2 FileName.bz
-# 压缩：未知
-
-## .tar.bz
-# 解压：
-tar jxvf FileName.tar.bz
-# 压缩：
-# 未知
-
-## .Z
-# 解压：
-uncompress FileName.Z
-# 压缩：
-compress FileName
-
-## .tar.Z
-# 解压：
-tar Zxvf FileName.tar.Z
-# 压缩：
-tar Zcvf FileName.tar.Z DirName
-
-## .zip
-# 解压：
-unzip FileName.zip
-# 压缩：
-zip FileName.zip DirName
-
-## .rar
-# 解压：
-rar x FileName.rar
-# 压缩：
-rar a FileName.rar DirName
 
 
 
@@ -1172,16 +556,3 @@ sudo shutdown -h +60 # macos
 sudo shutdown -P +60 # linux
 sudo shutdown -P 1:00 # linux
 
-
-
-### redis
-## on macos
-brew install redis
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist # Start Redis server via “launchctl”.
-launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist # Stop Redis on autostart on computer start.
-redis-cli shutdown # Stop all the clients. Perform a blocking SAVE if at least one save point is configured. Flush the Append Only File if AOF is enabled. Quit the server.
-## on ubuntu
-sudo systemctl start redis
-sudo systemctl enable redis
-sudo systemctl restart redis
-sudo systemctl stop redis

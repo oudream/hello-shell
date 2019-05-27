@@ -24,30 +24,30 @@
 #    ${#string}                          $string的长度
 #    ${string:position}                  在$string中, 从位置$position开始提取子串
 #    ${string:position:length}           在$string中, 从位置$position开始提取长度为$length的子串
-#    ${string#substring}                 从变量$string的开头, 删除最短匹配$substring的子串
-#    ${string##substring}                从变量$string的开头, 删除最长匹配$substring的子串
-#    ${string%substring}                 从变量$string的结尾, 删除最短匹配$substring的子串
-#    ${string%%substring}                从变量$string的结尾, 删除最长匹配$substring的子串
-#    ${string/substring/replacement}     使用$replacement, 来代替第一个匹配的$substring
-#    ${string//substring/replacement}    使用$replacement, 代替所有匹配的$substring
-#    ${string/#substring/replacement}    如果$string的前缀匹配$substring, 那么就用$replacement来代替匹配到的$substring
-#    ${string/%substring/replacement}    如果$string的后缀匹配$substring, 那么就用$replacement来代替匹配到的$substring
-#    说明："* $substring”可以是一个正则表达式。
+#    ${string#stringExisting}                 从变量$string的开头, 删除最短匹配$stringExisting的子串
+#    ${string##stringExisting}                从变量$string的开头, 删除最长匹配$stringExisting的子串
+#    ${string%stringExisting}                 从变量$string的结尾, 删除最短匹配$stringExisting的子串
+#    ${string%%stringExisting}                从变量$string的结尾, 删除最长匹配$stringExisting的子串
+#    ${string/stringExisting/replacement}     使用$replacement, 来代替第一个匹配的$stringExisting
+#    ${string//stringExisting/replacement}    使用$replacement, 代替所有匹配的$stringExisting
+#    ${string/#stringExisting/replacement}    如果$string的前缀匹配$stringExisting, 那么就用$replacement来代替匹配到的$stringExisting
+#    ${string/%stringExisting/replacement}    如果$string的后缀匹配$stringExisting, 那么就用$replacement来代替匹配到的$stringExisting
+#    说明："* $stringExisting”可以是一个正则表达式。
 
-function testString1(){
+function testString11(){
 #    第一种又可以分为四种情况，下面一一介绍。
-#    1、使用 # 号操作符。用途是从左边开始删除第一次出现子字符串即其左边字符，保留右边字符。用法为#*substr,例如：
+#    1、使用 # 号操作符。用途是从左边开始删除第一次出现子字符串即其左边字符，保留右边字符。用法为#*stringExist,例如：
     str='http://www.你的域名.com/cut-string.html'
     echo ${str#*//}
-#    得到的结果为www.你的域名.com/cut-string.html，即删除从左边开始到第一个"//"及其左边所有字符2、使用 ## 号操作符。用途是从左边开始删除最后一次出现子字符串即其左边字符，保留右边字符。用法为##*substr,例如：
+#    得到的结果为www.你的域名.com/cut-string.html，即删除从左边开始到第一个"//"及其左边所有字符2、使用 ## 号操作符。用途是从左边开始删除最后一次出现子字符串即其左边字符，保留右边字符。用法为##*stringExist,例如：
     str='http://www.你的域名.com/cut-string.html'
     echo ${str##*/}
 #    得到的结果为cut-string.html，即删除最后出现的"/"及其左边所有字符
-#    3、使用 % 号操作符。用途是从右边开始删除第一次出现子字符串即其右边字符，保留左边字符。用法为%substr*,例如：
+#    3、使用 % 号操作符。用途是从右边开始删除第一次出现子字符串即其右边字符，保留左边字符。用法为%stringExist*,例如：
     str='http://www.你的域名.com/cut-string.html'
     echo ${str%/*}
 #    得到的结果为http://www.你的域名.com，即删除从右边开始到第一个"/"及其右边所有字符
-#    4、使用 %% 号操作符。用途是从右边开始删除最后一次出现子字符串即其右边字符，保留左边字符。用法为%%substr*,例如：
+#    4、使用 %% 号操作符。用途是从右边开始删除最后一次出现子字符串即其右边字符，保留左边字符。用法为%%stringExist*,例如：
     str='http://www.你的域名.com/cut-string.html'
     echo ${str%%/*}
 #    得到的结果为http://www.你的域名.com，即删除从右边开始到最后一个"/"及其右边所有字符
@@ -93,8 +93,8 @@ function testString1(){
     echo ${test##*/}
     echo ${test%/*}
     echo ${test%%/*}
-#    ${变量名#substring正则表达式}从字符串开头开始配备substring,删除匹配上的表达式。
-#    ${变量名%substring正则表达式}从字符串结尾开始配备substring,删除匹配上的表达式。
+#    ${变量名#stringExisting正则表达式}从字符串开头开始配备stringExisting,删除匹配上的表达式。
+#    ${变量名%stringExisting正则表达式}从字符串结尾开始配备stringExisting,删除匹配上的表达式。
 #    注意：${test##/},${test%/} 分别是得到文件名，或者目录地址最简单方法。
 
 #    4.字符串删除
@@ -104,15 +104,75 @@ function testString1(){
     echo ${test##*/}
     echo ${test%/*}
     echo ${test%%/*}
-#    ${变量名#substring正则表达式}从字符串开头开始配备substring,删除匹配上的表达式。
-#    ${变量名%substring正则表达式}从字符串结尾开始配备substring,删除匹配上的表达式。
+#    ${变量名#stringExisting正则表达式}从字符串开头开始配备stringExisting,删除匹配上的表达式。
+#    ${变量名%stringExisting正则表达式}从字符串结尾开始配备stringExisting,删除匹配上的表达式。
 #    注意：${test##/},${test%/} 分别是得到文件名，或者目录地址最简单方法。
 
 
 }
+echo "-----testString11 begin-----"
+testString11
+echo "-----testString11 end-----"
 
-echo "-----testString1 begin-----"
-testString1
-echo "-----testString1 end-----"
+
+function testStringSplit11(){
+    a="one,two,three,four"
+    #要将$a分割开，可以这样：
+    OLD_IFS="$IFS"
+    IFS=","
+    arr=($a)
+    IFS="$OLD_IFS"
+    for s in ${arr[@]}
+    do
+        echo "$s"
+    done
+}
+echo "-----testStringSplit11 begin-----"
+testStringSplit11
+echo "-----testStringSplit11 end-----"
+
+
+function stringExist
+{
+    STRING_A=$1
+    STRING_B=$2
+
+    if [[ ${STRING_A/${STRING_B}//} == $STRING_A ]]
+    then
+        ## is not exist.
+        echo N
+        return 0
+    else
+        ## is string exist.
+        echo Y
+        return 1
+    fi
+}
+
+function testStringExist11(){
+    stringExist "ThisIsAString" "stringExisting" # should output N
+    stringExist "ThisIsAString" "String" # should output Y
+}
+echo "-----testStringExist11 begin-----"
+testStringExist11
+echo "-----testStringExist11 end-----"
+
+
+function testStringExist12(){
+    strA="dkasnfk"
+    strB="asn"
+    strC="knk"
+
+    result=$(echo $strA | grep "${strC}")
+    if [[ "$result" != "" ]]
+    then
+        echo "True"
+    else
+        echo "False"
+    fi
+}
+echo "-----testStringExist12 begin-----"
+testStringExist12
+echo "-----testStringExist12 end-----"
 
 
