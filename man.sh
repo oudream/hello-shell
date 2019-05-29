@@ -2,6 +2,7 @@
 
 ### init
 ## 一次性安装
+sudo apt-get update -y ; sudo apt-get upgrade -y
 apt-get update -y ; apt-get upgrade -y && \
 apt-get install apt-utils wget openssh-server telnet vim passwd ifstat unzip iftop telnet samba net-tools lsof rsync gcc g++ cmake build-essential gdb gdbserver unixodbc unixodbc-dev -y && \
 # rm -rf /var/lib/apt/lists/*

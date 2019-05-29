@@ -11,7 +11,9 @@ sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd
 ClientAliveInterval 30
 ClientAliveCountMax 6
 sudo service ssh restart
+# sftp
 sftp get -r /usr/local/hadoop/tmp /ddd/hadoop/hadoop-3.1.0
+# scp
 scp -r local_folder remote_username@remote_ip:remote_folder
 scp -r /home/space/music/ root@vm-ubuntu1:/home/root/others/ # copy local to remote
 scp -r root@vm-ubuntu1:/home/root/others/ /home/space/music/ # copy remote to local

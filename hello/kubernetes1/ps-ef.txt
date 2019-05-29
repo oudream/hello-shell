@@ -1,0 +1,144 @@
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 05:59 ?        00:00:02 /sbin/init
+root         2     0  0 05:59 ?        00:00:00 [kthreadd]
+root         3     2  0 05:59 ?        00:00:00 [ksoftirqd/0]
+root         5     2  0 05:59 ?        00:00:00 [kworker/0:0H]
+root         7     2  0 05:59 ?        00:00:05 [rcu_sched]
+root         8     2  0 05:59 ?        00:00:00 [rcu_bh]
+root         9     2  0 05:59 ?        00:00:00 [migration/0]
+root        10     2  0 05:59 ?        00:00:00 [watchdog/0]
+root        11     2  0 05:59 ?        00:00:00 [watchdog/1]
+root        12     2  0 05:59 ?        00:00:00 [migration/1]
+root        13     2  0 05:59 ?        00:00:02 [ksoftirqd/1]
+root        15     2  0 05:59 ?        00:00:00 [kworker/1:0H]
+root        16     2  0 05:59 ?        00:00:00 [kdevtmpfs]
+root        17     2  0 05:59 ?        00:00:00 [netns]
+root        18     2  0 05:59 ?        00:00:00 [perf]
+root        19     2  0 05:59 ?        00:00:00 [khungtaskd]
+root        20     2  0 05:59 ?        00:00:00 [writeback]
+root        21     2  0 05:59 ?        00:00:00 [ksmd]
+root        22     2  0 05:59 ?        00:00:00 [khugepaged]
+root        23     2  0 05:59 ?        00:00:00 [crypto]
+root        24     2  0 05:59 ?        00:00:00 [kintegrityd]
+root        25     2  0 05:59 ?        00:00:00 [bioset]
+root        26     2  0 05:59 ?        00:00:00 [kblockd]
+root        27     2  0 05:59 ?        00:00:00 [ata_sff]
+root        28     2  0 05:59 ?        00:00:00 [md]
+root        29     2  0 05:59 ?        00:00:00 [devfreq_wq]
+root        34     2  0 05:59 ?        00:00:03 [kswapd0]
+root        35     2  0 05:59 ?        00:00:00 [vmstat]
+root        36     2  0 05:59 ?        00:00:00 [fsnotify_mark]
+root        37     2  0 05:59 ?        00:00:00 [ecryptfs-kthrea]
+root        53     2  0 05:59 ?        00:00:00 [kthrotld]
+root        54     2  0 05:59 ?        00:00:00 [acpi_thermal_pm]
+root        55     2  0 05:59 ?        00:00:00 [bioset]
+root        56     2  0 05:59 ?        00:00:00 [bioset]
+root        57     2  0 05:59 ?        00:00:00 [bioset]
+root        58     2  0 05:59 ?        00:00:00 [bioset]
+root        59     2  0 05:59 ?        00:00:00 [bioset]
+root        60     2  0 05:59 ?        00:00:00 [bioset]
+root        61     2  0 05:59 ?        00:00:00 [bioset]
+root        62     2  0 05:59 ?        00:00:00 [bioset]
+root        63     2  0 05:59 ?        00:00:00 [bioset]
+root        64     2  0 05:59 ?        00:00:00 [scsi_eh_0]
+root        65     2  0 05:59 ?        00:00:00 [scsi_tmf_0]
+root        66     2  0 05:59 ?        00:00:00 [scsi_eh_1]
+root        67     2  0 05:59 ?        00:00:00 [scsi_tmf_1]
+root        73     2  0 05:59 ?        00:00:00 [ipv6_addrconf]
+root        86     2  0 05:59 ?        00:00:00 [deferwq]
+root        87     2  0 05:59 ?        00:00:00 [charger_manager]
+root        88     2  0 05:59 ?        00:00:00 [bioset]
+root       125     2  0 05:59 ?        00:00:00 [bioset]
+root       126     2  0 05:59 ?        00:00:00 [bioset]
+root       127     2  0 05:59 ?        00:00:00 [bioset]
+root       128     2  0 05:59 ?        00:00:00 [bioset]
+root       129     2  0 05:59 ?        00:00:00 [bioset]
+root       130     2  0 05:59 ?        00:00:00 [bioset]
+root       131     2  0 05:59 ?        00:00:00 [bioset]
+root       132     2  0 05:59 ?        00:00:00 [bioset]
+root       133     2  0 05:59 ?        00:00:00 [kpsmoused]
+root       135     2  0 05:59 ?        00:00:01 [kworker/1:1H]
+root       156     2  0 05:59 ?        00:00:01 [kworker/0:1H]
+root       158     2  0 05:59 ?        00:00:02 [jbd2/vda1-8]
+root       159     2  0 05:59 ?        00:00:00 [ext4-rsv-conver]
+root       199     1  0 05:59 ?        00:00:02 /lib/systemd/systemd-journald
+root       212     2  0 05:59 ?        00:00:00 [kworker/1:3]
+root       215     2  0 05:59 ?        00:00:00 [kauditd]
+root       231     2  0 05:59 ?        00:00:00 [rpciod]
+root       280     1  0 05:59 ?        00:00:00 /lib/systemd/systemd-udevd
+root       326     2  0 06:39 ?        00:00:00 [kworker/u4:1]
+root       432     2  0 05:59 ?        00:00:00 [hwrng]
+root       434     1  0 05:59 ?        00:00:00 /usr/sbin/cron -f
+root       435     1  0 05:59 ?        00:00:00 /usr/lib/snapd/snapd
+root       443     1  0 05:59 ?        00:00:00 /usr/lib/accountsservice/accounts-daemon
+syslog     451     1  0 05:59 ?        00:00:02 /usr/sbin/rsyslogd -n
+root       454     1  0 05:59 ?        00:00:00 /lib/systemd/systemd-logind
+message+   458     1  0 05:59 ?        00:00:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+root       514     1  0 05:59 ?        00:00:00 /usr/sbin/irqbalance --pid=/var/run/irqbalance.pid
+root       651     2  0 06:40 ?        00:00:00 [kworker/1:2]
+root       701     1  0 05:59 ?        00:00:00 /sbin/dhclient -1 -v -pf /run/dhclient.ens3.pid -lf /var/lib/dhcp/dhclient.ens3.leases -I -df /var/lib/dhcp/dhclient6.ens3.leases ens3
+ntp        791     1  0 05:59 ?        00:00:00 /usr/sbin/ntpd -p /var/run/ntpd.pid -g -u 109:116
+root       799     1  0 05:59 ?        00:00:00 /usr/sbin/sshd -D
+root       807     1  0 05:59 tty1     00:00:00 /sbin/agetty --noclear tty1 linux
+root      1309  4579  0 06:42 ?        00:00:00 sleep 54
+root      1366  3377  0 06:42 pts/0    00:00:00 ps -ef
+root      3361   799  0 06:08 ?        00:00:00 sshd: root@pts/0
+root      3368     1  0 06:08 ?        00:00:00 /lib/systemd/systemd --user
+root      3369  3368  0 06:08 ?        00:00:00 (sd-pam)
+root      3377  3361  0 06:08 pts/0    00:00:00 -bash
+root      3436     1  0 06:08 ?        00:00:00 /usr/bin/containerd
+root      3451     1  2 06:08 ?        00:00:41 /usr/bin/dockerd -H fd://
+root      4044     1  6 06:09 ?        00:02:16 /usr/bin/kubelet --hostname-override=minikube --pod-manifest-path=/etc/kubernetes/manifests --cluster-domain=cluster.local --authorization-mode=Webhook --cgroup-driver=cgroupfs --fail-swap-on=false --kubeconfig=/etc/kubernetes/kubelet.conf --cluster-dns=10.96.0.10 --client-ca-file=/var/lib/minikube/certs/ca.crt --container-runtime=docker --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --allow-privileged=true
+root      4139     1  0 06:09 ?        00:00:00 docker-containerd-shim 1add6fb0c1123c06ab0d8d164290502be6a01aedc6aac01f3b99ecdf56352c40 /var/run/docker/libcontainerd/1add6fb0c1123c06ab0d8d164290502be6a01aedc6aac01f3b99ecdf56352c40 docker-runc
+root      4157  4139  0 06:09 ?        00:00:00 /pause
+root      4162     1  0 06:09 ?        00:00:00 docker-containerd-shim 9ca180f7f2a7c4127bc9063d56951629210ef3b230543f4e825f4603bd5fa858 /var/run/docker/libcontainerd/9ca180f7f2a7c4127bc9063d56951629210ef3b230543f4e825f4603bd5fa858 docker-runc
+root      4191  4162  0 06:09 ?        00:00:00 /pause
+root      4208     1  0 06:09 ?        00:00:00 docker-containerd-shim d5836b280484891f063f50b21135cf1ae898997e6adf4712b33c5f7e59fb9120 /var/run/docker/libcontainerd/d5836b280484891f063f50b21135cf1ae898997e6adf4712b33c5f7e59fb9120 docker-runc
+root      4247     1  0 06:09 ?        00:00:00 docker-containerd-shim 00a02b0e28c9dd177f957d093bb9335c54c60892a2b8a91d8b2e91460411b057 /var/run/docker/libcontainerd/00a02b0e28c9dd177f957d093bb9335c54c60892a2b8a91d8b2e91460411b057 docker-runc
+root      4261  4208  0 06:09 ?        00:00:00 /pause
+root      4265     1  0 06:09 ?        00:00:00 docker-containerd-shim 3e812c3daaddc1559ac696296db860656e058e37f99d8811d6dacd1fdf9cee05 /var/run/docker/libcontainerd/3e812c3daaddc1559ac696296db860656e058e37f99d8811d6dacd1fdf9cee05 docker-runc
+root      4293  4265  0 06:09 ?        00:00:00 /pause
+root      4305  4247  0 06:09 ?        00:00:00 /pause
+root      4384     1  0 06:09 ?        00:00:00 docker-containerd-shim c809f265aa75b15808cd886b86802ab9cc307ea0b989151e95ba7e647be4541f /var/run/docker/libcontainerd/c809f265aa75b15808cd886b86802ab9cc307ea0b989151e95ba7e647be4541f docker-runc
+root      4410  4384  3 06:09 ?        00:01:03 kube-controller-manager --address=127.0.0.1 --authentication-kubeconfig=/etc/kubernetes/controller-manager.conf --authorization-kubeconfig=/etc/kubernetes/controller-manager.conf --client-ca-file=/var/lib/minikube/certs/ca.crt --cluster-signing-cert-file=/var/lib/minikube/certs/ca.crt --cluster-signing-key-file=/var/lib/minikube/certs/ca.key --controllers=*,bootstrapsigner,tokencleaner --kubeconfig=/etc/kubernetes/controller-manager.conf --leader-elect=true --requestheader-client-ca-file=/var/lib/minikube/certs/front-proxy-ca.crt --root-ca-file=/var/lib/minikube/certs/ca.crt --service-account-private-key-file=/var/lib/minikube/certs/sa.key --use-service-account-credentials=true
+root      4456     1  0 06:09 ?        00:00:00 docker-containerd-shim 3e75015ece32ad7e9c7d5dce348fac126a2342f29e73a87d79f5da8ad2b06c14 /var/run/docker/libcontainerd/3e75015ece32ad7e9c7d5dce348fac126a2342f29e73a87d79f5da8ad2b06c14 docker-runc
+root      4457     1  0 06:09 ?        00:00:00 docker-containerd-shim 0cd07ec5b68b3a26196ba19685a8fc7130dc23cdf7ec1b5cc69bdf586826c853 /var/run/docker/libcontainerd/0cd07ec5b68b3a26196ba19685a8fc7130dc23cdf7ec1b5cc69bdf586826c853 docker-runc
+root      4491  4456  0 06:09 ?        00:00:15 kube-scheduler --address=127.0.0.1 --kubeconfig=/etc/kubernetes/scheduler.conf --leader-elect=true
+root      4501  4457  2 06:09 ?        00:00:58 etcd --advertise-client-urls=https://172.17.0.13:2379 --cert-file=/var/lib/minikube/certs/etcd/server.crt --client-cert-auth=true --data-dir=/data/minikube --initial-advertise-peer-urls=https://172.17.0.13:2380 --initial-cluster=minikube=https://172.17.0.13:2380 --key-file=/var/lib/minikube/certs/etcd/server.key --listen-client-urls=https://127.0.0.1:2379,https://172.17.0.13:2379 --listen-peer-urls=https://172.17.0.13:2380 --name=minikube --peer-cert-file=/var/lib/minikube/certs/etcd/peer.crt --peer-client-cert-auth=true --peer-key-file=/var/lib/minikube/certs/etcd/peer.key --peer-trusted-ca-file=/var/lib/minikube/certs/etcd/ca.crt --snapshot-count=10000 --trusted-ca-file=/var/lib/minikube/certs/etcd/ca.crt
+root      4526     1  0 06:09 ?        00:00:00 docker-containerd-shim 4c6b225546c8d503765f94c774ae8845e606ec34d89f0c60d45000c564b9a335 /var/run/docker/libcontainerd/4c6b225546c8d503765f94c774ae8845e606ec34d89f0c60d45000c564b9a335 docker-runc
+root      4529     1  0 06:09 ?        00:00:00 docker-containerd-shim ca27d4135d71cf0d9ec7f6fabacd843ad2e1b0fe063e181a44543d556d893503 /var/run/docker/libcontainerd/ca27d4135d71cf0d9ec7f6fabacd843ad2e1b0fe063e181a44543d556d893503 docker-runc
+root      4570  4526  6 06:09 ?        00:02:00 kube-apiserver --authorization-mode=Node,RBAC --enable-admission-plugins=Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota --advertise-address=172.17.0.13 --allow-privileged=true --client-ca-file=/var/lib/minikube/certs/ca.crt --enable-bootstrap-token-auth=true --etcd-cafile=/var/lib/minikube/certs/etcd/ca.crt --etcd-certfile=/var/lib/minikube/certs/apiserver-etcd-client.crt --etcd-keyfile=/var/lib/minikube/certs/apiserver-etcd-client.key --etcd-servers=https://127.0.0.1:2379 --insecure-port=0 --kubelet-client-certificate=/var/lib/minikube/certs/apiserver-kubelet-client.crt --kubelet-client-key=/var/lib/minikube/certs/apiserver-kubelet-client.key --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname --proxy-client-cert-file=/var/lib/minikube/certs/front-proxy-client.crt --proxy-client-key-file=/var/lib/minikube/certs/front-proxy-client.key --requestheader-allowed-names=front-proxy-client --requestheader-client-ca-file=/var/lib/minikube/certs/front-proxy-ca.crt --requestheader-extra-headers-prefix=X-Remote-Extra- --requestheader-group-headers=X-Remote-Group --requestheader-username-headers=X-Remote-User --secure-port=8443 --service-account-key-file=/var/lib/minikube/certs/sa.pub --service-cluster-ip-range=10.96.0.0/12 --tls-cert-file=/var/lib/minikube/certs/apiserver.crt --tls-private-key-file=/var/lib/minikube/certs/apiserver.key
+root      4579  4529  0 06:09 ?        00:00:00 /bin/bash /opt/kube-addons.sh
+root      5055     2  0 06:09 ?        00:00:00 [kworker/u4:0]
+root      5083     1  0 06:09 ?        00:00:00 docker-containerd-shim 6d608a9756359a129ab7232ab3bb2b35736db9c478e129279acfb62dcb666904 /var/run/docker/libcontainerd/6d608a9756359a129ab7232ab3bb2b35736db9c478e129279acfb62dcb666904 docker-runc
+root      5101  5083  0 06:09 ?        00:00:00 /pause
+root      5145     1  0 06:09 ?        00:00:00 docker-containerd-shim cf6a84d620b10a1ec1d1b1d7657a3801d24ed258b91e43774d728c78a179cc05 /var/run/docker/libcontainerd/cf6a84d620b10a1ec1d1b1d7657a3801d24ed258b91e43774d728c78a179cc05 docker-runc
+root      5151     1  0 06:09 ?        00:00:00 docker-containerd-shim 8c5741df4f5ad72ad38f72dfc8a3704488b9ab4f7f15fb46cf77b175bf307655 /var/run/docker/libcontainerd/8c5741df4f5ad72ad38f72dfc8a3704488b9ab4f7f15fb46cf77b175bf307655 docker-runc
+root      5153     1  0 06:09 ?        00:00:00 docker-containerd-shim 149d3cdf4e91443e80e23aa1d8e58e561141f8ceec33597017829073ea70d82d /var/run/docker/libcontainerd/149d3cdf4e91443e80e23aa1d8e58e561141f8ceec33597017829073ea70d82d docker-runc
+root      5192  5153  0 06:09 ?        00:00:00 /pause
+root      5203  5145  0 06:09 ?        00:00:00 /pause
+root      5244  5151  0 06:09 ?        00:00:06 /usr/local/bin/kube-proxy --config=/var/lib/kube-proxy/config.conf --hostname-override=minikube
+root      5403     1  0 06:09 ?        00:00:00 docker-containerd-shim 8200031bbb3d113ba49d09f8c2aeb06811b5f0b5869a267d9811b1b4cbbc0078 /var/run/docker/libcontainerd/8200031bbb3d113ba49d09f8c2aeb06811b5f0b5869a267d9811b1b4cbbc0078 docker-runc
+root      5407     1  0 06:09 ?        00:00:00 docker-containerd-shim ca34fd1fff257c2cfb8333abcc6060237874e7bcca8c55419e22519fddb95264 /var/run/docker/libcontainerd/ca34fd1fff257c2cfb8333abcc6060237874e7bcca8c55419e22519fddb95264 docker-runc
+root      5436  5403  0 06:09 ?        00:00:07 /coredns -conf /etc/coredns/Corefile
+root      5442  5407  0 06:09 ?        00:00:07 /coredns -conf /etc/coredns/Corefile
+root      5623     1  0 06:09 ?        00:00:00 docker-containerd-shim 11aca2c4a9dab475a53b52130778fa5047903915612b2b777ca64d20f7868d3e /var/run/docker/libcontainerd/11aca2c4a9dab475a53b52130778fa5047903915612b2b777ca64d20f7868d3e docker-runc
+root      5641  5623  0 06:09 ?        00:00:00 /pause
+root      5677     1  0 06:09 ?        00:00:00 docker-containerd-shim 97211a99c2aab71e0a92cb8fbca44b7d080fbd21e296cd4f71ee7ab1a10ce95b /var/run/docker/libcontainerd/97211a99c2aab71e0a92cb8fbca44b7d080fbd21e296cd4f71ee7ab1a10ce95b docker-runc
+root      5693  5677  0 06:09 ?        00:00:01 /storage-provisioner
+root      5821     1  0 06:10 ?        00:00:00 docker-containerd-shim a1dc1e38420a271bb4ccb0cc6690a5428eca9de7e2139252724da4d6a27c4d11 /var/run/docker/libcontainerd/a1dc1e38420a271bb4ccb0cc6690a5428eca9de7e2139252724da4d6a27c4d11 docker-runc
+root      5839  5821  0 06:10 ?        00:00:00 /pause
+root      5889     1  0 06:10 ?        00:00:00 docker-containerd-shim f29ccca0d7b4ef526a7fc17129e65a017c016453887eb612397cfc754d8ddd54 /var/run/docker/libcontainerd/f29ccca0d7b4ef526a7fc17129e65a017c016453887eb612397cfc754d8ddd54 docker-runc
+root      5906  5889  0 06:10 ?        00:00:00 /bin/sh -c node server.js
+root      5944  5906  0 06:10 ?        00:00:00 node server.js
+root      6005   799  0 06:10 ?        00:00:00 sshd: root@pts/1
+root      6010  6005  0 06:10 pts/1    00:00:00 -bash
+root      6177  6010  0 06:10 pts/1    00:00:00 kubectl proxy
+root      8849     2  0 06:18 ?        00:00:00 [kworker/1:1]
+root     28869     2  0 06:27 ?        00:00:00 [kworker/0:2]
+root     29095     2  0 06:28 ?        00:00:00 [kworker/0:3]
+root     29397  3451  0 06:29 ?        00:00:06 docker-containerd -l unix:///var/run/docker/libcontainerd/docker-containerd.sock --metrics-interval=0 --start-timeout 2m --state-dir /var/run/docker/libcontainerd/containerd --shim docker-containerd-shim --runtime docker-runc --debug
+root     29964     2  0 06:30 ?        00:00:00 [kworker/u4:3]
+root     30970     2  0 06:33 ?        00:00:00 [kworker/0:1]
+root     31704     2  0 06:36 ?        00:00:00 [kworker/1:0]
+root     32635     2  0 06:38 ?        00:00:00 [kworker/0:0]

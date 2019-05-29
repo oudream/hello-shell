@@ -7,20 +7,20 @@
 #    登录用户:500+, 1000+
 # 用户组GID：管理员组：root, 0；系统组：1-499, 1-999(centos7)；普通组：500+, 1000+
 # Linux安全上下文：运行中的程序：进程 (process)，以进程发起者的身份运行；
-#    进程所能够访问的所有资源的权限取决于进程的发起者的身份；
-w # 查看活动用户
-id <用户名> # 查看指定用户信息
-last # 查看用户登录日志
-cut -d: -f1 /etc/passwd # 查看系统所有用户
-cut -d: -f1 /etc/group # 查看系统所有组
-crontab -l # 查看当前用户的计划任务
-# 列出用户信息，文件列表，警告: 不要手动编辑这些文件。有些工具可以更好的处理锁定、避免数据库错误。
-cat /etc/shadow	# 保存用户安全信息
-cat /etc/passwd	# 用户账户信息
-cat /etc/gshadow # 保存组账号的安全信息
-cat /etc/group # 定义用户所属的组
-cat /etc/sudoers # 可以运行 sudo 的用户
-cat /home/* # 主目录
+## 进程所能够访问的所有资源的权限取决于进程的发起者的身份；
+w                           # 查看活动用户
+id ${username}              # 查看指定用户信息
+last                        # 查看用户登录日志
+cut -d: -f1 /etc/passwd     # 查看系统所有用户
+cut -d: -f1 /etc/group      # 查看系统所有组
+crontab -l                  # 查看当前用户的计划任务
+## 列出用户信息，文件列表，警告: 不要手动编辑这些文件。有些工具可以更好的处理锁定、避免数据库错误。
+cat /etc/shadow	    # 保存用户安全信息
+cat /etc/passwd	    # 用户账户信息
+cat /etc/gshadow    # 保存组账号的安全信息
+cat /etc/group      # 定义用户所属的组
+cat /etc/sudoers    # 可以运行 sudo 的用户
+cat /home/*         # 主目录
 ### 用户组名
 # adm     类似 wheel 的管理器群组.
 # ftp     /srv/ftp/	访问 FTP 服务器.
@@ -51,6 +51,8 @@ userdel [OPTION] login # -r: 删除用户家目录；
 # 例如：
 useradd testuser # 创建用户testuser
 passwd testuser # 给已创建的用户testuser设置密码
+# create user docker and append to group docker
+useradd -g docker -m docker
 # 说明：新创建的用户会在/home下创建一个用户目录testuser
 usermod --help 修改用户这个命令的相关参数
 userdel testuser # 删除用户testuser   rm -rf testuser 删除用户testuser所在目录
