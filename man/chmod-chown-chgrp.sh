@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+
+chmod -R 777 dir1
+dir1=
+sudo chown -R oudream ${dir1} ; chgrp -R oudream ${dir1}
+
 ### chown chmod 权限
 
 # drwxrwxrwx 是10个空间保持值。你可以忽略第一个，然后有 3组 3。第一集为所有者，第二个集为该组，最后一集为世界。

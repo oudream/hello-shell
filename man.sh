@@ -432,25 +432,6 @@ sudo spctl --master-disable
 
 
 ### network
-telnet 192.168.1.1 25
-# 如果不嫌多一步可以考虑用CTRL+]键，这时会强制退到telnet命令界面下，再用quit退出就行了，百试百灵。
-# 其它就是用CTRL +C或CTRL+D两种方式来强行断开与远程的连接，但能支持这种命令的比较少。
-# 最后的方法就是关掉telnet的窗口。
-# 监听本地端口
-nc -l -p 80   # 开启本机 80 端口 TCP 监听
-nc -l 5555    # macos
-nc -l -p 80 > /tmp/log
-# 扫描端口
-nc -zv host.example.com 22           # 扫描 22 端口是否开放
-nc -zv host.example.com 22 80 443    # 扫描端口
-nc -zv host.example.com 20-30        # 扫描一个范围
-nc -zv -w 5 host.example.com 22-443  # -w 表示超时等待 5 秒
-# 作为简单的 Web Server
-nc -l 8080 < index.html
-curl localhost:8080
-# ping
-until ping -c1 google.com; do sleep 1; done;
-until [$(nc -zv 13.112.200.162 7000) == "*succeeded*"]; do sleep 1; done;
 ### MAC ADDRESS
 第一个是自己的
 sudo ifconfig en0 ether a0:99:9b:0f:53:15 ### mac2015
@@ -459,7 +440,6 @@ sudo ifconfig en0 ether C0:3F:D5:74:79:4F ### oudream pc
 sudo ifconfig en0 ether 28:D2:44:7E:99:E4 ### llb thinkpadt440
 sudo ifconfig en0 ether 5C:51:4F:62:C8:6B ### llb thinkpadt440 - wifi
 sudo ifconfig en0 ether C0-3F-D5-74-74-71 ### common pc 215
-
 
 
 ### script / asciinema rec / asciinema auth
