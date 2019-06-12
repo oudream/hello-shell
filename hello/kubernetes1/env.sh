@@ -19,7 +19,7 @@ export ETCD_NODES="${NODE_NAMES[0]}=https://${NODE_IPS[0]}:2380,${NODE_NAMES[1]}
 export KUBE_APISERVER="https://127.0.0.1:8443"
 
 # 节点间互联网络接口名称
-export IFACE="eth0"
+export IFACE="enp2s0"
 
 # etcd 数据目录
 export ETCD_DATA_DIR="/eee/kubernetes/etcd/data"

@@ -64,23 +64,23 @@ iptables -A INPUT -i ppp0 -j ACCEPT
 #你便等同于停用了我们的防火墙！
 
 # 接纳来自被信任 IP 地址的封包
- iptables -A INPUT -s 192.168.0.4 -j ACCEPT # change the IP address as appropriate
+iptables -A INPUT -s 192.168.0.4 -j ACCEPT # change the IP address as appropriate
 
 # 接纳来自被信任 IP 地址的封包
- iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT  # using standard slash notation
- iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT # using a subnet mask
+iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT  # using standard slash notation
+iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT # using a subnet mask
 
 # 接纳来自被信任 IP 地址的封包
- iptables -A INPUT -s 192.168.0.4 -m mac --mac-source 00:50:8D:FD:E6:32 -j ACCEPT
+iptables -A INPUT -s 192.168.0.4 -m mac --mac-source 00:50:8D:FD:E6:32 -j ACCEPT
 
 # 接纳目标端口是 6881 号（bittorrent）的 tcp 封包
- iptables -A INPUT -p tcp --dport 6881 -j ACCEPT
+iptables -A INPUT -p tcp --dport 6881 -j ACCEPT
 
 # 接纳目标端口是 6881-6890 号的 tcp 封包
- iptables -A INPUT -p tcp --dport 6881:6890 -j ACCEPT
+iptables -A INPUT -p tcp --dport 6881:6890 -j ACCEPT
 
 # 接纳目标端口是 22 号（SSH）的 tcp 封包
- iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
 # 接纳来自私人网络，目标端口是 22 号（SSH）的 tcp 封包
- iptables -A INPUT -p tcp -s 192.168.0.0/24 --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -s 192.168.0.0/24 --dport 22 -j ACCEPT
