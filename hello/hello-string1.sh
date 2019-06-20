@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# IFS 默认为 空格
+# 所以在变量赋值时，空格会用作拆分符号
+
 #    一、判断读取字符串值**
 #
 #    表达式 含义
@@ -132,6 +135,8 @@ testStringSplit11
 echo "-----testStringSplit11 end-----"
 
 
+
+### --- --- --- existString begin: --- --- ---
 function stringExist
 {
     STRING_A=$1
@@ -157,7 +162,6 @@ echo "-----testStringExist11 begin-----"
 testStringExist11
 echo "-----testStringExist11 end-----"
 
-
 function testStringExist12(){
     strA="dkasnfk"
     strB="asn"
@@ -175,4 +179,55 @@ echo "-----testStringExist12 begin-----"
 testStringExist12
 echo "-----testStringExist12 end-----"
 
+### --- --- --- existString end. --- --- ---
 
+
+### --- --- --- catchString begin: --- --- ---
+
+### python
+# import re
+# str = u'陈奕迅演唱(十年)、(浮夸)、(不要说话)'
+# print re.findall('\((.*?)\)', str)
+
+# sed 就用这个吧
+function catchString11() {
+    s1="Here is a String"
+    # 替换为组1
+    s2=$(echo $s1 | sed -e 's/Here\(.*\)String/\1/')
+    echo $s2
+}
+
+# grep
+function catchString12() {
+    a='abc[edg]adfirpqu'
+    echo $a | grep -o '\[.*\]'  #中括号的处理需要转义
+    # [edg]
+
+    b='abc(edg)adfirpqu'
+    echo $b|grep -o '(.*)'
+    (edg)
+}
+
+# cut
+function catchString12() {
+    a='abc[edg]adfirpqu'
+    echo $a|cut -d '[' -f2|cut -d ']' -f1
+    # edg
+
+    b='abc(edg)adfirpqu'
+    echo $b | cut -d '(' -f 2 | cut -d ')' -f 1
+    # edg
+}
+
+# string
+function catchString12() {
+    a='abc[edg]adfjaierqpwe'
+    b=${a#*[}
+    echo $b
+    # edg]adfjaierqpwe
+
+    c=${b%]*}
+    echo $c
+    # edg
+}
+### --- --- --- catchString end. --- --- ---

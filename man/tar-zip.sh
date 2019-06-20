@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# 在不解压缩的情况下直接查看压缩包的内容
+tar -tvf  testcase-2.2.1.jar
+
 ### tar unzip
 ## .tar
 # 解包：

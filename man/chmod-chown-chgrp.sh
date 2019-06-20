@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-
-chmod -R 777 dir1
-dir1=
-sudo chown -R oudream ${dir1} ; chgrp -R oudream ${dir1}
+chmod -R 777 ${PWD}
+sudo chown -R oudream ${PWD} ; chgrp -R oudream ${PWD}
 
 ### chown chmod 权限
 
@@ -28,7 +26,7 @@ chmod [ugoa] [+ or -] [rwx] 文件
 chmod u+x，g-w，o todo.txt
 
 chown [选项] 用户或组 文件
-- R 递归式地改变指定目录及其下的所有子目录和文件的属组。
+# -R 递归式地改变指定目录及其下的所有子目录和文件的属组。
 chgrp [选项] group filename?
-- R 递归式地改变指定目录及其下的所有子目录和文件的属组。
+# -R 递归式地改变指定目录及其下的所有子目录和文件的属组。
 

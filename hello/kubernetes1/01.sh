@@ -26,9 +26,18 @@ useradd -g docker -m docker
 
 ### ssh login with no password
 ssh-keygen -t rsa
+ssh-copy-id oudream@oudream-ubuntu1
+ssh-copy-id oudream@vm-ubuntu1
+ssh-copy-id oudream@vm-ubuntu2
 ssh-copy-id root@oudream-ubuntu1
 ssh-copy-id root@vm-ubuntu1
 ssh-copy-id root@vm-ubuntu2
+ssh-copy-id oudream@ics-ubuntu1
+ssh-copy-id oudream@ics-ubuntu2
+ssh-copy-id oudream@ics-ubuntu3
+ssh-copy-id root@ics-ubuntu1
+ssh-copy-id root@ics-ubuntu2
+ssh-copy-id root@ics-ubuntu3
 # cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
 
@@ -163,6 +172,7 @@ done
 
 ### ca end
 
+## kubectl begin
 
 cat > admin-csr.json <<EOF
 {
@@ -184,14 +194,16 @@ cat > admin-csr.json <<EOF
 }
 EOF
 
-
-## kubectl begin
-
 cfssl gencert -ca=/fff/kubernetes/ca.pem \
   -ca-key=/fff/kubernetes/ca-key.pem \
   -config=/fff/kubernetes/ca-config.json \
   -profile=kubernetes admin-csr.json | cfssljson -bare admin
 
+
+cfssl gencert -ca=/fff/kubernetes/ca.pem \
+  -ca-key=/fff/kubernetes/ca-key.pem \
+  -config=/fff/kubernetes/ca-config.json \
+  -profile=kubernetes admin-csr.json | cfssljson -bare admin
 
 
 # 设置集群参数
@@ -221,9 +233,17 @@ for node_ip in ${NODE_IPS[@]}
 do
     echo ">>> ${node_ip}"
     ssh root@${node_ip} "mkdir -p ~/.kube"
+    ssh root@${node_ip} "rm ~/.kube/config"
     scp kubectl.kubeconfig root@${node_ip}:~/.kube/config
 done
 
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    ssh oudream@${node_ip} "mkdir -p ~/.kube"
+    ssh oudream@${node_ip} "rm ~/.kube/config"
+    scp kubectl.kubeconfig oudream@${node_ip}:~/.kube/config
+done
 ## kubectl end.
 
 
@@ -612,7 +632,9 @@ etcdctl \
   --cert-file=/etc/flanneld/cert/flanneld.pem \
   --key-file=/etc/flanneld/cert/flanneld-key.pem \
   get ${FLANNEL_ETCD_PREFIX}/subnets/172.30.48.0-21
+
   get ${FLANNEL_ETCD_PREFIX}/subnets/172.30.40.0-21
+
   get ${FLANNEL_ETCD_PREFIX}/subnets/172.30.168.0-21
 
 for node_ip in ${NODE_IPS[@]}
@@ -633,6 +655,103 @@ done
 
 
 
+### nginx begin:
+cd /fff
+wget http://nginx.org/download/nginx-1.15.3.tar.gz
+tar -xzvf nginx-1.15.3.tar.gz
+
+cd /fff/nginx-1.15.3
+mkdir nginx-prefix
+./configure --with-stream --without-http --prefix=$(pwd)/nginx-prefix --without-http_uwsgi_module --without-http_scgi_module --without-http_fastcgi_module
+make && make install
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    mkdir -p /fff/kubernetes/kube-nginx/{conf,logs,sbin}
+done
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    scp /fff/nginx-1.15.3/nginx-prefix/sbin/nginx  root@${node_ip}:/fff/kubernetes/kube-nginx/sbin/kube-nginx
+    ssh root@${node_ip} "chmod a+x /fff/kubernetes/kube-nginx/sbin/*"
+    ssh root@${node_ip} "mkdir -p /fff/kubernetes/kube-nginx/{conf,logs,sbin}"
+done
+
+cat > kube-nginx.conf <<EOF
+worker_processes 1;
+
+events {
+    worker_connections  1024;
+}
+
+stream {
+    upstream backend {
+        hash $remote_addr consistent;
+        server ${NODE_IPS[0]}:6443        max_fails=3 fail_timeout=30s;
+        server ${NODE_IPS[1]}:6443        max_fails=3 fail_timeout=30s;
+        server ${NODE_IPS[2]}:6443        max_fails=3 fail_timeout=30s;
+    }
+
+    server {
+        listen 127.0.0.1:8443;
+        proxy_connect_timeout 1s;
+        proxy_pass backend;
+    }
+}
+EOF
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    scp kube-nginx.conf  root@${node_ip}:/fff/kubernetes/kube-nginx/conf/kube-nginx.conf
+done
+
+cat > kube-nginx.service <<EOF
+[Unit]
+Description=kube-apiserver nginx proxy
+After=network.target
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+ExecStartPre=/fff/kubernetes/kube-nginx/sbin/kube-nginx -c /fff/kubernetes/kube-nginx/conf/kube-nginx.conf -p /fff/kubernetes/kube-nginx -t
+ExecStart=/fff/kubernetes/kube-nginx/sbin/kube-nginx -c /fff/kubernetes/kube-nginx/conf/kube-nginx.conf -p /fff/kubernetes/kube-nginx
+ExecReload=/fff/kubernetes/kube-nginx/sbin/kube-nginx -c /fff/kubernetes/kube-nginx/conf/kube-nginx.conf -p /fff/kubernetes/kube-nginx -s reload
+PrivateTmp=true
+Restart=always
+RestartSec=5
+StartLimitInterval=0
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    scp kube-nginx.service  root@${node_ip}:/etc/systemd/system/
+done
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    ssh root@${node_ip} "systemctl daemon-reload && systemctl enable kube-nginx && systemctl restart kube-nginx"
+done
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    ssh root@${node_ip} "systemctl status kube-nginx |grep 'Active:'"
+done
+### nginx end.
+
+
+
+
 for node_ip in ${NODE_IPS[@]}
 do
     echo ">>> ${node_ip}"
@@ -641,3 +760,433 @@ do
     ssh root@${node_ip} "chown -R oudream /etc/flanneld ; chgrp -R oudream /etc/flanneld" &
     ssh root@${node_ip} "chown -R oudream /fff/kubernetes ; chgrp -R oudream /fff/kubernetes" &
 done
+
+
+
+### apiserver
+
+cat > kubernetes-csr.json <<EOF
+{
+  "CN": "kubernetes",
+  "hosts": [
+    "127.0.0.1",
+    "${NODE_IPS[0]}",
+    "${NODE_IPS[1]}",
+    "${NODE_IPS[2]}",
+    "${CLUSTER_KUBERNETES_SVC_IP}",
+    "kubernetes",
+    "kubernetes.default",
+    "kubernetes.default.svc",
+    "kubernetes.default.svc.cluster",
+    "kubernetes.default.svc.cluster.local."
+  ],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "BeiJing",
+      "L": "BeiJing",
+      "O": "kubernetes",
+      "OU": "google"
+    }
+  ]
+}
+EOF
+
+cfssl gencert -ca=/fff/kubernetes/ca.pem \
+  -ca-key=/fff/kubernetes/ca-key.pem \
+  -config=/fff/kubernetes/ca-config.json \
+  -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    ssh root@${node_ip} "mkdir -p /etc/kubernetes/cert"
+    ssh root@${node_ip} "rm /etc/kubernetes/cert/kubernetes*.pem"
+    scp kubernetes*.pem root@${node_ip}:/etc/kubernetes/cert/
+done
+
+cat > encryption-config.yaml <<EOF
+kind: EncryptionConfig
+apiVersion: v1
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              secret: ${ENCRYPTION_KEY}
+      - identity: {}
+EOF
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    scp encryption-config.yaml root@${node_ip}:/etc/kubernetes/
+done
+
+cat > audit-policy.yaml <<EOF
+apiVersion: audit.k8s.io/v1beta1
+kind: Policy
+rules:
+  # The following requests were manually identified as high-volume and low-risk, so drop them.
+  - level: None
+    resources:
+      - group: ""
+        resources:
+          - endpoints
+          - services
+          - services/status
+    users:
+      - 'system:kube-proxy'
+    verbs:
+      - watch
+
+  - level: None
+    resources:
+      - group: ""
+        resources:
+          - nodes
+          - nodes/status
+    userGroups:
+      - 'system:nodes'
+    verbs:
+      - get
+
+  - level: None
+    namespaces:
+      - kube-system
+    resources:
+      - group: ""
+        resources:
+          - endpoints
+    users:
+      - 'system:kube-controller-manager'
+      - 'system:kube-scheduler'
+      - 'system:serviceaccount:kube-system:endpoint-controller'
+    verbs:
+      - get
+      - update
+
+  - level: None
+    resources:
+      - group: ""
+        resources:
+          - namespaces
+          - namespaces/status
+          - namespaces/finalize
+    users:
+      - 'system:apiserver'
+    verbs:
+      - get
+
+  # Don't log HPA fetching metrics.
+  - level: None
+    resources:
+      - group: metrics.k8s.io
+    users:
+      - 'system:kube-controller-manager'
+    verbs:
+      - get
+      - list
+
+  # Don't log these read-only URLs.
+  - level: None
+    nonResourceURLs:
+      - '/healthz*'
+      - /version
+      - '/swagger*'
+
+  # Don't log events requests.
+  - level: None
+    resources:
+      - group: ""
+        resources:
+          - events
+
+  # node and pod status calls from nodes are high-volume and can be large, don't log responses for expected updates from nodes
+  - level: Request
+    omitStages:
+      - RequestReceived
+    resources:
+      - group: ""
+        resources:
+          - nodes/status
+          - pods/status
+    users:
+      - kubelet
+      - 'system:node-problem-detector'
+      - 'system:serviceaccount:kube-system:node-problem-detector'
+    verbs:
+      - update
+      - patch
+
+  - level: Request
+    omitStages:
+      - RequestReceived
+    resources:
+      - group: ""
+        resources:
+          - nodes/status
+          - pods/status
+    userGroups:
+      - 'system:nodes'
+    verbs:
+      - update
+      - patch
+
+  # deletecollection calls can be large, don't log responses for expected namespace deletions
+  - level: Request
+    omitStages:
+      - RequestReceived
+    users:
+      - 'system:serviceaccount:kube-system:namespace-controller'
+    verbs:
+      - deletecollection
+
+  # Secrets, ConfigMaps, and TokenReviews can contain sensitive & binary data,
+  # so only log at the Metadata level.
+  - level: Metadata
+    omitStages:
+      - RequestReceived
+    resources:
+      - group: ""
+        resources:
+          - secrets
+          - configmaps
+      - group: authentication.k8s.io
+        resources:
+          - tokenreviews
+  # Get repsonses can be large; skip them.
+  - level: Request
+    omitStages:
+      - RequestReceived
+    resources:
+      - group: ""
+      - group: admissionregistration.k8s.io
+      - group: apiextensions.k8s.io
+      - group: apiregistration.k8s.io
+      - group: apps
+      - group: authentication.k8s.io
+      - group: authorization.k8s.io
+      - group: autoscaling
+      - group: batch
+      - group: certificates.k8s.io
+      - group: extensions
+      - group: metrics.k8s.io
+      - group: networking.k8s.io
+      - group: policy
+      - group: rbac.authorization.k8s.io
+      - group: scheduling.k8s.io
+      - group: settings.k8s.io
+      - group: storage.k8s.io
+    verbs:
+      - get
+      - list
+      - watch
+
+  # Default level for known APIs
+  - level: RequestResponse
+    omitStages:
+      - RequestReceived
+    resources:
+      - group: ""
+      - group: admissionregistration.k8s.io
+      - group: apiextensions.k8s.io
+      - group: apiregistration.k8s.io
+      - group: apps
+      - group: authentication.k8s.io
+      - group: authorization.k8s.io
+      - group: autoscaling
+      - group: batch
+      - group: certificates.k8s.io
+      - group: extensions
+      - group: metrics.k8s.io
+      - group: networking.k8s.io
+      - group: policy
+      - group: rbac.authorization.k8s.io
+      - group: scheduling.k8s.io
+      - group: settings.k8s.io
+      - group: storage.k8s.io
+
+  # Default level for all other requests.
+  - level: Metadata
+    omitStages:
+      - RequestReceived
+EOF
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    scp audit-policy.yaml root@${node_ip}:/etc/kubernetes/audit-policy.yaml
+done
+
+cat > proxy-client-csr.json <<EOF
+{
+  "CN": "aggregator",
+  "hosts": [],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "BeiJing",
+      "L": "BeiJing",
+      "O": "kubernetes",
+      "OU": "google"
+    }
+  ]
+}
+EOF
+
+cfssl gencert -ca=/etc/kubernetes/cert/ca.pem \
+  -ca-key=/etc/kubernetes/cert/ca-key.pem  \
+  -config=/etc/kubernetes/cert/ca-config.json  \
+  -profile=kubernetes proxy-client-csr.json | cfssljson -bare proxy-client
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    scp proxy-client*.pem root@${node_ip}:/etc/kubernetes/cert/
+done
+
+scp /fff/kubernetes/bin/{apiextensions-apiserver,cloud-controller-manager,kube-apiserver,kube-controller-manager,kube-scheduler,mounter} root@${NODE_IPS[1]}:/fff/kubernetes/bin/
+ssh root@${NODE_IPS[1]} "chmod +x /fff/kubernetes/bin/*"
+scp /fff/kubernetes/bin/{apiextensions-apiserver,cloud-controller-manager,kube-apiserver,kube-controller-manager,kube-scheduler,mounter} root@${NODE_IPS[2]}:/fff/kubernetes/bin/
+ssh root@${NODE_IPS[2]} "chmod +x /fff/kubernetes/bin/*"
+
+cat > kube-apiserver.service.template <<EOF
+[Unit]
+Description=Kubernetes API Server
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+After=network.target
+
+[Service]
+WorkingDirectory=${K8S_DIR}/kube-apiserver
+ExecStart=/fff/kubernetes/bin/kube-apiserver \\
+  --advertise-address=##NODE_IP## \\
+  --default-not-ready-toleration-seconds=360 \\
+  --default-unreachable-toleration-seconds=360 \\
+  --feature-gates=DynamicAuditing=true \\
+  --max-mutating-requests-inflight=2000 \\
+  --max-requests-inflight=4000 \\
+  --default-watch-cache-size=200 \\
+  --delete-collection-workers=2 \\
+  --encryption-provider-config=/etc/kubernetes/encryption-config.yaml \\
+  --etcd-cafile=/etc/kubernetes/cert/ca.pem \\
+  --etcd-certfile=/etc/kubernetes/cert/kubernetes.pem \\
+  --etcd-keyfile=/etc/kubernetes/cert/kubernetes-key.pem \\
+  --etcd-servers=${ETCD_ENDPOINTS} \\
+  --bind-address=##NODE_IP## \\
+  --secure-port=6443 \\
+  --tls-cert-file=/etc/kubernetes/cert/kubernetes.pem \\
+  --tls-private-key-file=/etc/kubernetes/cert/kubernetes-key.pem \\
+  --insecure-port=0 \\
+  --audit-dynamic-configuration \\
+  --audit-log-maxage=15 \\
+  --audit-log-maxbackup=3 \\
+  --audit-log-maxsize=100 \\
+  --audit-log-mode=batch \\
+  --audit-log-truncate-enabled \\
+  --audit-log-batch-buffer-size=20000 \\
+  --audit-log-batch-max-size=2 \\
+  --audit-log-path=${K8S_DIR}/kube-apiserver/audit.log \\
+  --audit-policy-file=/etc/kubernetes/audit-policy.yaml \\
+  --profiling \\
+  --anonymous-auth=false \\
+  --client-ca-file=/etc/kubernetes/cert/ca.pem \\
+  --enable-bootstrap-token-auth \\
+  --requestheader-allowed-names="" \\
+  --requestheader-client-ca-file=/etc/kubernetes/cert/ca.pem \\
+  --requestheader-extra-headers-prefix="X-Remote-Extra-" \\
+  --requestheader-group-headers=X-Remote-Group \\
+  --requestheader-username-headers=X-Remote-User \\
+  --service-account-key-file=/etc/kubernetes/cert/ca.pem \\
+  --authorization-mode=Node,RBAC \\
+  --runtime-config=api/all=true \\
+  --enable-admission-plugins=NodeRestriction \\
+  --allow-privileged=true \\
+  --apiserver-count=3 \\
+  --event-ttl=168h \\
+  --kubelet-certificate-authority=/etc/kubernetes/cert/ca.pem \\
+  --kubelet-client-certificate=/etc/kubernetes/cert/kubernetes.pem \\
+  --kubelet-client-key=/etc/kubernetes/cert/kubernetes-key.pem \\
+  --kubelet-https=true \\
+  --kubelet-timeout=10s \\
+  --proxy-client-cert-file=/etc/kubernetes/cert/proxy-client.pem \\
+  --proxy-client-key-file=/etc/kubernetes/cert/proxy-client-key.pem \\
+  --service-cluster-ip-range=${SERVICE_CIDR} \\
+  --service-node-port-range=${NODE_PORT_RANGE} \\
+  --logtostderr=true \\
+  --v=2
+Restart=on-failure
+RestartSec=10
+Type=notify
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+for (( i=0; i < 3; i++ ))
+do
+    sed -e "s/##NODE_NAME##/${NODE_NAMES[i]}/" -e "s/##NODE_IP##/${NODE_IPS[i]}/" kube-apiserver.service.template > kube-apiserver-${NODE_IPS[i]}.service
+done
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    scp kube-apiserver-${node_ip}.service root@${node_ip}:/etc/systemd/system/kube-apiserver.service
+done
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    ssh root@${node_ip} "mkdir -p ${K8S_DIR}/kube-apiserver"
+    ssh root@${node_ip} "systemctl daemon-reload && systemctl enable kube-apiserver && systemctl restart kube-apiserver"
+done
+
+for node_ip in ${NODE_IPS[@]}
+do
+    echo ">>> ${node_ip}"
+    ssh root@${node_ip} "systemctl status kube-apiserver |grep 'Active:'"
+done
+
+ETCDCTL_API=3 etcdctl \
+    --endpoints=${ETCD_ENDPOINTS} \
+    --cacert=/fff/kubernetes/ca.pem \
+    --cert=/fff/kubernetes/etcd.pem \
+    --key=/fff/kubernetes/etcd-key.pem \
+    get /registry/ --prefix --keys-only
+
+
+#检查集群信息
+kubectl cluster-info
+# Kubernetes master is running at https://127.0.0.1:8443
+# To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+kubectl get all --all-namespaces
+# NAMESPACE   NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+# default     service/kubernetes   ClusterIP   10.254.0.1   <none>        443/TCP   12m
+
+kubectl get componentstatuses
+# NAME                 STATUS      MESSAGE                                                                                     ERROR
+# scheduler            Unhealthy   Get http://127.0.0.1:10251/healthz: dial tcp 127.0.0.1:10251: connect: connection refused
+# controller-manager   Unhealthy   Get http://127.0.0.1:10252/healthz: dial tcp 127.0.0.1:10252: connect: connection refused
+# etcd-0               Healthy     {"health":"true"}
+# etcd-1               Healthy     {"health":"true"}
+# etcd-2               Healthy     {"health":"true"}
+
+# 授予 kube-apiserver 访问 kubelet API 的权限
+# 在执行 kubectl exec、run、logs 等命令时，apiserver 会将请求转发到 kubelet 的 https 端口。
+#    这里定义 RBAC 规则，授权 apiserver 使用的证书（kubernetes.pem）用户名（CN：kuberntes）
+#    访问 kubelet API 的权限：
+kubectl create clusterrolebinding kube-apiserver:kubelet-apis --clusterrole=system:kubelet-api-admin --user kubernetes
+# clusterrolebinding.rbac.authorization.k8s.io/kube-apiserver:kubelet-apis created
+

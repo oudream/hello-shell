@@ -29,7 +29,7 @@ export ETCD_DATA_DIR="/eee/kubernetes/etcd/data"
 export ETCD_WAL_DIR="/eee/kubernetes/etcd/wal"
 
 # kubernetes 各组件数据目录
-export K8S_DIR="/fff/kubernetes/kubernetes"
+export K8S_DIR="/fff/kubernetes"
 
 # docker 数据目录
 export DOCKER_DIR="/kubernetes/docker"
