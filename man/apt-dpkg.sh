@@ -35,6 +35,8 @@ dpkg -S filename-search-pattern #搜索指定包里面的文件（模糊查询�
 dpkg -L package #显示一个包安装到系统里面的文件目录信息
 dpkg -s package #报告指定包的状态信息
 dpkg -l #显示所有已经安装的Deb包，同时显示版本号以及简短说明
+
+
 ## apt-get , apt
 # apt-get是一条linux命令，适用于deb包管理式的操作系统，主要用于自动从互联网的软件仓库中搜索、安装、升级、卸载软件或操作系统。
 apt-get update # 升级安装包相关的命令,刷新可安装的软件列表(但是不做任何实际的安装动作)
@@ -47,3 +49,27 @@ apt-get remove --purge [软件名称] # 卸载一个已安装的软件包（删�
 apt-get autoremove [软件名称] # 删除包及其依赖的软件包
 apt-get autoremove --purge [软件名称] # 删除包及其依赖的软件包+配置文件，比上面的要删除的彻底一点
 dpkg --force-all --purge [软件名称] # 有些软件很难卸载，而且还阻止了别的软件的应用，就能够用这个，但是有点冒险。
+
+
+## Snap
+## Snap安装软件时候，终端会有白色进度条显示下载百分比，非常的人性。
+# 其实基础教程应该在实战之前，不过我觉得实战才是最好的学习方法，所以先写了Snap安装软件的方法。相比你现在都已经学会了几个Snap的基本用法了。
+#查询已经安装了的软件
+sudo snap list
+#搜索要安装的Snap软件包
+sudo snap find xxxx
+#查看Snap软件的更多信息
+sudo snap info xxxx
+#安装Snap软件包
+sudo snap install xxxx
+#更换软件安装通道
+sudo snap switch –channel=xxxx xxxx
+#更新Snap软件包
+sudo snap refresh xxxx
+#还原到之前版本
+sudo snap revert xxxx
+#卸载Snap软件
+sudo snap remove xxxx
+# 有什么snap软件包呢！
+# Uappexplorer
+# https://uappexplorer.com/snaps

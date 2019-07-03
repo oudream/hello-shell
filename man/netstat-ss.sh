@@ -16,6 +16,10 @@ netstat -nap | grep nginx-pid
 # 例：查看8081号端口对应的进程名
 netstat -nap | grep 8081
 
-ss -ltn # -l, --listening 显示监听状态的套接字 --tcp 仅显示 TCP套接字（sockets） -n --numeric 不解析服务名称
-ss -t -a # 显示TCP连接
-ss -pl # 查看进程使用的socket
+# -l, --listening 显示监听状态的套接字 --tcp 仅显示 TCP套接字（sockets）
+# -n --numeric 不解析服务名称
+ss -ltn
+# 显示TCP连接
+ss -t -a
+# 查看进程使用的socket
+ss -pl

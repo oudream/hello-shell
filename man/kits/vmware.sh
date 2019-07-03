@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 
+vmrun -T ws start "/fff/vm1/vm-ubuntu1.vmx" nogui
+vmrun -T ws start "/fff/vm2/vm-ubuntu1.vmx" nogui
+
 ### vmware
 #https://docs.vmware.com/cn/VMware-Fusion/11/com.vmware.fusion.using.doc/GUID-3E063D73-E083-40CD-A02C-C2047E872814.html
 vmrun -T ws start "/opt/VMware/win2k8r2.vmx" nogui

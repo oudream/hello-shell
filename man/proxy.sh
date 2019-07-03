@@ -4,8 +4,8 @@
 
 
 ### proxy
-git config --global http.proxy http://10.31.58.5:1080
-git config --global https.proxy https://10.31.58.5:1080
+git config --global http.proxy http://127.0.0.1:1080
+git config --global https.proxy https://127.0.0.1:1080
 git config --global --unset http.proxy
 git config --global --unset https.proxy
 
