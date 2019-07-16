@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+
+echo "# wwwroot" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/oudream/wwwroot.git
+git push -u origin master
+
+git remote add origin https://github.com/oudream/wwwroot.git
+git push -u origin master
+
 ### --- branch begin: ---
 git init
 # 初始化空的 Git 仓库于 /fff/tmp/testgit/.git/

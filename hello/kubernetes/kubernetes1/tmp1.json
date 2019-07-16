@@ -1,0 +1,141 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Node",
+            "metadata": {
+                "annotations": {
+                    "kubeadm.alpha.kubernetes.io/cri-socket": "/var/run/dockershim.sock",
+                    "node.alpha.kubernetes.io/ttl": "0",
+                    "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+                },
+                "creationTimestamp": "2019-07-09T09:14:31Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/os": "linux",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "localhost",
+                    "kubernetes.io/os": "linux",
+                    "node-role.kubernetes.io/master": ""
+                },
+                "name": "localhost",
+                "resourceVersion": "5302",
+                "selfLink": "/api/v1/nodes/localhost",
+                "uid": "f5fd3c5e-a229-11e9-ac7b-f23c910eadcf"
+            },
+            "spec": {
+                "taints": [
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node-role.kubernetes.io/master"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/not-ready"
+                    }
+                ]
+            },
+            "status": {
+                "addresses": [
+                    {
+                        "address": "172.104.92.71",
+                        "type": "InternalIP"
+                    },
+                    {
+                        "address": "localhost",
+                        "type": "Hostname"
+                    }
+                ],
+                "allocatable": {
+                    "cpu": "2",
+                    "ephemeral-storage": "75588555447",
+                    "hugepages-1Gi": "0",
+                    "hugepages-2Mi": "0",
+                    "memory": "3937052Ki",
+                    "pods": "110"
+                },
+                "capacity": {
+                    "cpu": "2",
+                    "ephemeral-storage": "82018832Ki",
+                    "hugepages-1Gi": "0",
+                    "hugepages-2Mi": "0",
+                    "memory": "4039452Ki",
+                    "pods": "110"
+                },
+                "conditions": [
+                    {
+                        "lastHeartbeatTime": "2019-07-09T09:27:18Z",
+                        "lastTransitionTime": "2019-07-09T09:14:27Z",
+                        "message": "kubelet has sufficient memory available",
+                        "reason": "KubeletHasSufficientMemory",
+                        "status": "False",
+                        "type": "MemoryPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2019-07-09T09:27:18Z",
+                        "lastTransitionTime": "2019-07-09T09:14:27Z",
+                        "message": "kubelet has no disk pressure",
+                        "reason": "KubeletHasNoDiskPressure",
+                        "status": "False",
+                        "type": "DiskPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2019-07-09T09:27:18Z",
+                        "lastTransitionTime": "2019-07-09T09:14:27Z",
+                        "message": "kubelet has sufficient PID available",
+                        "reason": "KubeletHasSufficientPID",
+                        "status": "False",
+                        "type": "PIDPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2019-07-09T09:27:18Z",
+                        "lastTransitionTime": "2019-07-09T09:14:27Z",
+                        "message": "runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:docker: network plugin is not ready: cni config uninitialized",
+                        "reason": "KubeletNotReady",
+                        "status": "False",
+                        "type": "Ready"
+                    }
+                ],
+                "daemonEndpoints": {
+                    "kubeletEndpoint": {
+                        "Port": 10250
+                    }
+                },
+                "images": [
+                    {
+                        "names": [
+                            "k8s.gcr.io/kube-proxy@sha256:3f86b2fb55f1cc1c785d567ca86958bae440bd1b73280bac776a7339c5ad33eb",
+                            "k8s.gcr.io/kube-proxy:v1.14.4"
+                        ],
+                        "sizeBytes": 82106236
+                    },
+                    {
+                        "names": [
+                            "k8s.gcr.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea",
+                            "k8s.gcr.io/pause:3.1"
+                        ],
+                        "sizeBytes": 742472
+                    }
+                ],
+                "nodeInfo": {
+                    "architecture": "amd64",
+                    "bootID": "56b8615f-3251-4417-810f-85c6199c1001",
+                    "containerRuntimeVersion": "docker://18.9.7",
+                    "kernelVersion": "4.15.0-50-generic",
+                    "kubeProxyVersion": "v1.15.0",
+                    "kubeletVersion": "v1.15.0",
+                    "machineID": "612892249edc4cf7b40cdfd1534feded",
+                    "operatingSystem": "linux",
+                    "osImage": "Ubuntu 18.04.2 LTS",
+                    "systemUUID": "612892249edc4cf7b40cdfd1534feded"
+                }
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": "",
+        "selfLink": ""
+    }
+}
