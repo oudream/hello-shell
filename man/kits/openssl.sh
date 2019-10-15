@@ -37,4 +37,3 @@ openssl x509 -in localhost-cert.pem -noout -dates
 # notAfter=Jun 22 06:40:15 2019 GMT
 openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' \
   -keyout localhost-privkey.pem -out localhost-cert.pem
-

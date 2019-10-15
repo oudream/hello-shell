@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-### token expired ¹ıÆÚ
+### token expired è¿‡æœŸ
 
 ### export var
 export CLUSTER_IP=$(kubectl get services/webapp1-clusterip-svc -o go-template='{{(index .spec.clusterIP)}}')
@@ -19,24 +19,24 @@ kubeadm join 172.18.0.16:6443 --token 102952.1a7dd4cc8d1f4cc5 \
 
 
 kubectl [command] [TYPE] [NAME] -o=[output_format]
-#    ¸ù¾İkubectl²Ù×÷£¬Ö§³ÖÒÔÏÂÊä³ö¸ñÊ½£º
-#    Êä³ö¸ñÊ½	ÃèÊö
-#    -o=custom-columns=<spec>	Ê¹ÓÃ¶ººÅ·Ö¸ôµÄcustom columnsÁĞ±í´òÓ¡Ò»¸ö±í¡£
-#    -o=custom-columns-file=<filename>	Ê¹ÓÃÎÄ¼şÖĞµÄcustom columnsÄ£°å´òÓ¡±í<filename>¡£
-#    -o=json	Êä³öJSON¸ñÊ½µÄAPI¶ÔÏó¡£
-#    -o=jsonpath=<template>	´òÓ¡ÔÚjsonpath±í´ïÊ½ÖĞ¶¨ÒåµÄ×Ö¶Î¡£
-#    -o=jsonpath-file=<filename>	´òÓ¡ÓÉ fileÖĞµÄjsonpath±í´ïÊ½¶¨ÒåµÄ×Ö¶Î<filename>¡£
-#    -o=name	½ö´òÓ¡×ÊÔ´Ãû³Æ£¬¶ø²»´òÓ¡ÆäËûÄÚÈİ¡£
-#    -o=wide	ÒÔ´¿ÎÄ±¾¸ñÊ½Êä³öÈÎºÎ¸½¼ÓĞÅÏ¢¡£¶ÔÓÚpod£¬°üÀ¨nodeÃû³Æ¡£
-#    -o=yaml	Êä³öYAML¸ñÊ½µÄAPI¶ÔÏó¡£
-# ÔÚ´ËÊ¾ÀıÖĞ£¬ÒÔÏÂÃüÁî½«µ¥¸öpodµÄÏêÏ¸ĞÅÏ¢×÷ÎªYAML¸ñÊ½»¯¶ÔÏóÊä³ö£º
+#    æ ¹æ®kubectlæ“ä½œï¼Œæ”¯æŒä»¥ä¸‹è¾“å‡ºæ ¼å¼ï¼š
+#    è¾“å‡ºæ ¼å¼	æè¿°
+#    -o=custom-columns=<spec>	ä½¿ç”¨é€—å·åˆ†éš”çš„custom columnsåˆ—è¡¨æ‰“å°ä¸€ä¸ªè¡¨ã€‚
+#    -o=custom-columns-file=<filename>	ä½¿ç”¨æ–‡ä»¶ä¸­çš„custom columnsæ¨¡æ¿æ‰“å°è¡¨<filename>ã€‚
+#    -o=json	è¾“å‡ºJSONæ ¼å¼çš„APIå¯¹è±¡ã€‚
+#    -o=jsonpath=<template>	æ‰“å°åœ¨jsonpathè¡¨è¾¾å¼ä¸­å®šä¹‰çš„å­—æ®µã€‚
+#    -o=jsonpath-file=<filename>	æ‰“å°ç”± fileä¸­çš„jsonpathè¡¨è¾¾å¼å®šä¹‰çš„å­—æ®µ<filename>ã€‚
+#    -o=name	ä»…æ‰“å°èµ„æºåç§°ï¼Œè€Œä¸æ‰“å°å…¶ä»–å†…å®¹ã€‚
+#    -o=wide	ä»¥çº¯æ–‡æœ¬æ ¼å¼è¾“å‡ºä»»ä½•é™„åŠ ä¿¡æ¯ã€‚å¯¹äºpodï¼ŒåŒ…æ‹¬nodeåç§°ã€‚
+#    -o=yaml	è¾“å‡ºYAMLæ ¼å¼çš„APIå¯¹è±¡ã€‚
+# åœ¨æ­¤ç¤ºä¾‹ä¸­ï¼Œä»¥ä¸‹å‘½ä»¤å°†å•ä¸ªpodçš„è¯¦ç»†ä¿¡æ¯ä½œä¸ºYAMLæ ¼å¼åŒ–å¯¹è±¡è¾“å‡ºï¼š
 kubectl get pod web-pod-13je7 -o=yaml
 kubectl get pods <pod-name> -o=custom-columns=NAME:.metadata.name,RSRC:.metadata.resourceVersion
 kubectl get pods <pod-name> -o=custom-columns-file=template.txt
-# Òª´òÓ¡°´Ãû³ÆÅÅĞòµÄpodÁĞ±í£¬ÇëÔËĞĞ£º
+# è¦æ‰“å°æŒ‰åç§°æ’åºçš„podåˆ—è¡¨ï¼Œè¯·è¿è¡Œï¼š
 kubectl get pods --sort-by=.metadata.name
 
-## kubectl create - ´Ófile»òstdinÖĞ´´½¨×ÊÔ´¡£
+## kubectl create - ä»fileæˆ–stdinä¸­åˆ›å»ºèµ„æºã€‚
 # Create a service using the definition in example-service.yaml.
 kubectl create -f example-service.yaml
 # Create a replication controller using the definition in example-controller.yaml.
@@ -44,7 +44,7 @@ kubectl create -f example-controller.yaml
 # Create the objects that are defined in any .yaml, .yml, or .json file within the <directory> directory.
 kubectl create -f [directory]
 
-## kubectl get ÁĞ³öÒ»¸ö»ò¶à¸ö×ÊÔ´¡£
+## kubectl get åˆ—å‡ºä¸€ä¸ªæˆ–å¤šä¸ªèµ„æºã€‚
 # List all pods in plain-text output format.
 kubectl get pods
 # List all pods in plain-text output format and includes additional information (such as node name).
@@ -55,7 +55,7 @@ kubectl get replicationcontroller <rc-name>
 kubectl get rc,services
 
 
-## kubectl describe - ÏÔÊ¾Ò»¸ö»ò¶à¸ö×ÊÔ´µÄÏêÏ¸×´Ì¬¡£
+## kubectl describe - æ˜¾ç¤ºä¸€ä¸ªæˆ–å¤šä¸ªèµ„æºçš„è¯¦ç»†çŠ¶æ€ã€‚
 # Display the details of the node with name [node-name].
 kubectl describe nodes [node-name]
 # Display the details of the pod with name [pod-name].
@@ -65,7 +65,7 @@ kubectl describe pods/[pod-name]
 kubectl describe pods [rc-name]
 
 
-## kubectl describe - ÏÔÊ¾Ò»¸ö»ò¶à¸ö×ÊÔ´µÄÏêÏ¸×´Ì¬¡£
+## kubectl describe - æ˜¾ç¤ºä¸€ä¸ªæˆ–å¤šä¸ªèµ„æºçš„è¯¦ç»†çŠ¶æ€ã€‚
 # Display the details of the node with name [node-name].
 kubectl describe nodes [node-name]
 # Display the details of the pod with name [pod-name].
@@ -75,7 +75,7 @@ kubectl describe pods/[pod-name]
 kubectl describe pods [rc-name]
 
 
-## kubectl exec - ¶ÔpodÖĞµÄÈİÆ÷Ö´ĞĞÃüÁî¡£
+## kubectl exec - å¯¹podä¸­çš„å®¹å™¨æ‰§è¡Œå‘½ä»¤ã€‚
 # Get output from running 'date' from pod [pod-name]. By default, output is from the first container.
 kubectl exec [pod-name] date
 # Get output from running 'date' in container [container-name] of pod [pod-name].
@@ -84,7 +84,7 @@ kubectl exec [pod-name] -c [container-name] date
 kubectl exec -ti [pod-name] /bin/bash
 
 
-## kubectl logs - ´òÓ¡podÖĞµÄÈİÆ÷µÄÈÕÖ¾¡£
+## kubectl logs - æ‰“å°podä¸­çš„å®¹å™¨çš„æ—¥å¿—ã€‚
 # Return a snapshot of the logs from pod [pod-name].
 kubectl logs [pod-name]
 # Start streaming the logs from pod [pod-name]. This is similar to the 'tail -f' Linux command.

@@ -2,6 +2,12 @@
 
 sudo journalctl -f -u etcd
 
+# Ubuntu Desktop: Completley remove Ubuntu Desktop from a Ubuntu Server
+# INSTALL UBUNTU DESKTOP WITHOUT INSTALL RECOMMENDS
+sudo apt-get install --no-install-recommends ubuntu-desktop
+# REMOVE UBUNTU DESKTOP COMPLETELY
+sudo apt purge ubuntu-desktop -y && sudo apt autoremove -y && sudo apt autoclean
+
 ### 服务 Systemd
 service --status-all systemctl
 systemctl list-units --type=service

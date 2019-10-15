@@ -39,6 +39,8 @@ python3 ./shadowsocks/local.py
 
 export local_ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1)
 #export local_ip=127.0.0.1
+export local_ip=192.168.169.1
+export local_ip=10.35.191.11
 export http_proxy=http://${local_ip}:1080
 export HTTP_PROXY=$http_proxy
 export https_proxy=https://${local_ip}:1080
@@ -58,3 +60,8 @@ git config --global --unset https.proxy
 
 ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1
 ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
+
+
+
+libqt5core5a libqt5gui5 libqt5widgets5 libqt5network5 libqt5xml5
+export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH

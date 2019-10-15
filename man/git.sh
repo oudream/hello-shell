@@ -1,6 +1,27 @@
 #!/usr/bin/env bash
 
+# 运行git status命令查看本地修改
+git status
+git diff readme.txt # 看看更改的地方（difference）
 
+# 下述命令其实相当于 git fetch + git merge
+git pull origin master
+
+# git fetch 指令是下载远程仓库最新内容，不做合并
+# git reset 指令把HEAD指向master最新版本
+git fetch --all
+git reset --hard origin/master
+git pull //可以省略
+
+###
+# git pull使用给定的参数运行git fetch，并调用git merge将检索到的分支头合并到当前分支中。
+# 使用--rebase，它运行git rebase而不是git merge。
+# git pull <远程主机名> <远程分支名>:<本地分支名>
+# 要取回origin主机的next分支，与本地的master分支合并，需要写成下面这样 -
+git pull origin next:master
+
+
+###
 echo "# wwwroot" >> README.md
 git init
 git add README.md
@@ -163,3 +184,32 @@ rm -rf assets
 # 删除.git文件夹中的相关子模块文件
 rm -rf .git/modules/assets
 
+# 只克隆最新的提交记录
+git clone <remote-address> --depth 1
+
+# 只克隆单个分支的最新一次提交
+# git clone --branch <branch_name> <remote-address> --depth 1
+
+
+### 用户名 密码
+# 设置记住密码（默认15分钟）：
+git config --global credential.helper cache
+# 2、如果想自己设置时间，可以这样做：
+git config credential.helper 'cache --timeout=3600'
+
+# 长期存储密码：
+git config --global credential.helper store
+# 当git push的时候输入一次用户名和密码就会被记录
+# 参考
+man git | grep -C 5 password
+man git-credential-store
+#
+git config credential.helper store
+git push http://example.com/repo.git
+#       Username: <type your username>
+#       Password: <type your password>
+#       [several days later]
+#       [your credentials are used automatically]
+# 这样保存的密码是明文的，保存在用户目录~的.git-credentials文件中
+file ~/.git-credentials
+cat  ~/.git-credentials

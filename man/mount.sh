@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+
+# å¯ä»¥å°†VPSæ–‡ä»¶ç³»ç»ŸæŒ‚è½½åˆ°æœ¬åœ°è®¡ç®—æœºä¸Šï¼Œè¿™æ ·æ‚¨å°±å¯ä»¥åŠ¨æ€åœ°è¿›è¡Œæ›´æ”¹å¹¶å°†æ‚¨çš„æœåŠ¡å™¨çš„æ–‡ä»¶
+sudo apt-get install sshfs
+sudo port install sshfs # macos
+# æ°¸ä¹…æŒ‚è½½è¿œç¨‹æ–‡ä»¶ç³»ç»Ÿï¼Œç¼–è¾‘æœ¬åœ°è®¡ç®—æœºä¸Š/etc/fstabæ–‡ä»¶
+sudo nano /etc/fstab
+# å¢åŠ 
+sshfs#root@xxx.xxx.xxx.xxx:/ /mnt/droplet
+# ç­‰åŒäº
+sudo sshfs -o allow_other,defer_permissions root@xxx.xxx.xxx.xxx:/ /mnt/droplet
+
+sshfs -C -o reconnect oudream@10.31.58.132:/ddd /fff/r132ddd
+
+
+# mount è¿œç¨‹å…±äº«æ–‡ä»¶å¤¹
+sudo mount -o username=oudream,password=135246 //192.168.169.132/opt/ddd/ccpp/hello-cmake /opt/ddd/ccpp/hello-cmake
+
 sudo mount -t cifs -o username=administrator,password=ygct@12345678 //10.31.58.215/d /eee/215d
 
 sudo mount -t cifs //10.35.191.11/ddd /eee/11d -o username=oudream,password=oudream,nounix,sec=ntlmssp
@@ -10,43 +27,44 @@ sudo mount -t cifs //144.202.65.220/fff/ceph /eee/ceph -o username=root,password
 
 
 # mount
-mount | column -t # ²é¿´¹Ò½ÓµÄ·ÖÇø×´Ì¬
+mount | column -t # æŸ¥çœ‹æŒ‚æ¥çš„åˆ†åŒºçŠ¶æ€
 mount -t cifs -o username=Bob,password=123456 //192.168.0.102/Share /usr/local/bin/code
-df -h # ²é¹ÒÔØÔÚ×´Ì¬
+df -h # æŸ¥æŒ‚è½½åœ¨çŠ¶æ€
 mount
 umount /usr/local/bin/code
 
 
-# mountÃüÁîÓÃÓÚ¼ÓÔØÎÄ¼şÏµÍ³µ½Ö¸¶¨µÄ¼ÓÔØµã¡£´ËÃüÁîµÄ×î³£ÓÃÓÚ¹ÒÔØcdrom£¬Ê¹ÎÒÃÇ¿ÉÒÔ·ÃÎÊcdromÖĞµÄÊı¾İ£¬ÒòÎªÄã½«¹âÅÌ²åÈëcdromÖĞ£¬
-#    Linux²¢²»»á×Ô¶¯¹ÒÔØ£¬±ØĞëÊ¹ÓÃLinux mountÃüÁîÀ´ÊÖ¶¯Íê³É¹ÒÔØ¡£
+# mountå‘½ä»¤ç”¨äºåŠ è½½æ–‡ä»¶ç³»ç»Ÿåˆ°æŒ‡å®šçš„åŠ è½½ç‚¹ã€‚æ­¤å‘½ä»¤çš„æœ€å¸¸ç”¨äºæŒ‚è½½cdromï¼Œä½¿æˆ‘ä»¬å¯ä»¥è®¿é—®cdromä¸­çš„æ•°æ®ï¼Œå› ä¸ºä½ å°†å…‰ç›˜æ’å…¥cdromä¸­ï¼Œ
+#    Linuxå¹¶ä¸ä¼šè‡ªåŠ¨æŒ‚è½½ï¼Œå¿…é¡»ä½¿ç”¨Linux mountå‘½ä»¤æ¥æ‰‹åŠ¨å®ŒæˆæŒ‚è½½ã€‚
 
 mount option params
 
-# Ñ¡Ïî
-# -V£ºÏÔÊ¾³ÌĞò°æ±¾£»
-# -l£ºÏÔÊ¾ÒÑ¼ÓÔØµÄÎÄ¼şÏµÍ³ÁĞ±í£»
-# -h£ºÏÔÊ¾°ïÖúĞÅÏ¢²¢ÍË³ö£»
-# -v£ºÈß³¤Ä£Ê½£¬Êä³öÖ¸ÁîÖ´ĞĞµÄÏêÏ¸ĞÅÏ¢£»
-# -n£º¼ÓÔØÃ»ÓĞĞ´ÈëÎÄ¼ş¡°/etc/mtab¡±ÖĞµÄÎÄ¼şÏµÍ³£»
-# -r£º½«ÎÄ¼şÏµÍ³¼ÓÔØÎªÖ»¶ÁÄ£Ê½£»
-# -a£º¼ÓÔØÎÄ¼ş¡°/etc/fstab¡±ÖĞÃèÊöµÄËùÓĞÎÄ¼şÏµÍ³¡£
+# é€‰é¡¹
+# -t typeï¼šæŒ‡å®šæŒ‚è½½çš„æ–‡ä»¶ç³»ç»Ÿç±»å‹ï¼Œä¸€èˆ¬ä¸ç”¨æŒ‡å®šï¼Œmount å‘½ä»¤èƒ½å¤Ÿè‡ªè¡Œåˆ¤æ–­ã€‚
+# -Vï¼šæ˜¾ç¤ºç¨‹åºç‰ˆæœ¬ï¼›
+# -lï¼šæ˜¾ç¤ºå·²åŠ è½½çš„æ–‡ä»¶ç³»ç»Ÿåˆ—è¡¨ï¼›
+# -hï¼šæ˜¾ç¤ºå¸®åŠ©ä¿¡æ¯å¹¶é€€å‡ºï¼›
+# -vï¼šå†—é•¿æ¨¡å¼ï¼Œè¾“å‡ºæŒ‡ä»¤æ‰§è¡Œçš„è¯¦ç»†ä¿¡æ¯ï¼›
+# -nï¼šåŠ è½½æ²¡æœ‰å†™å…¥æ–‡ä»¶â€œ/etc/mtabâ€ä¸­çš„æ–‡ä»¶ç³»ç»Ÿï¼›
+# -rï¼šå°†æ–‡ä»¶ç³»ç»ŸåŠ è½½ä¸ºåªè¯»æ¨¡å¼ï¼›
+# -aï¼šåŠ è½½æ–‡ä»¶â€œ/etc/fstabâ€ä¸­æè¿°çš„æ‰€æœ‰æ–‡ä»¶ç³»ç»Ÿã€‚
 
-# ²ÎÊı
-# Éè±¸ÎÄ¼şÃû£ºÖ¸¶¨Òª¼ÓÔØµÄÎÄ¼şÏµÍ³¶ÔÓ¦µÄÉè±¸Ãû£»
-# ¼ÓÔØµã£ºÖ¸¶¨¼ÓÔØµãÄ¿Â¼¡£
+# å‚æ•°
+# è®¾å¤‡æ–‡ä»¶åï¼šæŒ‡å®šè¦åŠ è½½çš„æ–‡ä»¶ç³»ç»Ÿå¯¹åº”çš„è®¾å¤‡åï¼›
+# åŠ è½½ç‚¹ï¼šæŒ‡å®šåŠ è½½ç‚¹ç›®å½•ã€‚
 
-#ÊµÀı
+#å®ä¾‹
 mount -t auto /dev/cdrom /mnt/cdrom
-# mount: mount point /mnt/cdrom does not exist           /mnt/cdromÄ¿Â¼²»´æÔÚ£¬ĞèÒªÏÈ´´½¨¡£
+# mount: mount point /mnt/cdrom does not exist           /mnt/cdromç›®å½•ä¸å­˜åœ¨ï¼Œéœ€è¦å…ˆåˆ›å»ºã€‚
 
 cd /mnt
 #-bash: cd: /mnt: No such file or directory
 
-# ´´½¨/mnt/cdromÄ¿Â¼
+# åˆ›å»º/mnt/cdromç›®å½•
 mkdir -p /mnt/cdrom
-# ¹ÒÔØcdrom
+# æŒ‚è½½cdrom
 mount -t auto /dev/cdrom /mnt/cdrom
-# mount: block device /dev/cdrom is write-protected, mounting read-only     ¹ÒÔØ³É¹¦
+# mount: block device /dev/cdrom is write-protected, mounting read-only     æŒ‚è½½æˆåŠŸ
 
-# ²é¿´cdromÀïÃæÄÚÈİ
+# æŸ¥çœ‹cdromé‡Œé¢å†…å®¹
 ll /mnt/cdrom

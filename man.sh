@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
 
 ### init
-## 一次性安装
 sudo apt-get update -y ; sudo apt-get upgrade -y
-apt-get update -y ; apt-get upgrade -y && \
-apt-get install apt-utils wget openssh-server telnet vim passwd ifstat unzip iftop telnet samba net-tools lsof rsync gcc g++ cmake build-essential gdb gdbserver unixodbc unixodbc-dev -y && \
-# rm -rf /var/lib/apt/lists/*
+## 一次性安装
+sudo apt-get update -y ; sudo apt-get upgrade -y && \
+sudo apt-get install apt-utils wget openssh-server telnet vim passwd ifstat unzip iftop telnet samba net-tools lsof rsync gcc g++ cmake build-essential gdb gdbserver unixodbc unixodbc-dev libcurl4-openssl-dev uuid-dev qt5-default libqt5svg5 libqt5svg5-dev qtcreator -y && \
+sudo rm -rf /var/lib/apt/lists/*
+
 ## 创建目录
+sudo mkdir /opt/ddd; sudo mkdir /opt/eee; sudo mkdir /opt/fff; sudo chown oudream /opt/ddd; sudo chown oudream /opt/eee; sudo chown oudream /opt/fff
 sudo mkdir /ddd; sudo mkdir /eee; sudo mkdir /fff; sudo chown oudream /ddd; sudo chown oudream /eee; sudo chown oudream /fff
 
 scp /fff
 
+
 ### etc 环境变量配置文件加载优先级，三个阶段：系统运行、用户登录、软件运行
 # linux
 /etc/environment    /etc/profile    ~/.bash_profile    ~/.bashrc    /etc/bashrc
+/etc/bashrc_Apple_Terminal
 # /etc/profile全局环境变量文件，用户登录系统后首先会加载，系统上默认的shell主环境变量。每个用户登录后都会加载。
 # /etc/profile.d目录下的脚本文件在加载完/etc/profile文件后才会执行，这个目录下脚本有很多。
 # ~/.bash_profile：每个用户都可使用该文件设置专用于自己的shell信息，当用户登录时，该文件仅执行一次。默认情况下，他设置一些环境变量，执行用户的.bashrc文件。
@@ -70,7 +74,6 @@ node percent.js m75.07796,155c0,-42.49836 34.42367,-76.92204 76.92204,-76.92204c
 
 
 ### python
-
 jupyter notebook --no-browser --port 8901 --ip=10.35.191.17
 
 ### jupyter password
@@ -136,6 +139,7 @@ alias rm='rm -i'           # 删除前需确认
 alias cp='cp -i'           # 覆盖前需确认
 alias mv='mv -i'           # 覆盖前需确认
 alias vi='vim'             # 输入 vi 命令时使用 vim 编辑器
+
 
 ### 资源
 free -m # 查看内存使用量和交换区使用量
@@ -494,7 +498,7 @@ send "oudream\r"
 interact
 
 
-
+Z.a-135246-a.Z
 # export
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8

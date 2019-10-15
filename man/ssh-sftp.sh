@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# https://linux.die.net/man/1/ssh
+
 ### remote sftp scp ssh ssh-keygen ssh-copy-id
 ## SSH 的配置文件在 /etc/ssh/sshd_config 中，你可以看到端口号, 空闲超时时间等配置项。
 # 使用-p选项指定端口号, 直接连接并在后面加上要执行的命令就可以了
@@ -11,25 +13,41 @@ sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd
 ClientAliveInterval 30
 ClientAliveCountMax 6
 sudo service ssh restart
-# sftp
-sftp get -r /usr/local/hadoop/tmp /ddd/hadoop/hadoop-3.1.0
-# scp
-scp -r local_folder remote_username@remote_ip:remote_folder
-scp -r /home/space/music/ root@vm-ubuntu1:/home/root/others/ # copy local to remote
-scp -r root@vm-ubuntu1:/home/root/others/ /home/space/music/ # copy remote to local
-# clipboard
-# From a X(7) man page:
-cat /fff/tmp/000.txt | ssh -X 10.35.191.11 "DISPLAY=:0.0 pbcopy -i"
-ssh -p 56743 oudream@frp1.chuantou.org ls -l
-# 另外一个很赞的基于 SSH 的工具叫 sshfs. sshfs 可以让你在本地直接挂载远程主机的文件系统.
-# sshfs -o idmap=user user@hostname:/home/user ~/Remote
-sshfs -o idmap=user pi@10.42.0.47:/home/pi ~/Pi
+
+# X11 客户端选项
+# https://linux.die.net/man/5/ssh_config
+        ForwardX11 yes
+        ForwardX11Trusted yes
+        XAuthLocation /opt/X11/bin/xauth
+        ServerAliveInterval 60
+        ForwardX11Timeout 596h
+
 # 打开调试模式
 ssh -v 192.168.0.103
 # 把服务端的 X11 应用程序显示到客户端计算机上
 ssh -X oudream@10.31.58.75 xclock
 
-# ssh-keygen 用于：生成、管理和转换认证密钥
+
+# sftp
+sftp get -r /usr/local/hadoop/tmp /ddd/hadoop/hadoop-3.1.0
+
+# scp
+scp -r local_folder remote_username@remote_ip:remote_folder
+scp -r /home/space/music/ root@vm-ubuntu1:/home/root/others/ # copy local to remote
+scp -r root@vm-ubuntu1:/home/root/others/ /home/space/music/ # copy remote to local
+
+# clipboard
+# From a X(7) man page:
+cat /fff/tmp/000.txt | ssh -X 10.35.191.11 "DISPLAY=:0.0 pbcopy -i"
+ssh -p 56743 oudream@frp1.chuantou.org ls -l
+
+
+# 另外一个很赞的基于 SSH 的工具叫 sshfs. sshfs 可以让你在本地直接挂载远程主机的文件系统.
+# sshfs -o idmap=user user@hostname:/home/user ~/Remote
+sshfs -o idmap=user pi@10.42.0.47:/home/pi ~/Pi
+
+
+### ssh-keygen 用于：生成、管理和转换认证密钥
 # 通常，这个程序产生一个密钥对，并要求指定一个文件存放私钥，同时将公钥存放在附加了".pub"后缀的同名文件中。
 #      程序同时要求输入一个密语字符串(passphrase)，空表示没有密语(主机密钥的密语必须为空)。
 #      密语和口令(password)非常相似，但是密语可以是一句话，里面有单词、标点符号、数字、空格或任何你想要的字符。
