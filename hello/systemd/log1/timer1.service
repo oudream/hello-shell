@@ -1,0 +1,13 @@
+[Unit]
+Description=Hello Systemd Timer1
+After=systemd-networkd.service network.target sshd.service
+
+[Service]
+Type=simple
+User=nobody
+Restart=on-failure
+RestartSec=5s
+ExecStart=/bin/bash -c '/opt/ddd/cshell/hello/systemd/log1/timer1.py'
+
+[Install]
+WantedBy=multi-user.target

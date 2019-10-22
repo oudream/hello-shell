@@ -30,8 +30,12 @@ systemctl cat sshd.service # 查看配置文件
 #    After 和 Before 字段只涉及启动顺序，不涉及依赖关系
 #    Wants 字段：表示"弱依赖"关系，Requires 字段则表示"强依赖"关系
 # [Service] 区块：启动行为
-#    ExecStart 字段：定义启动进程时执行的命令；ExecReload 字段：重启服务时执行的命令; ExecStop 字段：停止服务时执行的命令;
-#    ExecStartPre 字段：启动服务之前执行的命令；ExecStartPost 字段：启动服务之后执行的命令；ExecStopPost 字段：停止服务之后执行的命令
+#    ExecStart 字段：定义启动进程时执行的命令；
+#    ExecReload 字段：重启服务时执行的命令;
+#    ExecStop 字段：停止服务时执行的命令;
+#    ExecStartPre 字段：启动服务之前执行的命令；
+#    ExecStartPost 字段：启动服务之后执行的命令；
+#    ExecStopPost 字段：停止服务之后执行的命令
 #    Type：simple（默认值）：ExecStart字段启动的进程为主进程; oneshot（值）：类似于simple，但只执行一次
 #    Restart：no（默认值）：退出后不会重启；always：不管是什么退出原因，总是重启
 # [Install] 区块：Install区块，定义如何安装这个配置文件，即怎样做到开机启动。
