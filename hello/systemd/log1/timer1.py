@@ -10,7 +10,7 @@ class MyThread(Thread):
 
     def run(self):
         while not self.stopped.wait(0.5):
-            print("my thread, ", time.localtime(time.time()))
+            print("my thread: ", time.localtime(time.time()))
             # call a function
 
 
