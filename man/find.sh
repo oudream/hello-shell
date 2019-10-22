@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-### find
+# 使用find命令找到大于指定大小的文件：
+find / -type f -size +10G
+# 排除某个目录
+find / -path "/media/xww" -type f -size +10G
+
+### find > datetime < datetime
 macos:
 touch -t "201802210444" /tmp/start
 touch -t "201802210445" /tmp/end

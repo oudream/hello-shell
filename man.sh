@@ -4,7 +4,7 @@
 sudo apt-get update -y ; sudo apt-get upgrade -y
 ## 一次性安装
 sudo apt-get update -y ; sudo apt-get upgrade -y && \
-sudo apt-get install apt-utils wget openssh-server telnet vim passwd ifstat unzip iftop telnet samba net-tools lsof rsync gcc g++ cmake build-essential gdb gdbserver unixodbc unixodbc-dev libcurl4-openssl-dev uuid-dev qt5-default libqt5svg5 libqt5svg5-dev qtcreator -y && \
+sudo apt-get install apt-utils wget openssh-server telnet vim passwd ifstat unzip iftop htop telnet samba net-tools lsof rsync gcc g++ cmake build-essential gdb gdbserver unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev qt5-default libqt5svg5 libqt5svg5-dev qtcreator -y && \
 sudo rm -rf /var/lib/apt/lists/*
 
 ## 创建目录
@@ -64,6 +64,13 @@ readonly     # 设置只读环境变量 readonly HELLO
 getenv() # 返回一个环境变量。
 setenv() # 设置一个环境变量。
 unsetenv() # 清除一个环境变量。
+
+
+# 列出Bash Shell内置命令
+compgen -b
+# Bash Shell内置命令，列出全部可执行命令
+compgen -c
+
 
 
 
@@ -541,3 +548,9 @@ sudo shutdown -h +60 # macos
 sudo shutdown -P +60 # linux
 sudo shutdown -P 1:00 # linux
 
+
+### cmake
+
+cmake . --build "/opt/ddd/ccpp/ccxx/build/cmake" -B"/opt/ddd/ccpp/ccxx/build/cmake-gcc"
+cmake . -DCMAKE_BUILD_TYPE=Debug --build "/opt/ddd/ccpp/gcl3/build/cmake" -B"/opt/ddd/ccpp/gcl3/build/cmake-gcc"
+cmake . -DCMAKE_BUILD_TYPE=Debug --build . -B"./cmake-gcc"

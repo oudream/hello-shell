@@ -155,6 +155,7 @@ docker rm [OPTIONS] CONTAINER [CONTAINER...]
 # -f :通过SIGKILL信号强制删除一个运行中的容器
 # -l :移除容器间的网络连接，而非容器本身
 # -v :-v 删除与容器关联的卷
+docker rm -v $(docker ps -a -q -f status=exited)
 
 
 ##docker wait : 阻塞运行直到容器停止，然后打印出它的退出代码。
@@ -189,6 +190,8 @@ docker exec -i -t  mynginx /bin/bash
 docker exec -it 9df70f9a0714 /bin/bash
 docker attach --sig-proxy=false mynginx
 docker exec -it $ContainerID /bin/bash
+docker exec -it e3338bd4ce6b /bin/sh
+docker exec -it db env
 
 
 ## docker network
@@ -257,3 +260,8 @@ docker save -o my_ubuntu_v3.tar runoob/ubuntu:v3
 # -q :精简输出信息。
 # 导入镜像：
 docker load -i ubuntu.tar
+
+## docker images
+# 默认情况下Docker的存放位置为：/var/lib/docker
+# 可以通过下面命令查看具体位置：
+sudo docker info | grep "Docker Root Dir"

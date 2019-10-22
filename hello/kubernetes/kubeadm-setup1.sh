@@ -19,7 +19,7 @@ sudo apt-get install \
     gnupg-agent \
     software-properties-common
 
-# Add Docker¡¯s official GPG key:
+# Add Dockerâ€™s official GPG key:
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo apt-key fingerprint 0EBFCD88
 sudo add-apt-repository \
@@ -37,14 +37,14 @@ wget https://storage.googleapis.com/kubernetes-release/release/v1.14.3/kubernete
 echo 'PATH=/fff/kubernetes/server/bin:$PATH' >>/root/.bashrc
 source /root/.bashrc
 
-# ¹Ø±Õ swap ·ÖÇø
-# Èç¹û¿ªÆôÁË swap ·ÖÇø£¬kubelet »áÆô¶¯Ê§°Ü(¿ÉÒÔÍ¨¹ý½«²ÎÊý --fail-swap-on ÉèÖÃÎª false À´ºöÂÔ swap on)£¬
-#    ¹ÊÐèÒªÔÚÃ¿Ì¨»úÆ÷ÉÏ¹Ø±Õ swap ·ÖÇø¡£Í¬Ê±×¢ÊÍ /etc/fstab ÖÐÏàÓ¦µÄÌõÄ¿£¬·ÀÖ¹¿ª»ú×Ô¶¯¹ÒÔØ swap ·ÖÇø£º
-swapon -s # ²é
+# å…³é—­ swap åˆ†åŒº
+# å¦‚æžœå¼€å¯äº† swap åˆ†åŒºï¼Œkubelet ä¼šå¯åŠ¨å¤±è´¥(å¯ä»¥é€šè¿‡å°†å‚æ•° --fail-swap-on è®¾ç½®ä¸º false æ¥å¿½ç•¥ swap on)ï¼Œ
+#    æ•…éœ€è¦åœ¨æ¯å°æœºå™¨ä¸Šå…³é—­ swap åˆ†åŒºã€‚åŒæ—¶æ³¨é‡Š /etc/fstab ä¸­ç›¸åº”çš„æ¡ç›®ï¼Œé˜²æ­¢å¼€æœºè‡ªåŠ¨æŒ‚è½½ swap åˆ†åŒºï¼š
+swapon -s # æŸ¥
 swapoff -a
 sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
-# ÖØÆô»úÆ÷
+# é‡å¯æœºå™¨
 shutdown -r 0
 
 

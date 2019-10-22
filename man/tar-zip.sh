@@ -3,6 +3,8 @@
 # 在不解压缩的情况下直接查看压缩包的内容
 tar -tvf  testcase-2.2.1.jar
 
+tar -C /myfolder -xvf yourfile.tar
+
 ### tar unzip
 ## .tar
 # 解包：
