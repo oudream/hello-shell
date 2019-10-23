@@ -550,7 +550,18 @@ sudo shutdown -P 1:00 # linux
 
 
 ### cmake
-
 cmake . --build "/opt/ddd/ccpp/ccxx/build/cmake" -B"/opt/ddd/ccpp/ccxx/build/cmake-gcc"
 cmake . -DCMAKE_BUILD_TYPE=Debug --build "/opt/ddd/ccpp/gcl3/build/cmake" -B"/opt/ddd/ccpp/gcl3/build/cmake-gcc"
 cmake . -DCMAKE_BUILD_TYPE=Debug --build . -B"./cmake-gcc"
+
+
+### log level
+# emerg alert crit error warning notice info debug
+#0	Emergency	    emerg	System is unusable	Severe Kernel BUG, systemd dumped core. This level should not be used by applications.
+#1	Alert	        alert	Should be corrected immediately	Vital subsystem goes out of work. Data loss. kernel: BUG: unable to handle kernel paging request at ffffc90403238ffc.
+#2	Critical	    crit	Critical conditions	Crashes, coredumps. Like familiar flash: systemd-coredump[25319]: Process 25310 (plugin-containe) of user 1000 dumped core Failure in the system primary application, like X11.
+#3	Error	        err	    Error conditions	Not severe error reported: kernel: usb 1-3: 3:1: cannot get freq at ep 0x84, systemd[1]: Failed unmounting /var., libvirtd[1720]: internal error: Failed to initialize a valid firewall backend).
+#4	Warning	        warning	May indicate that an error will occur if action is not taken.	A non-root file system has only 1GB free. org.freedesktop. Notifications[1860]: (process:5999): Gtk-WARNING **: Locale not supported by C library. Using the fallback 'C' locale.
+#5	Notice	        notice	Events that are unusual, but not error conditions.	systemd[1]: var.mount: Directory /var to mount over is not empty, mounting anyway. gcr-prompter[4997]: Gtk: GtkDialog mapped without a transient parent. This is discouraged.
+#6	Informational	info	Normal operational messages that require no action.	lvm[585]: 7 logical volume(s) in volume group "archvg" now active.
+#7	Debug	        debug	Information useful to developers for debugging the application.	kdeinit5[1900]: powerdevil: Scheduling inhibition from ":1.14" "firefox" with cookie 13 and reason "screen"
