@@ -1,0 +1,11 @@
+$Id$
+DUPX README
+
+For installation instructions, please see file INSTALL.
+
+For building an rpm on a RedHat-like system such as Fedora,
+do:
+    ./configure
+    make rpm
+
+DUPX needs gdb to be installed on your system.

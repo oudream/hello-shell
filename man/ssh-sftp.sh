@@ -14,6 +14,8 @@ ClientAliveInterval 30
 ClientAliveCountMax 6
 sudo service ssh restart
 
+ssh -p 50022 oudream@172.105.35.102
+
 # X11 客户端选项
 # https://linux.die.net/man/5/ssh_config
         ForwardX11 yes
@@ -26,6 +28,9 @@ sudo service ssh restart
 ssh -v 192.168.0.103
 # 把服务端的 X11 应用程序显示到客户端计算机上
 ssh -X oudream@10.31.58.75 xclock
+ssh -Y oudream@10.31.58.75 xclock
+# 打开授权 auth -A
+ssh -AXY root@35.239.31.154
 
 
 # sftp
@@ -75,3 +80,32 @@ ssh-keygen -R 222.24.51.147 # 删除主机密钥 ~/.ssh/known_hosts
 # $HOME/.ssh/id_rsa: $HOME/.ssh/id_rsa文件包含用户的协议版本2 RSA身份验证标识。 除了用户之外，任何人都不应该有读取此文件的权限。
 # $HOME/.ssh/id_rsa.pub: $HOME/.ssh/id_rsa.pub文件包含用于身份验证的协议版本2 RSA公钥。 应在用户希望使用公钥认证登录的所有计算机上将此文件的内容添加到$HOME/.ssh/authorized_keys。
 
+
+
+### xauth
+# Rename the existing .Xauthority file by running the following command
+mv .Xauthority old.Xauthority
+# xauth with complain unless ~/.Xauthority exists
+touch ~/.Xauthority
+# only this one key is needed for X11 over SSH
+xauth generate :0 . trusted
+# generate our own key, xauth requires 128 bit hex encoding
+xauth add ${HOST}:0 . $(xxd -l 16 -p /dev/urandom)
+# To view a listing of the .Xauthority file, enter the following
+xauth list
+
+
+
+PermitRootLogin yes
+PasswordAuthentication yes
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+AcceptEnv LANG LC_*
+#Subsystem       sftp    /usr/lib/openssh/sftp-server
+Subsystem       sftp    /usr/lib/ssh/sftp-server
+UseDNS no
+ClientAliveInterval 120
+UseDNS no

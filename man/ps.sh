@@ -9,8 +9,11 @@ ps -L 1213
 ps -u root
 # 所有进程信息，连同命令行
 ps -ef
+# show process of 指定 parent id == 683,
+ps -l --ppid=683
 #
 pstree -c -p -A $(pgrep dockerd)
+
 
 # macos
 ps -Ao user,pid,%cpu,%mem,vsz,rss,tt,stat,start,time,command

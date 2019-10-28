@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+git pull origin master
+
 # 运行git status命令查看本地修改
 git status
 git diff readme.txt # 看看更改的地方（difference）

@@ -1,4 +1,5 @@
 #!/usr/bin/expect
+
 set user root
 set ipaddress 45.77.131.42
 set passwd "Z-j8\$S5-E\@\}\[97\?1"

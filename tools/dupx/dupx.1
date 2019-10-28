@@ -1,0 +1,114 @@
+.TH DUPX 1 "Version 436: 07 Jul 2009"
+
+.SH NAME
+dupx \- redirect input/output/error of a running process
+
+.SH SYNOPSIS
+.B "dupx [-q] [\-o \fIofile\fB] [\-e \fIefile\fB] [\-i \fIifile\fB]"
+.br
+.B "     [\-n \fIfd\fR:\fIfilename\fB] <pid>"
+.br
+.B "dupx [-q] <pid>"
+.br
+
+.SH DESCRIPTION
+\fBDupx\fR is a simple utility to remap files of an already running
+program.  Shells like \fIBash\fR allow easy input/output/error
+redirection at the time the program is started using >, < \- like
+syntax, e.g.:
+.br
+.B "    echo 'redirect this text' > /tmp/stdout"
+.br
+will redirect output of \fIecho\fR to \fI/tmp/stdout\fR.
+
+Standard shells however do not provide the capability of remapping
+(redirecting) of output (or input, or error) for an already started
+process.  \fBDupx\fR tries to address this problem by using
+\fIdup(2)\fR system call from inside \fIgdb(1)\fR.  \fBDupx\fR is
+currently implemented as a simple shell wrapper around a \fIgdb\fR
+script.
+
+.SH OPTIONS
+In the first form of its invocation, the user can optionally
+specify where he wants input/output/error to be using:
+.IP "-o \fIofile\fR"
+redirects the remaining of standard output (assumed to correspond to file 
+descriptor 0) to the filename \fIofile\fR.  This file is opened in
+write-only, append-to mode.  It's created if it does not already exist.
+.IP "-i \fIifile\fR"
+redirects the remaining of standard input (assumed to correspond to file 
+descriptor 1) to the filename \fIifile\fR.  This file is opened in
+read-only mode.
+.IP "-e \fIefile\fR"
+redirects the remaining of standard error (assumed to correspond to file 
+descriptor 2) to the filename \fIefile\fR.  This file is opened in
+write-only, append-to mode.  It's created if it does not already exist.
+.IP "-n \fIfd\fR:\fIfilename\fR"
+remaps the file descriptor \fIfd\fR to the \fIfilename\fR.  This file
+is opened in read-write, append-to mode.  It's created if it does not
+already exist. This option can be specified multiple times for
+different descriptors.
+.IP "-q"
+Be as quiet as possible.
+
+In the second form of its invocation, \fBdupx\fR remaps the standard
+input, output, and error from the current command line into the
+process specified by \fIpid\R.
+
+.SH EXAMPLE USAGE
+Note that these examples use \fIbash\fR syntax.
+First, we start a background bash job that sleeps, then prints
+something on standard output:
+.br
+.B "    bash -c 'sleep 1m && echo ""rise and shine""' &"
+.br
+.IP "1. Redirect the remainder of standard output to /tmp/stdout"
+The following invocations are equivalent:
+.br
+.B "    dupx -n 0:/tmp/test $!"
+.br
+.B "    dupx -o /tmp/test $!"
+.br
+.B "    dupx $! >>/tmp/test"
+.br
+Note that the last example also remaps stderr and stdin of the
+process.  But because the target process was started on the same tty
+as dupx is being run, they are effectively unchanged.
+.IP "2. Redirect the remainder of stdout, and stderr to different files, \
+read the rest of stdin from /dev/null:"
+The following invocations are equivalent:
+.br
+.B "    dupx -o /tmp/stdout -e /tmp/stderr -i /dev/null $!"
+.br
+.B "    dupx -n 0:/tmp/stdout 1:/dev/null 2:/tmp/stderr $!"
+.br
+.B "    dupx >/tmp/stdout 2>/tmp/stderr </dev/null $!"
+
+.SH "LIMITATIONS"
+You must have permissions to access the process that you are trying to remap.
+.br
+To remap stdin/stdout/stderr of a process to the current ones, you
+need to have \fIproc(5)\fR file system support.
+
+.SH "SEE ALSO"
+dup(2), gdb(1), bash(1), screen(1), proc(5)
+
+.SH COPYRIGHT
+Copyright (C) 2009-2010 Yuri Pradkin
+.br
+Distributed under 
+license GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+.br
+.PP
+dupx is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+
+.SH AUTHOR
+.PP
+Yuri Pradkin <yuri@isi.edu>
+.br
+For more information, see the dupx homepage at 
+.br
+http://www.isi.edu/~yuri/dupx
