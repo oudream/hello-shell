@@ -531,3 +531,4 @@ sudo shutdown -P 1:00 # linux
 
 
 ssh -AXY root@35.239.31.154
+ssh -AXY -p 2202 root@localhost
