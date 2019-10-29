@@ -320,4 +320,3 @@ ls /proc/$DBPID
 # For example, you can view and update the environment variables defined to that process.
 cat /proc/$DBPID/environ
 docker exec -it db env
-
