@@ -110,3 +110,69 @@ function testArray6() {
     fi
 }
 testArray6
+
+
+testArray7(){
+    local Array1=( "key1" "key2" "key3" "key4" "key5" "key6" "key7" "key8" "key9" "key10" )
+    local Array2=( "key1" "key2" "key3" "key4" "key5" "key6" )
+    local Array3=()
+    for i in "${Array1[@]}"; do
+        skip=
+        for j in "${Array2[@]}"; do
+            [[ $i == $j ]] && { skip=1; break; }
+        done
+        [[ -n $skip ]] || Array3+=("$i")
+    done
+    declare -p Array3
+}
+testArray7
+
+function testArray8() {
+    array1=([value1]=1 value2 valueN)
+
+    # set up array of constants
+    declare -A array
+    for constant in foo bar baz
+    do
+        array[$constant]=1
+    done
+
+    # test for existence
+    test1="bar"
+    test2="xyzzy"
+
+    if [[ ${array[$test1]} ]]; then echo "$test1 Exists"; else echo "$test1 does not exist"; fi    # Exists
+    if [[ ${array[$test2]} ]]; then echo "$test2 Exists"; else echo "$test2 does not exist"; fi    # doesn't
+
+    echo "${array[@]}"
+}
+testArray8
+
+testArray8_1(){
+    echo ${array[@]}
+    echo ${array1[@]}
+}
+testArray8_1
+
+testArraySum1(){
+    array=( 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 )
+#    I've done it this way but I want to use an array and then sum up the numbers in a shell script.
+    num1=2
+    num2=4
+    num3=8
+    num4=10
+    num5=12
+    num6=14
+    num7=16
+    num8=18
+    num9=20
+    sum=$((num1+num2+num3+num4+num5+num6+num7+num8+num9))
+    echo "The sum is: $sum"
+}
+testArraySum1
+testArraySum1_1(){
+    array=( 2, 4, 6, 8, 10, 12, 14, 16, 18, 20)
+    echo "${array[@]/,/+}" | bc
+}
+testArraySum1_1
+

@@ -12,9 +12,18 @@ sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd
 # 服务器端的心跳机制，添加 # ClientAliveInterval表示每隔多少秒，服务器端向客户端发送心跳 # 表示上述多少次心跳无响应之后，会认为Client已经断开
 ClientAliveInterval 30
 ClientAliveCountMax 6
-sudo service ssh restart
+sudo service restart ssh
+
+# 如果你没有服务器端管理权限， 在客户端进行设置也可以实现, 只要在/etc/ssh/ssh_config文件里加两个参数就行了
+TCPKeepAlive yes
+ServerAliveInterval 300
+# 前一个参数是说要保持连接，后一个参数表示每过5分钟发一个数据包到服务器表示“我还活着”
+# 如果你没有root权限，修改或者创建~/.ssh/ssh_config也是可以的
+ssh -o TCPKeepAlive=yes -o ServerAliveInterval=300 pswzyu@nuihq.com -p 12345678
+
 
 ssh -p 50022 oudream@172.105.35.102
+
 
 # X11 客户端选项
 # https://linux.die.net/man/5/ssh_config
@@ -65,7 +74,7 @@ sshfs -o idmap=user pi@10.42.0.47:/home/pi ~/Pi
 # -C comment：提供一个新的注释
 # -b bits：指定要生成的密钥长度 (单位:bit)，对于RSA类型的密钥，最小长度768bits,默认长度为2048bits。DSA密钥必须是1024bits
 # -f filename:指定生成的密钥文件名字
-ssh-keygen -t rsa -p "" # 此时在本机上生成如下一个公钥和一个私钥文件：
+ssh-keygen -t rsa # 此时在本机上生成如下一个公钥和一个私钥文件：
 cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 # 执行 # ssh localhost # 可以发现此时无需输入密码
 ssh-copy-id -i $HOME/.ssh/id_rsa.pub hadoop@192.168.24.129
@@ -109,3 +118,26 @@ Subsystem       sftp    /usr/lib/ssh/sftp-server
 UseDNS no
 ClientAliveInterval 120
 UseDNS no
+
+
+Port 22221 #工作中需要设定到1万以上的端口，避免被扫描出来。
+PermitRootLogin no #如果不是超大规模的服务器，为了方便我们可以暂时开启root远程登录
+PubkeyAuthentication yes #开启公钥认证模式
+AuthorizedKeysFile .ssh/authorized_keys #公钥放置位置
+PasswordAuthentication no #为了安全我们关闭服务器的密码认证方式
+GSSAPIAuthentication no #关闭GSSAPI认证，极大提高ssh连接速度
+UseDNS no #关闭DNS反向解析，极大提高ssh连接速度
+
+
+/usr/sbin/sshd >>/root/sshd_out.txt 2>>/root/sshd_err.txt
+PermitEmptyPasswords yes
+PasswordAuthentication yes
+
+
+### Problem with "Warning: No xauth data; using fake authentication data for X11 forwarding."
+Thanks for Help. I added on client configuration file /etc/ssh/ssh_config this 3 line :
+XAuthLocation /usr/bin/xauth
+ForwardX11 yes
+ForwardX11Trusted yes
+
+

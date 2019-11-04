@@ -14,7 +14,7 @@ function scanDir2()
     find . -maxdepth 1 -type d | while read dir; do count=$(find "$dir" -type f | wc -l); echo "$dir : $count"; done
 }
 scanDir2
-
+Î
 function mkdir1() {
     echo "mkdir -p a/b/c"
     mkdir -p a/b/c

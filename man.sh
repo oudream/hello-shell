@@ -40,17 +40,17 @@ scp /fff
 
 
 ### 环境变量
-BASH # Bash Shell的全路径
-CDPATH # 用于快速进入某个目录。
-PATH # 决定了shell将到哪些目录中寻找命令或程序
-HOME # 当前用户主目录
-HISTSIZE # 历史记录数
-LOGNAME # 当前用户的登录名
-HOSTNAME # 指主机的名称
-SHELL # 当前用户Shell类型
-LANGUGE # 语言相关的环境变量，多语言可以修改此环境变量
-MAIL # 当前用户的邮件存放目录
-PS1 # 基本提示符，对于root用户是#，对于普通用户是$
+BASH        # Bash Shell的全路径
+CDPATH      # 用于快速进入某个目录。
+PATH        # 决定了shell将到哪些目录中寻找命令或程序
+HOME        # 当前用户主目录
+HISTSIZE    # 历史记录数
+LOGNAME     # 当前用户的登录名
+HOSTNAME    # 指主机的名称
+SHELL       # 当前用户Shell类型
+LANGUGE     # 语言相关的环境变量，多语言可以修改此环境变量
+MAIL        # 当前用户的邮件存放目录
+PS1         # 基本提示符，对于root用户是#，对于普通用户是$
 
 # 命令
 echo         # 显示某个环境变量值 echo $PATH
@@ -59,6 +59,8 @@ env          # 显示所有环境变量
 set          # 显示本地定义的shell变量
 unset        # 清除环境变量 unset HELLO
 readonly     # 设置只读环境变量 readonly HELLO
+expr         # 运算
+
 
 # C程序调用环境变量函数
 getenv() # 返回一个环境变量。
@@ -180,6 +182,13 @@ shopt -p # 查看当前设置情况 shopt命令是set命令的一种替代
 set # 用来显示shell本地变量
 typeset -F # 只列出函数名
 declare -F # 只列出函数名
+last # 系统登录日志记录,它会读取位于/var/log下wtmp目录。默认是wtmp目录的记录，btmp能显示的更详细，可以显示远程登录，例如ssh登录。
+# utmp文件中保存的是当前正在本系统中的用户的信息。
+# wtmp文件中保存的是登录过本系统的用户的信息。
+# 查看用户的历史命令
+cat ~user/.bash_history # 如果是bash
+cat ~user/.history # 如果是csh 可能是
+cat ~user/.sh_history # 如果是ksh 则可能是
 
 
 
@@ -311,27 +320,6 @@ tmux ls # 查看所有会话
 touch ~/.tmux.conf
 set -g mouse off
 tmux rename-session [-t current-name] [new-name]
-
-### screen
-screen -S yourname -> 新建一个叫yourname的session
-screen -ls -> 列出当前所有的session
-screen -r yourname -> 回到yourname这个session
-screen -d yourname -> 远程detach某个session
-screen -d -r yourname -> 结束当前session并回到yourname这个session
-screen -X -S SCREENID kill # Kill Attached Screen in Linux
-screen -S SCREENNAME -p 0 -X quit
-# 在每个screen session 下，所有命令都以 ctrl+a(C-a) 开始。
-# C-a  ? -> 显示所有键绑定信息
-# C-a  d -> detach，暂时离开当前session，将目前的 screen session (可能含有多个 windows) 丢到后台执行，并会回到还没进 screen 时的状态，此时在 screen session 里，每个 window 内运行的 process (无论是前台/后台)都在继续执行，即使 logout 也不影响。
-# C-a  z -> 把当前session放到后台执行，用 shell 的 fg 命令则可回去。
-# C-a  c -> 创建一个新的运行shell的窗口并切换到该窗口
-# C-a  n -> Next，切换到下一个 window
-# C-a  p -> Previous，切换到前一个 window
-# C-a  0..9 -> 切换到第 0..9 个 window
-# C-a  [Space] -> 由视窗0循序切换到视窗9
-# C-a  C-a -> 在两个最近使用的 window 间切换
-# C-a  x -> 锁住当前的 window，需用用户密码解锁
-# C-a  w -> 显示所有窗口列表
 
 
 ### lsof
@@ -530,5 +518,7 @@ sudo shutdown -P 1:00 # linux
 #7	Debug	        debug	Information useful to developers for debugging the application.	kdeinit5[1900]: powerdevil: Scheduling inhibition from ":1.14" "firefox" with cookie 13 and reason "screen"
 
 
-ssh -AXY root@35.239.31.154
-ssh -AXY -p 2202 root@localhost
+ssh root@35.239.31.154 -AXY -v
+ssh root@localhost -p 2202 -AXY
+
+ssh root@122.51.12.151 -AXY

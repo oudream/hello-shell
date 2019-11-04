@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+docker rm -v $(docker ps -a -q -f status=exited)
+
+docker kill -s KILL $(docker ps -a -q)
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+docker rmi $(docker images alpine-ssh* -q)
+
+
 docker top $containerId
 docker ps --size
 
@@ -140,6 +149,9 @@ docker run -it --entrypoint="" mysql:latest bash
 docker run -it --entrypoint="" mysql:latest bash
 # 覆盖CMD指令
 docker run ... New_Command
+# The my-label key doesn’t specify a value so the label defaults to an empty string ("").
+# To add multiple labels, repeat the label flag (-l or --label).
+docker run -l my-label --label com.example.foo=bar ubuntu bash
 
 docker start [OPTIONS] CONTAINER [CONTAINER...]
 docker stop [OPTIONS] CONTAINER [CONTAINER...]
@@ -273,11 +285,13 @@ docker save -o my_ubuntu_v3.tar runoob/ubuntu:v3
 docker load -i ubuntu.tar
 
 
-## docker images
+## docker image
 # 默认情况下Docker的存放位置为：/var/lib/docker
 # 可以通过下面命令查看具体位置：
 sudo docker info | grep "Docker Root Dir"
-
+# Error response from daemon: conflict: unable to delete c5d80f5c2af6 (must be forced) - image is referenced in multiple repositories
+# forced remove
+docker image rm -f c5d80f5c2af6
 
 ps -l --ppid=683
 pstree -c -p -A $(pgrep dockerd)

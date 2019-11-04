@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 git pull origin master
 
 # 运行git status命令查看本地修改

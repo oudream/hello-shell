@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# PID pid
+ps aux | grep redis | grep -v "grep" | tr -s ' ' | cut -d ' ' -f 2
+ps aux | grep -v "grep" | grep redis | awk '{print $2}'
+# pidof 获取程序的文件名匹配到的进程号
+pidof "cmdname"
+# pgrep 效果 与 grep
+pgrep "cmdname"
+
+
 # linux 全部用户进程
 ps -aux
 ps -aux --sort -pmem

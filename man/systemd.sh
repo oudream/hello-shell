@@ -8,21 +8,38 @@ sudo apt-get install --no-install-recommends ubuntu-desktop
 # REMOVE UBUNTU DESKTOP COMPLETELY
 sudo apt purge ubuntu-desktop -y && sudo apt autoremove -y && sudo apt autoclean
 
-### 服务 Systemd
+
+# 列出所有可用单元
+systemctl list-unit-files
+# 列出所有运行中单元
+systemctl list-units
+# 列出所有失败单元
+systemctl –failed
+# 检查某个单元（如 crond.service）是否启用
+systemctl is-enabledcrond.service
+# 列出所有服务
+systemctl list-unit-files –type=service
+
 service --status-all systemctl
 systemctl list-units --type=service
 chkconfig --list # 列出所有系统服务
 chkconfig --list | grep on # 列出所有启动的系统服务
 sysv-rc-conf
+
+
+
+### 服务 Systemd 服务生命周期
 sudo systemctl set-default multi-user.target # 开机后进入命令行界面：
 sudo systemctl set-default graphical.target # 开机后进入图形界面
 systemctl list-units --all --type=service --no-pager # List all services
 sudo systemctl enable httpd # systemctl enable test.service # 开机启动
 sudo systemctl disable httpd # systemctl disable test.service # 开机不启动
 sudo systemctl start httpd # 启动服务
+sudo systemctl restart httpd.service
 sudo systemctl status httpd # 查看服务的状态
 sudo systemctl stop httpd.service # 停止服务
 sudo systemctl kill httpd.service # 服务停不下来。这时候就不得不"杀进程"了
+systemctl is-active mysql.service
 # 配置文件主要放在 /usr/lib/systemd/system 目录，也可能在 /etc/systemd/system
 systemctl cat sshd.service # 查看配置文件
 # [Unit] 区块：启动顺序与依赖关系
