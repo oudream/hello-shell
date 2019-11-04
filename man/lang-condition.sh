@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
+# https://www.mkssoftware.com/docs/man1/test.1.asp
+# https://linuxacademy.com/blog/linux/conditions-in-bash-scripting-if-statements/
 
+s1=`(test -r /opt/fff/a.aa) && echo 'y' || echo 'n'` ## 判断文件
+s1=`[[ " ${arr1[*]} " == *"23.2"* ]] && echo 'y'`    ## 判断数组
+
+# 条件判断有：[ ] , [[ ]] , (( )) , 命令 ( test expr , .. )
+
+
+### 条件通过与否有两种：
 # 1，数字比较。$[ 1 > 0 ] 与 $(( 1 > 0 )) 与 `expr 1 \> 0` 等同。都返回 1
 # 2，字符串、文件、命令都是命令是否成功
 

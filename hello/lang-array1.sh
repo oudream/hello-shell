@@ -176,3 +176,24 @@ testArraySum1_1(){
 }
 testArraySum1_1
 
+testArrayExist1(){
+    if [[ " ${arr[*]} " == *" d "* ]]; then
+        echo "arr contains d"
+    fi
+}
+array_contains () {
+    local seeking=$1; shift
+    local in=1
+    for element; do
+        if [[ $element == "$seeking" ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
+}
+testArrayExist2(){
+    arr=(a b c "d e" f g)
+    array_contains "a b" "${arr[@]}" && echo yes || echo no    # no
+    array_contains "d e" "${arr[@]}" && echo yes || echo no    # yes
+}

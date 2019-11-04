@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# http://tldp.org/LDP/abs/html/arrays.html#ARRAYSTROPS
 ### 注意 注意 注意
 # 1：数组下标可以是离散式
 arr1=([0]="a b" [3]=2 [5]=4) # a b 2 4
@@ -108,7 +109,6 @@ Output:
 # arr[@] : All Array Elements.
 # /Search_using_Regular_Expression/ : Search in Array
 # Search Returns 1 if it found the pattern else it return zero. It does not alter the original array elements.
-
 # Search in Array
 echo ${arr[@]/*[aA]*/}
 Output:
@@ -193,3 +193,45 @@ echo ${arr[@]/*[aA]*/}    # 1
 echo ${arr[@]//a/A}        # prAkhAr Ankit 1 rishAbh mAnish AbhinAv
 echo ${arr[@]}            # prakhar ankit 1 rishabh manish abhinav
 echo ${arr[0]//r/R}        # pRakhaR
+
+
+
+
+# Substring Removal
+# Removes shortest match from front of string(s).
+echo ${arrayZ[@]#f*r}   # one two three five five
+#               ^       # Applied to all elements of the array.
+                        # Matches "four" and removes it.
+# Longest match from front of string(s)
+echo ${arrayZ[@]##t*e}  # one two four five five
+#               ^^      # Applied to all elements of the array.
+                        # Matches "three" and removes it.
+# Shortest match from back of string(s)
+echo ${arrayZ[@]%h*e}   # one two t four five five
+#               ^       # Applied to all elements of the array.
+                        # Matches "hree" and removes it.
+# Longest match from back of string(s)
+echo ${arrayZ[@]%%t*e}  # one two four five five
+#               ^^      # Applied to all elements of the array.
+                        # Matches "three" and removes it.
+echo "----------------------"
+# Substring Replacement
+# Replace first occurrence of substring with replacement.
+echo ${arrayZ[@]/fiv/XYZ}   # one two three four XYZe XYZe
+#               ^           # Applied to all elements of the array.
+# Replace all occurrences of substring.
+echo ${arrayZ[@]//iv/YY}    # one two three four fYYe fYYe
+                            # Applied to all elements of the array.
+# Delete all occurrences of substring.
+# Not specifing a replacement defaults to 'delete' ...
+echo ${arrayZ[@]//fi/}      # one two three four ve ve
+#               ^^          # Applied to all elements of the array.
+# Replace front-end occurrences of substring.
+echo ${arrayZ[@]/#fi/XY}    # one two three four XYve XYve
+#                ^          # Applied to all elements of the array.
+# Replace back-end occurrences of substring.
+echo ${arrayZ[@]/%ve/ZZ}    # one two three four fiZZ fiZZ
+#                ^          # Applied to all elements of the array.
+echo ${arrayZ[@]/%o/XX}     # one twXX three four five five
+#                ^          # Why?
+echo "-----------------------------"
