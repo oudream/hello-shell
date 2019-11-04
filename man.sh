@@ -522,3 +522,14 @@ ssh root@35.239.31.154 -AXY -v
 ssh root@localhost -p 2202 -AXY
 
 ssh root@122.51.12.151 -AXY
+
+
+rm "${PWD}/../utf/*"
+find . -name \*.sh
+arr1=$(find . -name \*.sh)
+for a in ${arr1[@]};do echo ${a};touch "./../utf/${a}"; done
+for a in ${arr1[@]};do echo $a;iconv -f GBK -t UTF-8 "${a}" > "./../utf/${a}"; done
+for a in ${arr1[@]};do echo $a;iconv -f GBK -t UTF-8 ${a} -o ./../utf/${a}; done
+iconv -f GBK -t UTF-8 "./wstrings.sh" -o "./../utf/./wstrings.sh"
+iconv -f GBK -t UTF-8 "/opt/ddd/cshell/referto/abs-guide-cn/wstrings.sh" -o "/opt/ddd/cshell/referto/utf/wstrings.sh"
+iconv -f GBK -t UTF-8 "/opt/ddd/cshell/referto/abs-guide-cn/wstrings.sh" > "/opt/ddd/cshell/referto/utf/wstrings.sh"

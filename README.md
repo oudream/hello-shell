@@ -5,4 +5,7 @@ $ sudo ln -s  '/etc/systemd/system/test.service'  '/etc/systemd/system/multi-use
 
 wget –no-check-certificate  https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
 
+#
+https://github.com/fengyuhetao/shell
+https://github.com/chaoqing/abs-guide-cn
 

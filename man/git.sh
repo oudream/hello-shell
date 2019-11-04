@@ -3,9 +3,9 @@
 
 git pull origin master
 
-# 运行git status命令查看本地修改
-git status
+git status # 运行git status命令查看本地修改
 git diff readme.txt # 看看更改的地方（difference）
+git remote -v # git查看远程仓库地址命令
 
 # 下述命令其实相当于 git fetch + git merge
 git pull origin master

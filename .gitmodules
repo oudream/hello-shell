@@ -1,3 +1,6 @@
 [submodule "referto/abs-guide-cn"]
 	path = referto/abs-guide-cn
 	url = https://github.com/chaoqing/abs-guide-cn
+[submodule "referto/fengyuhetao"]
+	path = referto/fengyuhetao
+	url = https://github.com/fengyuhetao/shell
