@@ -58,3 +58,7 @@ $* - All arguments passed to script or function.|
 $? - The exit status of the last command executed.|
 $$ - The process ID of the current shell. For shell scripts, this is the process ID under which they are executing.|
 $! - The process number of the last background command.|
+
+
+## 可以识别转义字符，如\n是换行符
+echo -e "1\n2"

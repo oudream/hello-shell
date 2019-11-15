@@ -35,7 +35,7 @@ dpkg -S filename-search-pattern #搜索指定包里面的文件（模糊查询�
 dpkg -L package #显示一个包安装到系统里面的文件目录信息
 dpkg -s package #报告指定包的状态信息
 dpkg -l #显示所有已经安装的Deb包，同时显示版本号以及简短说明
-
+dpkg -L python3-dev
 
 ## apt-get , apt
 # apt-get是一条linux命令，适用于deb包管理式的操作系统，主要用于自动从互联网的软件仓库中搜索、安装、升级、卸载软件或操作系统。
@@ -49,6 +49,7 @@ apt-get remove --purge [软件名称] # 卸载一个已安装的软件包（删�
 apt-get autoremove [软件名称] # 删除包及其依赖的软件包
 apt-get autoremove --purge [软件名称] # 删除包及其依赖的软件包+配置文件，比上面的要删除的彻底一点
 dpkg --force-all --purge [软件名称] # 有些软件很难卸载，而且还阻止了别的软件的应用，就能够用这个，但是有点冒险。
+apt list --installed # 列出所有已经安装的包
 
 
 ## Snap

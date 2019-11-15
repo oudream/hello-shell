@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+
+
+OLD_IFS="$IFS";IFS=",";s2=($s1);IFS="$OLD_IFS"
+
+
+
 ### init
 sudo apt-get update -y ; sudo apt-get upgrade -y
 ## 一次性安装
@@ -189,7 +195,11 @@ last # 系统登录日志记录,它会读取位于/var/log下wtmp目录。默认
 cat ~user/.bash_history # 如果是bash
 cat ~user/.history # 如果是csh 可能是
 cat ~user/.sh_history # 如果是ksh 则可能是
-
+# linux 判断某个命令是否安装
+if ! [ -x "$(command -v git)" ]; then
+  echo 'Error: git is not installed.' >&2
+  exit 1
+fi
 
 
 ### 磁盘和分区
