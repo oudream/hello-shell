@@ -7,6 +7,7 @@ docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 
 docker rmi $(docker images alpine-ssh* -q)
+docker rmi $(docker images -q)
 
 
 docker top $containerId
@@ -152,6 +153,9 @@ docker run ... New_Command
 # The my-label key doesn’t specify a value so the label defaults to an empty string ("").
 # To add multiple labels, repeat the label flag (-l or --label).
 docker run -l my-label --label com.example.foo=bar ubuntu bash
+# This will run the redis container with a restart policy of always so that
+# if the container exits, Docker will restart it.
+docker run --restart=always redis
 
 docker start [OPTIONS] CONTAINER [CONTAINER...]
 docker stop [OPTIONS] CONTAINER [CONTAINER...]

@@ -28,19 +28,33 @@ pstree -c -p -A $(pgrep dockerd)
 ps -Ao user,pid,%cpu,%mem,vsz,rss,tt,stat,start,time,command
 pstree
 
+# http://man7.org/linux/man-pages/man1/ps.1.html
+# https://wangchujiang.com/linux-command/c/ps.html
+# https://www.ibm.com/support/knowledgecenter/en/ssw_aix_71/p_commands/ps.html
+
+
 # linux上进程有5种状态:
 #1. 运行(正在运行或在运行队列中等待)
 #2. 中断(休眠中, 受阻, 在等待某个条件的形成或接受到信号)
 #3. 不可中断(收到信号不唤醒和不可运行, 进程必须等待直到有中断发生)
 #4. 僵死(进程已终止, 但进程描述符存在, 直到父进程调用wait4()系统调用后释放)
 #5. 停止(进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行运行)
+# https://unix.stackexchange.com/questions/412471/what-does-i-uppercase-i-mean-in-ps-aux
+# https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=06eb61844d841d0032a9950ce7f8e783ee49c0d0
+#	/* states in TASK_REPORT: */
+#	"R (running)",		/* 0x00 */
+#	"S (sleeping)",		/* 0x01 */
+#	"D (disk sleep)",	/* 0x02 */
+#	"T (stopped)",		/* 0x04 */
+#	"t (tracing stop)",	/* 0x08 */
+#	"X (dead)",		/* 0x10 */
+#	"Z (zombie)",		/* 0x20 */
+#
+#	/* states beyond TASK_REPORT: */
+#	"I (idle)",		/* 0x40 */
 
-# ps工具标识进程的5种状态码:
-# D: 不可中断 uninterruptible sleep (usually IO)
-# R: 运行 runnable (on run queue)
-# S: 中断 sleeping
-# T: 停止 traced or stopped
-# Z: 僵死 a defunct (”zombie”) process
+# idle（发呆）模式下部份片内模块停止运行，功耗降低，适于短时无任务时降低系统功耗用，恢复正常工作模式的速度较快。
+# sleep（冬眠）模式（也可称stop模式）下绝大多数片内模块停止运行，这时的功耗比idle模式更低，适于长时无任务时将系统功耗降至最低，其恢复到正常工作模式的速度比idle模式慢。
 
 
 # 寻找僵尸进程

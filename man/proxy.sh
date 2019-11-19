@@ -58,6 +58,11 @@ git config --global https.proxy ${https_proxy}
 git config --global --unset http.proxy
 git config --global --unset https.proxy
 
+npm config set proxy ${http_proxy}
+npm config set https-proxy ${https_proxy}
+npm config delete proxy
+npm config delete https-proxy
+
 ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1
 ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
 
