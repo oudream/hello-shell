@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 
+# 输出 NGINX 各文件夹的路径
+nginx -V
+
+
 ### nginx
 nginx -c "/ddd/web/nginx/conf-limi/nginx.conf"
 nginx -t -c "/ddd/web/nginx/conf-limi/nginx.conf" # 只测试配置文件
