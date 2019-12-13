@@ -43,7 +43,7 @@ sed -i.bak 's/^Example/#Example/' /usr/local/etc/clamd.conf
 # non-standard antivirus_can_scan_system SELinux option instead of clamd_can_scan_system.
 #
 #At this time, libclamav only sets the clamd_can_scan_system option, so you may need to
-# manually enable antivirus_can_scan_system. If you don¡¯t perform this step, freshclam
+# manually enable antivirus_can_scan_system. If you donâ€™t perform this step, freshclam
 # will log something like this when it tests the newly downloaded signature databases:
 #
 #    During database load : LibClamAV Warning: RWX mapping denied: Can't allocate RWX Memory:
@@ -73,24 +73,24 @@ setsebool -P antivirus_can_scan_system 1
 clamscan -r /home /opt /fff /usr/local /tmp --log=/fff/clamscan.2.log
 
 
-## clamscan³£ÓÃ²ÎÊıÑ¡Ïî
-# -r£ºÊÊÓÃÓëËùÓĞÎÄ¼ş
-# --unrar£ºÊÊÓÃÓë .rar ÎÄ¼ş
-# --arj£ºÊÊÓÃÓÚ .arj ÎÄ¼ş
-# --unzoo£ºÊÊÓÃÓÚ .zoo ÎÄ¼ş
-# --lha£ºÊÊÓÃÓÚ .lzh ÎÄ¼ş
-# --jar£ºÊÊÓÃÓÚ .jar ÎÄ¼ş
-# --deb£ºÊÊÓÃÓÚ .deb °²×°°ü
-# --tar£ºÊÊÓÃÓÚ .tar ÎÄ¼ş
-# --tgz£ºÊÊÓÃÓÚ .tar.gz
-# --log=FILE/-l FILE£ºÊÊÓÃÓÚÔö¼ÓÉ¨ÃèÈÕÖ¾
-# --move=directory£ºÊÊÓÃÓÚ°Ñ²¡¶¾ÎÄ¼şÒÆ¶¯µ½Ä¿Â¼directoryÏÂ
-# --copy=directory£ºÊÊÓÃÓÚ°Ñ²¡¶¾ÎÄ¼ş¸´ÖÆµ½Ä¿Â¼directoryÏÂ
-# --remove£ºÊÊÓÃÓÚÉ¾³ı²¡¶¾ÎÄ¼ş
-# --quiet£ºÊÊÓÃÓÚÊä³ö´íÎóÏûÏ¢
-# --infected/-i£ºÊÊÓÃÓÚÊä³ö¸ĞÈ¾ÎÄ¼ş
-# --suppress-ok-results/-o£ºÊÊÓÃÓÚÌø¹ıÉ¨ÃèOKµÄÎÄ¼ş
+## clamscanå¸¸ç”¨å‚æ•°é€‰é¡¹
+# -rï¼šé€‚ç”¨ä¸æ‰€æœ‰æ–‡ä»¶
+# --unrarï¼šé€‚ç”¨ä¸ .rar æ–‡ä»¶
+# --arjï¼šé€‚ç”¨äº .arj æ–‡ä»¶
+# --unzooï¼šé€‚ç”¨äº .zoo æ–‡ä»¶
+# --lhaï¼šé€‚ç”¨äº .lzh æ–‡ä»¶
+# --jarï¼šé€‚ç”¨äº .jar æ–‡ä»¶
+# --debï¼šé€‚ç”¨äº .deb å®‰è£…åŒ…
+# --tarï¼šé€‚ç”¨äº .tar æ–‡ä»¶
+# --tgzï¼šé€‚ç”¨äº .tar.gz
+# --log=FILE/-l FILEï¼šé€‚ç”¨äºå¢åŠ æ‰«ææ—¥å¿—
+# --move=directoryï¼šé€‚ç”¨äºæŠŠç—…æ¯’æ–‡ä»¶ç§»åŠ¨åˆ°ç›®å½•directoryä¸‹
+# --copy=directoryï¼šé€‚ç”¨äºæŠŠç—…æ¯’æ–‡ä»¶å¤åˆ¶åˆ°ç›®å½•directoryä¸‹
+# --removeï¼šé€‚ç”¨äºåˆ é™¤ç—…æ¯’æ–‡ä»¶
+# --quietï¼šé€‚ç”¨äºè¾“å‡ºé”™è¯¯æ¶ˆæ¯
+# --infected/-iï¼šé€‚ç”¨äºè¾“å‡ºæ„ŸæŸ“æ–‡ä»¶
+# --suppress-ok-results/-oï¼šé€‚ç”¨äºè·³è¿‡æ‰«æOKçš„æ–‡ä»¶
 
-#¶¨Ê±É¨Ãè
-#³ıÁËÉÏÊöÉ¨Ãè²¡¶¾ÒÔÍâ£¬ÄãÒ²¿ÉÒÔÉèÖÃ¸ö¶¨Ê±ÈÎÎñÀ´¶¨Ê±É¨Ãè²¡¶¾£»
+#å®šæ—¶æ‰«æ
+#é™¤äº†ä¸Šè¿°æ‰«æç—…æ¯’ä»¥å¤–ï¼Œä½ ä¹Ÿå¯ä»¥è®¾ç½®ä¸ªå®šæ—¶ä»»åŠ¡æ¥å®šæ—¶æ‰«æç—…æ¯’ï¼›
 crontab -e

@@ -81,6 +81,12 @@ compgen -c
 
 
 
+set -u # 脚本在头部加上它，shell遇到不存在的变量就会报错，并停止执行。
+set -x # shell在运行结果之前，先打印出执行的那一行命令。
+set -e # 当脚本中任何以一个命令执行返回的状态码不为0时就退出整个脚本（默认脚本运行中某行报错会继续往下执行）
+set -e # set -e 还有另一种写法 set -o errexit。
+set -o pipefail # set -e 有一个例外情况，就是不适用于管道命令（对管道失效）。
+                # set -o pipefail 用来解决这种情况，只要一个子命令失败，整个管道命令就失败，脚本就会终止执行。
 
 ### node.js
 node xxx.js
@@ -283,8 +289,8 @@ apt-get remove iptables # 卸载了iptables
 ### 运行程序 bash
 ./rsync.sh &
 # 但是如上方到后台执行的进程，其父进程还是当前终端shell的进程，而一旦父进程退出，则会发送hangup信号给所有子进程，
-#    子进程收到hangup以后也会退出。如果我们要在退出shell的时候继续运行进程，则需要使用nohup忽略hangup信号，或者setsid将
-#    将父进程设为init进程(进程号为1)
+#    子进程收到hangup以后也会退出。如果我们要在退出shell的时候继续运行进程，则需要使用nohup忽略hangup信号，
+#    或者setsid将父进程设为init进程(进程号为1)
 nohup ./rsync.sh &
 setsid ./rsync.sh &
 # 用 screen tmux 运行进程
@@ -509,10 +515,35 @@ uname -a
 cat /proc/version
 cat /etc/issue
 
+
+
 ### shutdown
 sudo shutdown -h +60 # macos
 sudo shutdown -P +60 # linux
 sudo shutdown -P 1:00 # linux
+
+
+
+### open in browser
+# https://stackoverflow.com/questions/38147620/shell-script-to-open-a-url
+## Linux
+# xdg-open is available in most Linux distributions. It opens a file or URL in the user's preferred browser (configurable with xdg-settings).
+xdg-open https://stackoverflow.com
+
+# macOS
+# open opens files and URLs in the default or specified application.
+open https://stackoverflow.com
+open -a Firefox https://stackoverflow.com
+open -a "Google Chrome" "https://stackoverflow.com"
+
+# Windows
+# You can use the start command at the command prompt to open an URL in the default (or specified) browser:
+start https://stackoverflow.com
+start firefox https://stackoverflow.com
+
+# Cross-platform
+# The builtin webbrowser Python module works on many platforms.
+python -m webbrowser https://stackoverflow.com
 
 
 
@@ -552,3 +583,18 @@ cp -r /opt/tmp /opt/tmp2
 arr1=$(find .)
 for a in ${arr1[@]};do [[ ${a} =~ 'a.12' ]] && (echo "null ${a}") || (echo "rm ${a}") ; done
 for a in ${arr1[@]};do [[ ${a} =~ 'a.12' ]] && (echo "null ${a}") || (echo "rm ${a}: " `rm ${a}` ); ; done
+
+
+;信息系统集成服务;信息技术咨询服务;其他信息技术服务业;金融信息服务;软件开发;计算机和办公设备维修;智能消费设备制造
+;互联网信息服务;其他互联网服务;互联网接入及相关服务
+;数据处理和存储服务
+;电子和电工机械专用设备制造;医疗仪器设备及器械制造;输配电及控制设备制造;通信设备制造;广播电视设备制造;其他电子设备制造;
+
+
+git clone --branch fixV12 https://gitee.com/zhlgh603/ssrs-app.git
+npm install fsevents@1.2.9
+npm install node-sass@latest
+# npm install -f node-sass
+
+git clone --branch CommonComponents https://gitee.com/zhlgh603/ssrs-backend.git
+

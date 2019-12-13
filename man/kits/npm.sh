@@ -24,3 +24,7 @@ npm install --arch=ia32 electron@1.4.14
 #    "electron": "1.4.14"
 #  }
 #}
+
+# .npmrc
+# registry=https://registry.npm.taobao.org/
+# disturl=https://npm.taobao.org/dist
