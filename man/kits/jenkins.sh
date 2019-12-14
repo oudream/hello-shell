@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 docker run \
   -u root \
   --rm \

@@ -176,3 +176,12 @@ EOF
 ./gradlew properties
 
 ### hello world --- end.
+
+
+cat >> build.gradle <<EOF
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.ssrs.backend.BackendApplication'
+    }
+}
+EOF
