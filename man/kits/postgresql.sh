@@ -33,7 +33,6 @@ psql
 #    这时相当于系统用户postgres以同名数据库用户的身份，登录数据库，这是不用输入密码的。如果一切正常，系统提示符会变为"postgres=#"，表示这时已经进入了数据库控制台。以下的命令都在控制台内完成。
 #
 #    第一件事是使用\password命令，为postgres用户设置一个密码。
-#
     \password postgres
 #
 #    第二件事是创建数据库用户dbuser（刚才创建的是Linux系统用户），并设置密码。
@@ -47,7 +46,7 @@ CREATE DATABASE exampledb OWNER dbuser;
 GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
 #
 #    最后，使用\q命令退出控制台（也可以直接按ctrl+D）。
-\q
+    \q
 #
 #    第二种方法，使用shell命令行。
 #
@@ -60,9 +59,9 @@ sudo -u postgres createuser --superuser dbuser
 #    然后，登录数据库控制台，设置dbuser用户的密码，完成后退出控制台。
 sudo -u postgres psql
 #
-\password dbuser
+    \password dbuser
 #
-\q
+    \q
 #
 #    接着，在shell命令行下，创建数据库exampledb，并指定所有者为dbuser。
 #
@@ -141,3 +140,27 @@ ALTER TABLE user_tbl RENAME TO backup_tbl;
 #
 #    # 删除表格
  DROP TABLE IF EXISTS backup_tbl;
+
+
+
+
+### pgweb is postgresql's client
+# https://github.com/sosedoff/pgweb
+# Start server:
+pgweb
+
+# To enable multiple database sessions in pgweb, start the server with:
+pgweb --sessions
+
+# You can also provide connection flags:
+pgweb --host localhost --user myuser --db mydb
+
+# install
+# mac
+wget https://github.com/sosedoff/pgweb/releases/download/v0.11.4/pgweb_darwin_amd64.zip
+unzip pgweb_darwin_amd64.zip
+# linux
+wget https://github.com/sosedoff/pgweb/releases/download/v0.11.4/pgweb_linux_amd64.zip
+unzip pgweb_darwin_amd64.zip
+
+
