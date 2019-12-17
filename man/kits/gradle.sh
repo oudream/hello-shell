@@ -67,8 +67,34 @@ gradle clean build --refresh-dependencies
 #}
 
 
-# install
+## install
+# macos
 brew install gradle
+
+# linux
+sudo apt update
+# Install OpenJDK
+# Gradle requires Java JDK or JRE version 7 or above to be installed. We'll install OpenJDK 8.
+# The installation of Java is pretty simple. Start by updating the package index:
+# Install the OpenJDK package by typing:
+sudo apt install openjdk-8-jdk
+# Verify the Java installation by running the following command which will print the Java version:
+# test java
+java -version
+# Download Gradle
+wget https://services.gradle.org/distributions/gradle-6.0.1-bin.zip -P /tmp
+sudo unzip -d /opt/gradle /tmp/gradle-*.zip
+# test gradle
+ls /opt/gradle/gradle-6.0.1
+cat >> /etc/profile.d/gradle.sh <<EOF
+export GRADLE_HOME=/opt/gradle/gradle-6.0.1
+export PATH=${GRADLE_HOME}/bin:${PATH}
+EOF
+sudo chmod +x /etc/profile.d/gradle.sh
+source /etc/profile.d/gradle.sh
+# test gradle in path
+gradle -v
+
 
 # Gradle从Ant中获取了灵活的特性，从Maven得到了配置，依赖关系管理和插件的基本规范。
 # Gradle和Ant一样，将任务作为一等公民对待。
@@ -82,6 +108,7 @@ brew install gradle
 # Gradle的wrapper将自己包含在项目中，独立于构建工具的安装。
 # 它允许您以零配置方式用Gradle构建项目(无需先安装Gradle distribution)。 这将确保每个人都使用相同版本的构建工具。
 #
+
 
 gradle wrapper --gradle-version 2.14.1
 # 这将在你的工程里生成文件:

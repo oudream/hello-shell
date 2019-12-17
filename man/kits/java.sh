@@ -8,6 +8,17 @@ export PATH=$PATH:$HADOOP_HOME/bin
 
 
 
+### java 版本切换
+## macos
+export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+# export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+## linux
+update-alternatives --config java
+update-alternatives --config javac
+
+
+
 ### java
 https://www.jianshu.com/p/87637b150026
 
@@ -123,3 +134,30 @@ EOF
 
 javac HelloC.java
 java -cp . HelloC
+
+
+
+
+
+### MANIFEST.MF
+#    1. Manifest-Version
+#    用来定义manifest文件的版本，例如：Manifest-Version: 1.0
+#    2. Created-By
+#    声明该文件的生成者，一般该属性是由jar命令行工具生成的，例如：Created-By: Apache Ant 1.5.1
+#    3. Signature-Version
+#    定义jar文件的签名版本
+#    4. Class-Path
+#    应用程序或者类装载器使用该值来构建内部的类搜索路径
+
+Manifest-Version: 1.0
+Main-Class: com.hejing.paserTsp.ShowResultFrame
+Class-Path: lib/commons-beanutils-1.8.0.jar
+ lib/byte-buddy-1.7.5.jar
+ lib/client-combined-3.8.1.jar
+ lib/client-combined-3.8.1-sources.jar
+ lib/commons-codec-1.10.jar
+ lib/commons-collections-3.2.1.jar
+ lib/commons-exec-1.3.jar
+ lib/commons-lang-2.5.jar
+ lib/commons-logging-1.1.1.jar
+

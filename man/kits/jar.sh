@@ -26,6 +26,7 @@ jar {ctxui}[vfmn0PMe] [jar-file] [manifest-file] [entry-point] [-C dir] files ..
 
 # 以文件test创建test.jar
 jar cf test.jar test
+jar cf test.jar test.class
 
 # 查看jar文件列表
 jar tf test.jar
@@ -39,6 +40,46 @@ jar vtf test.jar > a.txt
 # 将jar中的文件解出到当前目录下
 jar xf test.jar a.txt
 
+
+
+
+### tutorial
+https://docs.oracle.com/javase/tutorial/deployment/jar/build.html
+jar cvf TicTacToe.jar TicTacToe.class audio images
+jar cvf0 TicTacToe.jar TicTacToe.class audio images
+jar cvf TicTacToe.jar *
+
+
+jar cf ImageAudio.jar -C images . -C audio .
+# The -C images part of this command directs the Jar tool to go to the images directory, and the .
+# following -C images directs the Jar tool to archive all the contents of that directory.
+# The -C audio . part of the command then does the same with the audio directory.
+
+# The resulting JAR file would have this table of contents:
+#
+#    META-INF/MANIFEST.MF
+#    cross.gif
+#    not.gif
+#    beep.au
+#    ding.au
+#    return.au
+#    yahoo1.au
+#    yahoo2.au
+
+
+# By contrast, suppose that you used a command that did not employ the -C option:
+jar cf ImageAudio.jar images audio
+
+# The resulting JAR file would have this table of contents:
+
+#    META-INF/MANIFEST.MF
+#    images/cross.gif
+#    images/not.gif
+#    audio/beep.au
+#    audio/ding.au
+#    audio/return.au
+#    audio/yahoo1.au
+#    audio/yahoo2.au
 
 
 
@@ -116,4 +157,5 @@ java -cp ./hello.jar abc.xyz.Hello
 #    jar包还可以包含其它jar包，这个时候，就需要在MANIFEST.MF文件里配置classpath了。
 #
 #    在大型项目中，不可能手动编写MANIFEST.MF文件，再手动创建zip包。Java社区提供了大量的开源构建工具，例如Maven，可以非常方便地创建jar包。
+
 
