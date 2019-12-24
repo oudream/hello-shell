@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 
+https://docs.oracle.com/javase/9/tools/jar.htm
+
+
 jar tf test.jar
 
 

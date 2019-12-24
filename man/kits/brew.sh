@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+
+
+brew install postgresql@8.4.4
+
+
+
 brew update && brew upgrade && brew cleanup
 
 brew doctor

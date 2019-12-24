@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 # Tutorial, Guides
 https://gradle.org/guides/
 https://docs.gradle.org/current/userguide/command_line_interface.html
@@ -7,6 +8,12 @@ https://docs.gradle.org/current/dsl/index.html
 
 ~/.gradle/wrapper/dists # gradle bin
 ~/.gradle/caches/modules-2/files-2.1 # jar包位置
+
+
+
+gradle wrapper
+gradle build
+
 
 
 # 查看依赖图表
@@ -72,6 +79,8 @@ gradle clean build --refresh-dependencies
 brew install gradle
 
 # linux
+# https://linuxize.com/post/how-to-install-gradle-on-ubuntu-18-04/
+# https://services.gradle.org/distributions/
 sudo apt update
 # Install OpenJDK
 # Gradle requires Java JDK or JRE version 7 or above to be installed. We'll install OpenJDK 8.
@@ -212,3 +221,10 @@ jar {
     }
 }
 EOF
+
+
+### hello fasterxml
+mkdir jackson-databind1 && cd jackson-databind1
+gradle init
+
+

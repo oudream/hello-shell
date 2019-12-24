@@ -74,3 +74,8 @@ sudo snap remove xxxx
 # 有什么snap软件包呢！
 # Uappexplorer
 # https://uappexplorer.com/snaps
+
+openjdk-11-jre-headless/now 11.0.4+11-1ubuntu2~18.04.3 amd64 [installed,upgradable to: 11.0.5+10-0ubuntu1.1~18.04]
+openjdk-8-jdk-headless/now 8u222-b10-1ubuntu1~18.04.1 amd64 [installed,upgradable to: 8u232-b09-0ubuntu1~18.04.1]
+openjdk-8-jre/now 8u222-b10-1ubuntu1~18.04.1 amd64 [installed,upgradable to: 8u232-b09-0ubuntu1~18.04.1]
+openjdk-8-jre-headless/
