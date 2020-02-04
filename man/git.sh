@@ -175,8 +175,8 @@ git push origin HEAD:master
 # 删除子模块比较麻烦，需要手动删除相关的文件，否则在添加子模块时有可能出现错误
 # 同样以删除assets文件夹为例
 # 删除子模块文件夹
-git rm --cached assets
-rm -rf assets
+git rm --cached springBoot_atguigu
+rm -rf springBoot_atguigu
 # 删除.gitmodules文件中相关子模块信息
 #[submodule "assets"]
 #  path = assets
@@ -185,7 +185,7 @@ rm -rf assets
 # [submodule "assets"]
 #   url = https://github.com/maonx/vimwiki-assets.git
 # 删除.git文件夹中的相关子模块文件
-rm -rf .git/modules/assets
+rm -rf .git/modules/springBoot_atguigu
 
 # 只克隆最新的提交记录
 git clone <remote-address> --depth 1

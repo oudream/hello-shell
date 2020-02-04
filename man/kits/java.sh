@@ -5,6 +5,8 @@ https://docs.oracle.com/javase/9/tools/java.htm
 https://docs.oracle.com/javase/9/tools/tools-and-command-reference.htm
 https://docs.oracle.com/javase/9/tools/index.html
 
+/opt/fff/jd-gui-osx-1.4.0/JD-GUI.app/Contents/MacOS/universalJavaApplicationStub.sh
+
 
 ### install
 ## linux

@@ -13,6 +13,7 @@ sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd
 ClientAliveInterval 30
 ClientAliveCountMax 6
 sudo service restart ssh
+sudo systemctl restart ssh.service
 
 # 如果你没有服务器端管理权限， 在客户端进行设置也可以实现, 只要在/etc/ssh/ssh_config文件里加两个参数就行了
 TCPKeepAlive yes

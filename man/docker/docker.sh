@@ -12,6 +12,7 @@ docker rmi $(docker images -q)
 
 docker top $containerId
 docker ps --size
+docker ps -a --no-trunc
 
 ## 容器生命周期管理
 run
@@ -338,3 +339,8 @@ ls /proc/$DBPID
 # For example, you can view and update the environment variables defined to that process.
 cat /proc/$DBPID/environ
 docker exec -it db env
+
+
+docker run -it --rm alpine "/bin/bash while sleep 2;do printf '\33[0n'; printf 'abc'; done;"
+docker run -d --rm alpine /bin/sh -c "while sleep 2;do printf aaabbbccc134\\n; done;"
+docker run -i -t crystal/mono-base bash -c "/usr/local/bin/mono /home/crystal/Downloads/BackgroundProcesser.exe & /bin/bash"
