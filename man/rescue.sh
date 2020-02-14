@@ -2,9 +2,9 @@
 
 # reboot to rescue base on Finnix
 
-# Finnix FinnixÊÇÒ»¸ö»ùÓÚDebianµÄÍêÈ«¶ÀÁ¢µÄ¿ÉÆô¶¯Linux¾ÈÔ®LiveCD¡£Ëü¶ÔÓÚ°²×°ºÍĞŞ¸ÄÓ²ÅÌÇı¶¯Æ÷£¬·ÖÇø£¬ÖØ½¨Æô¶¯¼ÇÂ¼£¬
-#    Íì¾ÈÏÖÓĞÏµÍ³µÈ·Ç³£ÓĞÓÃ¡£
-# Finnix»ùÓÚLinuxÄÚºË3.0ºÍx86£¬Ä¬ÈÏÇé¿öÏÂ°üÀ¨Êı°Ù¸öÏµÍ³¹ÜÀíÔ±Èí¼ş°ü£¬È«²¿Ğ¡ÓÚ400 MB£¬Ñ¹Ëõ³É160MBĞ¡ĞÍ¿ÉÒıµ¼ISOÓ³Ïñ¡£
+# Finnix Finnixæ˜¯ä¸€ä¸ªåŸºäºDebiançš„å®Œå…¨ç‹¬ç«‹çš„å¯å¯åŠ¨Linuxæ•‘æ´LiveCDã€‚å®ƒå¯¹äºå®‰è£…å’Œä¿®æ”¹ç¡¬ç›˜é©±åŠ¨å™¨ï¼Œåˆ†åŒºï¼Œé‡å»ºå¯åŠ¨è®°å½•ï¼Œ
+#    æŒ½æ•‘ç°æœ‰ç³»ç»Ÿç­‰éå¸¸æœ‰ç”¨ã€‚
+# FinnixåŸºäºLinuxå†…æ ¸3.0å’Œx86ï¼Œé»˜è®¤æƒ…å†µä¸‹åŒ…æ‹¬æ•°ç™¾ä¸ªç³»ç»Ÿç®¡ç†å‘˜è½¯ä»¶åŒ…ï¼Œå…¨éƒ¨å°äº400 MBï¼Œå‹ç¼©æˆ160MBå°å‹å¯å¼•å¯¼ISOæ˜ åƒã€‚
 
 # By default, your disks are not mounted when your Linode boots into Rescue Mode. However,
 #    you can manually mount a disk under Rescue Mode to perform system recovery and maintenance
@@ -13,7 +13,7 @@
 
 mount -o barrier=0 /dev/sda
 # Disks that contain a single filesystem will have mount points under /media in
-#    the rescue environment¡¯s /etc/fstab file. To view the directories on the disk,
+#    the rescue environmentâ€™s /etc/fstab file. To view the directories on the disk,
 #    enter the following command:
 
 ls /media/sda
@@ -29,11 +29,11 @@ mount -t devpts pts dev/pts/
 chroot /media/sda /bin/bash
 
 
-# ĞŞ¸´ÎÄ¼şÏµÍ³
-# ÔÚFinnixÉÏĞŞ¸´ÎÄ¼şÏµÍ³·Ç³£¼òµ¥Ã÷ÁË¡£ÈçÉÏËùÊöÒıµ¼ÖÁFinnix£¬²¢ÔËĞĞÒÔÏÂÃüÁî£º
-# ÉÏÃæµÄÃüÁî½«ĞŞ¸´ÄúµÄ¸ùÎÄ¼şÏµÍ³²¢´«µİ¡°yes¡±±êÖ¾ÒÔ×Ô¶¯ĞŞ¸´ÎÄ¼şÏµÍ³¶øÎŞĞè½øÒ»²½ÊäÈë¡£
+# ä¿®å¤æ–‡ä»¶ç³»ç»Ÿ
+# åœ¨Finnixä¸Šä¿®å¤æ–‡ä»¶ç³»ç»Ÿéå¸¸ç®€å•æ˜äº†ã€‚å¦‚ä¸Šæ‰€è¿°å¼•å¯¼è‡³Finnixï¼Œå¹¶è¿è¡Œä»¥ä¸‹å‘½ä»¤ï¼š
+# ä¸Šé¢çš„å‘½ä»¤å°†ä¿®å¤æ‚¨çš„æ ¹æ–‡ä»¶ç³»ç»Ÿå¹¶ä¼ é€’â€œyesâ€æ ‡å¿—ä»¥è‡ªåŠ¨ä¿®å¤æ–‡ä»¶ç³»ç»Ÿè€Œæ— éœ€è¿›ä¸€æ­¥è¾“å…¥ã€‚
 fsck -y /dev/vda1
 
 
-# To exit the chroot and get back to Finnix type ¡°exit¡± :
+# To exit the chroot and get back to Finnix type â€œexitâ€ :
 exit

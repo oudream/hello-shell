@@ -216,3 +216,18 @@ git push http://example.com/repo.git
 # 这样保存的密码是明文的，保存在用户目录~的.git-credentials文件中
 file ~/.git-credentials
 cat  ~/.git-credentials
+
+
+#【Git黑科技】git 删除远程分支上的某次commit
+# https://blog.csdn.net/jinzhencs/article/details/77897738
+# 回退版本
+git reset –hard commitId
+git push -f
+# 删除某一次commit
+git rebase -i “commit id”^ //注意^不能少 意思是包含本次要删除的commit
+#    然后出现交互界面 (vi的界面）
+dd  # 删除最上面的(就是你要删除的目标commit)
+:wq # 保存即可
+# 然后
+git push -f
+

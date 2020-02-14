@@ -6,26 +6,24 @@ gdb $PID
 
 #1. gdb 调试利器
 #GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。 对于一名Linux下工作的c++程序员，gdb是必不可少的工具；
-#
+
 #1.1. 启动gdb
 #对C/C++程序的调试，需要在编译前就加上-g选项:
-#
-#$g++ -g hello.cpp -o hello
+g++ -g hello.cpp -o hello
+
 #调试可执行文件:
-#
-#$gdb <program>
+gdb <program>
+
 #program也就是你的执行文件，一般在当前目录下。
-#
 #调试core文件(core是程序非法执行后core dump后产生的文件):
-#
-#$gdb <program> <core dump file>
-#$gdb program core.11127
+# gdb <program> <core dump file>
+gdb program core.11127
+
 #调试服务程序:
-#
-#$gdb <program> <PID>
-#$gdb hello 11127
+gdb <program> <PID>
+gdb hello 11127
+
 #如果你的程序是一个服务程序，那么你可以指定这个服务程序运行时的进程ID。gdb会自动attach上去，并调试他。program应该在PATH环境变量中搜索得到。
-#
 #1.2. gdb交互命令
 #启动gdb后，进入到交互模式，通过以下命令完成对程序的调试；注意高频使用的命令一般都会有缩写，熟练使用这些缩写命令能提高调试的效率；
 #

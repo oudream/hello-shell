@@ -7,6 +7,8 @@ https://docs.npmjs.com/cli/install
 
 npm install -f packages-win32.json
 
+npm cache clean -f
+
 # 您还可以通过以下方式嗅出操作系统：
 # nodejs:
 # const _isWin = /^win/.test( process.platform )
