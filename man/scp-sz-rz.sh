@@ -27,9 +27,13 @@ scp -r local_folder remote_username@remote_ip:remote_folder
 # 从远程复制到本地
 scp -P 4588 remote@xx.com:/usr/local/sin.sh /home/administrator
 
-scp -P 2231 root@34.69.62.252:/tmp/hello-* /opt/
+scp -P 2231 root@34.69.62.252:/tmp/hello-*
 
-
+scp /opt/limi/ionic3-components/platforms/android/build/outputs/apk/debug/android-debug.apk root@34.68.240.147:/opt/
+scp /opt/limi/ionic3-components/platforms/android/build/outputs/apk/debug/android-debug.apk root@122.51.12.151:/opt/
+scp root@34.68.240.147:/opt/android-debug.apk /opt/
+scp root@122.51.12.151:/opt/android-debug.apk /opt/
+http://122.51.12.151:8881/android-debug.apk
 
 
 ### install sz rz

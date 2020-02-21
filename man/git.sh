@@ -164,6 +164,9 @@ git submodule init
 # 初始化模块只需在克隆父项目后运行一次。
 # 更新子模块
 git submodule update
+# error : git submodule add https://github.com/maonx/vimwiki-assets.git --recursive
+# 子模块的递归克隆要先 submodule add, 再用以下的命令
+git submodule update --init --recursive
 # 递归克隆整个项目
 # 递归克隆整个项目，子模块已经同时更新了，一步到位。
 git clone https://github.com/maonx/vimwiki-assets.git assets --recursive
@@ -175,8 +178,8 @@ git push origin HEAD:master
 # 删除子模块比较麻烦，需要手动删除相关的文件，否则在添加子模块时有可能出现错误
 # 同样以删除assets文件夹为例
 # 删除子模块文件夹
-git rm --cached springBoot_atguigu
-rm -rf springBoot_atguigu
+git rm --cached "\--recursive"
+rm -rf "\--recursive"
 # 删除.gitmodules文件中相关子模块信息
 #[submodule "assets"]
 #  path = assets
@@ -221,10 +224,10 @@ cat  ~/.git-credentials
 #【Git黑科技】git 删除远程分支上的某次commit
 # https://blog.csdn.net/jinzhencs/article/details/77897738
 # 回退版本
-git reset –hard commitId
+git reset --hard commitId
 git push -f
 # 删除某一次commit
-git rebase -i “commit id”^ //注意^不能少 意思是包含本次要删除的commit
+git rebase -i "commit id"^ # 注意^不能少 意思是包含本次要删除的commit
 #    然后出现交互界面 (vi的界面）
 dd  # 删除最上面的(就是你要删除的目标commit)
 :wq # 保存即可

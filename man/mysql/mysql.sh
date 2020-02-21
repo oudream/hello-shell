@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 
+open https://dev.mysql.com/doc/refman/8.0/en/mysql-commands.html
+
+
 # 1.导出整个数据库
 # mysqldump -u 用户名 -p 数据库名 > 导出的文件名
 mysqldump -u root -p db1 > db1.sql

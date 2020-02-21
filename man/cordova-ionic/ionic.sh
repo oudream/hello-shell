@@ -67,6 +67,13 @@ ionic start "Conference App" https://github.com/ionic-team/ionic-conference-app
 
 
 
+# https://github.com/ionic-team/ionic-cli/issues/2758
+ionic cordova resources ios
+ionic cordova resources android
+ionic cordova resources -f
+
+
+
 ionic cordova run [<platform>] [options]
 #    --ssl ........................... [ng] (--livereload) (experimental) Use HTTPS for the dev server
 #    --list .......................... List all available targets

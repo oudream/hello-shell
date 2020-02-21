@@ -14,6 +14,17 @@ docker top $containerId
 docker ps --size
 docker ps -a --no-trunc
 
+
+docker network create --subnet=172.17.0.0/16 docker00
+
+
+# The host has a changing IP address (or none if you have no network access). From 18.03 onwards our recommendation is to connect to the special DNS name host.docker.internal, which resolves to the internal IP address used by the host. This is for development purpose and will not work in a production environment outside of Docker Desktop for Mac.
+curl host.docker.internal:3306 # macos , windows 用 host.docker.internal 来访问宿主机.
+nc -l 0.0.0.0 801
+nc -zv 192.168.65.2 801 # macos
+nc -zv 172.17.0.1 801 # linux
+
+
 ## 容器生命周期管理
 run
 start/stop/restart
@@ -341,7 +352,6 @@ cat /proc/$DBPID/environ
 docker exec -it db env
 
 
-docker run -it --rm alpine "/bin/sh while sleep 2;do printf '\33[0n'; printf 'abc'; done;"
 docker run -d --rm alpine /bin/sh -c "while sleep 2;do printf aaabbbccc134\\n; done;"
 docker run -i -t crystal/mono-base bash -c "/usr/local/bin/mono /home/crystal/Downloads/BackgroundProcesser.exe & /bin/bash"
 
