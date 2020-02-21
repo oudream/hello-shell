@@ -11,6 +11,7 @@ find / | xargs grep function
 find . -iname "*" -type f -exec ln -s /home/oudream/untitled2/{} /fff/a \;
 #
 find . -maxdepth 1 -type d | while read dir; do count=$(find "$dir" -type f | wc -l); echo "$dir : $count"; done
+find . -maxdepth 3 -type d | while read dir; do [[ ${dir} =~ '/lib' ]] && echo ${dir}; done
 #
 # I'm trying to find files with multiple extensions in a shell script
 find $DIR -name \*.jpg -o -name \*.png -o -name \*.gif -print

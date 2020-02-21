@@ -1,6 +1,6 @@
 ## git pull
 
-`git clone https://github.com/oudream/cshell.git --recursive`
+`git clone https://github.com/oudream/hello-shell.git --recursive`
 
 
 ## cshell
