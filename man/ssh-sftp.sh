@@ -2,37 +2,6 @@
 
 # https://linux.die.net/man/1/ssh
 
-### remote sftp scp ssh ssh-keygen ssh-copy-id
-## SSH 的配置文件在 /etc/ssh/sshd_config 中，你可以看到端口号, 空闲超时时间等配置项。
-# 使用-p选项指定端口号, 直接连接并在后面加上要执行的命令就可以了
-sudo vim /etc/ssh/sshd_config
-# 找到PermitRootLogin prohibit-password一行，改为PermitRootLogin yes
-sed -i 's/#PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-# 服务器端的心跳机制，添加 # ClientAliveInterval表示每隔多少秒，服务器端向客户端发送心跳 # 表示上述多少次心跳无响应之后，会认为Client已经断开
-ClientAliveInterval 30
-ClientAliveCountMax 6
-sudo service restart ssh
-sudo systemctl restart ssh.service
-
-# 如果你没有服务器端管理权限， 在客户端进行设置也可以实现, 只要在/etc/ssh/ssh_config文件里加两个参数就行了
-TCPKeepAlive yes
-ServerAliveInterval 300
-# 前一个参数是说要保持连接，后一个参数表示每过5分钟发一个数据包到服务器表示“我还活着”
-# 如果你没有root权限，修改或者创建~/.ssh/ssh_config也是可以的
-ssh -o TCPKeepAlive=yes -o ServerAliveInterval=300 pswzyu@nuihq.com -p 12345678
-
-
-ssh -p 50022 oudream@172.105.35.102
-
-
-# X11 客户端选项
-# https://linux.die.net/man/5/ssh_config
-        ForwardX11 yes
-        ForwardX11Trusted yes
-        XAuthLocation /opt/X11/bin/xauth
-        ServerAliveInterval 60
-        ForwardX11Timeout 596h
 
 # 打开调试模式
 ssh -v 192.168.0.103
@@ -55,7 +24,6 @@ scp -r root@vm-ubuntu1:/home/root/others/ /home/space/music/ # copy remote to lo
 # From a X(7) man page:
 cat /fff/tmp/000.txt | ssh -X 10.35.191.11 "DISPLAY=:0.0 pbcopy -i"
 ssh -p 56743 oudream@frp1.chuantou.org ls -l
-
 
 # 另外一个很赞的基于 SSH 的工具叫 sshfs. sshfs 可以让你在本地直接挂载远程主机的文件系统.
 # sshfs -o idmap=user user@hostname:/home/user ~/Remote
@@ -91,6 +59,36 @@ ssh-keygen -R 222.24.51.147 # 删除主机密钥 ~/.ssh/known_hosts
 # $HOME/.ssh/id_rsa.pub: $HOME/.ssh/id_rsa.pub文件包含用于身份验证的协议版本2 RSA公钥。 应在用户希望使用公钥认证登录的所有计算机上将此文件的内容添加到$HOME/.ssh/authorized_keys。
 
 
+# config
+### remote sftp scp ssh ssh-keygen ssh-copy-id
+## SSH 的配置文件在 /etc/ssh/sshd_config 中，你可以看到端口号, 空闲超时时间等配置项。
+# 使用-p选项指定端口号, 直接连接并在后面加上要执行的命令就可以了
+sudo vim /etc/ssh/sshd_config
+# 找到PermitRootLogin prohibit-password一行，改为PermitRootLogin yes
+sed -i 's/#PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+# 服务器端的心跳机制，添加 # ClientAliveInterval表示每隔多少秒，服务器端向客户端发送心跳 # 表示上述多少次心跳无响应之后，会认为Client已经断开
+ClientAliveInterval 30
+ClientAliveCountMax 6
+sudo service restart ssh
+sudo systemctl restart ssh.service
+
+# 如果你没有服务器端管理权限， 在客户端进行设置也可以实现, 只要在/etc/ssh/ssh_config文件里加两个参数就行了
+TCPKeepAlive yes
+ServerAliveInterval 300
+# 前一个参数是说要保持连接，后一个参数表示每过5分钟发一个数据包到服务器表示“我还活着”
+# 如果你没有root权限，修改或者创建~/.ssh/ssh_config也是可以的
+ssh -o TCPKeepAlive=yes -o ServerAliveInterval=300 pswzyu@nuihq.com -p 12345678
+
+
+
+# X11 客户端选项
+# https://linux.die.net/man/5/ssh_config
+        ForwardX11 yes
+        ForwardX11Trusted yes
+        XAuthLocation /opt/X11/bin/xauth
+        ServerAliveInterval 60
+        ForwardX11Timeout 596h
 
 ### xauth
 # Rename the existing .Xauthority file by running the following command
@@ -103,6 +101,35 @@ xauth generate :0 . trusted
 xauth add ${HOST}:0 . $(xxd -l 16 -p /dev/urandom)
 # To view a listing of the .Xauthority file, enter the following
 xauth list
+
+
+# ssh-agent 会启动一个进程在内存里保存这些私钥。之后每次登录时，ssh 客户端都会跟 ssh-agent 请求是否有
+#           目标主机的私钥；如果有，ssh 客户端便能直接登录目标主机。
+# 通过 ssh-agent bash 或者 eval `ssh-agent` （这里是shell 的命令替换符）来启动。
+ssh-agent bash
+eval `ssh-agent`
+
+# ssh-add命令是把专用密钥添加到ssh-agent的高速缓存中。该命令位置在/usr/bin/ssh-add。
+ssh-add [-cDdLlXx] [-t life] [file...]ssh-add -s pkcs11ssh-add -e pkcs11
+# 选项
+-D        # 删除ssh-agent中的所有密钥.
+-d        # 从ssh-agent中的删除密钥
+-e pkcs11 # 删除PKCS#11共享库pkcs1提供的钥匙。
+-s pkcs11 # 添加PKCS#11共享库pkcs1提供的钥匙。
+-L        # 显示ssh-agent中的公钥
+-l        # 显示ssh-agent中的密钥
+-t life   # 对加载的密钥设置超时时间，超时ssh-agent将自动卸载密钥
+-X        # 对ssh-agent进行解锁
+-x        # 对ssh-agent进行加锁
+
+
+
+# 1、把专用密钥添加到 ssh-agent 的高速缓存中：
+ssh-add ~/.ssh/id_dsa
+# 2、从ssh-agent中删除密钥：
+ssh-add -d ~/.ssh/id_xxx.pub
+# 3、查看ssh-agent中的密钥：
+ssh-add -l
 
 
 

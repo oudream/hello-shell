@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 
+# ContOS 修改静态 IP
+cd /etc/sysconfig/network-scripts
+# Ubuntu 修改静态 IP
+vim /etc/network/interfaces:
+
+
 # ip [options] object [command [arguments]]
 # OPTIONS 是修改ip行为或改变其输出的选项。所有的选项都是以-字符开头，分为长、短两种形式。如link、addr、route、rule、tunnel 。
 # object是要管理者获取信息的对象。如网络接口类型eth0。
@@ -190,5 +196,4 @@ ip netns monitor # 命令用来监控对 network namespace 的操作。比如我
 # -f <文件>：设置主机的IP地址与MAC地址的静态映射。
 arp -v
 arp -a
-
 
