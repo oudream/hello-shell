@@ -178,8 +178,8 @@ git push origin HEAD:master
 # 删除子模块比较麻烦，需要手动删除相关的文件，否则在添加子模块时有可能出现错误
 # 同样以删除assets文件夹为例
 # 删除子模块文件夹
-git rm --cached "\--recursive"
-rm -rf "\--recursive"
+git rm --cached "man-pages"
+rm -rf "man-pages"
 # 删除.gitmodules文件中相关子模块信息
 #[submodule "assets"]
 #  path = assets
