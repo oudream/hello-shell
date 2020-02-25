@@ -1,0 +1,25 @@
+主机IP列表：
+        [root@centos6 ~]#cat hostlist.txt 
+        192.168.30.7 root centos1
+        192.168.30.17 root centos2
+
+
+[root@centos6 ~]#cat pushkey.sh 
+#!/bin/bash
+ssh-keygen -t rsa -P ''  -f ~/.ssh/id_rsa &> /dev/null && echo "Ssh key is created"
+while read line;do
+        ip=`echo $line|awk '{print $1}'`
+        user=`echo $line|awk '{print $2}'`
+        password=`echo $line|awk '{print $3}'`
+
+        expect <<-EOF
+        set timeout 50
+        spawn ssh-copy-id  -i /root/.ssh/id_rsa.pub $user@$ip
+        expect {
+        "yes/no" { send "yes\n";exp_continue }
+        "password" { send "$password\n" }
+        }
+        expect eof
+        EOF
+        echo "$ip is finished"
+done < hostlist.txt

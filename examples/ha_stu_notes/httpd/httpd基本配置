@@ -1,0 +1,168 @@
+http 三种工作模型
+                    prefrok: 多进程I/O模型，每个进程响应一个请求，默认模型.
+                             一个主进程：生成和回收n个子进程，创建套接字，不响应请求
+                             多个子进程：工作work进程，每个子进程处理一个请求；系统初始时，预先生成多个空闲进程，等待请求，最大不超过1024个
+                             
+                     worker：复用的多进程I/O模型,多进程多线程，IIS使用此模型 
+                             一个主进程：生成m个子进程，每个子进程负责生个n个线程，每个线程响应一个请求，并发响应请求：m*n
+                     
+                     event：事件驱动模型（worker模型的变种）  
+                            一个主进程：生成m个子进程，每个进程直接响应n个请求，并发响应请求：m*n，有专门的线程来管理这些keep-alive类型的线程，当有真实请求时，将请
+                            求传递给服务线程，执行完毕后，又允许释放。这样增强了高并发场景下的请求处理能力
+                            
+                            
+ 
+
+yunm 安装： 
+           yum -y install httpd
+          
+
+相关文件：
+
+          主配置文件 ： /etc/httpd/conf/httpd.conf
+          子配置文件 ： /etc/httpd/conf.d/*.conf
+          
+          Centos6中，三种工作模型，分别对应进程
+                       /usr/sbin/httpd                          #prefork
+                       /usr/sbin/httpd.event
+                       /usr/sbin/httpd.worker
+          Centos种，三种工作模式由模块实现，分别为
+                       /usr/lib64/httpd/modules/mod_mpm_event.so
+                       /usr/lib64/httpd/modules/mod_mpm_prefork.so
+                       /usr/lib64/httpd/modules/mod_mpm_worker.so
+                                 
+          建议：http相关配置尽可能在子配置文件中更改，尽量不要更改主配置文件
+          
+          语法检查：
+                   httpd -t
+          
+          /run/httpd/httpd.pid                 # 存放 http Master主进程的进程号
+          /var/log/httpd/access_log            # 访问日志
+          /var/log/httpd/error_log             # 错误日志
+          
+   
+   
+基本配置：
+
+          初始安装，因为没有设置网站名，启动会出现如下警告信息：
+                  AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::20c:29ff:fe55:7660. Set the 'ServerName' directive globally to suppress this message
+          在配置文件中，设置ServerName：
+                  ServerName www.test.com:80              #此名字仅具有本地意义，只是自己给自己取得名字
+                  
+           centos6 中：
+                  <IfModule prefork.c>
+                  StartServers          8                 # 开机开启8个子进程 
+                  MinSpareServers       5                 # 
+                  MaxSpareServers       20                # 
+                  ServerLimit           256               # 最多进程数,最大20000
+                  MaxClients            256               # 最多并发
+                  MaxRequestsPerChild   4000              # 
+                  </IfModule>
+            vim /etc/sysconfig/httpd                      # 更改为work模式
+                  HTTPD=/usr/sbin/httpd.worker
+
+
+
+centos7更改工作模型：
+              cd /etc/httpd/conf.modules.d/
+              vim 00-mpm.conf
+                    LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+                    LoadModule mpm_worker_module modules/mod_mpm_worker.so
+                    LoadModule mpm_event_module modules/mod_mpm_event.so
+  
+            
+ 
+查看指定网站Web服务器的版本信息：
+
+            curl -I 192.168.1.1
+
+
+修改对外显示 Apache 的版本信息:
+            
+            ServerTokens Full (or not specified)
+            Server sends (e.g.): Server: Apache/2.4.2 (Unix) PHP/4.2.2 MyMod/1.2
+            ServerTokens Prod[uctOnly]
+            Server sends (e.g.): Server: Apache
+            ServerTokens Major
+            Server sends (e.g.): Server: Apache/2
+            ServerTokens Minor
+            Server sends (e.g.): Server: Apache/2.4
+            ServerTokens Min[imal]
+            Server sends (e.g.): Server: Apache/2.4.2
+            ServerTokens OS
+            Server sends (e.g.): Server: Apache/2.4.2 (Unix)
+            
+            
+            
+修改监听的IP和端口
+            
+            Listen [IP:]PORT
+                (1) 省略IP表示为本机所有IP
+                (2) Listen指令至少一个，可重复出现多次
+                 
+                例：
+                    Listen  8080                # 修改监听8080端口
+                    
+                    Listen 192.168.1.1 80       # 只能192.168.1.1访问
+                    
+
+
+持久连接 ： 连接建立，每个资源获取完成后不会断开连接，而是继续等待其它的请求完成，默认关闭持久连接
+            KeepAlived    On                    # 默认 On
+            KeepAliveTimeout 15                 # 持续时间15秒后断开连接，默认为5秒
+            MaxKeepAliveRequests 100            # 发起100个请求后断开
+            
+            用 telnet测试:
+                      在httpd根目录下创建几个个较大的html文件
+                      telnet 192.168.1.1 80                     # 模拟浏览器
+                      GET /index.html HTTP/1.1                  # 发GET指令获取指定页面
+                      HOST: 2.2.2.2                             # 指定你的网站IP，测试可以随便写
+                      ...                                       # 可以持续多个GET请求
+                      
+                      
+模拟并发访问：
+            ab -c 100 -n 2000 192.168.1.1/index.html                        # 模拟100个并发访问，最大2000个访问。
+            
+
+
+查看已加载的模块：
+            httpd -M
+            httpd -l                                                                 # 静态模块
+            /etc/httpd/conf.modules.d/00-base.conf                                   # 模块加载的配置文件
+            /etc/httpd/modules -> ../../usr/lib64/httpd/modules                      # 模块所在路径            
+
+
+
+
+
+更改主页面存放路径：(新路径为：/data/web)
+            /etc/httpd/conf.d/test.conf
+                DocumentRoot "/data/web"
+                <Directory "/data/web">
+                    Require all granted
+                </Directory>
+
+
+
+
+定义网站主页面：
+            
+            <IfModule dir_module>
+                DirectoryIndex index.html
+            </IfModule>
+             
+                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+

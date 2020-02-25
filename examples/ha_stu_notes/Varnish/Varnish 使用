@@ -1,0 +1,336 @@
+1. Varnish 的配置文件
+
+    /etc/varnish/varnish.params         # 用来进行 Varnish 自身的一些配置
+          VARNISH_VCL_CONF=/etc/varnish/default.vcl     # 指定 vcl 文件路径，可以随意写
+          VARNISH_LISTEN_PORT=6081                      # Varnish 的监听接口
+          
+          VARNISH_ADMIN_LISTEN_ADDRESS=127.0.0.1        # 管理 Varnish 的 IP 和接口
+          VARNISH_ADMIN_LISTEN_PORT=6082
+          VARNISH_SECRET_FILE=/etc/varnish/secret       # 预共享密钥，做身份验证的对称密钥
+          
+          VARNISH_STORAGE="malloc,256M"                 # 内存存储，[,size]用于定义空间大小；重启后所有缓存项失效
+          #VARNISH_STORAGE="file,/var/lib/varnish/varnish.bin,20G"
+                                                        #  磁盘文件存储，黑盒；重启后所有缓存项失效；
+                                                        #  persistent,path,size    文件存储，黑盒；重启后所有缓存项有效     
+          
+          VARNISH_USER=varnish                          #  指定进程的用户身份，用磁盘存储时，注意要对指定路径有写权限
+          VARNISH_GROUP=varnish
+  
+    varnish 的运行时参数  
+                
+           线程相关的参数：使用线程池机制管理线程；
+                  thread_pools                                    #  定义多少个线程池，最好小于或等于CPU核心数量；
+                  thread_pool_max                                 #  每线程池的最大线程数
+                  thread_pool_min                                 #  额外意义为“最大空闲线程数”
+                        最大并发连接数 = thread_pools  * thread_pool_max
+                        
+                  thread_pool_timeout
+                  thread_pool_add_delay
+                  thread_pool_destroy_delay             
+
+           Timer相关的参数：
+                  send_timeout
+				  timeout_idle
+				  timeout_req
+				  cli_timeout
+                  
+      varnishstat
+      varnishtop
+      varnishlog
+      varnishncsa
+                  
+
+
+
+2. varnishadm :
+       登陆：
+          varnishadm [-n ident] [-t timeout] [-S secretfile] -T [address]:port command [...]
+                -S 指明认证文件路径
+                -T 连接的地址和端口
+          例： varnishadm -S /etc/varnish/secret -T 127.0.0.1:6082
+       
+       登陆后：
+          help                                  # 列出可用命令列表      
+              help    
+              ping                              # 探测服务器存活性      
+              auth                              # 做认证
+              quit                              # 退出
+              banner                            # 输出欢迎信息
+              status                            # 查看服务进程状态                         
+              start                             # 启动 Vanish
+              stop                              # 停止 Vanish
+              vcl.load                          # 
+              vcl.inline       
+              vcl.use                           # 切换 VCL
+              vcl.discard                       # 删除 VCL
+              vcl.list                          # 列出正在使用的 VCL
+              param.show                        # 查看服务器内部进程参数
+              param.set 
+              panic.show                        # 内部出现故障，获取排障信息
+              storage.list                      # 列出存储系统
+              vcl.show                          # 查看 vcl 配置
+              backend.list                      # 列出后端服务器
+              backend.set_health
+              ban
+              ban.list
+
+
+3. Varnish 配置示例：
+       vcl 配置文件为 /etc/varnishi/default.vcl
+       后端两个 Web 服务器，IP分别为 ： 192.168.31.3 192.168.31.4 ，缓存服务器 IP 为 192.168.1.1
+                      
+                      
+        （1）为缓存服务器添加后端服务器
+              backend default {
+                  .host = "192.168.31.3";
+                  .port = "80";
+              }
+              # 添加了一个默认后端服务器，IP 为192.168.31.3 ，端口号为 80。
+              
+              两种编译重载方式：
+                  varnish_reload_vcl            # 在命令行直接执行
+                  vcl.load test1 default.vcl    # 登陆到 varnishadm 
+                  
+                  
+                  
+                  
+        （2） 在响应客户端的请求中添加信息
+                sub vcl_deliver {
+
+                    if (obj.hits>0) {
+                        set resp.http.X-Cache = "Hit via " + server.ip;
+                    } else {
+                        set resp.http.X-Cache = "Miss from " + server.ip;
+                    }
+                }
+                # 判断客户端的请求是否命中，如果没命中，在响应头中会多出如下信息：X-Cache: Miss from 192.168.1.1
+                                          如果命中，则会多出 ： X-Cache: Hit via 192.168.1.1
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+        （3） 强制对某类资源的请求不检查缓存：
+                vcl_recv {
+                    if (req.url ~ "(?i)^/(login|admin)") {
+                        return(pass);
+                    }   
+                }
+                # '?i' 表示不区分大小写，对以下请求不使用缓存 http://192.168.1.1:6081/login* 和 http://192.168.1.1:6081/admin*
+                
+                
+                
+                
+                
+                
+        （4） 对于特定类型的资源，例如公开的图片等，取消其私有标识，并强行设定其可以由varnish缓存的时长 
+                 sub vcl_backend_response {
+                        if (beresp.http.cache-control !~ "s-maxage") {
+                                if (bereq.url ~ "(?i)\.(jpg|jpeg|png|gif|css|js)$") {
+                                    unset beresp.http.Set-Cookie;
+                                    set beresp.ttl = 3600s;
+                                }
+                        }
+                  }
+                  #  判断后端发来的 cache-control 中是否有公共缓存时长，如果没有则判断发给后端请求中的 url 中
+                     是否以 jpg，jpeg，png，gif，css，js 等结尾。是的话，就将后端响应请求中的 cookie 去掉，
+                     并加上 缓存有效时长为 1 小时。
+                     
+                     
+
+
+
+        （5） 告诉后端服务器真实的客户端地址
+                   vcl_recv {       
+                        if (req.restarts == 0) {
+                            if (req.http.X-Fowarded-For) {
+                                set req.http.X-Forwarded-For = req.http.X-Forwarded-For + "," + client.ip;
+                            } else {
+                                set req.http.X-Forwarded-For = client.ip;
+                            }
+                        }
+                    } 
+                    # 如果 收到的 req 中已经有 X-Forwarded-For ,说明自己的前端也是一个代理服务器，在后面补上 client.ip.
+                      能够判断有多少级代理。如果 收到的 req 中没有 X-Forwarded-For，就将X-Forwarded-For的值设为 client.ip
+
+
+
+
+
+        （6） 使用 PURGE 修建缓存对象
+               
+                    acl purgers {
+                            "127.0.0.0"/8;
+                            "192.168.1.0"/24;
+                    }
+                    # 定义有哪些 IP 可以使用purger 清理缓存,清理的缓存为本地址段IP 的缓存
+                   vcl_recv {                     
+                        if (req.method == "PURGE") {
+                                if (!client.ip ~ purgers) {
+                                        return(synth(405,"Purging not allowed for " + client.ip));
+                                }
+                                return(purge);
+                        }
+                   }
+                   # 判断请求方法是否为 “PURGE” ，如果是，判断请求的来源 IP 是否是在 ACL 定义中允许的。
+                     如果不是，就返回 405错误，拒绝请求；如果是 ACL 允许的，则交给 purge.
+                     
+        (7)  在 varnishadm 中使用 ban 清理缓存
+        
+                  ban req.url ~ (?i)^/test[123]
+                  # 将请求中所有开头为 test1 test2 test3 的缓存清理掉，仅本次生效
+         
+        
+        
+        (8)  多后端服务器，并实现动静分离
+                    backend default {
+                        .host = "192.168.31.3";
+                        .port = "80";
+                    }
+                    backend php_server {
+                        .host = "192.168.31.4";
+                        .port = "80";
+                    }
+                    # 此处定义了两个后端服务器
+			
+                    sub vcl_recv {				
+                        if (req.url ~ "(?i)\.php$") {
+                            set req.backend_hint = php_server;
+                        } else {
+                            set req.backend_hint = default;
+                        }	
+                    }        
+                    # 对所有以的 php 代码，将被发往 php_server 定义的后端服务器，其他的默认发往 default
+                    
+         (9)  负载均衡 ，需要导入模块 directors
+         
+                1. 基于轮询的调度：
+
+                    import directors;    # 加载模块
+
+                    backend server1 {
+                            .host = "192.168.31.5";
+                            .port = "80";
+                    }
+                    backend server2 {
+                            .host = "192.168.31.6";
+                            .port = "80";
+                    }
+                    # 定义后端服务器
+                    
+                    sub vcl_init {
+                        new srvs = directors.round_robin();        # 定义一个服务器组，名字为 srvs,使用调度算法为 轮询
+                        srvs.add_backend(server1);                 # 向组内添加服务器 
+                        srvs.add_backend(server2);
+                    }                    
+
+
+                    sub vcl_recv {
+                        set req.backend_hint = srvs.backend();
+                    }
+                    # 在 vcl_recv 中调用
+
+
+
+		       2. 基于cookie的 调度
+                
+                    import directors;    # 加载模块
+
+                    backend server3 {
+                            .host = "192.168.31.7";
+                            .port = "80";
+                    }
+                    backend server4 {
+                            .host = "192.168.31.8";
+                            .port = "80";
+                    }
+
+
+                    sub vcl_init {
+                        new srvs2 = directors.hash();
+                        srvs2.add_backend(server3, 1);
+                        srvs2.add_backend(server4, 1);
+                    }
+                    
+                    sub vcl_recv {
+                        set req.backend_hint = srvs2.backend();
+                    }                    
+                    
+              3. 基于随机的调度方式，支持服务器权重：
+              
+                    import directors;    # 加载模块
+
+                    backend server5 {
+                            .host = "192.168.31.9";
+                            .port = "80";
+                    }
+                    backend server6 {
+                            .host = "192.168.31.10";
+                            .port = "80";
+                    }                    
+                    
+                    sub vcl_init {
+                        new srvs3 = directors.random();
+                        srvs3.add_backend(server5,1);           # 权重为1
+                        srvs3.add_backend(server6,2);           # 权重为2
+                    }  
+
+                    sub vcl_recv {
+                        set req.backend_hint = srvs3.backend();
+                    }                    
+                    
+
+
+
+         (10) 健康性检查
+         
+                    probe check {                                                   # 定义健康状态检测方法
+                        .url = "/.healthcheck.html";                                # 定义健康性检查时，向哪个页面发起请求
+                        .window = 5;                                                # 基于最近的多少次检查来判断其健康状态
+                        .threshold = 4;                                             # 检查的次数中有多少次成功，次算健康
+                        .interval = 2s;                                             # 多少时间检查一次
+                        .timeout = 1s;                                              # 超时时长
+                    }
+
+                    backend default {
+                        .host = "192.168.31.3";
+                        .port = "80";
+                        .probe = check;
+                    }
+
+                    backend appsrv {
+                        .host = "192.168.31.4";
+                        .port = "80";
+                        .probe = check;
+                    }
+
+
+        （11） 手动设定后端服务器状态, 在 varnishadm 中设定  
+                    
+                    backend.set_health server1 sick                         # 手工下线
+                    backend.set_health server1 health                       # 手工定义为 health ,即使后端出现问题，依然会显示 helth
+                    backend.set_health server1 auto                         # 设置自动探测
+
+
+
+
+        （12） 设置后端主机的属性
+                    
+                    backend BE_NAME {
+                        .host = "192.168.31.3";
+                        .port = "80";
+                        .connect_timeout = 0.5s;                            # 设置连接超时时间
+                        .first_byte_timeout = 20s;                          # 定义接收后端服务器第一个字节的超时时长，超过时间，则认定后端服务器故障
+                        .between_bytes_timeout = 5s;                        # 字节和字节之间的时间不能超过 5 秒
+                        .max_connections = 50;                              # 最大并发连接数
+                    }
+
+
+
+                    
+                    
+
+
+        

@@ -1,0 +1,139 @@
+安装包 ：
+        jdk-8u181-linux-x64.tar.gz
+        apache-tomcat-8.5.34.tar.gz 
+安装目录预览 ：
+    /app/
+    ├── jdk-8u181-linux-x64.tar.gz
+    ├── apache-tomcat-8.5.34.tar.gz
+    ├── apache-tomcat-8.5.34
+    ├── jdk1.8.0_181
+    ├── jdk -> jdk1.8.0_181/
+    └── tomcat -> apache-tomcat-8.5.34
+
+
+
+1. 安装 JDK
+        mkdir /app && cd /app
+        tar xvf jdk-8u181-linux-x64.tar.gz
+        ln -s /app/jdk1.8.0_181/ /apps/jdk
+        vim /etc/profile
+            export HISTTIMEFORMAT="%F %T `whoami` "
+            export export LANG="en_US.utf-8"
+            export JAVA_HOME=/app/jdk
+            export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+            export PATH=$PATH:$JAVA_HOME/bin
+        source  /etc/profile 
+        
+2. 安装 Tomcat
+        tar xvf   apache-tomcat-8.5.34.tar.gz
+        ln -s /app/apache-tomcat-8.5.34 /app/tomcat
+        
+        /app/tomcat/bin/
+        /app/tomcat/bin/catalina.sh start                    # 启动 Tomcat
+        /app/tomcat/bin/catalina.sh stop                     # 关闭 Tomcat
+        
+        
+* 服务脚本 tomcat
+        cp tomcat /etc/init.d/            # 复制到 /etc/init.d/ 下 ，可使用 /etc/init.d/tomcat start|stop  来启动关闭 tomcat
+        （如果想要添加到 systemctl 来管理启动关闭，使用 chkconfig --add tomcat 命令即可）
+
+
+
+
+vim tomcat
+
+      #!/bin/bash
+
+      JDK_HOME=/app/jdk
+      CATALINA_HOME=/app/tomcat
+      export JDK_HOME CATALINA_HOME
+      source /etc/profile
+      #PID=`ps -ef  | grep  -v grep  | grep java | awk  '{print $2}'`
+      #NUM=`ps -ef  | grep  -v grep  | grep java | awk  '{print $2}' | wc -l`
+
+      #case $1 in
+      start() {
+            echo "正在判断服务状态，请稍等！"	
+            echo "请稍等3秒钟"
+            echo "3";sleep 1;echo "2";sleep 1;echo "1";sleep 1
+          if	netstat -an | grep 8080 | grep LISTEN >/dev/null
+            then
+            echo "Tomcat已经正在运行了！"  
+          else 
+            echo "Tomcat没有运行，1秒后启动！"
+          echo 1;sleep 1  
+            $CATALINA_HOME/bin/catalina.sh start 
+            echo  "Tomcat 已经成功启动完成,5秒后判断是否启动成功"
+            echo "5";sleep 1;echo "4";sleep 1
+              echo "3";sleep 1;echo "2";sleep 1;echo "1";sleep 1
+        if  netstat -an | grep 8080 | grep LISTEN >/dev/null
+            then
+          PID=`ps -ef | grep  tomcat | grep jdk | awk '{print $2}'`
+          NUM=`ps -ef | grep  tomcat | grep jdk | awk '{print $2}' | wc -l`
+          echo "Tomcat 已经成功启动${NUM} 个Tomcat进程!,PID为${PID}"
+            else
+          echo "Tomcat启动失败，请重新启动！"
+                echo 1
+        fi
+        fi
+        }
+      stop() {
+          PID=`ps -ef  | grep  -v grep  | grep java | awk  '{print $2}'`
+          NUM=`ps -ef | grep  -v "color"  | grep tomcat | awk '{print $2}' | wc -l`
+          echo "正在判断服务状态，请稍等3秒钟！"	
+          echo "3";sleep 1;echo "2";sleep 1;echo "1";sleep 1
+        if  netstat -an | grep 8080 | grep LISTEN >/dev/null 
+           then	
+          echo "Tomcat运行中，1秒后关闭！"
+          echo  1;sleep 1 
+          echo "即将关闭Tomcat服务，请稍等！" 
+              $CATALINA_HOME/bin/catalina.sh stop ;echo "已经执行关闭命令,正在检查关闭了多少Tomcat进程，请稍等30秒钟！"
+          sleep 27
+              echo "3";sleep 1;echo "2";sleep 1;echo "1";sleep 1
+          pkill java && pkill tomcat
+          if  netstat -an | grep 8080 | grep LISTEN >/dev/null;then
+            PID=`ps -ef  | grep  -v grep  | grep java | awk  '{print $2}'`
+            NUM=`ps -ef | grep  -v "color"  | grep tomcat | awk '{print $2}' | wc -l`
+            kill -9 $PID ;echo "已成功关闭${NUM} 个tomcat进程"
+          else
+              echo  "Tomcat 已经关闭完成！" 
+                echo "3";sleep 1;echo "2";sleep 1;echo "1";sleep 1 
+          fi
+        else
+          echo "Tomcat 没有运行"
+          echo 1
+        fi
+        if  netstat -an | grep 8080 | grep LISTEN >/dev/null;then
+                  PID=`ps -ef  | grep  -v grep  | grep java | awk  '{print $2}'`
+                  #NUM=`ps -ef | grep  -v "color"  | grep tomcat | awk '{print $2}' | wc -l`
+                  echo "关闭失败，即将强制删除tomcat进程!"
+                  sleep 2
+                  pkill tomcat ;sleep 2 
+                  if  netstat -an | grep 8080 | grep LISTEN >/dev/null;then
+                      echo "强制关闭失败，即将再次强制删除tomcat进程!"
+                      pkill java; sleep 2
+                  fi
+        fi
+        }
+      restart() {
+        stop 
+        start 
+       }
+
+      case "$1" in 
+      start) 
+      start 
+      ;; 
+
+      stop) 
+      stop 
+      ;; 
+
+      restart) 
+      restart 
+      ;; 
+
+      *) 
+      echo $"Usage: $0 {start|stop|restart|status}" 
+      esac
+

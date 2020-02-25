@@ -1,0 +1,127 @@
+Mysql安装
+      
+      --二进制安装
+
+      --源码编译安装
+       
+      --Yum安装
+
+      https://dev.mysql.com/   Mysql官网
+      
+      https://mariadb.org/     MariaDB官网
+      
+      https://mirrors.tuna.tsinghua.edu.cn/mariadb/yum/10.2/centos7-amd64    MariaDB镜像
+      
+      
+      
+二进制安装（MariaDB）
+      /data/mysql       --数据库的数据所在路径
+      /usr/local        --数据库程序所在路径
+      
+      1.准备Mysql数据目录，数据库的数据文件为不断增长型，所以用LVM具有更好的可扩展性
+            fdisk /dev/sdb
+            partprobe 
+            pvcreate  /dev/sdb1
+            vgcreate  vg0 /dev/sdb1
+            lvcreate  -n lv_mysql -l +100%FREE vg0
+            mkfs.xfs  /dev/vg0/mysql 
+            vim /etc/fstab                            #将新建分区信息写入fstab，开机启动
+            mount /dev/vg0/lv_mysql /data
+      
+      2.创建mysql系统用户
+            getent passwd mysql                       #查看当前系统是否有mysql用户
+            useradd -r -s /sbin/nologin -d /data/mysql -m mysql
+      
+      3.解压压缩包，将二进制程序放入相应路径
+            tar xvf mariadb-10.2.16-linux-x86_64.tar.gz  -C /usr/local/
+            cd /usr/local/
+            ln -s mariadb-10.2.16-linux-x86_64/ mysql  #创建软连接
+            chown -R root.mysql /usr/local/mysql/      #更改解压缩后的文件所属用户和组
+            
+      4.添加环境变量
+            vim /etc/profile.d/mysql.sh
+            PATH=/usr/local/mysql:$PATH
+            . /etc/profile.d/mysql.sh
+            
+      5.创建数据库相关数据文件
+            cd /usr/local/mysql/
+            scripts/mysql_install_db  --datadir=/app/mysql --user=mysql
+      
+      6.准备数据库配置文件
+            cp  /usr/local/mysql/support-files/my-huge.cnf /etc/my.cnf
+            vim /etc/my.cnf
+            datadir=/app/mysql                        #在[mysqld]后面添加此行
+      
+      7 准备启动脚本
+            chkconfig --list
+            cp /usr/local/mysql/support-files/mysql.server  /etc/init.d/mysqld
+            chkconfig --add mysqld
+            ll /etc/init.d/mysqld
+            chkconfig --list
+            service mysqld start
+     
+      8 安全加固
+            mysql_secure_installation 
+            
+      
+
+
+
+
+
+源码编译安装
+      1 依赖关系
+            yum install bison bison-devel zlib-devel libcurl-devel libarchive-devel
+            boostdevel gcc gcc-c++ cmake ncurses-devel gnutls-devel libxml2-devel
+            openssldevel libevent-devel libaio-devel 
+            
+      2 数据目录
+            mkdir /data
+            useradd –r –s /sbin/nologin –m –d /data/mysqldb/ mysql
+            tar xvf mariadb-10.2.15.tar.gz
+       
+      3 cmake
+            cd mariadb-10.2.15/
+            cmake . \
+            -DCMAKE_INSTALL_PREFIX=/app/mysql \       二进制程序所在路径
+            -DMYSQL_DATADIR=/data/mysqldb/ \          数据库存放数据路径
+            -DSYSCONFDIR=/etc \
+            -DMYSQL_USER=mysql \
+            -DWITH_INNOBASE_STORAGE_ENGINE=1 \
+            -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+            -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+            -DWITH_PARTITION_STORAGE_ENGINE=1 \
+            -DWITHOUT_MROONGA_STORAGE_ENGINE=1 \
+            -DWITH_DEBUG=0 \
+            -DWITH_READLINE=1 \
+            -DWITH_SSL=system \
+            -DWITH_ZLIB=system \
+            -DWITH_LIBWRAP=0 \
+            -DENABLED_LOCAL_INFILE=1 \
+            -DMYSQL_UNIX_ADDR=/app/mysql/mysql.sock \
+            -DDEFAULT_CHARSET=utf8 \
+            -DDEFAULT_COLLATION=utf8_general_ci
+            make && make install 
+            
+      4 环境变量
+            echo 'PATH=/app/mysql/bin:$PATH' > /etc/profile.d/mysql.sh
+            . /etc/profile.d/mysql.sh
+
+      5 生成数据库文件
+            cd /app/mysql/
+            scripts/mysql_install_db --datadir=/data/mysqldb/ --user=mysql
+       
+      6 配置文件
+            cp /app/mysql/support-files/my-huge.cnf /etc/my.cnf
+            
+      7 启动脚本
+            cp /app/mysql/support-files/mysql.server /etc/init.d/mysqld  
+            chkconfig --add mysqld
+            ll /etc/init.d/mysqld
+            chkconfig --list
+            service mysqld start
+
+
+
+yum安装
+      https://mirrors.tuna.tsinghua.edu.cn/mariadb/yum/10.2/centos7-amd64

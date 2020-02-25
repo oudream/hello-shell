@@ -1,0 +1,83 @@
+监控系统的四大核心任务： 
+
+              采集、存储、告警、展示
+
+Zabbix的主要组件：
+
+              Zabbix-server , Zabbix database , zabbix-web
+              Zabbix-proxy
+              Zabbix-agent
+
+
+支持的通信接口：
+              SNMP , IPMI , JMX , ssh/telnet
+
+
+
+
+Agent 配置 ： /etc/zabbix/zabbix_agentd.conf
+            ############ GENERAL PARAMETERS #################         通用配置段
+            ### Option: PidFile
+            ### Option: LogType
+            ### Option: LogFile
+            ### Option: LogFileSize
+            ### Option: DebugLevel
+            ### Option: SourceIP
+            ### Option: EnableRemoteCommands
+            ### Option: LogRemoteCommands
+            ##### Passive checks related                        被动监控相关参数                           
+            ### Option: Server                                  指定服务器端 Zabbix_server 是谁
+            ### Option: ListenPort                              监听的端口
+            ### Option: ListenIP                                监听地址
+            ### Option: StartAgents                             启动的子进程
+            ##### Active checks related                         主动监控相关参数
+            ### Option: ServerActive                            指定主动监控时服务器端 Zabbix_server 是谁
+            ### Option: Hostname                                主动发送当前主机名
+            ### Option: HostnameItem                            主动发送跟当前主机名相关的监控项信息
+            ### Option: HostMetadata                            发送元数据信息                                           
+            ### Option: HostMetadataItem                        元数据相关项的信息
+            ### Option: RefreshActiveChecks           
+            ### Option: BufferSend                              发送缓冲
+            ### Option: BufferSize                              发送缓冲的大小
+            ### Option: MaxLinesPerSecond
+            ############ ADVANCED PARAMETERS #################        高级参数
+            ### Option: Alias
+            ### Option: Timeout
+            ### Option: AllowRoot
+            ### Option: User
+            ### Option: Include
+            ####### USER-DEFINED MONITORED PARAMETERS #######          用户自定义的监控参数
+            ### Option: UnsafeUserParameters
+            ### Option: UserParameter
+            ####### LOADABLE MODULES #######                           加载的模块
+            ### Option: LoadModulePath
+            ### Option: LoadModule
+            ####### TLS-RELATED PARAMETERS #######                      安全通信相关的配置
+            ### Option: TLSConnect
+            ### Option: TLSAccept
+            ### Option: TLSCAFile
+            ### Option: TLSCRLFile
+            ### Option: TLSServerCertIssuer
+            ### Option: TLSServerCertSubject
+            ### Option: TLSCertFile
+            ### Option: TLSKeyFile
+            ### Option: TLSPSKIdentity
+            ### Option: TLSPSKFile
+            
+
+
+配置实例 ：
+    
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+
+NFS软件包：nfs-utils
+相关软件包:rpcbind
+配置文件：/etc/exports,/etc/exports.d/*.exports
+
+NFS服务主要进程：
+                rpc.nfsd 最主要的NFS进程，管理客户端是否可登录
+                rpc.mountd 挂载和卸载NFS文件系统，包括权限管理
+                rpc.lockd 非必要，管理文件锁，避免同时写出错
+                rpc.statd 非必要，检查文件一致性，可修复文件
+
+NFS配置：
+                默认选项：(ro,sync,root_squash,no_all_squash)
+                默认选项：(ro,sync,root_squash,no_all_squash)
+                ro,rw 只读和读写
+                async 异步，数据变化后不立即写磁盘，性能高
+                sync（1.0.0后为默认）同步，数据在请求时立即写入共享
+                no_all_squash （默认）保留共享文件的UID和GID
+                all_squash 所有远程用户(包括root)都变成nfsnobody
+                root_squash （默认）远程root映射为nfsnobody,UID为65534，早期版本是4294967294 (nfsnobody)
+                no_root_squash 远程root映射成root用户
+                anonuid和anongid 指明匿名用户映射为特定用户UID和组GID，而非nfsnobody,可配合all_squash使用
+
+rpcinfo
+                rpcinfo -p hostname
+                rpcinfo –s hostname 查看RPC注册程序
+                
+                
+                
+exportfs
+                –v 查看本机所有NFS共享
+                –r 重读配置文件，并共享目录
+                –a 输出本机所有共享
+                –au 停止本机所有共享
+
+showmount -e hostname   查看远程NFS服务器共享的目录
+
+
+        
+
+
+示例：
+1.
+    vim /etc/exports
+        /data/nfs1   *                                  # 共享目录可以被任何主机挂载，默认为只读挂载。
+    exportfs -r
+    
+    setfacl -m u:nfsnobody:w /data/nfs2/test.txt        # 给 test.txt 加上读权限
+    setfacl -b /data/nfs2/test.txt                      # 清楚 test.txt 的acl
+
+2.
+    /data/nfs2 192.168.1.0/24(rw,no_root_squash)        # 设置远程用户的 root 权限不压榨，对目录有读写权限
+    
+3.
+    /data/nfs2 192.168.1.0/24(rw,no_root_squash)
+
+    
+
+  

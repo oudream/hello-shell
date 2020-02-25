@@ -1,0 +1,224 @@
+ngx_http_core_module  核心模块
+      
+      1.
+          http {
+              log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                                '$status $body_bytes_sent "$http_referer" '
+                                '"$http_user_agent" "$http_x_forwarded_for"';
+                                
+
+              access_log  /var/log/nginx/access.log  main;
+
+              sendfile            on;
+              tcp_nopush          on;
+              tcp_nodelay         on;
+              
+              keepalive_timeout           65;
+              types_hash_max_size         2048;
+
+              include             /etc/nginx/mime.types;
+              default_type        application/octet-stream;      
+              
+              client_max_body_size        20m;
+              client_header_buffer_size   32k;
+              client_header_timeout       10;
+              client_body_timeout         10;
+              send_timeout                10;
+              include /etc/nginx/conf.d/*.conf;
+              
+
+        
+        # include                       主模块命令，设定配置文件所包含的文件,当未定义文件类型时生效。例如，未配置PHP环境，Nginx时不会解析php文件的
+        # default_type                  设定默认类型为二进制流
+        # log_format                    指定日志文件的输出格式，main为二进制输出格式的名称。
+        # client_max_body_size          设置客户端请求的单个文件最大的字节数
+        # client_header_buffer_size     指定客户端请求头的headerbuffer大小
+        # sendfile                      开启高效文件传输模式，tcp_nopush，tcp_nodelay 设置为 on ，用来防止网络阻塞
+        # keepalive_timeout             设置客户端连接的活动超时时长，超过时长则关闭连接
+        # client_header_timeout         客户端请求头超时时长，超过时长，Nginx 将返回 Request time out(408)
+        # client_body_timeout           客户端请求主体超时时长，超过时长，Nginx 将返回 Request time out(408)
+        # send_timeout                  相应客户端的超时时长
+        
+   
+   
+   虚拟主机配置：
+   
+   ngx_http_core_module：
+          
+          1.如下设定了三个虚拟主机，分别监听在 81，82，83 端口，并分别指定了其根目录。
+                server{
+                        listen 81;                  # 也可以监听在某个地址上： listen 192.168.1.1
+                        root /app/website1;
+                }
+
+
+                server{
+                        listen 82;                  # listen 192.168.1.2
+                        root /app/website2; 
+                }
+
+
+                server{
+                        listen 83;                  # listen 192.168.1.3
+                        root /app/website3;
+                }
+
+
+          2.
+                server{
+                        listen 80;
+                        root /app/website1;
+                        server_name www.test.com;
+                        index index.html index.php index.jsp;
+                        charset utf-8;
+                        access_log   /var/log/test.com.access.log main;
+                }
+
+                # server_name 支持通配符和正则表达式 配合DNS可以做泛域名解析
+                     例：
+                        server_name     *.test.com www.test.*;
+                        server_name        ~^www\d+\.test\.com$;       # \d 表示[0-9]
+                        匹配优先级机制从高到低:
+                           (1) 首先是字符串精确匹配 如：www.test.com
+                           (2) 左侧*通配符 如：*.test.com
+                           (3) 右侧*通配符 如：www.test.*
+                           (4) 正则表达式 如： ~^.*\.test\.com$
+                           (5) default_server
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+          3. 设置响应报文的Server首部显示的nginx版本信息
+          
+                server{
+                        listen 192.168.31.1;
+                        root /app/website1;
+                        server_tokens off;
+                }
+
+                #  server_tokens on | off   默认 on，显示信息为：Server: nginx/1.12.2。 设为 off，显示为 ：Server: nginx
+                          
+
+    location ：
+
+         4.  location 中的 root 和 alias 匹配的结果不一样
+                  
+                server{
+                        listen 192.168.31.1;
+                        root /app/website1;
+                        
+                        location /test/{
+                                root  /data/;
+                        }
+                }
+                
+                # 网站根目录为 /app/website1 ,当访问 /app/website1/test/ 下的文件时 ，将会去访问 /data/test/下的文件
+                  例如 : http://192.168.31.1/test/hello.txt ，实际上访问的位置为 /data/test/hello.txt
+                  
+                  
+                  
+         5. 别名 alias  
+         
+                server{
+                        listen 192.168.31.2;
+                        root /app/website2;
+                        
+                        location /test/ {
+                                alias /data/;
+                        }
+                }
+                # 网站根目录为 /app/website1 ,当访问 /app/website1/test/ 下的文件时 ，将会去访问 /data/下的文件
+                  例如 : http://192.168.31.1/test/hello.txt ，实际上访问的位置为 /data/hello.txt                  
+         
+         
+         5.
+
+                server{
+                        listen 192.168.31.1;
+                        
+                        location ~ ^/(upload|html)/ {
+                                root /app/website1;
+                                expires 30d;
+                        }
+                }
+                # 将 upload 和 html 文件夹下的所有文件交给 Nginx 处理， expires 指定静态文件的过期时间
+                
+                
+          6.           
+                        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+                        
+                        # 此处匹配了所有以扩展名为 gif，jpg，jpeg，png，bmp，swf 结尾的文件
+                        
+                        
+                                     
+          7. error_page
+          
+                server{
+                        listen 192.168.31.1 default_server;
+                        root /app/website1;
+                        error_page 404 /404error.html;
+                }          
+                # 定义自己的错误页面
+                 
+                server{
+                        listen 192.168.31.1 default_server;
+                        root /app/website1;
+                        error_page 404 =302 /404error.html;
+                } 
+                # 出现 404 时返回 302 ，防止某些浏览器劫持。
+                
+                
+                
+                
+                
+ngx_http_access_module                
+          1. 基于ip的访问控制
+                
+               location / {
+                  deny 192.168.1.1;
+                  allow 192.168.1.0/24;
+                  allow 10.1.1.0/16;
+                  allow 2001:0db8::/32;
+                  deny all;
+                }
+                # 自上而下检查，一旦匹配，将生效，条件严格的置前
+  
+
+
+ngx_http_auth_basic_module
+
+          2. 基于用户的访问控制
+          
+               location /admin/ {
+                        auth_basic "提示语句";
+                        auth_basic_user_file /etc/nginx/.ngxpasswd;
+                }
+                #  对/admin 目录设置访问权限
+                
+                htpasswd -c /etc/nginx/.ngxpasswd user1               #使用 htpasswd 命令生成存放用户及密码的文件，htpasswd 命令由 http-tools提供
+
+
+ngx_http_stub_status_module
+                
+          3.  查看nginx的基本状态信息     
+                
+                location /status {
+
+                        stub_status;
+                        #allow 172.16.0.0/16;
+                        #deny all;
+
+                }
+                # 显示信息如下：
+                  Active connections: 2 
+                  server accepts handled requests
+                    2120 2120 2164 
+                  Reading: 0 Writing: 1 Waiting: 1
+
+
+
+
+        
+        

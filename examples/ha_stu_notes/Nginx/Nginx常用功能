@@ -1,0 +1,213 @@
+1. 日志格式定义 ：ngx_http_log_module
+
+        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+        具体显示如下：
+        
+        192.168.31.200 - user1 [29/Aug/2018:19:27:27 +0800] "GET /admin/ HTTP/1.1" 200 4 "-" 
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36" "-"              
+        
+        # 此语句块只能定义在 http 中
+        # $remote_addr               对应 192.168.31.200 ，客户端 IP
+        # $remote_user               对应 user1 ，客户端用户名
+        # $time_local                对应 29/Aug/2018:19:27:27 +0800 ，访问时间
+        # $request                   对应 GET /admin/ HTTP/1.1  ，请求内容
+        # $status                    对应 200 ，状态码
+        # $body_bytes_sent           对应 4 ，主体文件大小
+        # $http_referer              对应 - ，从哪个链接跳到此网站，此处为空，表示拥护之间访问。
+        # $http_user_agent           对应 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) 
+                                          Chrome/68.0.3440.75 Safari/537.36  客户端浏览器版本
+        # $http_x_forwarded_for      对应 - ，HTTP 的首部字段头
+        
+        
+        其他格式
+        
+        # $gzip_ratio                gzip 的压缩比
+        
+        
+        
+        
+        access_log /spool/logs/nginx-access.log compression buffer=32k;  启用缓存
+        
+        open_log_file_cache off|max=N;                                         定义缓存
+        # max：缓存的最大文件描述符数量
+        # min_uses：在inactive指定的时长内访问大于等于此值方可被当作活动项
+        # inactive：非活动时长
+        # valid：验证缓存中各缓存项是否为活动项的时间间隔
+        
+        
+        
+
+
+
+2. gzip 压缩 ： ngx_http_gzip_module
+        
+        gzip on；
+        gzip_min_length 1K;
+        gzip_buffers 4 16k;
+        gzip_http_version  1.1;
+        gzip_comp_leve    2;
+        gzip_types text/xml text/css application/javascript;
+        gzip_vary on;
+        
+        
+        # gzip                      gzip on 表示启用压缩
+        # gzip_min_length           启用压缩功能的响应报文大小阈值 ，默认为0.
+        # gzip_buffers              支持实现压缩功能时缓冲区数量及每个缓存区的大小
+        # gzip_http_version         设定启用压缩功能时，协议的最小版本，默认1.1
+        # gzip_comp_leve            gzip 压缩比，压缩比 1-9 ，压缩比越高，传输速度越快，处理速度越慢
+        # gzip_types                指明仅对哪些类型的资源执行压缩操作，text/html 类型总是会被压缩
+        # gzip_vary                 如果启用压缩，是否在响应报文首部插入“Vary: Accept-Encoding”
+       
+       
+        # gzip_proxied on|off       nginx充当代理服务器时，对于后端服务器的响应报文，在何种条件下启用压缩功能
+        
+        
+        
+
+
+
+
+
+3. 多虚拟主机 https： ngx_http_ssl_module
+  
+      创建证书(实验，用自签名的证书，省去搭建CA)：
+        
+        cd /etc/pki/tls/certs
+        make a.com.crt                      # 生成了证书和私钥文件 a.com.crt  a.com.key
+        make b.com.crt
+        cp a.com.* /etc/nginx/conf.d/
+        cp b.com.* /etc/nginx/conf.d/
+        vim vhost.conf
+              server{
+                      listen 443 ssl;
+                      root /app/website1;
+                      server_name www.a.com;
+                      ssl_certificate  /etc/nginx/conf.d/a.com.crt;
+                      ssl_certificate_key /etc/nginx/conf.d/a.com.key;
+                      ssl_session_cache shared:sslcache:20m;
+                      ssl_session_timeout 10m;
+
+              }
+              
+              server{
+                      listen 443 ssl;
+                      root /app/website2;
+                      server_name www.b.com;
+                      ssl_certificate  /etc/nginx/conf.d/b.com.crt;
+                      ssl_certificate_key /etc/nginx/conf.d/b.com.key;
+                      ssl_session_cache shared:sslcache:20m;
+                      ssl_session_timeout 10m;
+
+              }        
+        
+        
+        
+4. rewrite 重定向： ngx_http_rewrite_module     
+
+              location /mp4 {
+                      rewrite ^/mp4/(.*)$ /data/$1 last;
+              }
+              # 访问主站点下的/mp4 中的文件时 ，自动跳转到 主站点下的 /data 目录 ,url不跳转
+              
+              
+              location /mp4 {
+                      rewrite ^/mp4/(.*)$ /data/$1 redirect;
+              }
+              # 临时重定向
+              
+              
+              location /mp4 {
+                      rewrite ^/mp4/(.*)$ /data/$1 permanent;
+              }
+              # 永久重定向
+              
+              
+              
+              
+              # last          重写完成后停止对当前URI在当前location中后续的其它重写操作，而后对新的URI启动新一轮重写检查；
+                              提前重启新一轮循环，不建议在location中使用
+              
+              # break         重写完成后停止对当前URI在当前location中后续的其它重写操作，而后直接跳转至重写规则配置块之后的其它配置；
+                              结束循环，建议在location中使用
+                        
+              # redirect      临时重定向，重写完成后以临时重定向方式直接返回重写后生成的新URI给客户端，由客户端重新发起请求；
+                              使用相对路径,或者http://或https://开头，状态码：302  
+                               
+              # permanent     重写完成后以永久重定向方式直接返回重写后生成的新URI给客户端，由客户端重新发起请求，状态码：301    
+              
+       
+       
+       由 http 跳转 https
+              
+           http 和 https 不是同一个虚拟主机
+              server{
+                      listen 192.168.31.1 default_server;
+                      root /app/website1;
+                      location / {
+                              rewrite / https://192.168.31.1/ redirect;
+                      }
+
+              }
+              # 当访问 http://192.168.31.1/ ,将被跳转到  https://192.168.31.1/
+              
+              server{
+                      listen 443 ssl;
+                      root /app/website1;
+                      server_name www.test.com;
+                      ssl_certificate  /etc/nginx/conf.d/a.com.crt;
+                      ssl_certificate_key /etc/nginx/conf.d/a.com.key;
+                      ssl_session_cache shared:sslcache:20m;
+                      ssl_session_timeout 10m;
+              }
+              # 此处实现 https
+              
+              
+              
+           http 和 https 为同一个虚拟主机              
+              
+              server{
+                      listen 192.168.31.1 default_server;
+                      root /app/website1;
+                      listen 443 ssl;
+                      ssl_certificate  /etc/nginx/conf.d/a.com.crt;
+                      ssl_certificate_key /etc/nginx/conf.d/a.com.key;
+                      ssl_session_cache shared:sslcache:20m;
+                      ssl_session_timeout 10m;
+
+                      location / {
+                              if ($scheme = http ) {
+                              rewrite / https://192.168.31.1/ redirect;
+                              }
+                      }
+
+              }   
+              # 用 if 语句判断 ，不是http就不跳转，避免死循环跳转
+
+              
+              
+
+5. referer 防止盗链 : ngx_http_referer_module
+              
+                        location / {
+                                valid_referers none block server_names *.test.com ~\.baidu\. ~\.google\.;
+
+                                if ($invalid_referer) {
+                                        return 403 http://www.baidu.com;
+                                }
+                        } 
+              
+                        # 除了来自定义的网站 ，其他来源的都将返回403
+                        # none：请求报文首部没有referer首部
+                        # blocked：请求报文有referer首部，但无有效值
+                        # server_names：参数，其可以有值作为主机名或主机名模式
+                        # arbitrary_string：任意字符串，但可使用*作通配符
+                        # regular expression：被指定的正则表达式模式匹配到的字符串,要使用~开头
+                        
+                        
+
+                                          
+        
+
+    

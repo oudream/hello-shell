@@ -1,0 +1,234 @@
+                        +-----------------+------------------+------------------+----------------------------------+
+                        |    Host name    |  System version  |        IP        |   Soft && version                |
+                        +-----------------+------------------+------------------+----------------------------------+
+                        |     DNS_S_1     |    Centos 7.5    |    192.168.1.1   |     bind-9.9.4-61.el7.x86_64     |
+                        +-----------------+------------------+------------------+----------------------------------+
+                        |     HTTP_S_1    |    Centos 7.5    |    192.168.1.2   | httpd-2.4.6-80.el7.centos.x86_64 |
+                        +-----------------+------------------+------------------+----------------------------------+
+                        |     HTTP_S_2    |    Centos 7.5    |    192.168.1.3   | httpd-2.4.6-80.el7.centos.x86_64 |
+                        +-----------------+------------------+------------------+----------------------------------+
+                        |     NFS_S_1     |    Centos 7.5    |    192.168.1.4   |  nfs-utils-1.3.0-0.54.el7.x86_64 |
+                        +-----------------+------------------+------------------+----------------------------------+
+                        |      DB_S_1     |    Centos 7.5    |    192.168.1.5   |  mariadb-5.5.56-2.el7.x86_64     |
+                        +-----------------+------------------+------------------+----------------------------------+
+                        |      Client     |    Centos 7.5    |    192.168.1.6   |                                  |
+                        +-----------------+------------------+------------------+----------------------------------+
+                                                DNS + LAMP + NFS 环境配置
+                                                
+                                                
+功能介绍：（以wordpress为例）
+         用户通过域名 www.hgh.com 可以访问自己的个人博客。DNS_S_1 做为 DNS 服务器，负责将用户的域名解析为对应的 WEB 服务器 IP 地址（为实现负载均衡，       
+      其WEB 服务器有两个）. HTTPS_S_1 和 HTTPS_S_2 作为 WEB 服务器，接受和响应用户请求，为保证处理用户请求时，数据的一致性,将网站的根目录同时放在远程的
+      NFS服务器上的同一位置。DB_S_1 为 数据库服务器，负责存放用户的数据。
+                                                
+                                                
+1.  配置DNS (在 DNS_S_1 上配置DNS，将www.hgh.com 解析为192.168.1.2 192.168.1.3 这两个地址)
+           
+        DNS_S_1 :
+                	yum install bind                                              # 安装DNS软件包 
+                  vim /etc/named.conf                                           # 修改DNS的配置文件，将下面两行注释掉
+                    // listen-on port 53 { 127.0.0.1; };
+                    // allow-query { localhost; };
+				
+				
+				
+				
+                  vim /etc/named.rfc1912.zones
+                      zone "hgh.com"{
+                        type master;
+                        file "hgh.com.zone";
+                      };
+			
+                  cd /var/named
+                  vim hgh.com.zone
+                      $TTL 1D
+                      @  IN SOA dns1 admin.hgh.com. (1 1D 3H 1w 2D)
+                          NS dns1
+                      dns1    A  192.168.1.1
+                      www     A  192.168.1.2
+                      www     A  192.168.1.3
+
+                  chgrp named hgh.com.zone	
+                  chmod 640 hgh.com.zone
+                  systemctl start named
+         测试：
+                  dig www.hgh.com @192.168.1.1
+                  
+         显示结果：
+                      
+                    ; <<>> DiG 9.9.4-RedHat-9.9.4-61.el7 <<>> www.hgh.com @192.168.1.1
+                    ;; global options: +cmd
+                    ;; Got answer:
+                    ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 7592
+                    ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 2
+
+                    ;; OPT PSEUDOSECTION:
+                    ; EDNS: version: 0, flags:; udp: 4096
+                    ;; QUESTION SECTION:
+                    ;www.hgh.com.			IN	A
+
+                    ;; ANSWER SECTION:
+                    www.hgh.com.		86400	IN	A	192.168.1.3
+                    www.hgh.com.		86400	IN	A	192.168.1.2
+
+                    ;; AUTHORITY SECTION:
+                    hgh.com.		86400	IN	NS	dns1.hgh.com.
+
+                    ;; ADDITIONAL SECTION:
+                    dns1.hgh.com.		86400	IN	A	192.168.1.1
+
+                    ;; Query time: 11 msec
+                    ;; SERVER: 192.168.1.1#53(192.168.1.1)
+                    ;; WHEN: Fri Aug 17 23:28:47 CST 2018
+                    ;; MSG SIZE  rcvd: 107
+
+         
+        
+2.  配置 LAMP 
+          
+        HTTP_S_1 :(安装 HTTP 及 PHP 组件)
+                   yum install httpd php-fpm php-mysql -y
+                   echo 'This is server1' /var/www/html/index.html
+                   systemctl start httpd 
+
+        HTTP_S_2 :
+                   yum install httpd php-fpm php-mysql -y
+                   echo 'This is server1' /var/www/html/index.html
+                   systemctl start httpd
+                   
+        Client :  （测试 DNS 及 HTTP）
+                  设置自身的 DNS 地址为192.168.1.1 ，也就是 DNS_S_1 的IP地址。
+                  ping www.hgh.com
+                  多次 ping 目标网址可以发现，解析出的地址有时为192.168.1.2，有时为192.168.1.3
+                  
+                  使用浏览器输入网址 www.hgh.com 可以发现 会出现 ‘This is server 1’ 或 ‘This is server 2’。注意浏览器的缓存，每次测试需要重新
+                  打开浏览器。如果用Windows测试，其缓存时间很长，会记住解析的IP地址，所以其每次都会访问同一台WEB服务器。
+        
+        HTTP_S_1 :（配置 PHP 组件，负责将用户数据存入远端数据库）
+                  
+                  vim /etc/php-fpm.d/www.conf
+                      systemctl start php-fpm
+                      
+                  vim /etc/httpd/conf.d/fcgi.conf
+                      proxyrequests off
+                      proxypassmatch  "^/(.*\.php)$" fcgi://127.0.0.1:9000/var/www/html/$1
+                  
+                  cd /var/www/html/index.php
+                  
+                  vim index.php                                                           # 用来将来测试 PHP 组件配置是否正确
+                      <?php
+                      phpinfo();
+                      ?>
+                  
+                  vim /etc/httpd/conf/httpd.conf
+                      <IfModule dir_module>
+                        DirectoryIndex index.php index.html
+                      </IfModule>
+                  
+                  systemct restart httpd                  
+
+
+
+
+
+        HTTP_S_2 :（配置和 HTTP_S_1 一样）
+                  
+                  vim /etc/php-fpm.d/www.conf
+                      systemctl start php-fpm
+                      
+                  vim /etc/httpd/conf.d/fcgi.conf
+                      proxyrequests off
+                      proxypassmatch  "^/(.*\.php)$" fcgi://127.0.0.1:9000/var/www/html/$1
+                  
+                  cd /var/www/html/index.php
+                  
+                  vim index.php                                                           # 用来将来测试 PHP 组件配置是否正确
+                      <?php
+                      phpinfo();
+                      ?>
+                  
+                  vim /etc/httpd/conf/httpd.conf
+                      <IfModule dir_module>
+                        DirectoryIndex index.php index.html
+                      </IfModule>
+                  
+                  systemct restart httpd 
+                  
+                  
+                  
+                  
+        Client :(测试 PHP 组件)                  
+                  
+                  在浏览器里分别输入 192.168.1.2 192.168.1.3 查看PHP模块信息是否加载。
+                 
+
+
+        DB_S_1 : （为两个 WEB 服务器创建数据库及远程链接用户）
+        
+                  yum install mariadb-server
+                  systemctl start mariadb
+                  mysql -e 'create database wpdb;grant all on wpdb.* to wpuser@"192.168.1.2" identified by "passwd"'
+                  mysql -e 'grant all on wpdb.* to wpuser@"192.168.1.3" identified by "passwd"'
+                  
+        
+        NFS_S_1 : （配置 NFS 文件服务区器）
+
+                  NFS 的软件包大部分已默认安装。
+                  rpm -qi nfs-utils                                                   # 查看软件包是否安装 ，如果未安装，使用 yum -y install nfs-utils 安装 
+                  
+                  mkdir /data/www                                                      # 创建要共享的目录
+                  
+                  准备 wordpress ,将其解压到 /data/www/ 目录下
+                  tar -xf wordpress-4.9.4-zh_CN.tar.gz -C /data/www
+                  
+                  vim /etc/exports.d/www.exports                                       # 配置共享目录     
+                    /data/www 192.168.1.0/24(rw,all_squash,anonuid=48,anongid=48)                  
+
+                  useradd -u 48 apache                                                 # 添加 UID 为 48 的用户，名字可以不是 apache ,但是UID必须和Web服务器上的apache用户一样
+			
+                  cd /data/www/wordpress/
+                  cp -p wp-config-sample.php wp-config.php
+                  vim wp-config.php
+                  
+                      define('DB_NAME', 'wpdb');
+
+                      /** MySQL数据库用户名 */
+                      define('DB_USER', 'wpuser');
+
+                      /** MySQL数据库密码 */
+                      define('DB_PASSWORD', 'passwd');
+
+                      /** MySQL主机 */
+                      define('DB_HOST', '192.168.1.5');
+
+                  
+                  chown -R apache.apache /data/www
+                  
+                  exportfs -r
+                  exportfs -v
+                  systemctl start nfs-server
+
+
+
+        HTTP_S_1 :
+        
+                vim /etc/fstab                                                                    开机挂载远程NFS共享目录
+                        192.168.1.4:/data/www/wordpress/ /var/www/html nfs defaults 0 0
+
+                mount -a
+                
+        
+        HTTP_S_2 :
+        
+                vim /etc/fstab
+                        192.168.1.4:/data/www/wordpress/ /var/www/html nfs defaults 0 0
+
+                mount -a        
+                
+                
+                
+                
+ 至此，所有配置完成。 （注意防火墙和 Selinux 的影响）
+        
+        
+

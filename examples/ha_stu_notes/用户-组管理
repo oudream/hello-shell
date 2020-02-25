@@ -1,0 +1,205 @@
+主要有四个配置文件：
+        /etc/passwd   
+        /etc/group 
+        /etc/shadow 
+        /etc/gshadow
+    
+    
+一： passwd配置文件信息：
+
+    cat /etc/passwd
+        共七列：   root:x:0:0:root:/root:/bin/bash
+        分别为：   用户名：密码：用户ID：组ID：描述信息：家目录：用户默认shell
+    man 5 passwd :
+
+              1. account   the name of the user on the system.  It should not contain capital letters.
+
+              2. password  the encrypted user password, an asterisk (*), or the letter 'x'.  (See pwconv(8) for an  explanation
+                        of 'x'.)
+
+              3. UID       the numerical user ID.
+
+              4. GID       the numerical primary group ID for this user.
+
+              5. GECOS     This  field  is  optional  and  only used for informational purposes.  Usually, it contains the full
+                        username.  GECOS means General Electric Comprehensive Operating System, which has  been  renamed  to
+                        GCOS  when  GE’s  large systems division was sold to Honeywell.  Dennis Ritchie has reported: "Some-
+                        times we sent printer output or batch jobs to the GCOS machine.  The gcos field in the password file
+                        was a place to stash the information for the $IDENTcard.  Not elegant."
+
+              6. directory the user’s $HOME directory.
+
+              7. shell     the  program to run at login (if empty, use /bin/sh).  If set to a non-existing executable, the user
+                        will be unable to login through login(1).
+                        
+二：  group配置文件信息：                
+      cat /etc/group
+          共四列:     root:x:0:gentoo
+          分别为:     组名：密码：组ID：用户列表
+      man 5 group : 
+              1. group_name   the name of the group.
+              
+              2. password     the (encrypted) group password.  If this field is empty, no password is needed.         
+              
+              3. GID          the numerical group ID.
+
+              4. user_list    a list of the usernames that are members of this group, separated by commas.
+          
+三：  shadow配置文件信息：
+      cat /etc/shadow
+          共九列：   root:$6$TVvqRphKPRbBmGIp$WHiMP8Lz9Xz2uCPxk.tjCWL1aZuHBzM25lr0F/YztvPMUkMHoIsTvQMpkBsNbOPfQBTyLgKcjDgUFaQCtgV/q0:17667:0:99999:7:::
+                    hgh:!!:17672:0:99999:7:::
+          分别为：   用户名：用户密码(加密过)：最近一次更改的时间：密码使用最少天数：密码使用最大天数：密码过期前几天提醒用户：密码过期几天后帐号会被锁定：帐户过期时间（从1970-1-1开始计算）：保留位          
+          
+     man 5 shadow : 
+              
+              1. login name
+          
+              2. encrypted password
+          
+              3. date of last password change
+          
+              4. minimum password age
+         
+              5. maximum password age
+       
+              6. password warning period
+     
+              7. password inactivity period
+           
+              8. account expiration dat
+
+              9. reserved field
+  
+四：   gshadow配置文件信息：
+       cat /etc/gshadow :
+              共四列:     root:::gentoo 
+              分别为:     组名称：组密码：组管理员：组成员（作为附加组的成员）
+       man 5 group :
+              1. group name
+              
+              2. encrypted password
+              
+              3. administrators
+              
+              4. members
+
+                
+
+用户/组管理命令： useradd 、usermod 、userdel 、passwd 、chage 、chown 、chmod
+      
+
+   useradd [options] LOGIN
+        -u UID 
+        -o 配合-u 选项，不检查UID的唯一性
+        -g GID/GROUP NAME：指明用户所属基本组，可为组名，也可以GID
+        -c "COMMENT"：用户的注释信息
+        -d HOME_DIR: 以指定的路径(不存在)为家目录   确保指定目录的目录名要存在，而基名不要存在
+        -s SHELL: 指明用户的默认shell程序,默认不指定是为/bin/bash
+        -G GROUP1[,GROUP2,...]：为用户指明附加组，组须事先存在
+        -N 不创建私用组做主组，使用users组做主组
+        -r: 创建系统用户 CentOS 6: ID<500，CentOS 7: ID<1000
+        -m 创建家目录，用于系统用户
+        -M 不创建家目录，用于非系统用户
+        
+        
+   usermod [OPTION] login
+        -u UID: 新UID
+	-g GID: 新主组
+	-G GROUP1[,GROUP2,...[,GROUPN]]]：新附加组，原来的附加组将会被覆盖；若保留原有，则要同时使用-a选项
+	-s SHELL：新的默认SHELL
+	-c 'COMMENT'：新的注释信息
+	-d HOME: 新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项
+	-l login_name: 新的名字；
+	-L: lock指定用户,在/etc/shadow 密码栏的增加 ! 
+	-U: unlock指定用户,将 /etc/shadow 密码栏的 ! 拿掉
+	-e YYYY-MM-DD: 指明用户账号过期日期
+	-f INACTIVE: 设定非活动期限
+        
+        
+   userdel -r 用户名
+
+
+   passwd [OPTIONS] UserName: 修改指定用户的密码，仅root用户权限
+   passwd: 修改自己的密码
+   常用选项：
+        -l:锁定指定用户
+        -u:解锁指定用户
+        -e:强制用户下次登录修改密码
+        --stdin：从标准输入接收用户密码
+        echo "PASSWORD" | passwd --stdin USERNAME
+   
+   
+   chage Options:
+        -d, --lastday LAST_DAY        修改密码上一次的修改时间
+        -E, --expiredate EXPIRE_DATE  设置密码的过期时间
+        -I, --inactive INACTIVE       设置密码过期之后多少天触发帐户过期
+        -l, --list                    列出信息
+        -m, --mindays MIN_DAYS        设置密码的最小存活期
+        -M, --maxdays MAX_DAYS        设置密码的最大存活期
+        -W, --warndays WARN_DAYS      设置密码过期之前多少天提醒用户
+       
+       
+   手工创建家目录
+          mkdir /home/magetest
+          cp -r /etc/skel/.[^.]* /home/magetes t
+          chown -R magetest.magetest /home/magetest
+          chmod -R 700 /home/matgtest
+      
+    groupadd 
+	-g GID GNAME
+	-r GNAME
+	
+groupdel GNAME
+
+gpasswd
+	Options:
+  -a, --add USER                增加单个用户到指定组当中（组管理员可执行）
+  -d, --delete USER             从指定组中删除单个用户（组管理员可执行）
+  -r, --delete-password         将指定组的组密码删除（组管理员可执行）
+  -R, --restrict                限制组成员访问该组
+  -M, --members USER,...        一次性设置组成员（仅root执行）
+  -A, --administrators ADMIN,... 设置组管理列表（root执行）
+
+newgrp groupname
+	用户会打开一个子shell，在这个子shell下，该用户的主要组切换为该组，若该用户本不属于该组，则要输入组密码，若该组属于用户的附加组之一，则无需输入密码。
+
+
+
+groupmems
+	-g GNAME
+		-a  USERNAME 加用户加入到指定组
+		-d  USERNAME 把用户从指定组删除
+		-p  清除该组的所有成员
+		-l  列出组成员列表 
+
+groups USERNAME
+	查看用户属于哪些组（包含主要组）
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      

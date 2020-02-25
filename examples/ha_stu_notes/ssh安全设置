@@ -1,0 +1,48 @@
+ssh配置文件：
+    /etc/ssh/sshd_config
+
+主要配置项：
+    
+    Port 22                            设置sshd的监听接口，默认为22，为保证安全通常设置为5位以上的陌生数字端口
+    
+    Protocol 2                         设置使用的SSH协议的版本位SSH1或SSH2，SSH1版本有缺陷
+    
+    ListenAddress 0.0.0.0              设置sshd服务器绑定的IP地址
+    
+    HostKey /etc/ssh/ssh_host_dsa_key  设置服务器密钥文件的路径
+    
+    KeyRegenerationInterval 1h         设置多久后系统重新生成服务器的密钥，防止利用盗用的密钥来解密截获的信息
+    
+    ServerKeyBits 1024                 设置服务器密钥的长度
+    
+    LogLevel INFO                      记录sshd日志消息的级别
+    
+    LoginGraceTime 2m                  登陆失败后，在切断连接前，服务器需要等待的时间，以秒为单位
+    
+    PermitRootLogin no                 禁止通过root身份进行ssh登陆
+    
+    StrictModes yes                    设置SSH在接收登录请求之前是否检查用户根目录和rhost文件的权限和所有权
+    
+    PermitEmptyPasswords no            是否允许口令为空的用户登陆，必须设置为no
+    
+    PrintMotd yes                      是否在用户登陆的时候显示 /etc/motd 中的信息
+    
+    PrintLastlog no                    是否显示上次登陆信息
+    
+    TCPKeepAlive yes                   选项 yes 防止死连接
+    
+    UseDNS no                          是否使用DNS反向解析
+    
+    MaxStartups 5                      设置同时允许几个尚未登陆的联机。
+    
+    MaxAuthTries 3                     允许最大的失败尝试次数
+    
+    AllowUsers                         允许远程登陆的用户，多用户之间用空格隔开
+    
+    AllowGroups                        允许远程登陆的用户组，多用户组之间用空格隔开
+    
+    DenyUsers                          拒绝远程登陆的用户，多用户之间用空格隔开
+    
+    DenyGroups                         拒绝远程登陆的用户组，多用户组之间用空格隔开
+    
+   

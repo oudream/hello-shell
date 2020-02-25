@@ -1,0 +1,109 @@
+#!/bin/bash
+
+read -p 'Input Package dir: ' Package_dir
+read -p 'Input Database data dir: ' Data_dir
+
+if [ -d $Package_dir ];then
+	cd $Package_dir
+else
+	echo Dir $Package_dir is not exist
+	exit
+fi
+
+
+if ls mariadb*.tar.gz &> /dev/null &> /dev/null ;then
+	Package_name=$(ls mariadb*.tar.gz)
+	Binary_dir=$(echo $Package_name | cut -d'.' -f1-3)
+else
+	echo Package is not exist
+	exit
+fi
+
+
+
+# create system user for mysql
+echo
+if getent passwd mysql &> /dev/null; then
+	userdel -r mysql &> /dev/null
+fi
+
+useradd -r -u 306 -s /sbin/nologin -d /data/mysql  mysql
+
+if [ -d $Data_dir/mysql ];then
+	rm -rf $Data_dir/mysql/*
+else
+	mkdir $Data_dir/mysql
+fi
+
+chown -R mysql.mysql $Data_dir/mysql
+echo 'User mysql is already created'
+echo
+
+
+
+
+
+# Prepare binary file to the /usr/local
+
+echo 'Preparing binary dir' 
+tar -xvf $Package_dir/$Package_name -C /usr/local/ &> /dev/null 
+
+ln -s /usr/local/$Binary_dir/ /usr/local/mysql
+chown -R root.mysql /usr/local/mysql/
+echo
+
+
+
+
+
+# add environment variable
+
+echo 'Seting PATH '
+echo PATH='/usr/local/mysql/bin:$PATH' > /etc/profile.d/mysql.sh
+. /etc/profile.d/mysql.sh
+echo
+
+
+
+
+
+
+# Create data file of Database
+
+echo 'Preparing data file...' 
+echo
+cd /usr/local/mysql
+/usr/local/mysql/scripts/mysql_install_db  --datadir=$Data_dir/mysql --user=mysql &> /dev/null 
+
+
+
+
+
+# Configure file
+
+echo 'Preparing configure file'
+if [ -f /etc/my.cnf ];then
+	rm -f /etc/my.cnf
+fi
+cp  /usr/local/mysql/support-files/my-huge.cnf /etc/my.cnf
+sed -i "/\[mysqld\]/a\datadir    =    $Data_dir/mysql" /etc/my.cnf
+echo 
+
+
+
+
+# Boot script
+
+echo 'Preparing boot script'
+if [ -f /etc/init.d/mysqld ];then
+	rm -f /etc/init.d/mysqld
+fi
+cp /usr/local/mysql/support-files/mysql.server  /etc/init.d/mysqld
+chkconfig --add mysqld
+echo
+service mysqld start
+
+
+#
+mysql_secure_installation
+

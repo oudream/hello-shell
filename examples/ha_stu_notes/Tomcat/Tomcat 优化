@@ -1,0 +1,42 @@
+		(1) 内存空间：
+			/etc/sysconfig/tomcat, /etc/tomcat/tomcat.conf
+				JAVA_OPTS="-server -Xms32g -Xmx32g -XX:NewSize= -XX:MaxNewSize= "
+					-server：服务器模式
+					-Xms：堆内存初始化大小；
+					-Xmx：堆内存空间上限；
+					-XX:NewSize=：新生代空间初始化大小；					
+					-XX:MaxNewSize=：新生代空间最大值；
+
+					
+		(2) 线程池设置：
+			<Connector port="8080" protocol="HTTP/1.1"  connectionTimeout="20000" redirectPort="8443" />
+			
+			常用属性：
+				maxThreads：最大线程数；
+				minSpareThreads：最小空闲线程数；
+				maxSpareThreads：最大空闲线程数；
+				acceptCount：等待队列的最大长度；
+				URIEncoding：URI地址编码格式，建议使用UTF-8；
+				enableLookups：是否启用dns解析，建议禁用； 
+				compression：是否启用传输压缩机制，建议“on";
+				compressionMinSize：启用压缩传输的数据流最小值，单位是字节；
+				compressableMimeType：定义启用压缩功能的MIME类型；
+					text/html, text/xml, text/css, text/javascript
+				
+				
+		(3) 禁用8005端口；
+			<Server port="-1" shutdown="SHUTDOWN">
+			
+		(4) 隐藏版本信息：
+			<Connector port="8080" protocol="HTTP/1.1"  connectionTimeout="20000" redirectPort="8443" />
+			
+			Server="SOME STRING"
+			
+	Tomcat Session Server (memcached)
+	
+		https://github.com/magro/memcached-session-manager
+		
+		支持的session server类型：
+			memcached：
+			couchbase：
+			redis：

@@ -1,0 +1,37 @@
+centos6
+  修改网卡名称
+      /etc/udev/rules.d/70-persistent-net.rules 
+      
+  修改网卡配置
+      /etc/sysconfig/network-scripts/ifcfg-eth[0,1,2..]
+              DEVICE=eth1      设备名
+              TYPE：接口类型；常见有的Ethernet, Bridge
+              ONBOOT=yes       当网络服务启动时（开机时），该网卡是否自动激活
+              NM_CONTROLLED=yes    该网卡是否受NetworkManager管理
+              HWADDR=00:0C:29:3E:96:39   网卡的mac地址
+              BOOTPROTO=dhcp		该网卡IP的设置方式，dhcp 自动获取，static/none 或 没有这一行，则表示静态配置ip
+              IPADDR=x.x.x.x
+              NETMASK=255.x.x.x
+              GATEWAY=x.x.x.x
+              DNS1=x.x.x.x
+              DNS2：第二个DNS服务器指向
+              USERCTL：普通用户是否可控制此设备
+              PEERDNS：如果BOOTPROTO的值为“dhcp”，是否允许dhcp server分配的dns服务器指向信息直接覆盖至/etc/resolv.conf文件中
+
+  查看网卡的模块名
+      ethtool -i eth0
+      
+  卸载网卡模块，并重新激活
+      modprobe -r e1000
+      modprobe e1000
+  
+  启用或关闭指定网卡
+      ifconfig eth0 down
+      ifconfig eth0 up
+  
+  
+  ifconfig 命令：
+      ifconfig
+  
+  
+  

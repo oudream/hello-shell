@@ -1,0 +1,94 @@
+1 创建三个逻辑卷，分别存放Mysql数据文件，二进制日志文件，快照。
+   
+   lvcreate  -n lv_mysql_data -L 5G vg0 
+   lvcreate  -n lv_bin_logs -L 1G vg0 
+   mkfs.xfs  /dev/vg0/lv_mysql_data 
+   mkfs.xfs  /dev/vg0/lv_bin_logs 
+   mkdir /data/{mysqldata,binlogs} -pv
+   chown -R mysql.mysql /data/
+   vim /etc/fstab                               设置开机自动挂载 
+
+
+   vim /etc/my.cnf
+   [mysqld]
+   log_bin=/data/binlogs/mysql-bin
+   datadir=/data/mysqldata/
+
+   systemctl stop mariadb                      二进制安装，如果事先已经指定数据目录，可忽略
+   cp -av /var/lib/mysql/.   /data/mysqldata/
+   systemctl start mariadb
+
+
+
+
+2 锁定数据库所有表，记录当前数据库状态，为拍摄快照做准备
+
+   mysql -e "flush tables with read lock";
+   mysql -e 'SHOW MASTER STATUS'> /root/bin.log
+   lvcreate -n mysqldatasnap -s -L 100M -p r  /dev/vg0/mysqldata;     对mysql数据做快照 , -p r对快照添加只读属性 
+   mysql -e "unlock tables"
+
+
+
+
+
+3 修改数据库信息，为后面验证数据恢复做准备
+  
+  INSERT INTO STUDENTS (name,age,gender,classid,teacherid) VALUES ('test1',18,'M',5,2);
+  INSERT INTO STUDENTS (name,age,gender,classid,teacherid) VALUES ('test2',25,'F',2,1);
+  INSERT INTO STUDENTS (name,age,gender) VALUES ('test1',18,'M');
+  此处插入三条信息，以验证后面是否能恢复此三条信息。
+  
+
+
+
+
+4 对快照做文件的备份后，删除快照
+   
+   mount -o nouuid,norecovery  /dev/vg0/mysqldatasnap /mnt/
+   cp -av /mnt/ /backup-`date +%F`/
+   umount /mnt
+   lvremove  /dev/vg0/mysqldatasnap
+
+
+
+
+
+5 破坏数据库，模拟故障
+
+   systemctl stop mariadb
+   rm -rf /data/mysqldata/*
+
+
+ 
+ 
+6 完全备份的还原
+  
+   systemctl stop mariadb
+   cp -a /backup-2018-07-31/* /data/mysqldata/
+   vim /etc/my.cnf
+   skip-networking                                    关闭网络连接数据库
+   systemctl start mariadb
+   mysql> set sql_log_bin=off;                        临时关闭记录二进制日志，避免产生大量不必要二进制日志
+   mysql> flush logs;
+
+
+
+7 利用二进制还原数据库到最新状态
+
+   cat /root/bin.log
+   mysqlbinlog  --start-position=245 mysql-bin.000001  > /root/sqlbin.log
+   mysqlbinlog  mysql-bin.000002 >> /root/sqlbin.log 
+   mysqlbinlog  mysql-bin.000003 >> /root/sqlbin.log 
+   mysqlbinlog  mysql-bin.000004 >> /root/sqlbin.log 
+   mysqlbinlog  mysql-bin.000005 >> /root/sqlbin.log 
+   cat /root/sqlbin.log
+   mysql <  /root/sqlbin.log
+
+
+
+
+8  验证结果
+   vim /etc/my.cnf
+   skip-networking 删除此行
+   systemctl restart mariadb

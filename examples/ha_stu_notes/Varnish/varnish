@@ -1,0 +1,161 @@
+
+      缓存类型：代理式缓存；旁挂式缓存
+               nginx 自带的缓存系统就是代理式缓存。
+                     当用户发起请求，nginx先查看自身有没有缓存。如果没有，nginx就会去找真正的提供数据的服务器。当取得数据，根据提示是否可以缓存下来，
+                     然后再响应给客户端。
+               memcached : 旁路式缓存。
+                     当客户端向数据库请求，根据提示，是否允许将数据缓存到memcached。当下次查询时，先查询memcached，如果未命中，再去直接查询数据库
+
+     缓存机制：
+              HTTP/1.0
+                    Expires：根据绝对时间。此方式缺点为：对时间一致性要求很高，当缓存服务器和代理服务器的时间不一样时，就会出现问题。           
+              HTTP/1.1
+                    条件式请求：代理端会发送请求，询问缓存是否过期，这个过程不会发送缓存数据本身，会极大节约带宽。
+                          Last-Modified/If-Modified-Since：基于文件的修改时间
+                                此判别方式缺点为：当文件在短时间内修改多次时，文件的修改时间戳确是一样的
+                          Etag/If-None-Match：基于文件的校验码来判别
+                          
+                          过期时间：缓存服务器得到缓存数据后，会得到一个过期时间。当到了过期时间，缓存服务器不会立马删除缓存数据，会先去询问
+                                   数据服务器缓存是否发生改变。如果没变，数据服务器会再给代理服务器一个过期时间，这样就减少了询问的次数。
+				   
+
+
+
+Varnish : 拥有强大的缓存管理能力，和缓存系统管理能力，是nginx所不具备的。
+
+				   
+     Cache-Control ：key1=value1,key2=value2,...         控制缓存功能
+     
+             请求报文用 Cache-Control 是告诉缓存服务器该怎么响应
+             响应报文用 Cache-Control 是告诉缓存服务该怎么缓存
+
+
+     请求报文用于通知缓存服务如何使用缓存响应请求：
+                   "no-cache"，    表示不管是不是最新的，必须到原始服务器上再问一次                   
+                   "no-store"      表示不能用缓存向应，必须到原始服务器上取数据                   
+                   "max-age" "=" delta-seconds        
+                   "max-stale" [ "=" delta-seconds ]     过期后，还能使用多久 
+                   "min-fresh" "=" delta-seconds      
+                   "no-transform"                    
+                   "only-if-cached"                  
+
+                            
+                            
+     响应报文用于通知缓存服务器如何存储上级服务器响应的内容：    
+                   "private" : 表示只能被私有缓存所缓存
+                   "public"  : 表示公共和私有都可以缓存
+                   "no-cache" [ "=" <"> 1#field-name <"> ]，可缓存，但响应给客户端之前需要revalidation，即必须发出条件式请求进行缓存有效性验正；
+                   "no-store" ，不允许存储响应内容于缓存中；                           
+                   "no-transform"                        
+                   "must-revalidate"                     
+                   "proxy-revalidate"                  
+                   "max-age" "=" delta-seconds       私有缓存可以使用多长时间        
+                   "s-maxage" "=" delta-seconds       公共缓存可以使用多长时间  
+                           
+     vcl 的语法：
+     		(1)//、#或/* comment */用于注释
+
+		(2)sub $name 定义函数
+
+		(3)不支持循环，有内置变量
+
+		(4)使用终止语句（return）将控制权返回给varnish，没有返回值
+
+		(5)域专用
+
+		(6)操作符：=(赋值)、==(等值比较)、~(模式匹配)、!(取反)、&&(逻辑与)、||(逻辑或)
+		
+		
+		
+     Varnish 的状态引擎主要有：
+	 			
+	   前端：
+		vcl_recv  	 ：  用于接收用户请求，当成功接收用户请求后被调用。通过某种动作来决定如何处理请求。
+			      		pass：表示请求不再本地缓存中查找，且进入pass模式，并将处理请求控制权交给vcl_pass函数
+					pipe：表示请求不再本地缓存中查找，且进入pipe模式，并将请求控制权交给vcl_pipe函数。				
+		vcl_pipe	 :   在进入pipe模式时该函数被调用，用于将客户端请求直接传递给后端服务器，在请求和返回的内容没有改变的
+				     情况下，将不变的内容直接返回给客户端。直到这个连接关闭。
+		vcl_pass	 :   当vcl_recv函数执行pass动作进入pass模式时该函数被调用，用于将客户端请求直接转发给后端服务器，后端
+				     服务器响应给客户端时，不进行缓存。由于直接将请求转发给后端服务器，因此该连接下的响应数据都是最新的
+		vcl_hash	 :   
+		
+		vcl_hit		 ：  该函数在执行lookup命令后，如果在缓存中找到请求数据，则自动调用该函数。	
+		vcl_miss         ：  该函数在执行lookup命令后，如果在缓存中没有找到请求数据，则自动调用该函数	
+		vcl_pass
+		vcl_purge		
+		vcl_synth
+		vcl_deliver      ：  将请求的数据返回给客户端调用此函数。
+				
+	   后端：	
+		vcl_backend_fetch
+		vcl_backend_response
+		vcl_backend_error
+		
+		
+		
+	常用变量：
+		bereq.*, req.*：
+			bereq.http.HEADERS
+			bereq.request, req.request：请求方法；
+			bereq.url, req.url：请求的url；
+			bereq.proto：请求的协议版本；
+			bereq.backend：指明要调用的后端主机；
+						
+			req.http.Cookie：客户端的请求报文中Cookie首部的值； 
+			req.http.User-Agent ~ "chrome"
+						
+						
+		beresp.*, resp.*：
+			beresp.http.HEADERS
+			beresp.status, resp.status：响应的状态码；
+			reresp.proto, resp.proto：协议版本；
+			beresp.backend.name：BE主机的主机名；
+			beresp.ttl：BE主机响应的内容的余下的可缓存时长；
+						
+		obj.*
+			obj.hits：此对象从缓存中命中的次数；
+			obj.ttl：对象的ttl值
+						
+		server.*
+			server.ip：varnish主机的IP；
+			server.hostname：varnish主机的Hostname；
+		client.*
+			client.ip：发请求至varnish主机的客户端IP；
+
+
+        配置文件 ：
+		    
+		/etc/varnish/varnish.params              # 配置守护进程工作特性
+		/etc/varnish/default.vcl				 # 配置缓存系统
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

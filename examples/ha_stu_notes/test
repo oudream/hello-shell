@@ -1,0 +1,16 @@
+1. 一个文本文件 info.txt 的内容如下 ：
+    aa,201
+    zz,502
+    bb,1
+    ee,42 
+   请对该文件按照第二列数字从大到小排序
+     方法1：
+     awk -F',' '{print $2,$1}' info.txt  |sort -n| awk '{print $2","$1}'
+     
+     方法2：
+     sort -t ',' -k 2 -nr info.txt
+
+
+
+
+2. 

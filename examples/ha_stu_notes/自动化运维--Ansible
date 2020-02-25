@@ -1,0 +1,188 @@
+Ansible主要文件
+
+  配置文件
+  
+    /etc/ansible/ansible.cfg 主配置文件，配置ansible工作特性
+         [defaults]
+         #inventory = /etc/ansible/hosts # 主机列表配置文件
+         #library = /usr/share/my_modules/ # 库文件存放目录
+         #remote_tmp = $HOME/.ansible/tmp #临时py命令文件存放在远程主机目录
+         #local_tmp = $HOME/.ansible/tmp # 本机的临时命令执行目录
+         #forks = 5 # 默认并发数
+         #sudo_user = root # 默认sudo 用户
+         #ask_sudo_pass = True #每次执行ansible命令是否询问ssh密码
+         #ask_pass = True
+         #remote_port = 22
+         #host_key_checking = False # 检查对应服务器的host_key，建议取消注释
+         #log_path=/var/log/ansible.log #日志文件
+         
+    /etc/ansible/hosts 主机清单
+    
+    /etc/ansible/roles/ 存放角色的目录
+    
+  程序
+  
+    /usr/bin/ansible 主程序，临时命令执行工具
+    
+    /usr/bin/ansible-doc 查看配置文档，模块功能查看工具
+    
+    /usr/bin/ansible-galaxy 下载/上传优秀代码或Roles模块的官网平台
+    
+    /usr/bin/ansible-playbook 定制自动化任务，编排剧本工具/usr/bin/ansible-pull 远程执行命令的工具
+    
+    /usr/bin/ansible-vault 文件加密工具
+    
+    /usr/bin/ansible-console 基于Console界面与用户交互的执行工具
+    
+
+
+ansible-doc: 显示模块帮助
+ 
+ ansible-doc [options] [module...]
+ 
+      -a 显示所有模块的文档
+      -l, --list 列出可用模块
+      -s, --snippet显示指定模块的playbook片段
+      示例：
+          ansible-doc –l 列出所有模块
+          ansible-doc ping 查看指定模块帮助用法
+          ansible-doc –s ping 查看指定模块帮助用法
+          
+  
+ansible <host-pattern> [-m module_name] [-a args]
+    --version 显示版本
+    -m module 指定模块，默认为command
+    -v 详细过程 –vv -vvv更详细
+    --list-hosts 显示主机列表，可简写—list
+    -k, --ask-pass 提示输入ssh连接密码，默认Key验证
+    -K, --ask-become-pass 提示输入sudo时的口令
+    -C, --check 检查，并不执行
+    -T, --timeout=TIMEOUT 执行命令的超时时间，默认10s
+    -u, --user=REMOTE_USER 执行远程执行的用户
+    -b, --become 代替旧版的sudo 切换        
+
+
+
+ansible命令执行过程
+
+    1. 加载自己的配置文件 默认/etc/ansible/ansible.cfg
+    2. 加载自己对应的模块文件，如command
+    3. 通过ansible将模块或命令生成对应的临时py文件，并将该文件传输至远程服务器的对应执行用户$HOME/.ansible/tmp/ansible-tmp-数字/XXX.PY文件
+    4. 给文件+x执行
+    5. 执行并返回结果
+    6. 删除临时py文件，sleep 0退出
+执行状态：
+    绿色：执行成功并且不需要做改变的操作
+    黄色：执行成功并且对目标主机做变更
+    红色：执行失败
+
+
+
+ansible常用模块
+
+Command：在远程主机执行命令，默认模块，可忽略-m选项
+        ansible srvs -m command -a ‘service vsftpd start’
+        ansible srvs -m command -a ‘echo magedu |passwd --stdin wang’ 不成功
+        此命令不支持 $VARNAME < > | ; & 等，用shell模块实现
+
+
+Shell：和command相似，用shell执行命令
+        ansible srv -m shell -a ‘echo magedu |passwd –stdin wang’
+        调用bash执行命令 类似 cat /tmp/stanley.md | awk -F‘|’ ‘{print $1,$2}’ &>/tmp/example.txt 这些复杂命令，即使使用shell也可能会失败，解决办法：写到脚本时，copy到远程执行，再把需要的结果拉回执行命令的机器
+
+
+Script：运行脚本
+        -a "/PATH/TO/SCRIPT_FILE“
+        snsible websrvs -m script -a f1.sh
+
+
+Copy:从服务器复制文件到客户端,
+        ansible srv -m copy -a “src=/root/f1.sh dest=/tmp/f2.sh owner=wang mode=600backup=yes” 如目标存在，默认覆盖，此处指定先备份
+        ansible srv -m copy -a “content=‘test content\n’ dest=/tmp/f1.txt”  利用内容，直接生成目标文件
+
+
+Fetch:从客户端取文件至服务器端，copy相反，目录可先tar
+        ansible srv -m fetch -a ‘src=/root/a.sh dest=/data/scripts’
+
+
+File：设置文件属性
+        ansible srv -m file -a "path=/root/a.sh owner=wang mode=755“
+        ansible web -m file -a ‘src=/app/testfile dest=/app/testfile-link state=link’
+
+
+Hostname：管理主机名
+        ansible node1 -m hostname -a “name=websrv”
+
+
+Cron：计划任务
+        支持时间：minute，hour，day，month，weekday
+        ansible srv -m cron -a “minute=*/5 job=‘/usr/sbin/ntpdate 172.16.0.1 &>/dev/null’ name=Synctime” 创建任务
+        ansible srv -m cron -a ‘state=absent name=Synctime’ 删除任务
+
+
+Yum：管理包
+        ansible srv -m yum -a ‘name=httpd state=latest’ 安装
+        ansible srv -m yum -a ‘name=httpd state=absent’ 删除
+
+
+Service：管理服务
+        ansible srv -m service -a 'name=httpd state=stopped'
+        ansible srv -m service -a 'name=httpd state=started'
+        ansible srv –m service –a ‘name=httpd state=reloaded’
+        ansible srv -m service -a 'name=httpd state=restarted'
+
+
+User：管理用户
+        ansible srv -m user -a 'name=user1 comment=“test user” uid=2048 home=/app/user1 group=root‘
+        ansible srv -m user -a 'name=sysuser1 system=yes home=/app/sysuser1 ’
+        ansible srv -m user -a ‘name=user1 state=absent remove=yes‘ 删除用户及家目录等数据
+
+
+Group：管理组
+        ansible srv -m group -a "name=testgroup system=yes“
+        ansible srv -m group -a "name=testgroup state=absent" 
+
+
+
+[root@centos_6_S_002 roles]# tree
+.
+├── httpd
+│   ├── files
+│   │   ├── httpd6.conf
+│   │   ├── httpd7.conf
+│   │   └── index.html
+│   └── tasks
+│       ├── copyfile6.yml
+│       ├── copyfile7.yml
+│       ├── copyfile.yml
+│       ├── group.yml
+│       ├── main.yml
+│       ├── service.yml
+│       ├── user.yml
+│       └── yum.yml
+├── memcached
+│   ├── tasks
+│   │   ├── conf.yml
+│   │   ├── install.yml
+│   │   ├── main.yml
+│   │   └── service.yml
+│   └── templates
+│       └── memcached.j2
+└── nginx
+    ├── files
+    │   └── nginx.conf
+    ├── handlers
+    │   └── main.yml
+    ├── tasks
+    │   ├── copyfile.yml
+    │   ├── group.yml
+    │   ├── html.yml
+    │   ├── main.yml
+    │   ├── service.yml
+    │   ├── user.yml
+    │   └── yum.yml
+    ├── templates
+    │   └── nginx.conf.j3
+    └── vars
+        └── main.yml
+

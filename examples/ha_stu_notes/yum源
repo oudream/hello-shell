@@ -1,0 +1,31 @@
+[base]
+name=centos7_base
+baseurl=http://mirrors.aliyun.com/centos/$releasever/os/$basearch/
+enabled=1
+gpgcheck=0
+
+
+[epel]
+name=centos7_epel
+baseurl=http://mirrors.aliyun.com/epel/7/$basearch
+enabled=1
+gpgcheck=0
+
+
+
+mysql56.repo
+[mysql56-community]
+name=MySQL 5.6 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-5.6-community/el/6/$basearch/
+enabled=1
+gpgcheck=0
+
+
+mysql57.repo
+[mysql57-community]
+name=MySQL 5.7 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/
+enabled=1
+gpgcheck=1
+
+

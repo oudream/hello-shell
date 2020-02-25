@@ -1,0 +1,497 @@
+1. Tomcat manager host-manager 管理工具
+      （1）manager
+        /etc/tomcat/tomcat-users.xml
+            <role rolename="manager-gui"/>
+            <user username="tomcat" password="qwe123" roles="manager-gui"/>
+        systemctl restart tomcat
+        在浏览器输入 ： http://192.168.1.1:8080/manager 进入管理界面
+                部署：
+                    Context Path (required): /test         # 部署的路径 ，即将来可以通过 http://192.168.1.1:8080/test 访问到
+                    WAR or Directory URL：/app/myapp       # WAR 包所在路径
+      
+      （2）host-manager 虚拟主机管理器
+        /etc/tomcat/tomcat-users.xml
+            <role rolename="admin-gui"/>
+            <user username="tomcat" password="qwe123" roles="admin-gui"/>      
+      
+
+2. 8005端口
+        <Server port="8005" shutdown="SHUTDOWN">
+            此为 tomcat 管理端口的默认配置，监听8005端口，并且接受 SHUTDOWN 指令，用 telnet 连接到此端口，通过此指令可以关闭 Tomcat,不安全
+            可以将 监听端口改为 -1 ，或者将 “SHUTDOWN“ 改为较为复杂的字符串
+            
+
+
+3. Connector : http https ajp 
+        
+        Connector 组件用来监听接口，接受请求，支持三种协议： http https ajp 。生产中尽量不用 https ,因为它的开销很大，而且
+        在内网中没必要使用加密。默认配置，启用了 http ajp 两种协议，当我们只使用其中一种服务时，建议关闭另一个。
+                <Connector port="8080" protocol="HTTP/1.1"
+                   connectionTimeout="20000"
+                   redirectPort="8443" />
+                # HTTP   
+                   
+                <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
+                # ajp
+                
+
+4. 定义 host 虚拟主机
+                       
+           /etc/tomcat/server.xml
+                      <Host name="www.test.com"  appBase="/app/myapps"
+                            unpackWARs="true" autoDeploy="true">
+                      </Host>
+                      # 定义虚拟主机名为 www.test.com ,根目录为 /app/myapps
+                      
+            mkdir -p /app/myapps/ROOT/{classes,lib,META-INF,WET-INF}
+            vim /app/myapps/ROOT/index.jsp
+                <%@ page language="java" %>
+                <html>
+                        <head><title>TomcatA</title></head>
+                        <body>
+                                <h1><font color="orange">Test Page : TomcatA</font></h1>
+                                <table align="centre" border="1">
+                                        <tr>
+                                        <td>Session ID</td>
+                                        <% session.setAttribute("testsession","testsession"); %>
+                                        <td><%= session.getId() %></td>
+                                        </tr>
+                                        <tr>
+                                                <td>Created on</td>
+                                                <td><%= session.getCreationTime() %></td>
+                                        </tr>
+                                </table>
+                        </body>
+                </html>
+            # 定义测试主页
+            重启 Tomcat
+            systemctl restart tomcat
+            
+            在浏览器输入 www.test.com:8080  ，进行测试
+
+
+5. 定义 context (Web 下的单个应用)
+        （1）URL 路径位于虚拟主机根目录下
+                /app/
+                └── myapps
+                    ├── ROOT
+                    │   ├── classes
+                    │   ├── index.jsp
+                    │   ├── lib
+                    │   ├── META-INF
+                    │   └── WET-INF
+                    └── test1
+                        ├── classes
+                        ├── index.jsp
+                        ├── lib
+                        ├── META-INF
+                        └── WET-INF
+             <Host name="www.test.com"  appBase="/app/myapps"
+                    unpackWARs="true" autoDeploy="true">
+                    <Context path="/test1" docBase="test1" reloadable="">
+                    </Context>
+             </Host>
+             # 此处定义了虚拟主机 www.test.com ,根目录为 /app/myapps。同时在Context中定义了一个 test1 的应用，path 指定了URL路径，docBase 
+               定义了 test1 应用所在路径，此处因为是在虚拟主机的根目录下，可以使用相对路径。使用 www.test.com/test1 ，即可访问此应用。
+               因为是在虚拟主机的根目录下，即使不配置Context，也是可以被 Tomcat 自动部署的。
+
+        （2）URL 路径不在虚拟主机根目录下
+        
+                /app/
+                ├── latest -> test2/
+                ├── myapps
+                │   └── ROOT
+                │       ├── classes
+                │       ├── index.jsp
+                │       ├── lib
+                │       ├── META-INF
+                │       └── WET-INF
+                └── test2
+                    ├── classes
+                    ├── index.jsp
+                    ├── lib
+                    ├── META-INF
+                    └── WET-INF
+
+              <Host name="www.test.com"  appBase="/app/myapps"
+                       unpackWARs="true" autoDeploy="true">
+                       <Context path="/test2" docBase="/app/latest" reloadable="">
+                       </Context>
+              </Host>
+              # 此处使用软连接，latest 文件指向 /app/test2 ，在 Context 中定义了 latest 文件路径。这样当 test2 的版本发生改变时，只需将
+                latest 指向新版本就行，不需要再修改配置文件。
+
+
+
+
+6. 定义 Value 组件 ：
+
+	      定义访问日志：org.apache.catalina.valves.AccessLogValve
+	      定义访问控制：org.apache.catalina.valves.RemoteAddrValve
+              
+              实例1：  
+              
+              <Host name="www.test.com"  appBase="/app/myapps"
+                   unpackWARs="true" autoDeploy="true">              
+		   <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+		        prefix="www.test.com" suffix=".txt"
+			pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+              </Host>                
+              #  此处定义了虚拟主机的访问日志。directory 为日志的路径，此处使用了相对路径。prefix 定义了日志文件命名的开头部分，
+                 suffix 定义了日志文件命名的结束部分。pattern 定义了日志文件的格式。
+                      
+                      
+              实例2：
+              
+              <Valve className="org.apache.catalina.valves.RemoteAddrValve" deny="192\.168\.1\.2"/>
+              # 此处定义了虚拟主机的访问控制权限，deny 定义了拒绝 912.168.1.2 主机的访问。
+
+
+
+
+
+7. 实现 LNMT
+    （1）Nginx 和 Tomcat 在一台服务器上。
+    
+         配置 Nginx ：     
+         vim /etc/nginx/conf.d/test.conf
+                server {
+                        server_name www.app.com;
+                        root /data/web/html;
+                        index index.jsp index.html;
+                        location / {
+                                proxy_pass http://www.test.com:8080/;
+                        }
+                }
+         配置 Tomcat :
+             此处忽略，使用前面配置。
+             
+         使用浏览器访问 www.app.com 时，就调度到了本机上的虚拟主机名为 www.test.com 上。         
+
+
+
+
+    （2）Nginx 和 Tomcat 在一台服务器上，并且实现动静分离
+
+
+		server {
+			listen 80;
+			server_name www.app.com;
+			index index.jsp index.html;
+			location / {
+				rewrite / http://www.test.com:8080 last;
+			}
+
+			location ~ ^/test1/ {
+				rewrite ^/test1/(.*)$ http://www.test.com:8080/test1/$1 last;
+			}
+
+			location ~* \.(html|jpg|png|image)$ {
+				root /data/web/html;
+			}
+
+			location ~* \.(jsp|d0)$  {
+
+				proxy_pass http://www.test.com:8080;
+			}
+		}
+
+        # 当访问 www.app.com 时，url 会被重写为 /index.jsp ，而以 jsp 结尾的文件将由tomcat处理。当访问 静态页面时，会有 nginx 自己处理。
+          当访问动态页面时，会被调度到本机上的 tomcat 处理。
+
+
+
+8. httpd 实现代理 （可进行 ajp http 协议的调度）
+	（1） http 协议的代理
+
+		<VirtualHost *:80>
+			ServerName      www.app.com
+			ProxyRequests Off				 # 关闭正向代理
+			ProxyVia        On				 # 响应客户端时，是否在首部加入 Via,让客户端知道内容是由谁代理的
+			ProxyPreserveHost Off			         # 是否保留主机头
+			<Proxy *>
+				Require all granted
+			</Proxy>
+			ProxyPass / http://www.test.com:8080/
+			ProxyPassReverse / http://www.test.com:8080/
+			<Location />
+				Require all granted
+			</Location>
+		</VirtualHost>
+
+
+	（2） ajp 协议的代理
+
+		<VirtualHost *:80>
+			ServerName      www.ajp.com
+			ProxyRequests Off
+			ProxyVia        On
+			ProxyPreserveHost Off
+			<Proxy *>
+				Require all granted
+			</Proxy>
+			ProxyPass / ajp://127.0.0.1:8009/
+			ProxyPassReverse / ajp://127.0.0.1:8009/
+			<Location />
+				Require all granted
+			</Location>
+		</VirtualHost>
+
+
+
+9. 会话保持，三种方案
+		(1) session sticky 				# 会话粘性
+			1. 通过代理服务器的源地址哈希 
+				 nginx   : ip_hash
+				 haproxy : source
+				 lvs     :   sh
+			2. 通过 cookie 
+				 nginx   : hash
+				 hsproxy : cookie
+		(2) session cluster				# 会话集群，通过信道传递会话信息。通过组播方式，所以集群不宜过大
+			tomcat delta manager
+			
+		(3) session server 				# 通过会话服务器，存储专门的会话信息
+			memcached
+			redis
+
+session cluster ：此方案 tomcat 集群最好不要超过 4 个
+	 client -> proxy(nginx) -> session cluster(nginx + tomcat nginx处理静态请求，tomcat处理动态请求)
+	 测试页面 ：index.jsp
+		<%@ page language="java" %>
+		<html>
+			<head><title>TomcatA</title></head>
+			<body>
+				<h1><font color="red">Test Page : TomcatA</font></h1>
+				<table align="centre" border="1">
+					<tr>
+					<td>Session ID</td>
+					<% session.setAttribute("testsession","testsession"); %>
+					<td><%= session.getId() %></td>
+					</tr>
+					<tr>
+						<td>Created on</td>
+						<td><%= session.getCreationTime() %></td>
+					</tr>
+				</table>
+			</body>
+		</html>
+
+
+
+	(1) cluster_server : nginx + tomcat
+	
+		cluster_server1：192.168.1.1
+		
+			tomcat 配置：			   
+			   /etc/tomcat/server.xml
+			      <Host name="www.test1.com"  appBase="/app/myapps"
+				    unpackWARs="true" autoDeploy="true">
+				    <Context path="/test" docBase="/app/latest" reloadable="">
+				    </Context>
+			      </Host>
+			      
+			 nginx 配置：
+			 
+				server {
+					listen 80 default_server;
+					server_name www.app1.com;
+					index index.jsp index.html;
+					location / {
+						proxy_pass http://www.test1.com:8080;
+					}
+					location ~* \.(html|jpg|png|image)$ {
+						root /data/web/html;
+					}
+
+					location ~* \.(jsp|d0)$  {
+
+						proxy_pass http://www.test1.com:8080;
+					}
+				}
+
+
+		cluster_server2： 192.168.1.2
+			tomcat配置：			   
+			   /etc/tomcat/server.xml
+			      <Host name="www.test2.com"  appBase="/app/myapps"
+				    unpackWARs="true" autoDeploy="true">
+				    <Context path="/test" docBase="/app/latest" reloadable="">
+				    </Context>
+			      </Host>
+			      
+			 nginx 配置：
+
+				server {
+					listen 80 default_server;
+					server_name www.app2.com;
+					index index.jsp index.html;
+					location / {
+						proxy_pass http://www.test2.com:8080;
+					}
+					location ~* \.(html|jpg|png|image)$ {
+						root /data/web/html;
+					}
+
+					location ~* \.(jsp|d0)$  {
+
+						proxy_pass http://www.test2.com:8080;
+					}
+				}
+
+
+
+
+	(2) 负载均衡配置 （nginx） 
+
+	proxy_server : 192.168.1.3
+	
+		vim /etc/nginx/nginx.conf
+
+			http {
+
+				upstream srvs {
+					server 192.168.1.1:80 weight=2;
+					server 192.168.1.2:80 weight=2;
+				}
+
+			    server {
+				listen       80 default_server;
+				server_name  www.app.com;
+				location / {
+					proxy_pass http://srvs;
+				}
+			    }
+			 }    
+	  ################################################################################################		 
+	  # 使用 httpd 做负载均衡
+	  			<proxy balancer://tcsrvs>
+				BalancerMember http://192.168.1.1:80
+				BalancerMember http://192.168.1.2:80
+				ProxySet lbmethod=byrequests
+				</Proxy>
+
+				<VirtualHost *:80>
+					ServerName www.app.com
+					ProxyVia On
+					ProxyRequests Off
+					ProxyPreserveHost On
+					<Proxy *>
+						Require all granted
+					</Proxy>
+					ProxyPass / balancer://tcsrvs/
+					ProxyPassReverse / balancer://tcsrvs/
+					<Location />
+						Require all granted
+					</Location>
+				</VirtualHost>
+	  # 使用 httpd 做粘性会话				
+				Header add Set-Cookie "ROUTEID=.%{BALANCER_WORKER_ROUTE}e; path=/" env=BALANCER_ROUTE_CHANGED
+
+				<proxy balancer://tcsrvs>
+					BalancerMember http://192.168.1.1:80 route=TomcatA loadfactor=1
+					BalancerMember http://192.168.1.2:80 route=TomcatB loadfactor=2
+					ProxySet lbmethod=byrequests
+					ProxySet stickysession=ROUTEID
+				</Proxy>
+
+				<VirtualHost *:80>
+					ServerName www.app.com
+					ProxyVia On
+					ProxyRequests Off
+					ProxyPreserveHost On
+					<Proxy *>
+						Require all granted
+					</Proxy>
+					ProxyPass / balancer://tcsrvs/
+					ProxyPassReverse / balancer://tcsrvs/
+					<Location />
+						Require all granted
+					</Location>
+				</VirtualHost>	
+	 ##########################################################################################################	
+
+	(2) 配置 Tomcat 会话集群 cluster_server1(192.168.1.1) 和 cluster_server2（192.168.1.2）配置类似，这里以 cluster_server1 为例
+	
+	cluster_server1：
+	
+	   配置 server.xml 文件: 
+	   
+	   vim /etc/tomcat/server.xml
+
+	      <Host name="www.test1.com"  appBase="/app/myapps"
+		    unpackWARs="true" autoDeploy="true">
+					<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"
+							channelSendOptions="8">
+
+						<Manager className="org.apache.catalina.ha.session.DeltaManager"
+							expireSessionsOnShutdown="false"
+							notifyListenersOnReplication="true"/>
+
+						<Channel className="org.apache.catalina.tribes.group.GroupChannel">	 # 成员关系判定	
+						<Membership className="org.apache.catalina.tribes.membership.McastService" 
+								address="228.10.0.4"				 # 多播地址
+								port="45564"
+								frequency="500"					 # 没500毫秒检查一次
+								dropTime="3000"/>				 # 超过6秒，则认为成员 down 掉
+						<Receiver className="org.apache.catalina.tribes.transport.nio.NioReceiver" # 如何接收其他节点的会话信息
+							address="192.168.1.1"
+							port="4000"
+							autoBind="100"
+							selectorTimeout="5000"
+							maxThreads="6"/>
+
+						<Sender className="org.apache.catalina.tribes.transport.ReplicationTransmitter"> # 如何向其他节点发送会话信息
+						<Transport className="org.apache.catalina.tribes.transport.nio.PooledParallelSender"/>
+						</Sender>
+						<Interceptor className="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector"/>
+						<Interceptor className="org.apache.catalina.tribes.group.interceptors.MessageDispatch15Interceptor"/>
+						</Channel>
+
+						<Valve className="org.apache.catalina.ha.tcp.ReplicationValve"
+							filter=""/>
+						<Valve className="org.apache.catalina.ha.session.JvmRouteBinderValve"/>
+
+						<Deployer className="org.apache.catalina.ha.deploy.FarmWarDeployer"
+							tempDir="/tmp/war-temp/"
+							deployDir="/tmp/war-deploy/"
+							watchDir="/tmp/war-listen/"
+							watchEnabled="false"/>
+
+						<ClusterListener className="org.apache.catalina.ha.session.JvmRouteSessionIDBinderListener"/>
+						<ClusterListener className="org.apache.catalina.ha.session.ClusterSessionListener"/>
+						</Cluster>	
+		    <Context path="/test" docBase="/app/latest" reloadable="">
+		    </Context> 
+	    </Host>
+
+	   配置 WEB-INF/web.xml 文件: (每个 web 应用都要单独配置)
+		 例如：本实验的网站目录结构为：
+		 	/app/
+			├── latest -> test2/
+			├── myapps
+			│   └── ROOT
+			│       ├── classes
+			│       ├── index.jsp
+			│       ├── lib
+			│       ├── META-INF
+			│       └── WEB-INF
+			│           └── web.xml
+			└── test2
+			    ├── classes
+			    ├── index.jsp
+			    ├── lib
+			    ├── META-INF
+			    └── WEB-INF
+				└── web.xml
+	   所以需要在 /app/myapps/ROOT/WEB-INF/web.xml /app/test2/WEB-INF/web.xml 两个文件中添加 <distributable/> 元素，
+	   这样当访问 www.app.com 和 www.app.com/test 时 ，才会实现会话共享。如果不希望此应用保存会话，可以不设置。
+
+
+
+
+
+
+
+
+

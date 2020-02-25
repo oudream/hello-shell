@@ -1,0 +1,136 @@
+
+网站访问控制：
+       
+       httpd2.2中：
+            order和allow、deny放在directory, .htaccess中
+            order：定义生效次序；写在后面的表示默认法则
+                        Order allow,deny
+                        Order deny,allow
+            Allow from和Deny from：定义客户端地址
+            客户端地址：
+                        IP
+                        网络: 172.16
+                                    172.16.0.0
+                                    172.16.0.0/16
+                                    172.16.0.0/255.255.0.0
+
+
+                        <files "*.txt">                     # 对于txt文件，根据规则，172.16.100.100会允许
+                            order deny,allow
+                            deny from 172.16.100.100
+                            allow from 172.16
+                        </files>
+
+
+                        <filematch “.*\.(conf|ini)$">      # 172.16.100.100 会被拒绝
+                            order allow,deny
+                            deny from 172.16.100.100
+                            allow from 172.16
+                        </filematch>            
+            
+       httpd2.4中：
+                        <FilesMatch ".+\.(conf|ini)$">      # 对于 .conf .ini 文件，只有192.168.1.2可以访问，包括自身也会被拒绝
+                        <RequireAny>
+                              Require all denied
+                              require ip 192.168.1.2
+                        </RequireAny>
+                        </FilesMatch>
+                        
+       httpd2.4中限制对指定目录的访问：
+       
+                        <Location /test>                                # 只有192.168.1.2可以访问主站点下的test目录
+                        <RequireAny>
+                           Require all denied
+                           require ip 192.168.1.2
+                        </RequireAny>
+                        </Location>
+
+
+当主页面不存在时，是否可以访问其他文件列表：
+                        options indexes
+
+
+
+支持软连接：
+                        options indexes FollowSymlinks
+                    
+                    
+
+
+与访问控制相关的哪些指令可以放在指定目录下的.htaccess文件中，并使之生效
+                        
+                        <Directory /data/web/test> 
+                            AllowOverride All                               # 所有指令都有效
+                            AllowOverride None                              # .htaccess 文件无效
+                            AllowOverride AuthConfig Indexes                # 除了AuthConfig 和Indexes的其它指令都无法覆盖
+                        </Directory>
+                        
+                        如果上面配置的为 AllowOverride All ，则.htaccess中的指令会生效，并覆盖之前的配置
+                        /data/web/test1/.htaccess 
+                            options indexes
+                            <FilesMatch ".+\.(conf|ini)$">
+                            <RequireAny>
+                               Require all denied
+                               require ip 192.168.1.200
+                            </RequireAny>
+                            </FilesMatch>
+
+
+
+
+
+           
+访问非主页面下的文件夹：
+                     如：网站的主文件夹/data/web/ 下有一个 app 的文件夹 ，当访问http://x.x.x.x/app时，实际访问的是/app/test/
+                        
+                        <Directory "/app/test/">
+                            Require all granted
+                        </Directory>
+
+                        alias /appdir  /app/test
+                        
+                        
+                        
+                        
+基于用户的访问控制：
+            
+            虚拟用户：HTTP自己用于访问验证的账号。
+              /etc/httpd/conf.d/test.conf
+                     <Directory "/data/web/test/">
+                     AuthType Basic
+                     AuthName "Secure Login"
+                     AuthUserFile "/etc/httpd/conf.d/.htpasswd"
+                     Require valid-user
+                     </Directory>
+                     
+              /etc/httpd/conf.d/
+              htpasswd -c /etc/httpd/conf.d/.htpasswd test1             # 第一次创建用户时，添加-c选项
+              htpasswd  /etc/httpd/conf.d/.htpasswd test2
+              htpasswd  /etc/httpd/conf.d/.htpasswd test3
+              
+              htpasswd -D /etc/httpd/conf.d/.htpasswd test1             # 删除用户            
+           
+
+            基于组验证：
+              <Directory "/data/web/secure/">
+                     AuthType Basic
+                     AuthName "Secure Login Group"
+                     AuthUserFile "/etc/httpd/conf.d/.htuser"
+                     AuthGroupFile "/etc/httpd/conf.d/.htgroup"
+              Require group g1 g2
+              
+              /etc/httpd/conf.d/
+              htpasswd -c .htuser test1
+              htpasswd  .htuser test2
+              htpasswd  .htuser test3
+              vim .htgroup
+                     g1:test1
+                     g2:test2
+                     g3:test3
+
+              
+            
+            
+            
+                    
+                    

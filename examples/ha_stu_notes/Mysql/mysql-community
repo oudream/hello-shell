@@ -1,0 +1,4 @@
+alter user'root'@'localhost' IDENTIFIED BY 'test';
+mysqld --initialize-insecure  --user=mysql
+	systemctl start mysqld
+	mysql -e 'grant all on *.* to "root"@"localhost" identified by "test"' -uroot

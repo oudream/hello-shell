@@ -1,0 +1,325 @@
+            +-----------------+------------------+-----------------------------+-----------------------+
+            |    Hostname     |  System Version  |             IP              |        VIP            |
+            +-----------------+------------------+-----------------------------+-----------------------+
+            |                 |                  |   eth0 : 192.168.1.1/24     |  VIP1: 192.168.1.100  |
+            |   Ka1_Server    |    Centos7.5     |-----------------------------|                       |
+            |                 |                  |   eth1 : 192.168.31.1/24    |  VIP2: 192.168.1.200  |
+            +-----------------+------------------+-----------------------------+-----------------------+
+            |                 |                  |   eth0 : 192.168.1.2/24     |  VIP1: 192.168.1.100  |
+            |   Ka2_Server    |    Centos7.5     |-----------------------------|                       |
+            |                 |                  |   eth1 : 192.168.31.2/24    |  VIP2: 192.168.1.200  |    
+            +-----------------+------------------+-----------------------------+-----------------------+
+            |   Web _Server1  |    Centos7.5     |   eth0 : 192.168.31.3/24    |                       |    
+            +-----------------+------------------+-----------------------------+-----------------------+
+            |   Web _Server2  |    Centos7.5     |   eth0 : 192.168.31.4/24    |                       |    
+            +-----------------+------------------+-----------------------------+-----------------------+
+            |   Web _Server3  |    Centos7.5     |   eth0 : 192.168.31.5/24    |                       |    
+            +-----------------+------------------+-----------------------------+-----------------------+
+            |   Web _Server4  |    Centos7.5     |   eth0 : 192.168.31.6/24    |                       |    
+            +-----------------+------------------+-----------------------------+-----------------------+
+            
+
+
+
+Ka1_Server：
+      
+      安装 nginx keepalived
+          yum install nginx keepalived -y
+          
+          vim /etc/keepalived/keepalived.conf
+              ! Configuration File for keepalived
+
+              global_defs {
+                 notification_email {
+                  root@localhost 
+                 }
+                 notification_email_from ka@localhost
+                 smtp_server 127.0.0.1
+                 smtp_connect_timeout 30
+                 router_id ka1
+                 vrrp_mcast_group4 230.10.10.10
+              }
+
+
+              vrrp_script chk_nginx {
+                  script "/usr/bin/killall -0 nginx &> /dev/null"
+                  interval 1
+                  weight -30
+              }
+
+              vrrp_instance VI_1 {
+                  state MASTER
+                  interface eth0
+                  virtual_router_id 10
+                  priority 100
+                  advert_int 1
+                  authentication {
+                      auth_type PASS
+                      auth_pass 1111
+                  }
+                  virtual_ipaddress {
+                      192.168.1.100/24 dev eth0
+                  }
+                  track_script {
+                      chk_nginx
+                  }
+                  notify_master "/etc/keepalived/notify.sh master"
+                  notify_backup "/etc/keepalived/notify.sh backup"
+                  notify_fault "/etc/keepalived/notify.sh fault"
+              }
+              vrrp_instance VI_2 {
+                  state BACKUP
+                  interface eth0
+                  virtual_router_id 20
+                  priority 80
+                  advert_int 1
+                  authentication {
+                      auth_type PASS
+                      auth_pass 2222
+                  }
+                  virtual_ipaddress {
+                      192.168.1.200/24 dev eth0
+                  }
+                  track_script {
+                      chk_nginx
+                  }
+                  notify_master "/etc/keepalived/notify.sh master"
+                  notify_backup "/etc/keepalived/notify.sh backup"
+                  notify_fault "/etc/keepalived/notify.sh fault"
+              }
+
+-----------------------------------------------------------------
+
+          vim /etc/nginx/nginx.conf
+               http {
+                  upstream webserver1 {
+                      server 192.168.31.3:80;
+                      server 192.168.31.4:80;
+                  } 
+
+
+                  upstream webserver2 {
+                      server 192.168.3  1.5:80;
+                      server 192.168.31.6:80;
+                  }
+
+
+
+                  server {
+                listen  80;
+                server_name www.a.com;
+                      location / {
+                  proxy_pass http://webserver1;
+                }
+                  }
+
+
+                  server {
+                listen  80;
+                server_name www.b.com;
+                      location / {
+                  proxy_pass http://webserver2;
+                }
+                  }
+             }
+             
+             
+             
+             
+      启动服务：
+              
+              systemctl start nginx 
+              systemctl start keepalived
+                           
+             
+-----------------------------------------------------------------------------------------------------------            
+             
+             
+
+Ka2_Server
+
+      安装 nginx keepalived
+          yum install nginx keepalived -y
+
+
+          vim /etc/keepalived/keepalived.conf
+          
+            ! Configuration File for keepalived
+
+            global_defs {
+               notification_email {
+                root@localhost 
+               }
+               notification_email_from ka@localhost
+               smtp_server 127.0.0.1
+               smtp_connect_timeout 30
+               router_id ka2
+               vrrp_mcast_group4 230.10.10.10
+            }
+
+              vrrp_script chk_nginx {
+                  script "/usr/bin/killall -0 nginx &> /dev/null"
+                  interval 1
+                  weight -30
+              }
+
+
+
+            vrrp_instance VI_1 {
+                state BACKUP
+                interface eth0
+                virtual_router_id 10
+                priority 80
+                advert_int 1
+                authentication {
+                    auth_type PASS
+                    auth_pass 1111
+                }
+                virtual_ipaddress {
+                    192.168.1.100/24 dev eth0
+                }
+                track_script {
+                    chk_nginx
+                }
+                notify_master "/etc/keepalived/notify.sh master"
+                notify_backup "/etc/keepalived/notify.sh backup"
+                notify_fault "/etc/keepalived/notify.sh fault"
+            }
+            vrrp_instance VI_2 {
+                state MASTER
+                interface eth0
+                virtual_router_id 20
+                priority 100
+                advert_int 1
+                authentication {
+                    auth_type PASS
+                    auth_pass 2222
+                }
+                virtual_ipaddress {
+                    192.168.1.200/24 dev eth0
+                }
+                track_script {
+                    chk_nginx
+                }
+                notify_master "/etc/keepalived/notify.sh master"
+                notify_backup "/etc/keepalived/notify.sh backup"
+                notify_fault "/etc/keepalived/notify.sh fault"
+            }
+
+
+
+
+----------------------------------------------------------------------
+
+          vim /etc/nginx/nginx.conf
+            http{
+              upstream webserver1 {
+                  server 192.168.31.3:80;
+                  server 192.168.31.4:80;
+              } 
+
+
+              upstream webserver2 {
+                  server 192.168.31.5:80;
+                  server 192.168.31.6:80;
+              }
+
+
+
+              server {
+            listen  80;
+            server_name www.a.com;
+                  location / {
+              proxy_pass http://webserver1 ;
+            }
+
+              }
+
+              server {
+            listen  80;
+            server_name www.b.com;
+                  location / {
+              proxy_pass http://webserver2 ;
+            }
+
+              }
+          }
+          
+          
+          
+      启动服务：
+              
+              systemctl start nginx 
+              systemctl start keepalived
+              
+-----------------------------------------------------------------------------------------------------------
+
+
+Web _Server1
+          
+          yum install httpd -y
+          echo This is Web Server 1 > /var/www/html/index.html
+          systemctl start httpd
+
+
+Web _Server2
+
+          yum install httpd -y
+          echo This is Web Server 1 > /var/www/html/index.html
+          systemctl start httpd
+
+
+Web _Server3
+
+          yum install httpd -y
+          echo This is Web Server 1 > /var/www/html/index.html
+          systemctl start httpd
+
+
+Web _Server4
+
+          yum install httpd -y
+          echo This is Web Server 1 > /var/www/html/index.html
+          systemctl start httpd
+          
+
+测试 ：
+      用一台客户端，配置 /etc/hosts文件，模拟DNS域名解析
+          vim /etc/hosts
+              192.168.1.100 www.a.com
+              192.168.1.200 www.b.com
+     
+              
+
+
+
+
+notify.sh 
+
+#!/bin/bash
+
+contact='root@localhost'
+notify() {
+mailsubject="$(hostname) to be $1, vip floating"
+mailbody="$(date +'%F %T'): vrrp transition, $(hostname) changed to be $1"
+echo "$mailbody" | mail -s "$mailsubject" $contact
+}
+case $1 in
+master)
+notify master
+systemctl start nginx
+;;
+backup)
+notify backup
+systemctl restart nginx
+;;
+fault)
+notify fault
+;;
+*)
+echo "Usage: $(basename $0) {master|backup|fault}"
+exit 1
+;;
+esac
+c
+

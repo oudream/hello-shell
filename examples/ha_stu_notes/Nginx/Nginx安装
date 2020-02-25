@@ -1,0 +1,52 @@
+
+http://nginx.org/packages/centos/7/x86_64/RPMS/
+
+
+
+yum install pcre-devel openssl-devel zlib-devel gcc
+
+useradd -r nginx
+
+./configure \
+--prefix=/usr/local/nginx \
+--conf-path=/etc/nginx/nginx.conf \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--pid-path=/var/run/nginx.pid \
+--lock-path=/var/run/nginx.lock \
+--user=nginx \
+--group=nginx \
+--with-http_ssl_module \
+--with-http_v2_module \
+--with-http_dav_module \
+--with-http_stub_status_module \
+--with-threads --with-file-aio
+		
+make && make install
+
+
+
+vim /etc/profile.d/nginx.sh
+	PATH=/usr/local/nginx/sbin:$PATH
+. nginx.sh
+
+
+
+
+
+
+--prefix=/etc/nginx                 安装路径
+--sbin-path=/usr/sbin/nginx         指明nginx程序文件安装路径
+--conf-path=/etc/nginx/nginx.conf   主配置文件安装位置
+--error-log-path=/var/log/nginx/error.log     错误日志文件安装位置
+--http-log-path=/var/log/nginx/access.log     访问日志文件安装位置
+--pid-path=/var/run/nginx.pid                 指明pid文件安装位置
+--lock-path=/var/run/nginx.lock               锁文件安装位置
+--http-client-body-temp-path=/var/cache/nginx/client_temp     客户端body部分的临时文件存放路径，服务器允许客户端使用put方法提交大数据时，临时存放的磁盘路径		
+--http-proxy-temp-path=/var/cache/nginx/proxy_temp            作为代理服务器，服务器响应报文的临时文件存放路径
+--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp        作为fastcgi代理服务器，服务器响应报文的临时文件存放路径
+--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp            作为uwsgi代理服务器，服务器响应报文的临时文件存放路径
+--http-scgi-temp-path=/var/cache/nginx/scgi_temp              作为scgi反代服务器，服务器响应报文的临时文件存放路径
+--user=nginx                                                  指明以那个身份运行worker进程，主控master进程一般由root运行
+--group=nginx
+--with-http_ssl_module                                        表示把指定模块编译进来

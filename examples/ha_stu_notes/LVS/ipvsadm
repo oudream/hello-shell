@@ -1,0 +1,65 @@
+管理集群服务：增，改，删 ：
+
+      增，改：
+              ipvsadm -A|E -t|u|f service-address [-s scheduler] [-p [timeout]]
+      删除：
+              ipvsadm -D -t|u|f service-address
+              
+              
+                  service-address：                                # VIP
+                  
+                  -t|u|f：                                         # 指定使用那个协议
+                          -t: TCP协议的端口，VIP:TCP_PORT
+                          -u: UDP协议的端口，VIP:UDP_PORT
+                          -f：firewall MARK，标记，一个数字
+                          
+                  -s scheduler                                     # 指定集群的调度算法，默认为wlc
+                  
+                  
+                  
+管理集群上的RS：增，改，删 ：
+      增，改：
+              ipvsadm -a|e -t|u|f service-address -r server-address [-g|i|m] [-w weight]
+         删：
+              ipvsadm -d -t|u|f service-address -r server-address
+          
+          
+                  server-address：
+                  rip[:port] 如省略port，不作端口映射
+
+
+                  -g: gateway, DR类型，默认
+                  -i: ipip, Tun类型
+                  -m: masquerade, NAT类型
+                  
+                  -w weight：权重       
+                  
+                  
+                  
+                  
+                 
+保存：
+      建议保存至/etc/sysconfig/ipvsadm
+              ipvsadm-save -n > /PATH/TO/IPVSADM_FILE
+              ipvsadm -S > /PATH/TO/IPVSADM_FILE
+              systemctl stop ipvsadm.service
+重载：
+              ipvsadm-restore < /PATH/FROM/IPVSADM_FILE
+              ipvsadm -R < /PATH/FROM/IPVSADM_FILE
+              systemctl restart ipvsadm.service                  
+
+                  
+                  
+                  
+                  
+                  
+                  
+
+
+
+
+
+
+
+
+                  

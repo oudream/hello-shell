@@ -1,0 +1,23 @@
+Linux DHCP协议的实现程序：dhcp, dnsmasq（dhcp,dns)
+
+Dhcp Server
+    /usr/sbin/dhcpd
+    /etc/dhcp/dhcpd.conf --> /etc/rc.d/init.d/dhcpd
+    /etc/dhcp/dhcpd6.conf--> /etc/rc.d/init.d/dhcpd6
+    /usr/sbin/dhcrelay
+    /etc/rc.d/init.d/dhcrelay
+
+DHCP配置文件
+    /etc/dhcp/dhcpd.conf
+    
+    option domain-name "test";
+    option domain-name-servers 114.114.114.114,223.5.5.5;
+    default-lease-time 86400;
+    max-lease-time 86400;
+    subnet 192.168.1.0 netmask 255.255.255.0 {
+    range 192.168.1.20 192.168.100.200;
+    option routers 192.168.100.1;
+    }
+    
+    
+    

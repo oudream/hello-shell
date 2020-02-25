@@ -1,0 +1,23 @@
+Iptable 有四表五链：
+          四表 : 
+                fileter   ：过滤规则表
+                nat 表    ：地址转换规则表
+                mangle表  ：修改数据标记位规则表
+                raw表     ：跟踪数据表规则表
+          五链 ：
+                INPUT     ：入站数据过滤
+                OUTPUT    ：出站数据过滤
+                FORWARD   ：转发数据过滤
+                PREROUTINF  ：路由前过滤
+                POSTROUTING ：路由后过滤
+                
+                
+                
+                
+                ---> PREROUTING -------> 路由决策 ------> FORWARD ------> POSTROUTING --->
+                                            |                               ^
+                                            |                               |
+                                            |                               |
+                                            V                               |
+                                          INPUT ----> Local Process ---- OUTPUT
+                                            

@@ -1,0 +1,25 @@
+Nginx :
+		Nginx 由内核和模块组成
+				内核通过查找配置文件，将用户的请求映射到 location block
+				location 中的配置命令会启用不同的模块去完成响应工作
+
+		从结构上分为 ： 核心模块 	HTTP   ,  EVENT   ,   MAIL
+						基础模块    HTTP Access  ,  HTTP FastCGI  ,  HTTP Proxy  ,  HTTP Rewrite
+						第三方模块	HTTP Upstream Request Hash   ,   Notice  , HTTP  Access Key
+		从功能上分为 ： Handlers   处理器模块。此模块直接处理请求，并进行输出内容和修改 headers 信息登操作。
+						Filters    过滤器模块。 对处理器模块的输出内容进行修改
+		
+		从工作模式上分为 ： 
+						单工作模式 ： 除进程外，还有一个单线程的工作进程   （默认）
+						多工作模式 ： 每个工作进程还包含多个线程
+            
+            
+            
+		Nginx 的模块是直接编译进内核中的，在启动Nginx时，这些模块是被自动加载的
+		Apache 的模块是先编译成 so 文件 ，然后在配置文件中决定是否要加载
+		
+		负载均衡算法 ： 轮询         （默认）
+						weight
+						ip_hash
+						fail 				根据后端服务器的响应时间来分配请求
+						url_hash			可以使同一个IP的客户固定访问一台后端服务器，解决动态网页的 session 共享问题

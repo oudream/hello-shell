@@ -1,0 +1,32 @@
+                        +----------------------------+------------+
+                        |  Server_1 |  192.168.1.1   |  生成日志   |
+                        +----------------------------+------------+
+                        |  Server_2 |  192.168.1.2   | 日志服务器  |
+                        +----------------------------+------------+
+
+基于UDP：
+Server_1:
+    vim /etc/rsyslog.conf
+        authpriv.*                                              @192.168.1.3
+    systemctl restart rsyslog          
+
+Server_2:
+    vim /etc/rsyslog.conf
+        $ModLoad imudp
+        $UDPServerRun 514
+    systemctl restart rsyslog
+
+
+基于TCP：
+Server_1:
+    vim /etc/rsyslog.conf
+        authpriv.*                                              @@192.168.1.3
+    systemctl restart rsyslog          
+
+Server_2:
+    vim /etc/rsyslog.conf
+        $ModLoad imtcp
+        $TCPServerRun 514
+    systemctl restart rsyslog
+    
+   

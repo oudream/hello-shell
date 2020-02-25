@@ -1,0 +1,23 @@
+1. 
+    iptables -t filter -A INPUT -s 192.168.1.66 -j DROP               # -t 指定使用哪张表，默认为 filter；-A 添加；-s 源地址；-j 指定动作；DROP 丢弃。
+    
+2.
+    iptables -t filter -I  INPUT 2 -s 192.168.1.66 -j REJECT          # -I 插入；REJECT 拒绝。
+ 
+3.
+    iptables -R  INPUT 1 -s 192.168.1.66 -j ACCEPT                    # -R 修改
+    
+4.
+    iptables -F                                                       # 清空规则
+    
+5. 
+    iptables -A  INPUT  -s 192.168.1.7,192.168.1.66 -j REJEC          # 支持多个IP的写法
+    
+6.
+    iptables -I  INPUT ! -s 192.168.1.66 -j REJECT                    # ! 取反  ， 除了192.168.1.66，全都拒绝，包括自己远程SSH连接，生产中不要这写
+    
+7.
+    iptables -A INPUT -s 192.168.1.0/24 -j REJECT                     # 支持网段的写法
+    
+6.
+    iptable -A INPUT 

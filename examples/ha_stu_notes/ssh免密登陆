@@ -1,0 +1,36 @@
+ssh-keygen 产生公钥和私钥
+  -t 指定密钥加密类型 rsa dsa
+  -P 指定密码，可为空,不需要密码
+  -f 指定密钥存放的位置
+  
+  
+例：
+    两台主机：A B
+    
+    在主机A上：
+        
+        ssh-keygen -t dsa  -P '' -f ~/.ssh/id_dsa
+        
+        这个命令会产生一个公钥(~/.ssh/id_dsa.pub)和密钥(~/.ssh/id_dsa)
+        
+        -t 指定了加密类型为dsa
+        
+        -P ''表示不需要密码登陆
+        
+        -f 指定了生成密钥位置
+        
+        cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+        
+        这一步将公钥放入authorized_keys文件
+        
+        因为authorized_keys里面现在存放着A自己的公钥，所有我们现在在A上测试自己SSH自己，发现可以免密码连接。
+        
+        
+        同理，我们在B上做同样的操作，并将B的公钥放入A的authorized_keys文件里面，这样B在SSH登陆A时也无须密码。
+        
+        ssh-copy-id X.X.X.X
+        将自身的公钥发送给对方
+        
+        
+        如果A和B各自的authorized_keys文件里面都有对方的公钥，那么A和B之间互相都可以免密登陆。
+        

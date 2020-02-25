@@ -1,0 +1,93 @@
+
+                      +---------------------------------------------------------------+
+                      | system version | http version |  mysql version  | php version |
+                      +---------------------------------------------------------------+
+                      |   centos 7.5   |  httpd-2.4   | mariadb-10.2.15 |             |
+                      +---------------------------------------------------------------+
+                                            LAMP 配置环境
+
+1. 源码安装 httpd
+      
+      需要用到的安装包：        httpd-2.4.34.tar.bz2 , apr-1.6.3.tar.gz , apr-util-1.6.1.tar.gz 
+      httpd安装包官网地址：     https://httpd.apache.org/download.cgi
+      apr官网下载地址：         https://apr.apache.org/download.cgi
+      需要解决的依赖关系 ：     pcre-devel openssl-devel expat-devel
+      httpd安装目录：          /app/httpd24/
+      
+      
+      安装过程：
+            
+            创建用户：
+            
+                useradd  -r -s /sbin/nologin apache
+                
+            解压：
+              
+                tar -xf httpd-2.4.34.tar.bz2 
+                tar -xf apr-1.6.3.tar.gz 
+                tar -xf apr-util-1.6.1.tar.gz
+                ls /data/
+                apr-1.6.3  apr-1.6.3.tar.gz  apr-util-1.6.1  apr-util-1.6.1.tar.gz  httpd24  httpd-2.4.34  httpd-2.4.34.tar.bz2
+                
+            移动 apr组件：
+               
+                cp -r apr-1.6.3 httpd-2.4.34/srclib/apr                      
+                cp -r apr-util-1.6.1 httpd-2.4.34/srclib/apr-util 
+                
+            解决依赖性关系：
+                
+                yum install pcre-devel openssl-devel expat-devel
+                
+            编译：
+                
+                ./configure \
+                --prefix=/app/httpd24 \
+                --enable-so \
+                --enable-ssl \
+                --enable-cgi \
+                --enable-rewrite \
+                --with-zlib \
+                --with-pcre \
+                --with-included-apr \
+                --enable-modules=most \
+                --enable-mpms-shared=all \
+                --with-mpm=prefork
+            
+            安装：
+                
+                make && make install
+            
+            更改配置文件：
+                
+                vim /app/httpd24/conf/httpd.conf
+                user apache 
+                group apache    
+                
+            加入PATH变量：
+                
+                echo PATH=/app/httpd24/bin:$PATH > /etc/profile.d/lamp.sh
+                . /etc/profile.d/lamp.sh  
+                
+            设置开机启动：
+                
+                echo  /app/httpd24/bin/apachectl start >> /etc/rc.d/rc.local 
+                chmod +x /etc/rc.d/rc.local
+                
+                
+                
+                
+                
+                
+                             
+                
+2. 二进制安装mysql 
+            
+            https://github.com/MoMoHgH/Linux_Stu/blob/master/stu_notes/Mysql/Mysql安装 
+            
+            
+            
+
+                
+                
+                
+            

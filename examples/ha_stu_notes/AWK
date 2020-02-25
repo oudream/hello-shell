@@ -1,0 +1,75 @@
+1. test.txt 文件内容为一行随机数字，求test文件中所有数的最大和最小值
+
+    awk -F, '{min=$1;max=$1;i=1;while (i<=NF){if(max<$i)max=$i;if(min>$i)min=$i;i++};print "max: " max "min:" min}' test.txt
+
+
+
+2. 求1到100的奇数或偶数和
+
+    awk 'BEGIN{sum=0;for(i=1;i<=100;i++){if(i%2==0)continue;sum+=i}print sum}'	 奇数
+    awk 'BEGIN{sum=0;for (i=1;i<=100;i++) {if (i%2!=0) continue;sum+=i};print sum}'	 偶数
+
+
+
+3. 去重，将文本中重复的行去掉
+
+    awk '!arr[$0]++'  f1 	
+	  awk '{!arr[$0]++;print $0, arr[$0]}'
+    
+    
+
+4. 循环遍历数组，数组名为weekdays,for(i in weekdays);其中i为数组的下标值，weekdays[i]为其对应数组的值 
+
+  	awk 'BEGIN{weekdays["mon"]="Monday";weekdays["tue"]="Tuesday";for(i in weekdays) {print weekdays[i]}}'
+    
+	  [root@localhost awk]# awk 'BEGIN{weekdays["mon"]="Monday";weekdays["tue"]="Tuesday";for(i in weekdays) {print weekdays[i]}}'
+    Monday
+	  Tuesday
+    
+    
+    
+5. 统计连接的状态
+     tcp连接状态统计
+  	ss -nta |awk '!/^State/{ state[$1]++}END{for(i in state){print i,state[i]}}'
+	  [root@localhost awk]# ss -nta |awk '!/^State/{ state[$1]++}END{for(i in state){print i,state[i]}}'
+	  ESTAB 1
+	  LISTEN 12
+     统计有哪些IP地址对本机的连接，及次数
+    	ss -nt | awk -F'[ :]+'  '!/State/{ip[$(NF-2)]++}END{for( i in ip){print i,ip[i]}}'
+     
+    	ss -nt | awk -F'[ :]+'  '!/State/{ip[$(NF-2)]++}END{for( i in ip){print i,ip[i]}}' | while read line ;do ip=`echo $line| awk '{if($2>2)print $1}'`;[ -z "$ip" ] || iptables -A INPUT -s $ip -j REJECT; done
+   	
+	ss -nt | awk -F'[ :]+'  '!/State/{ip[$(NF-2)]++}END{for( i in ip){print i,ip[i]}}' | while read line ;do num=`echo $line |cut -d " " -f2`;ip=`echo $line|cut -d" " -f1`;[ $num -gt 3 ] && iptables -A INPUT -s $ip -j REJECT ; done 
+  	
+	ss -nt | awk -F'[ :]+'  '!/State/{ip[$(NF-2)]++}END{for( i in ip){print i,ip[i]}}'  |sort -nr -k2|head
+
+    awk '!/name/{if($2=="m"){m++;msum+=$3};if($2=="f"){f++;fsum+=$3}}END{print "mavg="msum/m,"favg="fsum/f}' score.txt
+
+    awk  '!/name/{num[$2]++;sum[$2]+=$3}END{for(i in num){print i" avg ="sum[i]/num[i]}}' score.txt
+
+
+awk 'BEGIN{}{}END{}' 
+
+
+6. 有100个文件，他们的地址都是 http://www.test.com/test1.tar.gz 
+			     http://www.test.com/test1.tar.gz
+			     ...
+			     http://www.test.com/test1.tar.gz
+   批量下载这100个文件，并找出大于50M 的文件
+   
+   	for i in {1..100}; do wget http://www.test.com/test$i.tar.gz; done
+	du -h * | awk -F'M' '{if ($1 > 50) print $1"M" , $2}'
+	
+		
+  对齐
+   -  左对齐，不写默认右对齐；15s 15个字符 
+ cat table_alarm_log.txt | grep -v Field | awk '{printf "%-15s %15s\n",$1,$2}'
+ id                      int(11)
+channel_id              int(11)
+channel_name          char(128)
+task_id                char(64)
+alarm_time             char(32)
+device_ip              char(32)
+device_port             int(11)
+status                 char(64)
+description        varchar(255)

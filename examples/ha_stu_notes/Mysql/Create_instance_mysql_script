@@ -1,0 +1,27 @@
+#!/bin/bash
+
+read -p 'Input Instance Dir: ' Inst_dir
+read -p 'Input template file Dir: ' Temp_dir
+for i in $*
+do
+
+        mkdir -p $Inst_dir/$i/{bin,data,etc,log,pid,socket} &> /dev/null
+        chown -R mysql.mysql $Inst_dir/
+
+        cd /usr/local/mysql
+        scripts/mysql_install_db --datadir=/data/$i/data --user=mysql &> /dev/null
+
+        cp $Temp_dir/my.cnf $Inst_dir/$i/etc/
+        eval sed -i 's/3306/$i/g' $Inst_dir/$i/etc/my.cnf
+        tem=$(echo $Inst_dir | awk -F'/' '{print $2}')
+        eval sed -i 's/mysqldb/$tem/g' $Inst_dir/$i/etc/my.cnf
+
+        cp $Temp_dir/mysqld $Inst_dir/$i/bin/
+        eval sed -i 's/3306/$i/g' $Inst_dir/$i/bin/mysqld
+        chmod +x $Inst_dir/$i/bin/mysqld
+
+
+        echo Instance $i is create Success...
+        echo
+done
+

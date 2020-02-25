@@ -1,0 +1,23 @@
+1 在CA主机：CA建立
+ cd /etc/pki/CA
+     (umask 066;openssl genrsa -out private/cakey.pem 2048)（加密）
+     openssl genrsa -out private/cakey.pem -des3 2048 (不加密)
+     
+     openssl req -new -x509 -key private/cakey.pem -out  cacert.pem -days 3650
+              -x509为自签证，自己为自己颁发证书
+     touch index.txt
+              数据库文件，存放已颁发的证书
+     echo 01 > serial 
+              证书编号，这里从01开始
+              
+ 2 在客户端主机上：申请
+ cd /app
+      (umask 066;openssl genrsa -out app.key 2048)
+            生成密钥
+      openssl req  -new  -key app.key -out  app.csr
+            生成申请证书文件
+ 3 在CA主机上：颁发证书
+  cd /etc/pki/CA
+  
+        openssl ca -in app.csr  -out app.cer -days 300
+            颁发证书

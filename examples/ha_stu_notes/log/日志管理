@@ -1,0 +1,120 @@
+  rsyslog特性：CentOS6和7
+        
+        多线程
+        UDP, TCP, SSL, TLS, RELP
+        MySQL, PGSQL, Oracle实现日志存储
+        强大的过滤器，可实现过滤记录日志信息中任意部分
+        自定义输出格式
+        
+        facility：设施，从功能或程序上对日志进行归类
+            auth, authpriv, cron, daemon,ftp,kern, lpr, mail, news, security(auth),user, uucp, local0-local7, syslog
+        
+        Priority 优先级别，从低到高排序
+            debug, info, notice, warn(warning), err(error), crit(critical), alert,emerg(panic)
+
+         
+	 
+	 
+	 
+	 配置文件 ： /etc/rsyslog.conf , /etc/rsyslog.d/*.conf
+	 
+	     规则：
+	     
+		            
+		*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+		*代表所有事件，只有大于等于info级别的事件才写入，邮件，身份验证，计划任务 不写
+		
+
+		# The authpriv file has restricted access.
+		authpriv.*                                              /var/log/secure
+
+		# Log all the mail messages in one place.
+		mail.*                                                  -/var/log/maillog
+		- 号代表异步写入，不立即写入
+
+
+		# Log cron stuff
+		cron.*                                                  /var/log/cron
+
+		# Everybody gets emergency messages
+		*.emerg                                                 :omusrmsg:*
+
+
+		# Save news errors of level crit and higher in a special file.
+		uucp,news.crit                                          /var/log/spooler
+
+		# Save boot messages also to boot.log
+		local7.*                                                /var/log/boot.log
+		计算机启动信息
+
+        
+  ELK：elasticsearch, logstash, kibana
+        非关系型分布式数据库
+        基于apache软件基金会jakarta项目组的项目lucene
+        Elasticsearch是个开源分布式搜索引擎
+        Logstash对日志进行收集、分析，并将其存储供以后使用
+        kibana 可以提供的日志分析友好的 Web 界面
+
+
+
+
+	
+
+更改ssh日志类别及位置：
+	vim /etc/rsyslog.conf
+		local6.*                                                /var/log/ssh_log
+	vim /etc/ssh/sshd_conf
+		SyslogFacility local6
+	systemclt restart rsyslog
+	systemctl restart sshd
+	
+其它的日志文件
+	/var/log/secure：系统安装日志，文本格式，应周期性分析
+	/var/log/btmp：当前系统上，用户的失败尝试登录相关的日志信息，二进制格式，lastb命令进行查看
+	/var/log/wtmp：当前系统上，用户正常登录系统的相关日志信息，二进制格式，last命令可以查看
+	/var/log/lastlog:每一个用户最近一次的登录信息，二进制格式，lastlog命令可以查看
+	/var/log/dmesg：系统引导过程中的日志信息，文本格式,专用命令dmesg查看
+	/var/log/messages ：系统中大部分的信息
+	/var/log/anaconda : anaconda的日志	
+
+Systemd 统一管理所有 Unit 的启动日志。带来的好处就是，可以只用journalctl一个命令，查看所有日志（内核日志和应用日志）。日志的配置文件
+	日志的配置文件
+		/etc/systemd/journald.conf
+	journalctl用法
+	    查看所有日志（默认情况下 ，只保存本次启动的日志）
+		journalctl
+	    查看内核日志（不显示应用日志）
+		journalctl -k
+	    查看系统本次启动的日志
+		journalctl -b
+		journalctl -b -0
+	    查看上一次启动的日志（需更改设置）
+	        journalctl -b -1	
+	    查看指定时间的日志
+		journalctl --since="2017-10-30 18:10:30"
+		journalctl --since "20 min ago"
+		journalctl --since yesterday
+		journalctl --since "2017-01-10" --until "2017-01-11 03:00"
+		journalctl --since 09:00 --until "1 hour ago"
+	    显示尾部的最新10行日志
+		journalctl -n
+	    显示尾部指定行数的日志
+		journalctl -n 20
+	    实时滚动显示最新日志
+		journalctl -f
+	    查看指定服务的日志
+		journalctl /usr/lib/systemd/systemd
+	    查看指定进程的日志
+		journalctl _PID=1
+       	    查看某个路径的脚本的日志
+		journalctl /usr/bin/bash
+	    查看指定用户的日志
+		journalctl _UID=33 --since today
+	    查看某个 Unit 的日志
+		journalctl -u nginx.service
+		journalctl -u nginx.service --since today
+	    实时滚动显示某个 Unit 的最新日志
+		journalctl -u nginx.service -f
+	    合并显示多个 Unit 的日志
+		journalctl -u nginx.service -u php-fpm.service --since today
+

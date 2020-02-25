@@ -1,0 +1,163 @@
+安装环境 ： Centos 7.5
+
+
+Yum 安装：
+
+  1. 配置 Yum 仓库配置文件：
+
+            vim /etc/yum.repo.d/zabbix
+
+                    [zabbix]
+                    name=zabbix
+                    baseurl=https://mirrors.tuna.tsinghua.edu.cn/zabbix/zabbix/3.4/rhel/7/x86_64/
+                    gpgcheck=0
+                    enabled=1
+
+
+                    [zabbix-non-supported]
+                    name=zabbix-non-supported
+                    baseurl=https://mirrors.tuna.tsinghua.edu.cn/zabbix/non-supported/rhel/7/x86_64/
+                    enabled=1
+       yum install zabbix-server-mysql zabbix-web-mysql zabbix-agent             
+
+
+    2. 安装 Mysql 数据库
+
+            yum install mariadb-server
+
+        修改 Mysql 配置文件
+            vim /etc/my.cnf.d/server.cnf
+               [mysqld]
+               skip_name_resolve=ON                               # 跳过域名解析
+
+        启动 Mysql
+            systemctl start mariadb
+
+
+    3. 创建数据库
+
+        创建 zabbix 数据库及授权用户
+
+            MariaDB [(none)]> create database zabbix character set utf8 collate utf8_bin;
+            MariaDB [(none)]> grant all privileges on zabbix.* to zabbix@'192.168.1.%' identified by 'qwe123';
+
+        定义 zabbix 数据库表结构
+            zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -pqwe123 -h192.168.1.1 zabbix
+
+
+    4. 编辑 zabbix 主配置文件
+
+            vim /etc/zabbix/zabbix_server.conf
+              DBHost=192.168.1.1
+              DBName=zabbix
+              DBUser=zabbix
+              DBPassword=qwe123
+
+
+
+    5. 启动 zabbix server
+            vim  /etc/httpd/conf.d/zabbix.conf                              # 更改时区
+                php_value date.timezone Asia/Shanghai       
+
+            systemctl start httpd zabbix-server
+
+
+    6. 在浏览器中访问 zabbix 管理页面
+
+             http://192.168.1.1/zabbix
+             界面 ：
+                  第一个界面 Welcome                   : 选择 Next step 继续安装 
+                  第二个界面 Check of pre-requisites   : 此界面检查你的配置条件是否正常 ，显示全部 OK ，则可以继续下一步  
+                  第三个界面 Configure DB connection   : 此界面输入数据库的 IP ，端口（0 ，表示默认），数据库名，用户，密码
+                  第四个界面 Zabbix server details     : 可直接下一步        
+                  第五个界面 Pre-installation summary  : 确认你之前的输入信息，检查无误后下一步
+                  第六个界面 Install                   : 成功页面
+             登陆 ：
+                  zabbix 初始管理用户名位 Admin ，密码位 zabbix
+
+
+
+
+
+源码编译安装 ：
+    Zabbix 下载地址 ： http://www.zabbix.com/download.php
+    
+    1. 安装环境：安装数据库、mysql命令、编译工具gcc、php、java环境
+        yum install gcc  mariadb mariadb-server  mariadb-devel libxml2-devel   net-snmp net-snmp-devel  java-1.8.0-openjdk-devel curl  curl-devel php  	php-bcmath  php-mbstring -y
+
+    2. 创建 Zabbix 用户 ：
+        useradd  zabbix -s /sbin/nologin
+        
+    3. 数据库配置 ：
+        systemctl  start mariadb
+        systemctl  enable  mariadb                      # 启动数据库并设置为开机启动
+        
+        MariaDB [(none)]>  create database zabbix character set utf8 collate utf8_bin;
+        MariaDB [(none)]> grant all privileges on zabbix.* to zabbix@localhost identified by ‘123456’;          #  创建 zabbix 数据库及授权用户
+        
+        tar xvf zabbix-3.0.3.tar.gz                                     # 解压 Zabbix 安装包 
+        
+        cd zabbix-3.0.3                                                 # 编译安装
+        ./configure  –prefix=/usr/local/zabbix  –enable-server –enable-agent –with-mysql –enable-ipv6 –with-net-snmp –with-libcurl –with-libxml2 –enable-java
+        
+        make  install
+        
+    4. 启动脚本：
+        cp /usr/local/src/zabbix-3.0.x/misc/init.d/fedora/core/zabbix_server  /etc/init.d/
+        vim /etc/init.d/zabbix_server
+            BASEDIR=/usr/local/zabbix
+        /etc/init.d/zabbix_server   start
+        
+        cp /opt/zabbix-3.0.x/misc/init.d/fedora/core/zabbix_agentd  /etc/init.d/
+        
+        vim /etc/init.d/zabbix_agentd
+            SERVICE="Zabbix agent"
+            DAEMON=/apps/zabbix_agent/sbin/zabbix_agentd                                     #改成实际agent的安装路径
+            PIDFILE=/tmp/zabbix_agentd.pid
+        /etc/init.d/zabbix_agentd   start
+        
+    5. 初始化数据库：
+        cd zabbix-3.0.3/database/mysql/  
+        mysql -uzabbix -p123456  zabbix < schema.sql
+        mysql -uzabbix -p123456  zabbix < images.sql
+        mysql -uzabbix -p123456  zabbix < data.sql
+
+    6. zabbix_server配置文件 ，修改数据库信息
+        vim /usr/local/zabbix/zabbix_server.conf 
+                 DBHost=localhost                                                   # mariadb授权的连接地址
+                 DBName=zabbix                                                      # 数据库名称
+                 DBUser=zabbix                                                      # 数据库用户
+                 DBPassword=123456                                                  # 数据库连接密码
+
+                 ListenIP=0.0.0.0                                                   # 监听地址
+                 
+    7. 配置zabbix-agent文件：
+        Server=192.168.56.11                                                        # 更改server的地址
+
+    8. 安装 Httpd
+        yum install httpd
+        mkdir /var/www/html/zabbix
+        
+        cd zabbix-3.0.3/frontends/php/                                              # 进到 zabbix 的源码目录
+        cp -a ./* /var/www/html/zabbix/                                             # 将当前目录下的所以文件复制到web目录
+        
+        systemctl  start httpd                                                      # 启动 httpd 
+    
+    9. 访问 http://192.168.56.11/zabbix/setup.php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

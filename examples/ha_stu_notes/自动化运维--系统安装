@@ -1,0 +1,76 @@
+
+
+
+安装过程的自动化实现：
+
+  boot:linux ks=http://192.168.1.1/ks6.cfg  ip=192.168.1.30 netmask=255.255.255.0
+        --http服务器为192.168.1.1  通过临时指定IP，使其找到ks6.cfg文件。
+  
+  
+  ks6.cfg内容及格式：
+    指定了分区信息，安装所需要的包，网络配置，root密码，安装类型（这里为test形式），以及安装后脚本
+#platform=x86, AMD64, or Intel EM64T
+#version=DEVEL
+# Firewall configuration
+firewall --disabled
+# Install OS instead of upgrade
+install
+# Use network installation
+url --url="http://192.168.1.1/centos/6/os/x86_64"
+# Root password
+rootpw --plaintext centos
+# System authorization information
+auth  --useshadow  --passalgo=sha512
+# Use text mode install
+text
+firstboot --disable
+# System keyboard
+keyboard us
+# System language
+lang en_US
+# SELinux configuration
+selinux --disabled
+# Installation logging level
+logging --level=info
+# Reboot after installation
+reboot
+# System timezone
+timezone  Africa/Banjul
+# Network information
+network  --bootproto=dhcp --device=eth0 --onboot=on
+# System bootloader configuration
+bootloader --location=mbr
+# Clear the Master Boot Record
+zerombr
+# Partition clearing information
+clearpart --all --initlabel 
+part /boot --fstype=ext4 --size=1024
+part / --fstype=ext4 --size=10240
+part /data --fstype=ext4 --size=5120
+
+part swap --size=2048
+
+%packages
+@base
+@core
+autofs
+%end
+%post
+rm -rf /etc/yum.repos.d/*
+cat > /etc/yum.repos.d/base.repo <<EOF
+[base]
+name=base
+baseurl=file:///misc/cd/
+gpgcheck=0
+EOF
+
+useradd hgh
+echo aaaa |passwd --stdin hgh
+
+mkdir /root/.ssh
+echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvWNDCHmOB1VYdLze86PIRTma70ZbSAAFvBzby/CKgTXx0VIRXKAaqyxNa2+JLfpcGn8E7W3IbIBW0K8BAlCSFdv8B38L/Op2scxfGet41tiA2XfZ51FADMqK/Ip0uWfYRT09aYywhuKq1iUmTTow5aH8Oo0p5aOgsJ4o9O2k1wG0IgrPpPC9suG8bxO0SJ6DzhfguXBliUiFSjFuQPEbAyz1E9Dem2sZ5MHOaAiVjt7yP9Hlv27SH7Idp0smSJEMgXN50g+c8Nqq55/Wa8s7k4Y+K+PVK+lUxQduu68iUaFAdIFEogNJrO2SDs5mn+VYtpIMrv5deLn4NdU9HVmsTw== root@ansible' > /root/.ssh/authorized_keys 
+echo alias cdnet="cd /etc/sysconfig/network-scripts" >> /root/.bashrc
+%end
+
+
+
