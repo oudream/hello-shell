@@ -4,3 +4,6 @@
 [submodule "referto/fengyuhetao"]
 	path = referto/fengyuhetao
 	url = https://github.com/fengyuhetao/shell
+[submodule "referto/superglue"]
+	path = referto/superglue
+	url = https://github.com/imaginate/superglue.git
