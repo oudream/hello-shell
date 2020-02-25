@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
-
 ### proxy
 git config --global http.proxy http://127.0.0.1:1080
 git config --global https.proxy https://127.0.0.1:1080
 git config --global --unset http.proxy
 git config --global --unset https.proxy
+
+npm config set proxy http://127.0.0.1:1080
+npm config set https-proxy https://127.0.0.1:1080
+npm config delete proxy
+npm config delete https-proxy
 
 http_proxy="http://10.31.58.78:1080/"
 https_proxy="https://10.31.58.78:1080/"
