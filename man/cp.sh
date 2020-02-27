@@ -6,7 +6,7 @@ cp -r test/ newtest
 
 # 不跟随源文件中的符号链接
 cp -RP source target
-
+cp --preserve=links source target
 
 # cp [options] source dest
 #
