@@ -27,6 +27,11 @@ chkconfig --list | grep on # 列出所有启动的系统服务
 sysv-rc-conf
 
 
+systemctl enable test.service
+## 以上命令相当于执行以下命令，把test.service添加到开机启动中
+sudo ln -s  '/etc/systemd/system/test.service'  '/etc/systemd/system/multi-user.target.wants/test.service'
+wget –no-check-certificate  https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
+
 
 ### 服务 Systemd 服务生命周期
 sudo systemctl set-default multi-user.target # 开机后进入命令行界面：

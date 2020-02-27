@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+ls -lR | grep "^d"
+
 ### ls
 # -X 根据扩展名排序
 # -S 根据文件大小排序
