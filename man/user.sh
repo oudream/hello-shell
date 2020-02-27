@@ -1,10 +1,44 @@
 #!/usr/bin/env bash
 
+groupadd -r admins
+useradd -s /sbin/nologin -G admins user1
+
+groupadd -g 995 group1
+useradd -s /sbin/nologin -r -u 997 -g 995 user2
+
+groupadd group1
+useradd -G group1 user3
+cat /etc/passwd	    # 用户账户信息
+# user3:x:1003:1006::/home/user3:/bin/sh
+cat /etc/group      # 定义用户所属的组
+# group1:x:1005:user3
+# user3:x:1006:
+
+
+useradd testuser
+passwd testuser
+cat /etc/passwd	    # 用户账户信息
+#testuser:x:1002:1003::/home/testuser:/bin/sh
+groupadd testgroup
+cat /etc/group      # 定义用户所属的组
+#testuser:x:1003:
+#testgroup:x:1004:
+usermod -a -G testgroup testuser
+gpasswd -a testuser testgroup
+cat /etc/group      # 定义用户所属的组
+#testgroup:x:1004:testuser
+gpasswd -d testuser testgroup
+cat /etc/group      # 定义用户所属的组
+# testgroup:x:1004:
+#
+
+
 ### 用户的管理工具或命令
 useradd      # 添加用户
 adduesr      # 添加用户
 passwd       # 为用户设置密码
 usermod      # 修改用户属性，如登录名、用户的home目录等
+userdel      # 删除用户
 pwcov        # 同步用户从/etc/passwd 到/etc/shadow
 pwck         # 校验用户配置文件/etc/passwd 和/etc/shadow 文件内容是否合法或完整；
 pwunconv     # 与pwconv功能相反，用来关闭用户的投影密码。它会把密码从shadow文件内，重回存到passwd文件里，然后删除 /etc/shadow 文件。
@@ -91,6 +125,14 @@ usermod [OPTION] login
 # -U: unlock指定用户
 # -e YYYY-MM-DD: 指明用户账号过期日期；
 # -f INACTIVE: 设定非活动期限；
+# -r, --system : Create a system account
+#    System users will be created with no aging information in /etc/shadow, and their numeric identifiers are chosen in
+#    the SYS_UID_MIN-SYS_UID_MAX range, defined in /etc/login.defs, instead of UID_MIN-UID_MAX (and their GID
+#    counterparts for the creation of groups).
+#
+#    Note that useradd will not create a home directory for such a user, regardless of the default setting in
+#    /etc/login.defs (CREATE_HOME). You have to specify the -m options if you want a home directory for a system account
+#    to be created.
 userdel [OPTION] login # -r: 删除用户家目录；
 # 例如：
 useradd testuser # 创建用户testuser
@@ -126,7 +168,6 @@ passwd -d <用户账号名> # 清除用户账户口令
 # whoami：显示当前用户的名称
 # w/who：显示登录用户及相关信息
 # newgrp：用于转换用户的当前组到指定的组账号，用户必须属于该组才可以正确执行该命令
-
 
 
 ### 赋予root权限
