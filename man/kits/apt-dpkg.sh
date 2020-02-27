@@ -1,19 +1,68 @@
 #!/usr/bin/env bash
 
+
+apt-cache search 键词
+apt-cache show 软件包名称
+
+
+apt-cache
+open https://debian-handbook.info/browse/zh-CN/stable/sect.apt-cache.html
+# apt-cache 命令可显示 APT 内部数据库里的多种信息。这些信息是从 sources.list 文件内聚集不同来源的缓存。
+# 于运行 apt update 运作时产生的。
+# apt-cache 命令可以做键词软件包搜索 apt-cache search 键词。
+# 也能显示软件包标头的可用版本 apt-cache show 软件包名称。
+# 这个命令提供软件包说明、其相依性、维护者名称等。
+# apt search、apt show、aptitude search、aptitude show 都以同样方式运作。
+
+
 wget -qO - https://deb.opera.com/archive.key | sudo apt-key add -
 wget -qO - https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
 
-   - name: add Kubernetes apt-key
-     apt_key:
-       url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-       state: present
 
-   - name: add Kubernetes' APT repository
-     apt_repository:
-      repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
-      state: present
-      filename: 'kubernetes'
+open https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+apt-get update && apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl
+
+
+
+open https://linuxize.com/post/how-to-add-apt-repository-in-ubuntu/
+# Let’s say you want to install MongoDB from their official repositories.
+# First import the repository public key:
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+# Add the MongoDB repository using the command below.
+sudo add-apt-repository 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse'
+# The repository will be appended to sources.list file.
+sudo apt install mongodb-org
+# If for any reasons you want to remove a previously enabled repository, use the --remove option:
+sudo add-apt-repository --remove 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse'
+
+
+
+apt-add-repository
+add-apt-repository
+
+
+
+apt-key
+# apt-key命令用于管理Debian Linux系统中的软件包密钥。每个发布的deb包，都是通过密钥认证的，apt-key用来管理密钥
+apt-key list          #列出已保存在系统中key。
+apt-key add keyname   #把下载的key添加到本地trusted数据库中。
+apt-key del keyname   #从本地trusted数据库删除key。
+apt-key update        #更新本地trusted数据库，删除过期没用的key
+#   Keyring of local trusted keys, new keys will be added here. Configuration Item: Dir::Etc::Trusted.
+/etc/apt/trusted.gpg
+#   File fragments for the trusted keys, additional keyrings can be stored here (by other packages or the
+#   administrator). Configuration Item Dir::Etc::TrustedParts.
+/etc/apt/trusted.gpg.d/
+
 
 
 ### 程序
@@ -53,6 +102,8 @@ dpkg -s package #报告指定包的状态信息
 dpkg -l #显示所有已经安装的Deb包，同时显示版本号以及简短说明
 dpkg -L python3-dev
 
+
+
 ## apt, apt-get
 # apt, apt-get是一条linux命令，适用于deb包管理式的操作系统，主要用于自动从互联网的软件仓库中搜索、安装、升级、卸载软件或操作系统。
 apt update # 升级安装包相关的命令,刷新可安装的软件列表(但是不做任何实际的安装动作)
@@ -76,6 +127,22 @@ apt update # update list of available packages
 apt upgrade # upgrade the system by installing/upgrading packages
 apt full#upgrade # upgrade the system by removing/installing/upgrading packages
 apt edit#sources # edit the source information file
+
+
+
+add-apt-repository [OPTIONS] REPOSITORY
+#   add-apt-repository is a script which adds an external APT repository to either  /etc/apt/sources.list  or  a  file  in
+#   /etc/apt/sources.list.d/ or removes an already existing repository.
+#
+#   The options supported by add-apt-repository are:
+   -h, --help           # Show help message and exit
+   -m, --massive-debug  # Print a lot of debug information to the command line
+   -r, --remove         # Remove the specified repository
+   -y, --yes            # Assume yes to all queries
+   -u,  --update        # After adding the repository, update the package cache with packages from this repository (avoids need to apt-get update)
+   -k, --keyserver      # Use a custom keyserver URL instead of the default
+   -s, --enable-source  # Allow downloading of the source packages from the repository
+
 
 
 ## Snap
