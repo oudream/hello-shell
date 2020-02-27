@@ -25,6 +25,7 @@ echo $1
 echo "--- ---"
 echo ${showVar1}
 echo ${showVar2}
+echo ${showVar3}
 
 
 echo -e "\033[41;36m something here \033[0m" 
