@@ -15,3 +15,8 @@
 
 
 - [https://github.com/jibill/myblog](https://github.com/jibill/myblog)
+
+- [https://github.com/opendocs-md/do-tutorials](https://github.com/opendocs-md/do-tutorials)
+- [https://www.digitalocean.com/community/tutorials?q=kubernetes+ansible](https://www.digitalocean.com/community/tutorials?q=kubernetes+ansible)
+- [https://www.digitalocean.com/community/tutorials](https://www.digitalocean.com/community/tutorials)
+
