@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function testSelect1() {
-    select i in a b c d
+    select i in a b c d 'i am'
     do
         case $i in 
             a)
@@ -15,6 +15,9 @@ function testSelect1() {
             ;;
             d)
                 echo "Your choice is d"
+            ;;
+            'i am')
+                echo "Your choice is i am"
             ;;
             *)
                 echo "Wrong choice! exit!"
