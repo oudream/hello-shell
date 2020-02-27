@@ -7,6 +7,6 @@ function testFor1() {
         echo "Element [$i]: "
     done
 }
-
 testFor1
+
 
