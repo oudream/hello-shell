@@ -43,8 +43,12 @@ sudo add-apt-repository 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu bi
 sudo apt install mongodb-org
 # If for any reasons you want to remove a previously enabled repository, use the --remove option:
 sudo add-apt-repository --remove 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse'
-
-
+#
+sudo echo "deb https://download.ceph.com/debian-nautilus/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/ceph.list
+#
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
 
 apt-add-repository
 add-apt-repository
