@@ -17,6 +17,8 @@ sudo rm -rf /var/lib/apt/lists/*
 sudo mkdir /opt/ddd; sudo mkdir /opt/eee; sudo mkdir /opt/fff; sudo chown oudream /opt/ddd; sudo chown oudream /opt/eee; sudo chown oudream /opt/fff
 sudo mkdir /ddd; sudo mkdir /eee; sudo mkdir /fff; sudo chown oudream /ddd; sudo chown oudream /eee; sudo chown oudream /fff
 
+libopencv-dev
+
 scp /fff
 
 
