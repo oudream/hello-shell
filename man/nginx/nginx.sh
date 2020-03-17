@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+
+nginx -c ./httpserver1.conf
+
+
+
 # news release
 open http://hg.nginx.org/nginx/
 open http://nginx.org/en/docs/
