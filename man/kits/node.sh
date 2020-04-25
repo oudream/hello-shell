@@ -2,17 +2,27 @@
 
 
 
+### install special version node use apt
+# Then for the Latest release (version 12), add this PPA..
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+# For (version 11), run the commands below:
+curl -sL https://deb.nodesource.com/setup_11.x | bash -
+# To install the LTS release (version 10), use this PPA
+curl -sL https://deb.nodesource.com/setup_10.x | bash -
+sudo apt install nodejs
+node -v
+npm -v
+
 ### on linux, debian, ubuntu
 sudo apt update
 sudo apt install nodejs
-#or
+# or
 NODE_VERSION=v12.16.0
 NODE_DISTRO=linux-x64
 wget https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz
 sudo mkdir -p /usr/local/lib/nodejs
 sudo tar -xJvf node-${NODE_VERSION}-${NODE_DISTRO}.tar.xz -C /usr/local/lib/nodejs
-
-# Nodejs
+# Nodejs to .bashrc
 export PATH=/usr/local/lib/nodejs/node-${NODE_VERSION}-${NODE_DISTRO}/bin:$PATH
 sed -i "$ a export PATH=/usr/local/lib/nodejs/node-${NODE_VERSION}-${NODE_DISTRO}/bin:"'$PATH' ~/.profile
 

@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# -or
+find . -name \*.cpp -or -name \*.js
+find . ! -name \*.cpp -and ! -name \*.js
+# “!”否定参数的含义
+find . ! -name "*.txt" -print
 # 使用find命令找到大于指定大小的文件
 find / -type f -size +10G
 # 排除某个目录

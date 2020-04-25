@@ -15,6 +15,9 @@ git pull origin master
 git fetch --all
 git reset --hard origin/master
 git pull //可以省略
+# How do I undo the most recent local commits in Git? : https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git
+git reset HEAD~
+
 
 ###
 # git pull使用给定的参数运行git fetch，并调用git merge将检索到的分支头合并到当前分支中。

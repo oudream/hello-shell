@@ -2,6 +2,9 @@
 
 conda list
 
+# How do I find the location of my Python site-packages directory?
+python -m site
+
 # unittest
 python -m unittest -h
 

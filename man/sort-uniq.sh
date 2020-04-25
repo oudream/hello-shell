@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+file * | grep " x " | sort -t ',' -k 2 -n
+
 ### sort
 # sort的工作原理
 # sort将文件的每一行作为一个单位，相互比较，比较原则是从首字符向后，依次按ASCII码值进行比较，最后将他们按升序输出。

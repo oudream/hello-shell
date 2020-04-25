@@ -125,7 +125,9 @@ systemctl restart systemd-logind
 # ln
 ln -s /ddd/dir1 link-dir1 # create link link-dir1
 
-
+-D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=/opt/limi/opencv_contrib/modules -D PYTHON3_LIBRARY=/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/lib/libpython3.7m.dylib -D PYTHON3_INCLUDE_DIR=/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/include/python3.7m -D PYTHON3_EXECUTABLE=/usr/local/bin/python3 -D PYTHON3_PACKAGES_PATH=/usr/local/lib/python3.7/site-packages -D WITH_FFMPEG=ON -D OPENCV_FFMPEG_USE_FIND_PACKAGE=ON -D BUILD_opencv_python2=OFF -D BUILD_opencv_python3=ON -D INSTALL_PYTHON_EXAMPLES=ON -D INSTALL_C_EXAMPLES=ON -D OPENCV_ENABLE_NONFREE=ON -D BUILD_EXAMPLES=ON
+-D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=/opt/limi/opencv_contrib/modules -D PYTHON3_LIBRARY=/opt/fff/anaconda3/lib/libpython3.7m.dylib -D PYTHON3_INCLUDE_DIR=/opt/fff/anaconda3/include/python3.7m -D PYTHON3_EXECUTABLE=/opt/fff/anaconda3/bin/python -D PYTHON3_PACKAGES_PATH=/opt/fff/anaconda3/lib/python3.7/site-packages -D BUILD_opencv_python2=OFF -D WITH_FFMPEG=ON -D OPENCV_FFMPEG_USE_FIND_PACKAGE=ON -D BUILD_opencv_python3=ON -D INSTALL_PYTHON_EXAMPLES=ON -D INSTALL_C_EXAMPLES=ON -D OPENCV_ENABLE_NONFREE=ON -D BUILD_EXAMPLES=ON
+-D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=/opt/limi/opencv_contrib/modules -D PYTHON3_LIBRARY=/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/lib/libpython3.7m.dylib -D PYTHON3_INCLUDE_DIR=/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/include/python3.7m -D PYTHON3_EXECUTABLE=/usr/local/bin/python3 -D PYTHON3_PACKAGES_PATH=/usr/local/lib/python3.7/site-packages -D BUILD_opencv_python2=OFF -D WITH_FFMPEG=ON -D OPENCV_FFMPEG_USE_FIND_PACKAGE=ON -D BUILD_opencv_python3=ON -D INSTALL_PYTHON_EXAMPLES=ON -D INSTALL_C_EXAMPLES=ON -D OPENCV_ENABLE_NONFREE=ON -D BUILD_EXAMPLES=ON
 
 ### grep more less sort wc
 grep -E 'pattern1.*pattern2' filename

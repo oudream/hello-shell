@@ -7,11 +7,14 @@ https://docs.npmjs.com/cli/install
 
 npm install -f packages-win32.json
 
+### cache
 npm cache clean -f
+npm install -g vue-cli --cache /tmp/empty-cache
 
 # 您还可以通过以下方式嗅出操作系统：
 # nodejs:
 # const _isWin = /^win/.test( process.platform )
+
 
 ### 安装 32位
 # 需要编译的

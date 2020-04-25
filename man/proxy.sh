@@ -66,6 +66,8 @@ npm config set proxy ${http_proxy}
 npm config set https-proxy ${https_proxy}
 npm config delete proxy
 npm config delete https-proxy
+npm config set proxy "http://127.0.0.1:1080"
+npm config set https-proxy "https://127.0.0.1:1080"
 
 ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1
 ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
@@ -74,3 +76,16 @@ ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
 
 libqt5core5a libqt5gui5 libqt5widgets5 libqt5network5 libqt5xml5
 export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
+
+
+unset local_ip
+unset http_proxy
+unset HTTP_PROXY
+unset https_proxy
+unset HTTPS_PROXY
+unset ftp_proxy
+unset FTP_PROXY
+unset all_proxy
+unset ALL_PROXY
+unset no_proxy
+unset NO_PROXY
