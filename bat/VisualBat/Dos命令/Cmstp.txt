@@ -1,0 +1,87 @@
+Cmstp
+
+
+
+安装或删除“连接管理器”服务配置文件。如果在不含可选参数的情况下使用，则 cmstp 会使用对应于操作系统和用户的权限的默认设置来安装服务配置文件。
+
+
+语法
+
+
+
+语法 1: ServiceProfileFileName.exe /q:a /c:"cmstp.exe ServiceProfileFileName.inf [/nf] [/ni] [/ns] [/s] [/su] [/u]"
+
+
+语法 2: cmstp.exe [/nf] [/ni] [/ns] [/s] [/su] [/u] "[Drive:][Path]ServiceProfileFileName.inf"
+
+
+参数
+
+
+
+
+	ServiceProfileFileName.exe
+	语法 1 需要该参数，但对语法 2 而言是无效的。按名称指定包含有要安装的配置文件的安装数据包。
+
+	/q:a
+	语法 1 需要该参数，但对语法 2 而言是无效的。指定在不给出用户提示的情况下安装配置文件。安装已经成功的确认消息仍将显示。
+
+	 [Drive:}[Path]ServiceProfileFileName.inf
+	必需。按名称指定确定如何安装该配置文件的配置文件。[Drive:][Path] 参数对语法 1 而言是无效的。
+
+	/nf
+	指定不安装支持文件。
+
+	/ni
+	指定不创建桌面图标。该参数仅对运行 Windows 95、Windows 98、Windows NT 4.0 或 Windows Millennium Edition 的计算机有效。
+
+	/ns
+	指定不创建桌面快捷方式。该参数仅对运行 Windows 2000 或 Windows XP 的计算机有效。
+
+	/s
+	指定静态地安装或卸载该服务配置文件（没有用户响应提示或显示确认信息）。
+
+	/su
+	指定为单个用户安装该服务配置文件，而不是为所有用户。该参数仅对运行 Windows 2000 或 Windows XP 的计算机有效。
+
+	/u
+	指定要卸载该服务配置文件。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+/s 是唯一能与 /u 参数一起使用的参数。
+	语法 1 是自定义安装应用程序中所使用的典型语法。要使用该语法，必须从含有 ServiceProfileFileName.exe 文件的目录运行 cmstp。
+
+
+
+
+范例
+
+
+
+下述范例通过一个虚构的名为 Fiction 的服务配置文件及其关联文件显示 cmstp 的各种可能的用法。
+
+要安装不含任何支持文件的 Fiction 服务配置文件，请键入： 
+
+fiction.exe /c:"cmstp.exe fiction.inf /nf"
+
+要为单个用户静态地安装 Fiction 服务配置文件，请键入：
+
+fiction.exe /c:"cmstp.exe fiction.inf /s /su"
+
+要将 Fiction 服务配置文件静态地卸载，请键入：
+
+fiction.exe /c:"cmstp.exe fiction.inf /s /u"
+
+
+XOX
+
+
+

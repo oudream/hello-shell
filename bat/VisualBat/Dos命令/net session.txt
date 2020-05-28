@@ -1,0 +1,81 @@
+Net session
+
+
+
+管理服务器计算机连接。使用不带参数的 net session 命令显示有关本地计算机所有会话的信息。
+
+
+语法
+
+
+
+net session [\\ComputerName] [/delete]
+
+
+参数
+
+
+
+	\\computername
+	标识您要列出或断开其会话的计算机。
+
+	/delete
+	结束计算机与 \\computername 的会话并关闭计算机中所有为该会话打开的文件。如果省略 \\computername，所有在本地计算机上的会话将被取消。
+
+	net help command
+	显示指定 net 命令的帮助。
+
+
+
+
+小心
+
+使用 net session 有可能造成数据丢失。在断开会话之前可能需要警告用户。
+
+
+
+注释
+
+
+也可以使用 net sessions 或 net sess 运行 net session 。
+使用 net session 命令查看服务器上用户的用户名和计算机名、用户是否打开了文件以及各个用户的已空闲会话时间。
+	
+信息将以类似下面的格式显示：
+
+ Computer        User name          Client type Opens Idle time
+
+------------------------------------------------------------------------
+\\BASSETT     CHRISDR          Windows 2000   1     00:00:13
+\\SHARONCA    Administrator    DOS LM 2.1     0     01:05:13
+
+	要显示用户会话，请在命令中使用 computername。单个用户的信息包括用户所连接的共享资源的列表。
+	当客户端的用户成功连接到服务器后，会话将被记录下来。相同的网络上的两个计算机可以成功会话，且用户具有一个被服务器接受的用户名和密码。客户端的用户在使用服务器资源之前必须与服务器进行一次会话，只有当客户端的用户连接到资源时才建立该会话。客户与服务器之间只有一个会话，但它们与资源之间可能有多个入口点或连接。
+	要设置自动断开连接之前会话空闲的时间，请使用 net config server/autodisconnect 命令设置 autodisconnect 功能。有关 net config server 命令的详细信息，请参阅 。自动断开连接对用户是透明的，因为当用户再次访问资源时将自动重新建立会话。
+	要中止与服务器的会话，请使用 net session \\ComputerName /delete。
+
+
+
+
+范例
+
+
+
+要显示本地服务器的会话信息列表，请键入：
+
+net session
+
+要显示计算机名为 Shepherd 的客户端会话信息，请键入：
+
+net session \\shepherd
+
+要结束服务器与连接到服务器的客户端的所有会话，请键入：
+
+net session /delete
+
+XOX
+
+
+
+
+
+ 

@@ -1,0 +1,202 @@
+Eventtriggers
+
+
+
+在本地或远程计算机上显示和配置事件触发器。
+
+
+若要查看该命令语法，请单击以下命令：
+
+
+eventtriggers create
+
+
+
+创建新事件触发器，其监视并作用于按给定条件显示的日志事件。
+
+
+语法
+
+
+
+eventtriggers[.exe] /create [/s Computer [/u Domain\User [/p Password]]] /tr TriggerName [/l [APPLICATION] [SYSTEM] [SECURITY] ["DNS server"] [LOG] [DirectoryLogName] [*] ] {[/eid ID]|[/t {ERROR|INFORMATION|WARNING|SUCCESSAUDIT|FAILUREAUDIT}]|[/so Source]} [/d  Description] /tk TaskName
+[/ru {[Domain\]User | "System"} [/rp Password]]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User 指定的用户的帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/tr TriggerName
+指定要与事件触发器关联的友好名称。
+
+/l  [APPLICATION] [SYSTEM] [SECURITY] ["DNS server"] [LOG] [DirectoryLogName] [*] }
+指定要监视的事件日志。有效类型包括：应用、系统、安全、DNS 服务器、日志和目录日志。可以使用通配符 (*)，并作为默认值。
+
+
+/eid ID
+指定事件触发器应监视的特定事件 ID。有效值为任意有效整数。不能与 /type 参数或 /so 参数一起使用。
+
+/t  {ERROR|INFORMATION|WARNING|SUCCESSAUDIT|FAILUREAUDIT}
+指定事件触发器应监视的事件类型。有效值包括：ERROR、INFORMATION、WARNING、SUCCESSAUDIT 和 FAILUREAUDIT。不能与 /id 参数或 /so 参数一起使用。
+
+/so Source
+指定事件触发器应监视的事件来源。有效值可为任何字符串。不能与 /id 参数或 /type 参数一起使用。
+
+/d Description
+指定事件触发器的详细说明。有效值可为任何字符串。
+
+/tk TaskName
+指定符合事件触发器条件时要执行的任务/命令/行。
+
+/ru {[Domain\]User | "System"}
+使用指定用户帐户的权限执行、任务。默认情况下，使用登录到运行 SchTasks 的计算机上的用户的权限执行任务。
+
+值说明[Domain\]User指定用户帐户。
+"System" 或 ""指定 NT Authority\System 帐户，它由操作系统使用。
+
+
+/rp Password
+指定在 /ru 参数中指定的用户帐户的密码。如果在指定用户帐户时省略该参数，SchTasks.exe 将提示您输入密码并隐藏键入的文字。使用 NT Authority\System 帐户的权限执行的任务不要求输入密码，且 SchTasks.exe 不提示输入密码。
+
+
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下列范例显示如何使用 eventtriggers /create 命令：
+
+eventtriggers /create /tr "Disk Cleanup" /l system /t error /tk c:\windows\system32\cleanmgr.exe
+ eventtriggers /create /s srvmain /u maindom\hiropln /p p@ssW23 /tr "Low Disk Space" /eid 4133 /t warning /tk \\server\share\diskcleanup.cmd
+ eventtriggers /create /s srvmain /user maindom\hiropln  /p p@ssW23 /tr "Disk Backup" /eid 4133 /l system /t error /tk \\server\share\ntbackup.exe 
+
+
+eventtriggers delete
+
+
+
+按事件触发器 ID 从系统中删除事件触发器。
+
+
+语法
+
+
+
+eventtriggers[.exe] /delete [/s Computer [/u Domain\User [/p Password]]] /tid {ID|*}
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User.指定的用户的帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/tid {ID|*}
+指定要按“Event Trigger ID”删除的事件触发器。可以使用通配符 (*)。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下列范例显示如何使用 eventtriggers /delete 命令：
+
+eventtriggers /delete /tid 1 /tid 2 /tid 4 /tid 6
+ eventtriggers /delete /s srvmain /u maindom\hiropln /p p@ssW23 /tid *
+ eventtriggers /delete /s srvmain /u maindom\hiropln /p p@ssW23 /tid 1
+
+
+
+
+eventtriggers query
+
+
+
+查询和显示系统的事件触发器属性和设置。
+
+
+语法
+
+
+
+eventtriggers[.exe] /query [/s Computer [/u Domain\User [/p Password]]] [/fo {TABLE|LIST|CSV}] [/nh] [/v]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User.指定的用户的帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fo {TABLE|LIST|CSV}
+指定查询结果输出的格式。有效值为 TABLE、LIST 和 CSV。输出的默认格式为 TABLE。
+
+/nh
+在输出中压缩列的开头。当 /fo 参数设置为 TABLE 或 CSV 时有效。
+
+/v
+指定显示在输出中的详细信息。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下列范例显示如何使用 eventtriggers /query 命令：
+
+eventtriggers /query
+ eventtriggers /query /s srvmain
+ eventtriggers /query /s srvmain /u maindom\hiropln /p p@ssW23 /fo list 
+
+
+注释
+
+不带操作指定时，eventtriggers 返回一个事件触发器列表。要显示事件触发器列表，请键入：
+
+eventtriggers
+
+出现类似于下面的输出： 
+触发器 ID   事件触发器名称              任务
+========== ========================== ==============================================
+1 Disk Cleanup               c:\windows\system32\cleanmgr.exe
+执行事件失败时，eventtriggers 在 \windows\system32\wbem\logs 目录中创建一个名为 TriggerConsumer.log 的日志文件，其中包含一条说明触发事件失败的消息。
+
+
+XOX
+
+
+

@@ -1,0 +1,88 @@
+Net continue
+
+
+
+继续由 net pause 暂停的服务。
+
+
+语法
+
+
+
+net continue service
+
+
+参数
+
+
+
+	service
+
+	必需。指定要继续的计算机。下表列出了所有 service 的部分值。
+
+
+
+值
+说明
+
+
+netlogon
+继续“网络登录”服务。
+
+
+"nt lm security support provider"
+继续“NT LM 安全支持提供商”服务
+
+
+schedule
+继续“任务计划程序”服务。
+
+
+server
+继续“服务器”服务。
+
+
+workstation
+继续“工作站”服务。
+
+
+
+
+
+	net help command
+显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+	 要对资源作轻微更正，请暂停服务。然后使用 net continue 命令重新激活服务或打印机，而不用中断用户连接。
+	
+	 暂停和继续服务的效果随每种服务而变化。
+	
+如果服务名包含空格，请使用引号将文本引起来（例如，"Service Name"）。
+
+
+
+
+范例
+
+
+
+如下命令将继续工作站服务：
+
+ net continue workstation
+
+ 如果服务器名由两个或多个单词组成，必须用引号把该服务器名圈起来。例如，要继续 NT LM 安全支持提供商服务，请键入：
+
+ net continue "nt lm security support provider"
+
+XOX
+
+
+
+
+
+ 

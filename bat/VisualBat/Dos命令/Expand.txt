@@ -1,0 +1,59 @@
+Expand
+
+
+
+展开一个或多个压缩文件。该命令用于从发行磁盘中提取压缩文件。
+
+
+语法
+
+
+
+expand [-r] Source [Destination]
+
+expand -d  source.cab [-f:files]
+
+expand source.cab -f:files Destination
+
+
+参数
+
+
+
+-r
+
+重命名扩展文件。
+
+/d
+
+显示源位置中的文件列表。不展开或提取文件。
+
+-f:files
+
+指定在 cab 文件 (.cab) 中要展开的文件。可以使用通配符（* 和 ?）。
+
+Source
+
+指定要展开的文件。source 可由驱动器号和冒号、目录名、文件名或组合所组成。可以使用通配符（* 和 ?）。
+
+Destination
+
+指定在何处展开文件。如果 source 是多个文件并且没有指定 -r，则 destination 必须是目录。Destination 可由驱动器号和冒号、目录名、文件名或组合而组成。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+在“故障恢复控制台”中使用 expand
+
+可以从“故障恢复控制台”中使用 expand 命令（可使用各种参数）。
+
+
+XOX
+
+
+
+

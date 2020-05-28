@@ -1,0 +1,80 @@
+Subst
+
+
+
+将路径与驱动器号关联。如果在没有参数的情况下使用，subst 将显示有效的虚拟驱动器的名称。
+
+
+语法
+
+
+
+subst [drive1:[drive2:}Path} 
+
+
+subst drive1:/d
+
+
+参数
+
+
+
+	drive1:
+
+	指定要为其指派路径的虚拟驱动器。
+
+	drive2: 
+
+	指定包含指定路径的物理驱动器（如果不是当前的驱动器）。
+
+	Path
+
+	指定要指派给虚拟驱动器的路径。
+
+	/d
+
+	删除虚拟驱动器。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+以下命令在 subst 命令中使用的驱动器上无法工作（或不应使用）：
+
+chkdsk
+Diskcomp
+Diskcopy
+format
+label
+recover 
+
+    
+drive1 参数必须在 lastdrive 命令指定的范围之内。如果没有，subst 将显示下列错误消息：
+
+ Invalid parameter - drive1: 
+    
+    
+
+
+
+范例
+
+
+
+ 若要为路径 B:\User\Betty\Forms 创建虚拟驱动器 Z，请键入： 
+
+ subst z:b:\user\betty\forms 
+
+ 现在，不用键入完整路径，而是通过键入虚拟驱动器号，后跟冒号，即可到达该目录，如下所示： 
+
+ z: 
+
+XOX
+
+
+
+

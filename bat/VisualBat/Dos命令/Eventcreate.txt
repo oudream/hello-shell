@@ -1,0 +1,71 @@
+Eventcreate
+
+
+
+使管理员在指定事件日志中创建自定义事件。
+
+
+语法
+
+
+
+eventcreate [/s Computer [/u Domain\User [/p Password]] {[/l {APPLICATION|SYSTEM}]|[/so SrcName]} /t {ERROR|WARNING|INFORMATION|SUCCESSAUDIT|FAILUREAUDIT} /id EventID /d Description
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User 指定的用户的帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/l {APPLICATION|SYSTEM}
+指定将创建事件的事件日志的名称。有效日志名称为 APPLICATION 和 SYSTEM。
+
+/so SrcName
+指定要使用的事件来源。有效来源可以是任何字符串，并应代表生成事件的应用程序或组件。
+
+/t {ERROR|WARNING|INFORMATION|SUCCESSAUDIT|FAILUREAUDIT}
+指定要创建的事件的类型。有效类型包括 ERROR、WARNING、INFORMATION、SUCCESSAUDIT 和 FAILUREAUDIT。
+
+/id EventID
+指定事件的事件 ID。有效 ID 是从 1 到 65535 的任意数字。
+
+/d Description
+指定用于新建事件的说明。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+自定义事件不能写到安全日志中。
+
+
+
+范例
+
+
+下面的范例显示您可以如何使用 eventcreate 命令：
+
+eventcreate /t error /id 100 /l application /d "Create event in application log"
+ eventcreate /t information /id 1000 /so winmgmt /d "Create event in WinMgmt source"
+ eventcreate /t error /id 2001 /so winword /l application /d "new src Winword in application log"
+ eventcreate /s server /t error /id 100 /l application /d "Remote machine without user credentials"
+ eventcreate /s server /u user /p password /id 100 /t error /l application /d "Remote machine with user credentials"
+ eventcreate /s server1 /s server2 /u user /p password /id 100 /t error /so winmgmt /d "Creating events on Multiple remote machines"
+ eventcreate /s server /u user /id 100 /t warning /so winmgmt /d "Remote machine with partial user credentials"
+
+XOX
+
+
+

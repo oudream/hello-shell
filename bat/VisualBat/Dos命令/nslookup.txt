@@ -1,0 +1,130 @@
+Nslookup
+
+
+ 显示可用来诊断域名系统 (DNS) 基础结构的信息。使用此工具之前，您应当熟悉 DNS 的工作原理。只有在已安装 TCP/IP 协议的情况下才可以使用 Nslookup 命令行工具。
+
+
+语法
+
+
+ nslookup [-SubCommand ...] [{ComputerToFind| [-Server]}]
+
+
+
+
+参数
+
+
+-SubCommand ...
+将一个或多个 nslookup 子命令指定为命令行选项。有关子命令的列表，请参阅“”。
+
+ComputerToFind
+如果未指定其它服务器，就使用当前默认 DNS 名称服务器查阅 ComputerToFind 的信息。要查找不在当前 DNS 域的计算机，请在名称上附加句点。
+
+-Server
+ 指定将该服务器作为 DNS 名称服务器使用。如果省略了 -Server，将使用默认的 DNS 名称服务器。
+
+{help|?}
+ 显示 nslookup 子命令的简短总结。
+
+
+
+
+
+注释
+
+
+
+如果 ComputerToFind 是 IP 地址，并且查询类型为 A 或 PTR 资源记录类型，则返回计算机的名称。如果 ComputerToFind 是一个名称，并且没有跟踪期，则向该名称添加默认 DNS 域名。此行为取决于下面 set 子命令的状态：domain、srchlist、defname 和 search。
+如果键入连字符 (-) 代替 ComputerToFind，命令提示符更改为 nslookup 交互式模式。
+命令行长度必须少于 256 个字符。
+Nslookup 有两种模式：交互式和非交互式。
+
+如果仅需要查找一块数据，请使用非交互式模式。对于第一个参数，键入要查找的计算机的名称或 IP 地址。对于第二个参数，键入 DNS 名称服务器的名称或 IP 地址。如果省略第二个参数，nslookup 使用默认 DNS 名称服务器。
+
+如果需要查找多块数据，可以使用交互式模式。为第一个参数键入连字符 (-)，为第二个参数键入 DNS 名称服务器的名称或 IP 地址。或者，省略两个参数，则 nslookup 使用默认 DNS 名称服务器。下面是一些有关在交互式模式下工作的提示：
+
+ 要随时中断交互式命令，请按 CTRL+B。
+ 要退出，请键入 exit。
+ 要将内置命令当作计算机名，请在该命令前面放置转义字符 (\)。
+ 将无法识别的命令解释为计算机名。
+
+
+
+
+如果查找请求失败，nslookup 将打印错误消息。下表列出可能的错误消息。
+
+
+错误消息
+说明
+
+
+Timed out
+重试一定时间和一定次数之后，服务器没有响应请求。可以通过 set timeout 子命令设置超时期。而利用 set retry 子命令设置重试次数。
+
+
+No response from server
+服务器上没有运行 DNS 名称服务器。
+
+
+No records
+尽管计算机名有效，但是 DNS 名称服务器没有计算机当前查询类型的资源记录。查询类型使用 set querytype 命令指定。
+
+
+Nonexistent domain
+计算机或 DNS 域名不存在。
+
+
+Connection refused
+ or 
+
+ Network is unreachable
+无法与 DNS 名称服务器或指针服务器建立连接。该错误通常发生在 ls 和 finger 请求中。
+
+
+Server failure
+DNS 名称服务器发现在其数据库中内部不一致而无法返回有效应答。
+
+
+Refused
+DNS 名称服务器拒绝为请求服务。
+
+
+Format error
+DNS 名称服务器发现请求数据包的格式不正确。可能表明 nslookup 中存在错误。
+
+
+
+
+
+有关 nslookup 命令和 DNS 的详细信息，请参阅如下资源：
+
+
+
+Microsoft Windows Resource Kit 网站(http://www.microsoft.com/)
+Lee, T., Davies J. 2000. Microsoft Windows 2000 TCP/IP Protocols and Services Technical Reference.Redmond, Washington:Microsoft Press.
+Albitz, P., Loukides, M. and C. Liu. 1998. DNS and BIND, Third Edition.Sebastopol, California:O'Reilly and Associates, Inc.
+
+
+
+
+
+
+
+范例
+
+
+每个命令行选项均由连字符 (-) 后紧跟命令名组成，有时是等号 (=) 后跟一个数值。例如，要将默认的查询类型更改为主机（计算机）信息，并将初始超时更改为 10 秒，请键入：
+
+ nslookup -querytype=hinfo -timeout=10
+
+
+
+
+XOX
+
+
+
+
+
+

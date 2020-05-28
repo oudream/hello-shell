@@ -1,0 +1,57 @@
+Debug
+
+
+
+启动 Debug.exe，它是可用于测试和调试 MS-DOS 可执行文件的程序。如果在不含参数的情况下使用，则 debug 会启动 Debug.exe 并显示 debug 提示符，该提示符用连字符 (-) 表示。
+
+
+语法
+
+
+
+debug [[Drive:][Path] FileName [parameters]]
+
+
+参数
+
+
+
+	[Drive:][Path] FileName
+
+	指定要测试的可执行文件的位置和名称。
+
+	parameters
+
+	指定要测试的可执行文件所需要的任何命令行信息。
+?显示 debug 子命令列表。
+
+
+注释
+
+
+XOX
+
+ 使用 MS-DOS 子系统命令
+
+Debug 是运行在 WOW/NTVDM 下的 MS-DOS 子系统命令。
+ 分隔命令参数
+	
+参数之间可以使用逗点或空格分隔，然而只有在两个十六进制值之间才需要这些分隔符。例如，以下命令是等价的： 
+ dcs:100 110 
+
+ d cs:100 110 
+
+ d,cs:100,110 
+	
+	 使用 debug 子命令
+	
+ 有几个 debug 子命令可供使用。有关 debug 子命令的详细信息，请参阅“”。
+
+
+XOX
+
+
+
+
+ 
+ 

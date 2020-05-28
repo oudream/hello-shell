@@ -1,0 +1,208 @@
+Secedit
+
+
+
+通过将当前配置与至少一个模板比较，配置和分析系统安全性。
+
+
+若要查看该命令语法，请单击以下命令：
+
+
+secedit /analyze 
+
+
+语法
+
+
+
+secedit /analyze /db FileName  [/cfg FileName] [/log FileName] [/quiet]
+
+
+参数
+
+
+
+/db FileName
+必需的。指定其中包含已存储配置的数据库的路径和文件名，将根据该配置执行分析。如果 FileName 指定新的数据库，那么还必须指定 /cfg FileName 命令行选项。
+
+/cfg FileName
+指定将被导入数据库进行分析的安全模板的路径和文件名。只有当使用了 /db 参数时此命令行选项才有效。如果没有指定此参数，则根据已存储在数据库中的配置执行分析。
+
+/log FileName
+指定该过程日志文件的路径和文件名。如果不提供该参数，则使用默认日志文件。
+
+/quiet
+不使用屏幕和日志文件的输出。仍然可以使用“安全配置和分析”查看分析结果。
+ 
+
+
+secedit /configure 
+
+通过应用已存储模板，配置系统安全性。
+
+
+语法
+
+
+
+secedit /configure /db FileName  [/cfg FileName ] [/overwrite][/areas area1 area2...] [/log FileName] [/quiet]
+
+
+参数
+
+
+
+/db FileName
+必需的。提供数据库的文件名，该数据库包含应该使用的安全模板。
+
+/cfg FileName
+指定安全模板的文件名，此安全模板将导入到数据库并应用于系统。只有当使用了 /db 参数时此命令行选项才有效。如果没有指定该参数，将应用已存储在数据库中的模板。
+
+/overwrite
+指定 /cfg 参数中的安全模板是否应该覆盖存储在数据库中的任何模板或复合模板，而不是将结果附加到存储的模板中。只有当使用了 /cfg 参数时此命令行选项才有效。如果没有指定，就会将 /cfg 参数中的模板附加到存储的模板中。
+
+/areas area1 area2...
+指定应用到系统中的安全区域。如果没有指定区域，则所有区域都应用到系统。每个区域应通过空格分隔。
+
+
+
+区域名称
+说明
+
+
+SECURITYPOLICY
+系统的本地策略和域策略，包含帐户策略、审核策略等等。
+
+
+GROUP_MGMT
+在安全模板中指定的任何组的受限组设置
+
+
+USER_RIGHTS
+用户登录权限和特权
+
+
+REGKEYS
+本地注册表项上的安全性
+
+
+FILESTORE
+本地文件存储的安全性
+
+
+SERVICES
+所有定义的服务的安全性
+
+
+
+
+
+/log FileName
+指定过程日志文件的文件名。如果没有指定，将使用默认路径。
+
+/quiet
+不使用屏幕和日志文件的输出。
+
+ 
+
+secedit /export 
+
+
+此命令从安全数据库中将存储的模板导出到安全模板文件中。
+
+
+语法
+
+
+
+secedit /export [/mergedpolicy] [/DB FileName] [/CFG FileName] [/areas area1 area2...] [/log FileName] [/quiet]
+
+
+参数
+
+
+
+/mergedpolicy
+合并并导出域和本地策略安全性。
+
+/db FileName
+指定包含将被导出的模板的数据库文件。如果没有提供数据库文件的名称，将使用系统策略数据库。
+
+/db FileName
+指定保存模板的文件名称。
+
+/areas area1 area2...
+指定将被导出到模板的安全区域。如果没有指定区域，则所有区域都将被导出。每个区域应通过空格分隔。
+
+
+
+区域名称
+说明
+
+
+SECURITYPOLICY
+系统的本地策略和域策略，包含帐户策略、审核策略等等。
+
+
+GROUP_MGMT
+指定在安全模板中指定的任何组的受限组设置。
+
+
+USER_RIGHTS
+指定用户登录权限和特权
+
+
+REGKEYS
+指定本地注册表项的安全性
+
+
+FILESTORE
+指定本地文件存储的安全性
+
+
+SERVICES
+指定所有定义的服务的安全性
+
+
+
+
+/log FileName
+指定该过程日志文件的文件名。如果没有指定，将使用默认路径。
+
+/quiet
+不使用屏幕和日志文件的输出。
+ 
+
+
+secedit /validate 
+
+
+验证要导入到分析数据库或系统应用程序的安全模板的语法。
+
+
+语法
+
+
+
+secedit /validate FileName
+
+
+参数
+
+
+
+FileName
+指定使用安全模板创建的安全模板文件名。
+
+
+
+
+
+注释
+
+ secedit /refreshpolicy 已经被 gpupdate 替代。有关如何刷新安全设置的信息，请参阅 gpupdate。
+
+ XOX
+
+
+

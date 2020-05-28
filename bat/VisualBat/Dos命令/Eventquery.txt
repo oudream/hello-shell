@@ -1,0 +1,144 @@
+Eventquery.vbs
+
+
+
+列出一个或多个事件日志中的事件和事件属性。
+
+
+语法
+
+
+
+eventquery[.vbs] [/s Computer [/u Domain\User [/p Password]]] [/fi FilterName] [/fo {TABLE|LIST|CSV}] [/r EventRange [/nh] [/v] [/l [APPLICATION] [SYSTEM] [SECURITY] ["DNS server"] [UserDefinedLog] [DirectoryLogName] [*] ]
+
+
+参数
+
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User 指定的用户的帐户权限的脚本。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fi FilterName
+指定要包括在查询中的事件的类型，或指定要从查询中排除的事件的类型。要查找具有任一值的事件，可通过使用运算符 or 在单个语法语句中结合使用“类型”和 ID。下列是有效筛选器名、运算符和值。
+
+名称
+运算符
+值
+
+
+日期时间
+eq, ne, ge, le, gt, lt
+mm/dd/yy(yyyy), hh:mm:ssAM(/PM)
+
+
+类型
+eq, ne, or
+{ERROR|INFORMATION|WARNING|SUCCESSAUDIT|FAILUREAUDIT}
+
+
+ID
+eq, ne, or, ge, le, gt, lt
+任何有效的正整数。
+
+
+用户
+eq, ne
+任何有效字符串。
+
+
+计算机
+eq, ne
+任何有效字符串。
+
+
+源
+eq, ne
+任何有效字符串。
+
+
+分类
+eq, ne
+任何有效字符串
+
+
+
+
+/fo {TABLE|LIST|CSV}
+指定输出所用的格式。有效值为 table、list 和 csv。
+
+/r EventRange
+指定要列出的事件的范围。
+
+
+值
+说明
+
+
+N
+列出 N 个最新的事件。
+
+
+-N
+列出 N 个最旧的事件。
+
+
+N1-N2
+列出从 N1 到 N2 的事件。
+
+
+
+
+/nh
+取消输出结果中的列标题。仅适用于 table 和 csv 格式。
+
+/v
+指定显示在输出结果中的详细事件信息。
+
+/l [APPLICATION] [SYSTEM] [SECURITY] ["DNS server"] [UserDefinedLog] [DirectoryLogName] [*] ]
+指定要监视的日志。有效值为 Application、System、Security、"DNS server"、用户自定义日志以及 Directory 日志。只有在由 /s 参数指定的计算机上运行 DNS 服务的情况下，才可以使用 "DNS server"。要指定多个要监视的日志，请重新使用 /l 参数。可以使用通配符 (*)，并且是默认值。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+要运行此脚本，必须正在运行 Cscript。如果尚未将默认 Windows Script Host 设置为 Cscript，请键入：
+
+cscript //h:cscript //s //nologo 
+
+
+
+范例
+
+
+下面的范例显示如何使用 eventquery 命令：
+
+eventquery /l system
+ eventquery /l mylog
+ eventquery /l application /l system
+ eventquery /s srvmain /u maindom\hiropln /p p@ssW23 /v /l *
+ eventquery /r 10 /l application /nh
+ eventquery /r -10 /fo LIST /l security
+ eventquery /r 5-10 /l "DNS server"
+ eventquery /fi "Type eq Error" /l application
+ eventquery /fi "Datetime eq 06/25/00,03:15:00AM/06/25/00,03:15:00PM" /l application
+ eventquery /fi "Datetime gt 08/03/00,06:20:00PM" /fi "id gt 700" /fi "Type eq warning" /l system
+eventquery /fi "ID eq 1000 OR ID ge 4500"
+eventquery /fi "Type eq error OR Type eq INFORMATION"
+eventquery /fi "ID eq 250 OR Type eq ERROR"
+
+XOX
+
+
+

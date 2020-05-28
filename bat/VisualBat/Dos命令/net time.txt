@@ -1,0 +1,55 @@
+Net time
+
+
+
+使计算机的时钟与另一个计算机或域的时钟同步。使用不带参数的 net time 显示另一台计算机或域的时间。
+
+
+语法
+
+
+
+net time [{\\ComputerName | /domain[:DomainName] | /rtsdomain[:DomainName]}] [/set]
+
+
+net time [\\ComputerName] [/querysntp] [/setsntp[:NTPServerList]]
+
+
+参数
+
+
+
+	\\computername
+
+	指定要检查或与之同步的服务器的名称。
+
+	/domain[:domainname]
+
+	指定要同步时钟的域。
+
+	/rtsdomain[:domainname]
+
+	指定要与之同步时钟的“可信时间服务器”所在的域。
+
+	/set
+
+	使计算机的时钟与指定的计算机或域的时间同步。
+
+	/querysntp
+
+	显示当前为本地计算机或 \\computername 所指定的计算机配置的网络时间协议 (NTP) 服务器的名称。
+
+	/setsntp[:NTPServerList]
+
+	指定本地计算机所使用的 NTP 时间服务器的列表。该列表可以包含 IP 地址 或 DNS 名称，并用空格分开。如果使用多个时间服务器，则必须使用引号引住该列表。
+
+	net help command
+显示指定 net 命令的帮助。
+
+
+
+XOX
+
+
+
+ 

@@ -1,0 +1,72 @@
+Query termserver
+
+
+
+显示网络上所有终端服务器的列表。
+
+
+语法
+
+
+query termserver [ServerName] [/domain:Domain] [/address] [/continue]
+
+
+参数
+
+
+ServerName
+指定标识终端服务器的名称。
+
+/domain:Domain
+指定查询终端服务器的域。如果您在当前工作的域中查询，则不需要指定域。
+
+/address
+显示每个服务器的网络和节点地址。
+
+/continue
+防止在显示每一屏幕的信息后停止。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+	Query termserver 在网络上搜索所有连接的终端服务器并返回以下信息：
+
+服务器的名称。
+网络（如果已使用 /address 选项，则还包括节点地址）。
+
+
+
+
+范例
+
+
+
+要显示关于网络上所有终端服务器的信息，请键入：
+
+query termserver
+
+要显示名为 server3 的终端服务器的有关信息，请键入：
+
+query termserver server3
+
+要显示关于域 SYSTEM 中所有终端服务器的信息，请键入：
+
+query termserver /domain:system
+
+要显示名为 server3 的终端服务器的网络和节点地址，请键入：
+
+query termserver server3 /address
+
+XOX
+
+
+
+
+

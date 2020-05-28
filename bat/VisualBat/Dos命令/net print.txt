@@ -1,0 +1,141 @@
+Net print
+
+
+
+显示有关指定打印队列、指定打印服务器上的所有打印队列和指定打印作业的信息，或者控制指定的打印作业。使用不带参数的 net print 显示该命令的命令行帮助。
+
+
+显示指定打印服务器上的指定打印队列或所有打印队列的信息 
+
+
+语法
+
+
+
+net print \\ComputerName[\QueueName]
+
+
+参数
+
+
+
+	\\computername
+
+	必需。通过名称指定要显示其上的打印队列的计算机。
+
+	\QueueName
+
+	通过名称指定要显示的打印队列。如果指定了计算机但没有指定打印队列，将显示指定计算机上所有打印队列的信息。
+
+	net help net print
+
+	显示 net print 命令的的帮助。
+
+
+
+注释
+
+
+
+ Net print 将显示有关打印队列的几种类型的信息。下面是服务器 Production 上所有打印队列的报告的示例：
+
+ Printer queues at \\PRODUCTION
+
+ Name              Job #      Size      Status
+
+---------------------------------------------------------
+
+LASER Queue       1 jobs               *Queue Active*
+
+USER1          84        0      Spooling
+
+
+
+范例
+
+
+要列出 \\PRODUCTION 计算机上 Dotmatrix 打印队列的内容，请键入： 
+
+net print \\production\dotmatrix
+
+
+
+
+显示关于某指定打印作业的信息或控制该指定打印作业 
+
+
+语法
+
+
+
+net print [\\ComputerName] JobNumber [{/hold | /release | /delete}]
+
+
+参数
+
+
+	\\computername
+
+	通过名称指定要控制其上打印作业的计算机。如果没有指定计算机，则使用本地计算机。
+
+	JobNumber
+
+	必需。指定要控制的打印作业的编号。该编号由接受打印作业并主持该打印作业的计算机分配。计算机分配编号给打印作业后，该号码将不会分配给该计算机所主持的任何打印队列中的任何其他打印作业。
+
+	{/hold | /release | /delete}
+
+	指定对打印作业执行的操作。/hold 参数可以延缓当前打印作业，允许其他打印作业忽略该打印，直到将其重新释放。/release 参数可以释放被延缓的打印作业。/delete 参数可以删除打印队列中的打印作业。如果指定了打印作业编号但没有指定操作，将显示该打印作业的信息。
+
+	net help net print
+
+	显示 net print 命令的帮助。
+
+
+
+注释
+
+
+下面是一个打印作业的报告示例：
+
+Job #            35
+
+
+Status           waiting
+
+Size             3096
+
+Remark
+
+Submitting user USER2
+
+Notify           USER2
+
+Job data type
+
+Job parameters
+
+Additional info
+
+
+
+范例
+
+
+要显示有关 \\PRODUCTION 计算机上作业号为 35 的信息，请键入： 
+
+net print \\production 35
+
+要延缓 \\PRODUCTION 计算机上的作业号 263，请键入： 
+
+net print \\production 263 /hold
+
+要释放 \\PRODUCTION 计算机上的作业号 263，请键入： 
+
+net print \\production 263 /release 
+
+XOX
+
+
+
+ 
+ 

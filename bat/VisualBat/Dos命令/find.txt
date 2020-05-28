@@ -1,0 +1,108 @@
+Find
+
+
+
+在一个文件或多个文件中搜索指定的文本字符串。当搜索指定的文件后，find 将显示出包含指定字符串的所有行。
+
+
+语法
+
+
+
+find [/v] [/c] [/n] [/i] "string" [[Drive:][Path]FileName[...]]
+
+
+参数
+
+
+
+	/v 
+
+	显示所有不包含指定 string 的行。
+
+	/c 
+
+	计算包含指定 string 的行并显示总数。
+
+	/n 
+
+	将文件行号置于每行开头。
+
+	/i 
+
+	指定搜索不区分大小写。
+
+	"string"
+
+	必需。指定要搜索的字符组。必须将 string 包含在引号之内（即，"string"）。
+
+	[Drive:][Path] FileName
+
+	指定要在其中搜索指定字符串的文件的位置和名称。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 指定字符串
+	
+ 如果不使用 /i，find 将精确搜索指定的字符串。例如，find 命令认为字符“a”和“A”是不同的。但是，如果使用 /i，find 不区分大小写，并将“a”和“A”视为同一个字符。
+
+ 如果要搜索的字符串包含引号，必须对包含在字符串中的单引号用双引号引起来，即"StringContaining""QuotationMarks"。
+    
+ 将 find 用作筛选器
+	
+ 如果省略文件名，find 将用作筛选器，从标准输入源（通常是键盘、管道或重定向的文件）得到输入，然后显示任何包含字符串的所有行。
+    
+	 命令语法次序
+	
+ 可以按任何顺序键入 find 命令的参数和命令行选项。
+	
+	 使用通配符
+	
+ 在用 find 命令指定的文件名或扩展名中不能使用通配符（* 和 ?）。要搜索使用通配符指定的一组文件中的字符串，可以在 for 命令中使用 find 命令。
+	
+	 将 /v 或 /n 与 /c 一起使用
+	
+ 如果在相同的命令行中指定 /c 和 /v ，find 将显示不包含指定字符串的行数。如果在相同的命令行中指定 /c 和 /n，find 将忽略 /n。
+	
+	 在 find 中使用回车
+	
+ find 命令不能识别回车。当使用 find 在包含回车的文件中搜索文本时，必须将搜索字符串限制在可以在两个回车之间找到的文本，也就是不能被回车中断的字符串。例如，“tax”与“file”之间出现回车时，find 不会报告找到“tax file”字符串。
+	
+
+
+
+
+范例
+
+
+
+ 要从 Pencil.ad 显示包含字符串“Pencil Sharpener”的所有行，请键入： 
+
+ find "Pencil Sharpener" pencil.ad 
+
+ 要查找将文字包含在引号之内的字符串，必须首先将整个字符串用引号围绕起来。其次，每个包含在字符串内的引号必须使用双引号。要在 Report.doc 中查找“The scientists labeled their paper ‘for discussion only.’It is not a final report.”，请键入： 
+
+ find "The scientists labeled their paper ""for discussion only."" It is not a final report." report.doc 
+
+ 如果要搜索一组文件，可以使用带有 for 命令的 find 命令。要在当前目录中搜索包含 .bat 扩展名以及包含“PROMPT”字符串的文件，请键入： 
+
+ for %f in (*.bat) do find "PROMPT" %f 
+
+ 要搜索硬盘以便在 C 驱动器上查找和显示包含字符串“CPU”的文件名，请使用管道号 (|) 将 dir 命令的结果重新定向到如下所示的 find中： 
+
+ dir c:\ /s /b | find "CPU" 
+
+ 因为 find 搜索区分大小写并且 dir 产生的输出是大写的，所以必须用大写字母键入字符串“CPU”或者将 /i 命令行选项与 find 一起使用。
+
+XOX
+
+
+
+
+ 

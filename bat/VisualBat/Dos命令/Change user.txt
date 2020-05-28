@@ -1,0 +1,56 @@
+Change user
+
+
+
+更改 .ini 文件映射的设置。
+
+
+语法
+
+
+
+change user {/execute | /install | /query}
+
+
+参数
+
+
+/execute
+允许 .ini 文件映射到主目录。这是默认设置。
+
+/install
+禁止 .ini 文件映射到主目录。读取所有的 .ini 文件，并写到系统目录。在终端服务器上安装应用程序时，必须禁用 .ini 文件映射。
+
+/query
+显示 .ini 文件映射的当前设置。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+ 在安装应用程序之前使用 change user /install 在系统目录中创建应用程序的 .ini 文件。这些文件作为用户特定 .ini 文件的主控副本使用。在安装应用程序之后，使用 change user /execute 恢复为标准 .ini 文件映射。
+    
+ 首次运行应用程序时，将搜索 .ini 文件的主目录。如果 .ini 文件在主目录中没有找到，但是在系统目录中找到，则终端服务会把 .ini 文件复制到主目录，以确保每个用户都有应用程序 .ini 文件的单一副本。任何新的 .ini 文件都是在主目录中创建的。
+    
+ 每个用户都应该有应用程序 .ini 文件的单一副本。这可以防止不同用户可能有不兼容的应用程序设置，例如，不同的默认目录或屏幕分辨率。
+    
+	 当该系统处于安装模式 (change user /install) 时，将出现多种情况。已创建的所有注册表项在 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\TerminalServer\Install 下都有镜像。添加到 HKEY_CURRENT_USER 的注册表项将复制到 \SOFTWARE 下，而且添加到 HKEY_LOCAL_MACHINE 的注册表项将复制到 \MACHINE 中。如果应用程序使用象 GetWindowsDirectory 这样的系统调用查询 Windows 目录，则终端服务器返回 systemroot 目录。如果所有 .ini 文件项都是用系统调用（如 WritePrivateProfileString）添加的，则这些项将添加到 systemroot 目录下的 .ini 文件中。
+    
+	 当系统返回到执行模式 (change user /execute)，而且应用程序试图读取 HKEY_CURRENT_USER 下已不存在的注册表项时，终端服务将进行检查，以查看是否在 \TerminalServer\Install 注册表项下存在注册表项的副本。如果是这样的话，这些注册表项将复制到 HKEY_CURRENT_USER 下的相应位置。如果应用程序试图从已不存在的 .ini 文件读取，则终端服务会在系统根目录下搜索这个 .ini 文件。如果 .ini 文件在系统根目录下，则它将被复制到用户主目录的 \Windows 子目录。如果该应用程序查询 Windows 目录，则终端服务器返回用户主目录的 \Windows 子目录。
+    
+	 当您登录时，终端服务会检查它的系统 .ini 文件是否比您计算机上的 .ini 文件新。如果系统版本是新的，则您的 .ini 文件将被替换或与新版本合并。这取决于 INISYNC 位 0x40 是否是为此 .ini 文件设置的。以前版本的 .ini 文件更名为 Inifile.ctx。如果在 \TerminalServer\Install 注册表项下的系统注册表值比 HKEY_CURRENT_USER 下的新，那么这些注册表项的版本将被删除，而且将被 \TerminalServer\Install 下的新注册表项替换。
+    
+
+
+XOX
+
+
+
+
+

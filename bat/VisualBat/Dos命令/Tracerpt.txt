@@ -1,0 +1,158 @@
+Tracerpt
+
+
+
+处理事件跟踪日志或已安装事件跟踪提供程序的实时数据，并允许生成跟踪分析报告以及已生成事件的 CSV（逗号分隔）文件。
+
+
+语法
+
+
+
+tracerpt [FileName [filename ...]] [-o  [FileName]] [-report [FileName]] [-rt session_name [session_name ...]] [-summary [FileName]] [-config [FileName]
+
+
+参数
+
+
+
+FileName [filename ...]
+
+指定事件跟踪会话的文件名称。可以指定多个文件。
+
+-o [FileName]
+
+指定 CSV（逗号分隔）文件名称。如果未指定任何文件，则默认为 dumpfile.csv，而不是 summary.txt。
+
+-report [FileName]
+
+指定输出报告文件的名称。默认为 workload.txt。
+
+-rt session_name [session_name ...]
+
+从实时数据源获取数据。要使用此选项，请将事件跟踪会话包括在内。
+
+-summary [FileName]
+
+指定输出摘要文件的名称。默认为 summary.txt。
+
+-config FileName
+
+指定包含命令行参数的设置文件的路径名。使用它，可将命令行选项输入文件。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+ 在 Microsoft Excel 中查看 dumpfile.csv 文件。
+
+在 Microsoft Excel 中打开 dumpfile.csv 格式，这样就可以按时间顺序查看事件。这些文件包括标题记录，其后面带有逗号分隔文本。标题字段列出如下：
+
+
+字段
+说明
+
+
+TID
+线程标识符
+
+
+时钟时间
+事件时间戳
+
+
+内核 (ms)
+处于内核模式的处理器时间
+
+
+用户 (ms)
+处于用户模式的处理器时间
+
+用户数据
+基于受控对象格式 (MOF) 结构的标题数据变量片段。
+
+IID
+实例 ID
+
+PIID
+父实例 ID
+
+
+
+ 使用 -report 选项
+
+要使用报告选项，必须在命令行中包括“Windows 内核跟踪”文件以及任何其它事件跟踪文件。如果不在命令行中包括此内容，就会出现错误消息。
+
+ 使用 -summary 选项
+
+使用 -summary 选项时，生成如下文件：
+
+
+已处理文件
+文件列表
+
+
+全部已处理缓冲区
+N
+
+
+全部已处理事件
+N
+
+
+全部已丢失事件
+N
+
+
+开始时间
+dd MMM yyyy    hh:mm:ss.ttt
+
+
+结束时间
+dd MMM yyyy    hh:mm:ss.ttt
+
+
+运行时间
+N sec
+
+
+
+ 使用 -config 选项
+
+与 -config 选项一起使用的设置文件的内容应具有如下格式：
+
+[command_option}
+
+value 其中 command_option 是命令行选项，然后在 value 指定其值。例如：
+
+[o]
+
+output.txt
+
+[report]
+
+report.txt
+
+[summary]
+
+summary.txt
+
+
+
+
+有关如何将 Tracerpt 合并到 Windows 管理工具 (WMI) 脚本中的详细信息，请参阅 Microsoft Windows 资源库网站上的“脚本日志和监视”。(http://www.microsoft.com/)
+
+
+
+XOX
+
+
+
+
+

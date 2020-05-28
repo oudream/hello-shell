@@ -1,0 +1,82 @@
+Rexec
+
+
+
+在运行 REXEC 服务 (daemon) 的远程计算机上运行命令。远程计算机上的 rexec 命令在执行指定命令之前验证用户名。Windows XP 和 Windows 2000 没有提供 Rexec 服务。使用不带参数的 rexec 可以显示帮助。
+
+
+语法
+
+
+
+rexec [Host] [-l UserName] [-n] [Command]
+
+
+参数
+
+
+
+	Host
+
+	通过 IP 地址或名称来指定在其上运行 Command 的远程主机（计算机）。
+
+	-l UserName
+
+	指定远程计算机上的用户名。在省略情况下，使用当前登录用户的名称。
+
+	-n
+
+	将 rexec 的输入重定向到 NULL。这防止本地计算机命令结果的显示。
+
+	Command
+
+	指定要在远程计算机上运行的命令。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 标准操作
+	
+ rexec 命令提示符用户输入密码，然后在远程计算机上验证输入的密码。如果身份验证成功，将运行该命令。
+
+ rexec 命令将标准输入复制到远程命令，将远程 command 的标准输出复制到其标准输出，将远程命令的标准错误复制到其标准错误。rexec 通常在远程命令终止时终止。
+    
+ 使用重定向符号
+	
+在远程计算机上进行重定向，要将重定向符号引在双引号之内（例如 ">>"）。如果不使用双引号，重定向在本地计算机进行。例如，以下命令将远程文件“RemoteFile”附加到本地文件“LocalFile”中：
+
+ rexec othercomputer cat remotefile >> localfile
+
+ 以下命令将远程文件 remotefile 附加到远程文件 otherremotefile 中：
+
+ rexec othercomputer cat remotefile ">>" otherremotefile
+    
+	 使用交互式命令
+	
+ 不能运行大多数交互式命令。例如，vi 或 emacs 不能通过使用 rexec 来运行。但是可以用 telnet 代替。
+	
+ 只有当网际协议 (TCP/IP) 协议在 网络连接中安装为网络适配器属性的组件时，该命令才可用。
+    
+
+
+
+范例
+
+
+
+要以名称 admin1 在远程计算机 vax1 上执行 telcon 命令，请键入以下命令：
+
+rexec vax1 -l admin1 telcon
+
+
+XOX
+
+
+
+
+ 

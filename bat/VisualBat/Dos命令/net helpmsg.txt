@@ -1,0 +1,53 @@
+Net helpmsg
+
+
+
+解释错误出现的原因，同时提供解决问题的信息。
+
+
+语法
+
+
+
+net helpmsg message#
+
+
+参数
+
+
+
+	message#
+
+	必需。指定要获得详细信息的消息的 4 位号码。
+
+	net help command
+显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+ 当网络操作失败时，可以看到类似于下面的消息：
+
+ 2182: The requested service has already been started.
+    
+
+
+
+
+范例
+
+
+
+ 要获得错误消息 NET 2182 的详细信息，请键入： 
+
+ net helpmsg 2182
+
+XOX
+
+
+
+
+ 

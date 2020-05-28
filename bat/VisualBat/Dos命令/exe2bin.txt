@@ -1,0 +1,76 @@
+Exe2bin
+
+
+
+将可执行程序 (.exe) 文件转换成二进制格式。
+
+
+语法
+
+
+
+exe2bin [drive1:][path1]InputFile [[drive2:][path2]OutputFile]
+
+
+参数
+
+
+
+	[drive1:][path1]InputFile
+
+	指定要转换的输入文件的位置和名称。需要 InputFile。
+
+	[drive2:][path2]OutputFile
+
+	指定要创建的输出文件的位置和名称。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+XOX
+ XOX
+    
+ Exe2bin 可提供给软件开发商。它对一般用户是没用的。
+    
+	 使用 exe2bin 命令时应用下列限制：
+
+输入文件必须是由链接程序生成的、合法 .exe 格式，而且不必被打包。
+
+合并文件的驻留（或实际）的代码和数据部分必须小于 64KB。
+
+必须没有 stack 段。
+
+	
+	 Exe2bin 根据用于 InputFile 和 OutputFile 参数的值执行如下特定操作：
+
+InputFile 的默认文件扩展名是 .exe。Exe2bin 将 InputFile .exe 转换为 .bin 格式的文件（即，程序的内存映像）并使用为 [drive2:][path2]OutputFile 指定的位置和文件名来存储输出文件。
+
+如果不指定 drive2 或 path2，exe2bin 将把输出文件写到当前驱动器和目录中。
+
+如果不为 OutputFile 指定文件名，exe2bin 就使用 InputFile 文件名。
+
+为 OutputFile 指定的文件名的默认扩展名为 .bin。
+
+	
+	 下列转换类型是可能的：
+
+
+如果 .exe 文件中没有指定 CS:IP，exe2bin 将执行纯二进制的转换。如果该程序包含需要段重新定位的说明，exe2bin 会提示您输入修正值。该值是要将程序加载到的绝对段。只有将结果程序加载到程序指定的绝对内存地址时，才可以使用此结果程序。命令解释程序无法加载程序。
+
+如果将 CS:IP 指定为 0000:100H，文件将作为 .com 文件运行，并且汇编程序语句 ORG 将指令指针设置在 100H。将扩展名 .com 包括在 OutputFile 中。不允许进行任何段修正操作，因为 .com 文件必须能够重新定位段。
+即，.com 文件必须采取 Microsoft Macro Assembler 文档中说明的输入条件。
+然后命令解释程序可以加载和运行程序，就像它加载和运行 Windows XP 磁盘上提供的 .com 程序一样。
+
+	
+    
+
+XOX
+
+
+
+
+ 

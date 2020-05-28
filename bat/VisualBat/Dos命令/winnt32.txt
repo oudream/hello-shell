@@ -1,0 +1,112 @@
+Winnt32
+
+
+
+安装或升级到 Windows XP。您可以在运行 Windows 95、Windows 98、Windows Millennium Edition、Windows NT、 Windows 2000 或 Windows XP 的计算机上的命令提示符下运行 winnt32。
+
+
+注意
+
+如果在基于 Itanium 的计算机上运行 winnt32，可从可扩展固件界面 (EFI) 或 Windows XP（不是从较低版本的操作系统）运行命令。此外，在基于 Itanium 的计算机上不能使用 /cmdcons 和 /syspart，与升级相关的选项也不能使用。
+
+
+
+语法
+
+
+
+winnt32 [/checkupgradeonly] [/cmd:command_line] [/cmdcons] [/copydir:{i386|ia64}\FolderName] [/copysource:FolderName] [/debug[Level]:[FileName]] [/dudisable] [/duprepare:pathname] [/dushare:pathname] [/m:FolderName] [/makelocalsource] [/noreboot] [/s:SourcePath] [/syspart:DriveLetter] [/tempdrive:DriveLetter] [/udf:id [,UDB_file]] [/unattend[num]:[answer_file]]
+
+
+参数
+
+
+
+/checkupgradeonly
+
+检查要升级的计算机是否与 Windows XP 兼容。
+
+
+如果将该选项与 /unattend 一起使用，则不需要用户输入。否则，结果将显示在屏幕上，并且可以用您指定的文件名保存它们。在 systemroot 文件夹中，默认的文件名是 Upgrade.txt。
+
+/cmd:command_line
+
+指示安装程序在执行最后阶段的安装前，运行一个特殊的命令。这将在计算机重新启动并且“安装程序”收集了必要的配置信息后，在“安装程序”结束之前发生。
+
+/cmdcons
+
+在基于 x86 的计算机上安装“恢复控制台”作为启动选项。恢复控制台是一个命令行界面，可以用它执行诸如启动和停止服务以及访问本地驱动器（包括 NTFS 格式的驱动器）这样的任务。完成正常安装后，只能使用 /cmdcons 选项。
+
+/copydir:{i386|ia64}\FolderName
+
+在安装 Windows XP 文件的文件夹内另外创建一个文件夹。Folder_name 是指您所创建的、用来保存您位置上所做的修改的文件夹。例如，对于基于 x86 的计算机，可以在安装的 i386 源文件夹中创建一个名为 Private_drivers 的文件夹，并将驱动程序文件放入该文件夹。然后，可以键入 /copydir:i386\Private_drivers 让安装程序将该文件夹复制到新安装的计算机中，同时创建新文件夹位置 systemroot\Private_drivers。可以使用 /copydir 创建任意数量的其他文件夹。
+
+/copysource:FolderName
+
+在安装 Windows XP 文件的文件夹内另外创建一个临时文件夹。Folder_name 是指所创建的、用来保存您位置上的所做修改的文件夹。例如，您可以在安装程序的源文件夹中创建名为 Private_drivers 的文件夹，用来存放驱动程序文件。然后，您可以键入 /copysource:Private_drivers 以使安装程序将该文件夹复制到最新安装的计算机上，并在安装期间使用其中的文件，从而建立临时文件夹位置 systemroot\Private_drivers。可以使用 /copysource 创建任意多个其他文件夹。与文件夹 /copydir 的创建不同，安装程序完成后将删除 /copysource 文件夹。
+
+/debug[Level]:[FileName]
+
+在指定级别创建调试日志，例如，/debug4:Debug.log。默认的日志文件为 C:\systemroot\Winnt32.log，默认调试级别为 2。日志级别如下：0 -- 严重错误、1 -- 错误、2 -- 警告、3 -- 通知、4 -- 用于调试的详细信息。每个级别都在其下包括一些子级别。
+
+/dudisable
+
+禁用“动态更新”。没有“动态更新”，安装程序仅能在初始安装文件下运行。即使使用应答文件并在该文件中指定“动态更新”选项，该选项仍会禁用“动态更新”。
+
+/duprepare:pathname
+
+进行安装共享准备，使从 Windows Update 网站下载的“动态更新”文件可以使用它。然后可使用该共享为多个客户端安装 Windows XP。
+
+/dushare:pathname
+
+将以前从 Windows Update 网站下载的“动态更新”文件（更新的文件在安装时使用）以及以前运行 /duprepare:pathname 的目录指定为共享。如果在客户端运行，则指定客户端安装将使用 PathName 中指定的共享位置的更新文件。
+
+/m:FolderName
+
+指定“安装程序”从备用位置复制替换文件。指导“安装程序”首先在备用位置中查看，如果有文件显示，则应使用这些文件而非默认位置中的文件。
+
+/makelocalsource
+
+指示安装程序将所有的安装源文件复制到本地硬盘上。从 CD 安装，如果 CD 在安装过程后期不可用，请使用 /makelocalsource 提供安装文件。
+
+/noreboot
+
+指导“安装程序”在结束文件复制阶段之后不重新启动计算机，这样您就可以执行另一个命令。
+
+/s:SourcePath
+
+指定 Windows XP 文件的资源位置。要同时从多个服务器复制文件，请多次键入 /s:SourcePath 选项（最多八次）。如果多次输入选项，则所指定的第一个服务器必须是可用的，否则“安装程序”失败。
+
+/syspart:DriveLetter
+
+在基于 x86 的计算机上，指定可以将安装的启动文件复制到硬盘上，并将硬盘标记为活动，然后将该磁盘安装到其他计算机上。启动该计算机时，它将自动启动下一阶段的安装。必须总是同时使用 /tempdrive 参数和 /syspart 参数。可以在基于 x86 并运行 Windows NT 4.0、Windows 2000 或 Windows XP 的计算机上使用 /syspart 选项启动 Winnt32。该计算机不能运行 Windows 95、Windows 98 或 Windows Millennium Edition。
+
+/tempdrive:DriveLetter
+
+指导安装程序将临时文件放置到指定分区。对于新安装，Windows XP 也会安装在指定分区上。对于升级，/tempdrive 选项只影响临时文件的位置；操作系统将在运行 winnt32 的分区中升级。
+
+/udf:id [,UDB_file]
+
+指出安装程序用来指定“唯一数据库”(UDB) 文件如何修改应答文件（请参阅 /unattend 项）的标识符 (id)。UDF 会覆盖应答文件中的一些值，且标识符会决定使用 UDF 中的哪些值。例如，/udf:RAS_user,Our_company.udb 取代 Our_company.udb 文件中为 RAS_user 标识符指定的设置。如果没有指定 UDF_file，安装程序将提示用户插入包含 $Unique$.udb 文件的磁盘。
+
+/unattend
+
+在无人参与的安装模式下升级先前版本的 Windows 98、Windows Millennium Edition、 Windows NT 4.0 或 Windows 2000。因为所有用户设置都可以从上一次安装中获得，所以在安装过程中并不需要用户干预。
+
+/unattend[num]:[answer_file]
+
+在无人参与安装模式下执行干净安装。指定的 answer_file 为安装程序提供您自定义的设置信息。Num 是从安装程序完成文件复制到重新启动计算机之间的秒数。可在运行 Windows 98、Windows Millennium Edition、Windows NT、Windows 2000 或 Windows XP 的任意计算机上使用 num。
+
+
+使用 /unattend 命令行选项自动完成安装程序可确保您已经阅读和接受了 Windows XP 的 Microsoft 许可协议。在代表某个组织而不是您自己使用该命令行选项来安装 Windows XP 之前，您必须确认最终用户（无论是个人还是单个实体）已经接收、阅读并接受 Windows XP 的 Microsoft 许可协议中的条款。OEM 在销售给最终用户的机器上可能不会指定此值。
+
+
+
+
+XOX
+
+
+
+ 
+
+

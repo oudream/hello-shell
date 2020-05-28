@@ -1,0 +1,73 @@
+Query process
+
+
+
+显示在终端服务器上运行的进程的有关信息。可以使用此命令了解特定用户正在运行的程序，以及运行特定程序的用户。
+
+
+语法
+
+
+
+query process [{ *|ProcessID|UserName|SessionName|/id:nn|ProgramName}] [/server:ServerName] [/system]
+
+
+参数
+
+
+*
+列出所有会话的进程。
+
+ProcessID
+指定标识要查询的进程的数字标识。
+
+UserName
+指定要列出其进程的用户的名称。
+
+SessionName
+指定要列出其进程的会话的名称。
+
+/id:nn
+指定要列出其进程的会话的标识。
+
+ProgramName
+指定要查询其进程的程序的名称。需要 .exe 扩展名。
+
+/server:ServerName
+指定要列出其进程的终端服务器。如果未指定，则使用您目前登录的服务器。
+
+/system
+指定显示关于系统进程的当前信息。如果您不希望显示系统进程，则不使用该参数。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+	管理员有完全访问所有 query process 功能的权利。
+ 如果不指定 UserName、SessionName、/id:SessionID、ProgramName 或 * 参数，query process 只显示属于当前用户的进程。
+	如果已指定会话，则必须标识活动会话。可以使用通配符标识进程。
+	
+ Query process 返回以下信息：
+	
+	拥有此进程的用户
+	拥有此进程的会话
+	此会话的 ID
+	进程的名称
+	进程的状态
+	进程的 ID
+	
+	
+	当 query process 返回信息时，在属于当前会话的每个进程之前会显示小于号 (>)。
+	
+
+
+XOX
+
+
+

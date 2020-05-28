@@ -1,0 +1,93 @@
+Setlocal
+
+
+
+开始批处理文件中环境变量的本地化。本地化将持续到出现匹配的 endlocal 命令或者到达批处理文件结尾为止。
+
+
+语法
+
+
+
+setlocal {enableextension | disableextensions} {enabledelayedexpansion | disabledelayedexpansion}
+
+
+参数
+
+
+
+	enableextension
+
+	启用命令扩展，直到出现匹配的 endlocal 命令，无论 setlocal 命令之前的设置如何。
+
+	disableextensions
+
+	禁用命令扩展，直到出现匹配的 endlocal 命令，无论 setlocal 命令之前的设置如何。
+
+	enabledelayedexpansion
+
+	启用延迟的环境变量扩展，直到出现匹配的 endlocal 命令，无论 setlocal 命令之前的设置如何。
+
+	disabledelayedexpansion
+
+	禁用延迟的环境变量扩展，直到出现匹配的 endlocal 命令，无论 setlocal 命令之前的设置如何。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+	使用 setlocal
+
+当您在脚本或批处理文件外使用 setlocal 时，将没有效果。
+ 更改环境变量
+	
+运行批处理文件时使用 setlocal 更改环境变量。运行 setlocal 后对环境所作的更改在批处理文件本地。Cmd.exe 在遇到 endlocal 命令或者到达批处理文件的结尾时将恢复上一次的设置。
+    
+ 在批处理程序中可以包含多个 setlocal 或 endlocal 命令（嵌套）。
+	
+	 测试批处理文件中的命令扩展
+	
+ setlocal 命令设置 ERRORLEVEL 变量。如果遇到 {enableextension | disableextensions} 或 {enabledelayedexpansion | disabledelayedexpansion}，ERRORLEVEL 变量将设置成 0 (0)。否则，该变量将被设置成 1 (1)。在批处理脚本中使用该命令可以确定扩展是否可用，例如：    verify other 2>nul
+setlocal enableextensions
+if errorlevel 1 echo Unable to enable extensions
+
+ 因为当禁用命令扩展时 cmd 不会设置 ERRORLEVEL 变量，所以当通过无效参数使用 setlocal 命令时 verify 命令将 ERRORLEVEL 变量初始化为非零值。另外，如果通过 {enableextension | disableextensions} 或 {enabledelayedexpansion | disabledelayedexpansion} 参数使用 setlocal 命令，而且没有将 ERRORLEVEL 变量设置成 1 (1) 时，则命令扩展将不可用。
+
+ 有关启用或禁用命令扩展的详细信息，请参阅“”中的 cmd。
+	
+
+
+
+
+范例
+
+
+
+ 可以在批处理文件中本地化环境变量，如下所示：
+
+  rem *******Begin Comment**************
+rem This program starts the superapp batch program on the network,
+rem directs the output to a file, and displays the file
+rem in Notepad.
+rem *******End Comment**************
+@echo off
+setlocal
+path=g:\programs\superapp;%path%
+call superapp>c:\superapp.out
+endlocal
+start notepad c:\superapp.out
+
+XOX
+
+
+
+
+
+ 
+ 

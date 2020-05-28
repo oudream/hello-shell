@@ -1,0 +1,68 @@
+Rasdial
+
+
+任何 Microsoft 客户的自动连接过程。如果在没有选项的情况下使用，则 rasdial 显示当前连接的状态。
+
+语法
+
+
+ rasdial ConnectionName [UserName [{Password|*}]] [/domain:Domain] [/phone:PhoneNumber] [/callback:CallbackNumber] [/phonebook:PhonebookPath] [/prefixsuffix]
+
+
+
+rasdial [ConnectionName] /disconnect 
+
+参数
+
+
+ConnectionName
+ 连接到电话簿 (.pbk) 项时才需要。指定位于 systemroot\System32\Ras 文件夹中的当前 .pbk 文件中的项。如果 ConnectionName 包含有空格或特殊字符，请使用引号将文本引起来（例如，"Connection Name"）。
+
+ 除非选择“个人电话簿”选项，否则使用 Rasphone.pbk 文件。如果选中了“个人电话簿”选项，则使用 UserName.pbk 文件。当选择“个人电话簿/p”时，Rasphone 标题栏上将显示名称。如果名称发生冲突，就会附加号码。
+
+ UserName [{Password|*}]
+ 指定连接所使用的用户名和密码。如果使用了星号，会提示用户输入密码，但不显示输入的字符。
+ /domain:Domain
+ 指定用户帐户所在的域。如果未指定，将使用“连接到”对话框中“域”字段的最后一个值。
+ /phone:PhoneNumber
+ 将 Rasphone.pbk 中的项目的电话号码替换为指定的电话号码。
+ /callback:CallbackNumber
+ 将 Rasphone.pbk 中项目的回拨号码替换为指定的回拨号码。
+ /phonebook:PhonebookPath
+ 指定电话簿文件的路径。默认路径为 systemroot\System32\Ras\username.pbk。可以指定文件的完整路径。
+ /prefixsuffix
+ 将当前 TAPI 位置拨号设置应用于电话号码。这些设置是在“控制面板”的“电话服务”中配置的。默认情况下该选项处于关闭状态。
+/disconnect
+ 断开连接时需要。断开指定项。也可以通过键入 /d 断开连接。
+
+注释
+
+Rasdial 不支持下列的 Rasphone.exe 功能：
+在拨号期间需要“终端”模式用户输入的项目。
+接线员辅助拨号或者人工拨号。
+
+
+
+
+范例
+
+
+ 在下面的范例中，该命令将连接到 Rasphone.pbk 中的 OFFICE 项： 
+
+ rasdial office
+
+ 在下面的范例中，该命令将连接到 Rasphone.pbk 中的 OFFICE 2 项并指定回叫号码： 
+
+ rasdial "office 2" /callback:555-0100
+
+ 在下面的范例中，该命令将从 EAST OFFICE  项断开连接：
+
+ rasdial "EAST OFFICE" /d
+
+
+ XOX 
+
+
+
+
+

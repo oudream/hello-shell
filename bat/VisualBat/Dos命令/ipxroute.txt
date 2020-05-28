@@ -1,0 +1,73 @@
+Ipxroute
+
+
+ 显示和修改有关由 IPX 协议使用的路由表的信息。使用不带参数的 ipxroute 显示发送给未知、广播和多点播放地址的数据包的默认设置。
+
+
+
+语法
+
+
+ ipxroute servers [/type=x]
+
+ ipxroute ripout network
+
+ ipxroute resolve {guid | name} {guid | AdapterName}
+
+ ipxroute board=n [def] [gbr] [mbr] [remove=xxxxxxxxxxxx]
+
+ ipxrout config
+
+
+参数
+
+
+
+
+	servers [/type=x]
+
+	为指定的服务器类型显示“服务访问点”(SAP) 表格。 x 必须是整数。例如，/type=4 显示所有的文件服务器。若不指定 /type，ipxroute servers 将显示各种类型的服务器，并按服务器名称列出。
+
+	ripout network
+	通过查询 IPX 堆栈路径表和发出 rip 请求（如果必要），确定 network 是否可以到达。Network 是 IPX 网段号。.
+
+	resolve {guid | name} {guid | AdapterName}
+	解析友好名称指南的名称，或指南的友好名称。
+
+	board=n
+	指定要查询或设置参数的网卡。
+
+	def
+	将数据包发送给 ALL ROUTES 广播。如果数据包被传送到不位于源路由表中唯一的媒体访问卡 (MAC) 地址，则默认操作是 ipxroute 将数据包发送到 SINGLE ROUTES 广播。
+
+	gbr
+	将数据包发送给 ALL ROUTES 广播。如果数据包传送到广播地址 (FFFFFFFFFFFF)，默认操作是 ipxroute 将数据包发送到 SINGLE ROUTES 广播。
+
+	mbr
+	将数据包发送给 ALL ROUTES 广播。如果数据包传送到多播地址 (C000xxxxxxxx)，默认操作是 ipxroute 将数据包发送到 SINGLE ROUTES 广播。
+
+	remove=xxxxxxxxxxxx
+	从源路由表中删除给定的节点地址。
+
+	config
+	显示所有已配置 IPX 绑定的信息。
+	/?
+在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+要显示工作站所在的网段、工作站节点地址和使用的帧类型，请键入如下命令：
+
+
+ipxrout config
+
+XOX
+
+
+
+
+

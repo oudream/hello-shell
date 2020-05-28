@@ -1,0 +1,54 @@
+使用 Windows Management Instrumentation 命令行 (WMIC) 工具
+
+
+
+Windows Management Instrumentation 命令行 (WMIC) 是一种命令行与脚本编写界面，使用它可简化 Windows Management Instrumentation (WMI) 和通过 WMI 来管理的系统的使用。
+
+
+WMIC 以别名为基础。别名允许您在不必了解 WMI 特定概念的情况下，使用 WMI 提供的主要数据。通过 WMI 而不使用别名也可访问 WMI 数据和许多 WMI 功能。
+
+
+可使用 WMIC /? 帮助来列出可用的别名。WMIC 有一个循序渐进的帮助系统。可随时随地使用 /? 来发现当前环境中可用的其他选项。/? 列出当前可用的别名、命令和全局命令选项（即适用于整个 WMIC 的命令选项）。要列出别名可用的动词与命令选项，请键入别名的名称和 /?。要列出特定动词可用的参数，请键入别名的名称、动词，然后键入 /?。
+
+
+例如，可从 PROCESS 别名使用当前系统上运行的进程。要查看当前在计算机上运行的所有进程，请在 WMIC 实用程序中键入 PROCESS。要列出特定进程，请键入一个型如 PROCESS WHERE (Description="explorer.exe" ) 的命令。要接收进程的特定属性，请键入一个型如 PROCESS GET Name, Handle, PageFaults 的命令。
+
+
+不使用别名，可在 CLASS 命令中使用效果相同的选项。例如，CLASS Win32_Process GET Name, Handle, PageFaults。但是，必须确定其他源的类名。要达到与别名 Where 子句相同的效果，必须使用 PATH Win32_Process.Description="explorer.exe"。
+
+
+有关使用和扩展 WMIC 的详细信息，请参阅 Windows XP 帮助中的 WMI 命令行。该文档包含有关在批处理文件中使用 WMIC 的信息，用于使用远程和多个计算机时的报告以及系统的管理。
+
+
+
+命令
+结果
+
+
+/?
+显示帮助。
+
+
+CLASS
+退出 WMIC 的默认别名方式并以 WMI 方式直接访问类。
+
+
+PATH
+退出 WMIC 的默认别名方式并以 WMI 方式直接访问实例。
+
+
+CONTEXT
+显示所有全局命令选项的当前值。
+
+
+QUIT
+退出 WMIC。
+
+
+EXIT
+退出 WMIC。
+
+
+
+
+

@@ -1,0 +1,176 @@
+Prncnfg.vbs
+
+
+
+配置或显示打印机的配置信息。如果不带参数，prncnfg.vbs 显示 prncnfg.vbs 命令的命令行帮助。
+
+
+
+显示打印机的配置信息 
+
+
+语法
+
+
+cscript prncnfg.vbs -g [-s RemoteComputer] -p PrinterName [-u UserName -w Password] 
+
+
+参数
+
+
+-g
+必需。指定要显示打印机的配置信息。
+-s RemoteComputer
+按名称指定用于管理打印机（要显示此打印机信息的）的远程计算机。如果没有指定计算机，则使用本地计算机。
+-p PrinterName
+必需。按名称指定要显示其信息的打印机。
+-u UserName -w Password
+使用 Windows 管理工具 (WMI) 服务，指定具有权限的帐户连接到要显示所安装的打印机信息的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要显示打印机 ColorPrinter_2 的配置信息，该打印机的打印队列由远程计算机 HRServer 主控，请键入：
+
+cscript prncnfg.vbs -g -s HRServer -p ColorPrinter_2 
+
+
+配置打印机 
+
+
+语法
+
+
+cscript prncnfg.vbs -t [-s RemoteComputer] -p PrinterName [-u UserName -w Password] [-r PortName] [-l Location] [-m Comment] [-h ShareName] [-f SeparatorText] [-y DataType] [-st StartTime] [-ut EndTime] [-o Priority] [-i DefaultPriority] [{+ | -}shared] [{+ | -}direct] [{+ | -}published] [{+ | -}hidden] [{+ | -}rawonly] [{+ | -}queued] [{+ | -}keepprintedjobs] [{+ | -}workoffline] [{+ | -}enabledevq] [{+ | -}docompletefirst][{+ | -}enablebidi]
+
+
+参数
+
+
+-t
+必需。指定要配置打印机。
+-s RemoteComputer
+按名称指定远程计算机（该计算机管理要配置的打印机）。如果不指定计算机，则打印机配置到本地计算机上。
+-p PrinterName
+必需。按名称指定要配置的打印机。
+-u UserName -w Password
+使用 Windows 管理工具 (WMI) 服务，指定具有权限的帐户连接到要显示所安装的打印机信息的计算机。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+-r PortName
+指定打印机连接的端口。如果是串口或并口，请使用端口 ID（例如 LPT1 或 COM1）。如果是 TCP/IP 端口，请使用添加端口时所指定的端口名。有关详细信息，请参阅“”。
+-l Location
+指定打印机位置，例如 "Copier Room"。
+-m Comment
+指定注释串。
+-h ShareName
+指定共享名。
+-f SeparatorText
+指定包含出现在分隔符页上的文本的文件。
+-y DataType
+指定打印机可接收的数据类型。有关数据类型的详细信息，请参阅“”。
+-st StartTime
+配置可用性受到限制的打印机。指定一天中打印机可用的开始时间。如果在打印机不可用时把文档发送到该打印机，则系统将保存该文档（成为后台文档），直到该打印机可用为止。必须将时间指定为 24 小时制。例如要指定晚上 11 点，可键入：2300。
+-ut EndTime
+配置可用性受到限制的打印机。指定一天中打印机可用的结束时间。如果在打印机不可用时把文档发送到该打印机，则系统将保存该文档（成为后台文档），直到该打印机可用为止。必须将时间指定为 24 小时制。例如要指定晚上 11 点，可键入：2300。
+-o:Priority
+指定后台打印程序用于选择打印作业的优先级。具有较高优先级的打印队列将比任何较低优先级的打印作业优先接收到它的所有打印作业。
+-i DefaultPriority
+指定分派给各个打印作业的默认优先级。
+{+ | -}shared
+指定本打印机是否共享到网络上。
+{+ | -}direct
+指定是否应直接将文档发送到打印机，而不用后台打印。
+{+ | -}published
+指定是否应在 Active Directory 中发布本打印机。如果发布，则其他用户可以根据其位置和能力（例如彩色打印和装订）搜索该打印机。
+{+ | -}hidden
+保留功能。
+{+ | -}rawonly
+指定是否只有原始数据打印作业才可以在此队列中进行后台打印。
+{+ | -}queued
+ 指定打印机应等到文档的最后一页被转换成后台文档之后才开始打印。打印程序直到文档已完成打印后才可用。然而，使用该选项可确保整个文档对打印机都是可用的。
+{+ | -}keepprintedjobs
+指定后台打印程序在打印完文档之后是否应保留这些文档。启用该选项可允许用户从打印队列（而不是从打印程序）中重新将文档提交给打印机。
+{+ | -}workoffline
+指定即使计算机没有连接到网络，用户是否可以将打印作业发送到打印队列。
+{+ | -}enabledevq
+指定与打印机设置不匹配（例如将后台打印的 PostScript 文件发送到非 PostScript 打印机）的打印作业是否应停留在队列中，而不进行打印。
+{+ | -}docompletefirst
+指定在将后台打印程序发送到具有较高优先级但尚未完成后台处理的相同打印作业之前，是否应将后台打印程序发送到具有较低优先级但已完成后台处理的适当打印队列作业中。如果启用了该选项且文档尚未完成后台处理，则后台打印程序将（在发送较小文件之前）优先发送较大的文档。如果要最大效率地利用打印机而忽略作业的优先级，则应启用该选项。如果关闭该选项，后台打印程序始终首先将较高优先级的打印作业发送到各自的打印队列中。
+
+{+ | -}enablebidi
+指定打印机是否将状态信息发送到后台打印程序。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要配置打印机 ColorPrinter_2 以便远程计算机 HRServer 中的后台打印程序在打印作业完成打印后仍保留这些作业，请键入： 
+
+cscript prncnfg.vbs -t -s HRServer -p ColorPrinter_2 +keepprintedjobs 
+
+
+更改打印机名称 
+
+
+语法
+
+
+cscript prncnfg.vbs -x [-s RemoteComputer] -p PrinterName -z NewPrinterName [-u UserName -w Password] 
+
+
+参数
+
+
+x
+必需指定要更改打印机的名称。
+-s RemoteComputer
+按名称指定要重命名其管理的打印机的远程计算机。如果没有指定计算机，则使用本地计算机。
+-p PrinterName
+必需指定当前的打印机名称。
+-z NewPrinterName
+必需指定新的打印机名称。
+-u UserName -w Password
+使用 Windows 管理工具 (WMI) 服务，指定具有权限的帐户连接到要显示所安装的打印机信息的计算机。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要将远程计算机 HRServer 上的打印机名从 ColorPrinter_2 更改为 ColorPrinter_3，请键入：
+
+cscript prncnfg.vbs -x -s HRServer -p ColorPrinter_2 -z ColorPrinter_3 
+
+XOX
+
+
+
+
+ 
+ 

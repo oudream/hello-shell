@@ -1,0 +1,5 @@
+@ 命令
+表示不显示@后面的命令，在入侵过程中（例如使用批处理来格式化敌人的硬盘）自然不能让对方看到你使用的命令啦。
+Sample：@echo off
+@echo Now initializing the program,please wait a minite...
+@format X: /q/u/autoset (format 这个命令是不可以使用/y这个参数的，可喜的是微软留了个autoset这个参数给我们，效果和/y是一样的。)

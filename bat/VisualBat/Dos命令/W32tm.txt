@@ -1,0 +1,82 @@
+W32tm
+
+
+
+一种用来诊断 Windows 时间服务出现的问题的工具
+
+
+语法
+
+
+
+{/config [/computer:ComputerName] [ [/update] [/manualpeerlist:ListOfComputerNames] ] [/syncfromflags:ListOfFlags] ]|/monitor|/ntte|/ntpte|/register|/resync [{:ComputerName] [/nowait]|[/rediscover}]|/tz|/unregister}
+
+
+参数
+
+
+
+
+	/config [/computer:ComputerName] [ [/update] [/manualpeerlist:ListOfComputerNames] ] [/syncfromflags:ListOfFlags]
+
+	调整本地或目标计算机上的时间设置。可以使用 /manualpeerlist 命令选项设置时间同步对等。除非重新启动该服务或使用 /update 命令选项，否则，Windows Time 不会使用更改的配置。/syncfromflags 可用来设置用于同步的源的类型，可设为 MANUAL 以使用手动对等列表，也可设为 DOMHIER 以便从域控制器进行同步。
+
+	/monitor
+
+	监视目标计算机或计算机列表。
+
+	/ntte
+
+	将 NT 系统时间转换为可读格式。
+
+	/ntpte
+
+	将 NTP 时间转换为可读格式。
+
+	/register
+
+	注册以便作为服务运行，同时向注册表添加默认配置。
+
+	/resync [{:ComputerName} [/nowait]|[/rediscover]]
+
+	尽快重新同步时钟，而不管累积的所有错误统计信息如何。如果未指定计算机，本地计算机将重新同步。除非使用 /nowait 命令选项，否则，该命令会等待重新同步。除非使用 /rediscover（该命令会强制在重新同步之前重新检测网络资源），否则将使用当前使用的时间资源。
+
+	/tz
+
+	显示当前时区设置。
+
+	/unregister
+
+	取消注册服务并从注册表中删除所有配置信息。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 该工具旨在供网络管理员诊断 windows 时间服务问题。
+
+
+有关详细信息，请参阅“”中的 net time。
+
+
+因为 windows 时间服务将使用通过 W32tm 所做的更改，所以，必须将这些更改通知它。要通知 windows 时间服务，请在命令提示符下键入 w32tm /config /update。
+
+
+
+范例
+
+
+
+要显示当前时区设置，请键入：
+
+w32tm /tz
+
+XOX
+
+
+
+

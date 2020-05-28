@@ -1,0 +1,23 @@
+choice 命令
+choice 使用此命令可以让用户输入一个字符，从而运行不同的命令。使用时应该加/c:参数，c:后应写提示可输入的字符，之间无空格。它的返回码为1234……
+如: choice /c:dme defrag,mem,end
+将显示
+defrag,mem,end[D,M,E]?
+Sample：
+Sample.bat的内容如下: 
+@echo off 
+choice /c:dme defrag,mem,end 
+if errorlevel 3 goto defrag （应先判断数值最高的错误码）
+if errorlevel 2 goto mem 
+if errotlevel 1 goto end 
+
+:defrag 
+c:\dos\defrag 
+goto end 
+:mem 
+mem 
+goto end 
+:end 
+echo good bye
+
+此文件运行后，将显示 defrag,mem,end[D,M,E]? 用户可选择d m e ，然后if语句将作出判断，d表示执行标号为defrag的程序段，m表示执行标号为mem的程序段，e表示执行标号为end的程序段，每个程序段最后都以goto end将程序跳到end标号处，然后程序将显示good bye，文件结束。

@@ -1,0 +1,216 @@
+Prnport.vbs
+
+
+
+创建、删除和列出标准的 TCP/IP 打印机端口，以及显示和更改端口配置。如果不带参数，prnport.vbs 显示 prnport.vbs 命令的帮助。
+
+
+创建标准 TCP/IP 打印机端口 
+
+
+语法
+
+
+cscript prnport.vbs -a -r PortName [-s RemoteComputer] -h IPAddress [-u UserName -w Password] [-o {raw -n PortNumber | lpr}] [-q QueueName] [-m{e | d}] [-i IndexName] [-y CommunityName] [-2{e | d}] 
+
+
+参数
+
+
+-a
+必需。指定要创建标准的 TCP/IP 打印机端口。
+-r PortName
+必需。指定连接打印机的端口。
+-s RemoteComputer
+ 按名称指定要创建添加端口的远程计算机。如果不指定计算机，则将端口添加到本地计算机。
+-h IPAddress
+必需。指定要分配端口的 IP 地址。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要创建标准 TCP/IP 打印机端口的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+-o {raw -n PortNumber | lpr}
+指定端口使用的协议：TCP raw 或 TCP LPR。如果使用 TCP raw，则指定 TCP raw 打印机端口的端口号。默认情况下，该端口号为 9100。详细信息，请参阅“”。多数打印机使用 TCP raw。在 UNIX 网络上，打印机通常使用 TCP LPR。有关 TCP raw 的详细信息，请参阅“”。有关 TCP LPR 的详细信息，请参阅 RFC 编辑器网站上的 RFC 1179。
+-q QueueName
+指定 TCP raw 端口的队列名称。
+-m{e | d} 
+指定是否启用 SNMP。参数 e 启用 SNMP。参数 d 禁用 SNMP。
+-i IndexName 
+指定 SNMP 索引（如果启用了 SNMP）。详细信息，请参阅 RFC 编辑器网站上的 RFC 1759。
+-y CommunityName
+指定 SNMP 社区名（如果启用了 SNMP）。有关详细信息，请参阅“”。
+-2{e | d}
+指定是否启用 TCP LPR 端口的双重后台打印（也称二次后台打印）。需要双重后台打印是因为 TCP LPR 必须在发送到打印机的控制文件中包含精确的字节数计数，但协议却不能从本地打印提供程序那里获得该计数。因此，当文件以后台方式发送到 TCP LPR 打印队列时，该文件也以后台打印方式存储为 system32 目录下的临时文件。TCP LPR 可以确定临时文件的大小并将该大小发送到运行 LPD 的服务器。参数 e 可以启用双重后台打印。参数 d 可以禁用双重后台打印。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果要在创建标准的 TCP/IP 打印机端口配置后对其配置进行更改，可以使用带参数 -t 的 cscript prnport.vbs 命令。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+XOX
+ 
+
+
+删除标准 TCP/IP 打印机端口 
+
+
+语法
+
+
+cscript prnport.vbs -d -r PortName [-s RemoteComputer] [-u UserName -w Password] 
+
+
+参数
+
+
+-d
+必需。指定要删除标准的 TCP/IP 打印机端口。
+-r PortName
+必需。指定要删除的标准 TCP/IP 打印机端口。
+-s RemoteComputer
+ 按名称指定要删除端口的远程计算机。?如果不指定计算机，则删除本地计算机的端口。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要删除其标准 TCP/IP 打印机端口的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要从远程计算机 HRServer 删除 TCP/IP 打印机端口 IP_192.168.12.128，请键入：
+
+cscript prnport.vbs -d -r IP_192.168.12.128 -s HRServer 
+
+
+列出计算机上的标准 TCP/IP 打印机端口 
+
+
+语法
+
+
+cscript prnport.vbs -l [-s RemoteComputer] [-u UserName -w Password]
+
+
+参数
+
+
+-l
+必需。指定要列出计算机上所有标准 TCP/IP 打印机端口。
+-s RemoteComputer
+按名称指定要列出其端口的远程计算机。如果不指定计算机，则列出本地计算机上的端口。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要列出其所有标准 TCP/IP 打印机端口的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要列出远程计算机 HRServer 上的所有标准 TCP/IP 打印机端口，请键入：
+
+cscript prnport.vbs -l -s HRServer 
+
+
+显示标准 TCP/IP 打印机端口的配置 
+
+
+语法
+
+
+cscript prnport.vbs -g -r PortName [-s RemoteComputer] [-u UserName -w Password]
+
+
+参数
+
+
+-g
+必需。指定要显示标准 TCP/IP 打印机端口的配置。
+-r PortName
+必需。指定要显示其配置的端口。
+-s RemoteComputer
+ 按名称指定要显示其端口配置的远程计算机。如果不指定计算机，则显示本地计算机上的端口配置信息。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要显示其端口配置的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+ 
+
+
+配置标准 TCP/IP 打印机端口 
+
+
+语法
+
+
+cscript prnport.vbs -t -r PortName [-s RemoteComputer] [-o {raw -n PortNumber | lpr}] [-h IPAddress] [-q QueueName] [-m{e | d}] [-i IndexName] [-y CommunityName] [-2{e | d}] [-u UserName -w Password] 
+
+
+参数
+
+
+-t
+必需。指定要配置标准 TCP/IP 打印机端口。
+-r PortName
+必需。指定连接打印机的端口。
+-s RemoteComputer
+按名称指定要配置其端口的远程计算机。如果不指定计算机，则配置本地计算机的端口。
+-o {raw -n PortNumber | lpr} 
+ 指定端口使用的协议：TCP raw 或 TCP LPR。如果使用 TCP raw，则指定 TCP raw 打印机端口的端口号。默认情况下，该端口号为 9100。详细信息，请参阅“”。多数打印机使用 TCP raw。在 UNIX 网络上，打印机端口通常使用 TCP LPR。有关 TCP raw 的详细信息，请参阅“”。有关 TCP LPR 的详细信息，请参阅 RFC 编辑器网站上的 RFC 1179。
+-?|-h
+按 IP 地址指定要配置端口的打印机。
+-q QueueName
+指定 TCP raw 端口的队列名称。
+-m{e | d} 
+指定是否启用 SNMP。参数 e 可以启用 SNMP。参数 d 可以禁用 SNMP。
+-i IndexName 
+指定 SNMP 索引（如果启用了 SNMP）。详细信息，请参阅 RFC 编辑器网站上的 RFC 1759。
+-y CommunityName
+指定 SNMP 社区名（如果启用了 SNMP）。有关详细信息，请参阅“”。
+-2{e | d}
+指定是否启用 TCP LPR 端口的双重后台打印（也称二次后台打印）。需要双重后台打印是因为 TCP LPR 必须在发送到打印机的控制文件中包含精确的字节数计数，但协议却不能从本地打印提供程序那里获得该计数。因此，当文件以后台方式发送到 TCP LPR 打印队列时，该文件也以后台打印方式存储为 system32 目录下的临时文件。TCP LPR 可以确定临时文件的大小并将该大小发送到运行 LPD 的服务器。参数 e 可以启用双重后台打印。参数 d 可以禁用双重后台打印。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要配置其端口的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+XOX
+ XOX
+
+
+
+
+
+返回列表  返回到
+
+
+
+ 
+ 

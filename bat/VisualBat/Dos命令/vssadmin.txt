@@ -1,0 +1,49 @@
+Vssadmin
+
+
+
+在命令窗口显示当前卷影子副本备份以及安装的所有影子副本写入程序和提供程序。
+
+
+语法
+
+
+
+Vssadmin list {shadows [/set= [shadow copy set GUID]] | writers | providers}
+
+参数
+
+
+
+list shadows [/set= [shadow copy set GUID]]
+
+列出系统上的所有影子副本备份，这些备份按照影子副本集（同时创建的一组影子副本）的“全局唯一标识符 (GUID)”分组。
+
+list writers
+
+列出安装的所有影子副本写入程序的名称、GUID、实例标识和状态。
+
+list providers
+
+列出安装的所有影子副本提供程序的名称、类型、GUID 和版本。
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+
+要显示安装的所有卷影子副本提供程序，应输入下列命令：
+
+
+vssadmin list providers
+
+XOX
+
+
+
+
+
+

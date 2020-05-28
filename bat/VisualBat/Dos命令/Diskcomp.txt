@@ -1,0 +1,194 @@
+Diskcomp
+
+
+
+比较两张软盘的内容。如果没有指定参数，diskcomp 就使用当前驱动器来比较两张软盘。
+
+
+语法
+
+
+
+diskcomp [drive1:[drive2:]]
+
+
+参数
+
+
+
+drive1
+
+指定包含其中一个软盘的驱动器。
+
+drive2
+
+指定包含其他软盘的驱动器。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+使用磁盘
+
+
+diskcomp 命令只应用于软盘。diskcomp 命令不能用于硬盘。如果指定了 drive1 或 drive2 的硬盘驱动器，diskcomp 将显示以下错误消息：
+
+
+Invalid drive specification
+Specified drive does not exist
+or is nonremovable
+
+
+比较磁盘
+
+如果两个被比较的磁盘中所有磁道均相同，diskcomp 将显示下列消息：
+
+比较无误。
+
+如果磁道不同，diskcomp 将显示与下面类似的消息：
+
+Compare error on
+side 1, track 2 
+
+当 diskcomp 完成比较时，它显示下列消息：
+
+Compare another diskette (Y/N)? 
+
+如果按“Y”，diskcopy 将提示插入用于下一次比较的磁盘。如果按“N”，diskcomp 将停止比较。
+
+当 diskcomp 进行比较时，它忽略磁盘的卷号。
+省略驱动器参数
+
+如果省略 drive2 参数，diskcopy 将把当前驱动器作为 drive2 驱动器。如果省略这两个驱动器参数，diskcopy 将使用当前驱动器作为这两个参数。如果当前驱动器与 drive1 相同，diskcomp 会提示您根据需要交换磁盘。
+
+使用一个驱动器
+
+如果为 drive1 和 drive2 指定相同的软盘驱动器，diskcomp 将使用一个驱动器并在需要时提示您插入磁盘来进行比较。根据磁盘容量和可用内存大小，可能需要多次交换磁盘。
+
+比较不同类型的磁盘
+
+Diskcomp 不能比较单面磁盘和双面磁盘，也不能比较高密度磁盘和双密度磁盘。如果 drive1 中的磁盘与 drive2 中的磁盘类型不同，diskcomp 将显示下列消息：
+
+Drive types or diskette types not compatible 
+
+对网络和重定向驱动器使用 diskcomp
+
+Diskcomp 不能在网络驱动器或由 subst 命令创建的驱动器上工作。如果要将 diskcomp 用于其中的任何类型的驱动器，diskcomp 将显示如下错误信息：
+
+
+无效驱动器规格
+
+将原始磁盘与其副本进行比较
+
+当在利用 copy 制作的磁盘中使用 diskcomp 时，diskcomp 可能显示类似于下面的消息：
+
+Compare error on
+side 0, track 0 
+
+即使磁盘上的文件相同，也可以发生这种类型的错误。尽管 copy 复制信息，但它不必将信息存放在目标磁盘上的相同位置。有关利用 Fc 比较位于两个磁盘上个别文件的详细信息，请单击“”。
+
+了解 diskcomp 退出代码
+
+下表列出了每个退出代码和简单描述。
+
+
+退出代码
+说明
+
+
+0
+磁盘相同
+
+
+1
+找到差异
+
+
+3
+出现了硬错误
+
+
+4
+出现了初始化错误。
+
+
+
+
+要处理 diskcomp 返回的退出代码，可以在批处理程序中的 if 命令行上使用 errorlevel 。
+
+
+
+
+
+范例
+
+
+
+如果计算机只有一个软盘驱动器（例如，驱动器 A），但想比较两个软盘，请键入：
+
+
+diskcomp a:a: 
+
+Diskcomp 会提示您根据需要插入每个软盘。
+
+下面的范例说明如何在批处理程序（该程序在 if 命令行上使用 errorlevel 参数）中处理 diskcomp 退出代码： 
+
+rem Checkout.bat compares the disks in drive A and B 
+
+echo off 
+
+diskcomp a: b: 
+
+if errorlevel 4 goto ini_error 
+
+if errorlevel 3 goto hard_error 
+
+if errorlevel 1 goto no_compare 
+
+if errorlevel 0 goto compare_ok 
+
+:ini_error 
+
+echo ERROR: Insufficient memory or command invalid 
+
+goto exit 
+
+:hard_error 
+
+echo ERROR: An irrecoverable error occurred 
+
+goto exit 
+
+:break 
+
+echo "You just pressed CTRL+C" to stop the comparison 
+
+goto exit 
+
+:no_compare 
+
+echo Disks are not the same 
+
+goto exit 
+
+:compare_ok 
+
+echo The comparison was successful; the disks are the same 
+
+goto exit 
+
+:exit 
+
+XOX
+
+
+
+
+
+ 

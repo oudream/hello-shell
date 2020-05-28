@@ -1,0 +1,339 @@
+Macfile
+
+
+
+ 在命令提示符下使用 Macfile 命令管理 Macintosh 服务器的文件服务器、卷、目录和文件。通过在批处理文件中包含一组命令并手动或在预定时间内启动它们，可以自动执行管理任务。
+
+
+
+修改 Macintosh 可访问卷中的目录
+
+
+
+
+语法
+
+
+
+macfile directory [/server:\\ComputerName] /path:Directory [/owner:OwnerName] [/group:GroupName] [/permissions:Permissions]
+
+
+参数
+
+
+
+	/server:\\computername
+
+	指定要更改目录的服务器。如果省略，操作在本地计算机上执行。
+
+	/path:Directory
+
+	必需指定要更改文件的路径。该目录必须存在。Macfile directory 不创建目录。
+
+	/owner:ownername
+
+	更改目录的所有者。如果省略，所有者保持不变。
+
+	/group:groupname
+
+	指定或更改与目录相关联的 Macintosh 主要组。如果省略，主要组保持不变。
+
+	/permissions:permissions
+
+	设置目录所有者、主要组和全体（每个成员）权限。使用 11 位数字设置权限。数字 1 表示授予权限；0 表示吊销权限（例如，11111011000）。数字位置决定设置的权限，如下表所述。如果省略，权限保持不变。
+
+
+位置
+设置权限
+
+
+第一个
+OwnerSeeFiles
+
+
+第二个
+OwnerSeeFolders（所有者查看文件夹）
+
+
+第三个
+OwnerMakeChanges（所有者更改）
+
+
+第四个
+GroupSeeFiles（组查看文件）
+
+
+第五个
+GroupSeeFolders（组查看文件夹）
+
+
+第六个
+GroupMakeChanges（组更改）
+
+
+第七个
+WorldSeeFiles（全体查看文件）
+
+
+第八个
+WorldSeeFolders（全体查看文件夹）
+
+
+第九个
+WorldMakeChanges（全体更改）
+
+
+第十个
+目录不能重命名、移动或删除。
+
+
+第十一个
+更改将应用于当前目录及其所有子目录。
+
+
+
+	/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果提供的信息包含空格或特殊字符，请使用引号将文本引起来（例如，"Computer Name"）。
+ 使用 macfile directory 可使 Macintosh 可访问卷中现有目录对 Macintosh 用户可用。macfile directory 命令不能创建目录。在使用 macfile directory 命令之前，请使用“文件管理器”、命令提示符或 Macintosh New Folder 命令在 Macintosh 可访问卷中创建目录。
+    
+    
+
+
+
+范例
+
+
+
+ 此示例更改本地服务器的驱动器 E 上 Macintosh 可访问卷 Statistics 中子目录“May sales”的权限。此示例将“查看文件”、“查看文件夹”和“更改”权限指派给所有者，并将“查看文件”和“查看文件夹”权限指派给所有其他成员，以防止重命名、移动或删除目录。
+
+macfile directory /path:"e:\statistics\may sales" /permissions:11111011000
+
+
+
+
+加入 Macintosh 文件的数据和资源派生
+
+
+
+
+语法
+
+
+
+macfile forkize [/server:\\ComputerName] [/creator:CreatorName] [/type:TypeName]  [/datafork:FilePath] [/resourcefork:FilePath] /targetfile:FilePath
+
+
+参数
+
+
+
+	/server:\\computername
+
+	指定要在上面加入文件的服务器。如果省略，操作在本地计算机上执行。
+
+	/creator:creatorname
+
+	指定文件的编写者。Macintosh Finder 使用 /creator 命令行选项确定创建文件的应用程序。
+
+	/type:typename
+
+	指定文件类型。Macintosh Finder 使用 /type 命令行选项确定创建文件的应用程序的文件类型。
+
+	/datafork:filepath
+
+	指定所连接的数据派生位置。可以指定远程路径。
+
+	/resourcefork:filepath
+
+	指定所连接的资源派生位置。可以指定远程路径。
+
+	/targetfile:filepath
+
+	必需指定通过连接数据派生和资源派生所创建的文件位置，或指定更改类型或编写者的文件位置。文件必须在指定的服务器上。
+	/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果提供的信息包含空格或特殊字符，请使用引号将文本引起来（例如，"Computer Name"）。
+    
+
+
+
+范例
+
+
+
+ 要使用派生资源 C:\Cross\Mac\Appcode 在 Macintosh 可访问卷 D:\Release 上创建文件 Treeapp，并使该新文件在 Micintosh 客户端显示为应用程序（Macintosh 应用程序使用类型 APPL），编写者（签名）设为 Magnolia，可键入：
+
+macfile forkize /resourcefork:c:\cross\mac\appcode /type:APPL /creator:Magnolia /targetfile:D:\release\Treeapp
+
+ 要将服务器 \\SERVERA 上 D:\Word documents\Group files 目录中的文件 WORD.txt 的文件编写者更改为 Microsoft Word 5.1，可键入：
+
+macfile forkize /server:\\servera /creator:MSWD /type:TEXT /targetfile:"d:\word documents\group files\word.txt"
+
+
+
+
+
+更改登录消息和限制会话
+
+
+
+
+语法
+
+
+
+macfile server [/server:\\ComputerName] [/maxsessions:{Number | unlimited}] [/loginmessage:Message]
+
+
+参数
+
+
+
+	/server:\\computername
+
+	指定要更改参数的服务器。如果省略，操作在本地计算机上执行。
+
+	/maxsessions:{Number | unlimited}
+
+	指定可以同时使用 Macintosh 文件和打印服务器的最大用户数。如果省略，服务器的 maxsessions 设置保持不变。
+
+	/loginmessage:message
+
+	更改 Macintosh 用户在登录到 Macintosh 服务器的文件服务器时所看到的消息。登录消息使用的字符最大数为 199。如果省略该参数，则服务器的“loginmessage”消息将保持不变。要删除现有的登录消息，请使用 /loginmessage 参数，但需将 message 变量保留为空。
+	/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果提供的信息包含空格和特殊字符，请使用引号将文本引起来（例如，"Computer Name"）。
+   
+
+
+
+范例
+
+
+
+ 要将本地服务器上许可的 Macintosh 文件和打印服务器会话数量从当前设置更改为 5 个会话并添加登录消息“Log off from Server for Macintosh when you are finished.”，请键入：
+
+macfile server /maxsessions:5 /loginmessage:"Log off from Server for Macintosh when you are finished."
+
+
+
+
+添加、更改或删除 Macintosh 可访问卷
+
+
+
+
+语法
+
+
+
+macfile volume {/add | /set} [/server:\\ComputerName] /name:VolumeName /path:Directory [/readonly:{true | false}] [/guestsallowed:{true | false}] [/password:Password] [/maxusers:{Number | unlimited}]
+
+
+
+macfile volume /remove [/server:\\ComputerName] /name:VolumeName
+
+
+参数
+
+
+
+	{/add | /set} 
+
+	当添加或更改 Macintosh 可访问卷时请使用该参数。添加或更改指定卷。
+
+
+	/server:\\computername
+
+	指定要在上面添加、更改或删除卷的服务器。如果省略，操作在本地计算机上执行。
+
+	/name:volumename
+
+	必需。指定要添加、更改或删除的卷名。
+
+	/path:Directory
+
+	仅在添加卷时改参数才是必须和有效的。指定要添加卷的根目录路径。
+
+	/readonly:{true | false}
+
+	指定用户是否可更改卷中的文件。键入 true 指定用户不能更改卷中的文件。键入 false 指定用户可以更改卷中的文件。如果添加卷时省略，则允许更改文件。如果在更改卷时省略该参数，则卷的“只读”设置将保持不变。
+
+	/guestsallowed:{true | false}
+
+	指定以来宾身份登录的用户是否可以使用卷。键入 true 指定来宾可以使用卷。键入 false 指定来宾不能使用卷。如果在添加卷时省略该选项，则来宾可以使用卷。如果在更改卷时省略，则卷的 guestsallowed 设置将保持不变。
+
+	/password:Password
+
+	指定访问卷所需的口令。如果添加卷时省略，则不会创建口令。如果在更改卷时省略该选项，则口令保持不变。
+
+	/maxusers:{Number | unlimited}
+
+	指定可以同时使用卷上文件的最大用户数。如果添加卷时省略该选项，则使用卷的用户数没有限制。如果在更改卷时省略该选项，maxusers 值将保持不变。
+
+	/remove
+
+	删除 Macintosh 可访问卷时需要该参数。删除指定卷。
+	/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果提供的信息包含空格或特殊字符，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+
+ 要使用驱动器 E 上的 Stats 目录在本地服务器上创建名为 US Marketing Statistics 的卷，而且指定该卷不能被来宾访问，请键入：
+
+macfile volume /add /name:"US Marketing Statistics" /guestsallowed:false /path:e:\stats
+
+ 要将上面创建的卷更改为只读且需要密码访问，同时将最大用户数设为 5，请键入：
+
+macfile volume /set /name:"US Marketing Statistics" /readonly:true /password:saturn /maxusers:5
+
+ 要使用驱动器 E 上的 Trees 目录在服务器 \\Magnolia 上添加名为 Landscape Design 的卷，而且指定该卷不能被来宾访问，请键入：
+
+macfile volume /add /server:\\magnolia /name:"Landscape Design" /path:e:\trees
+
+ 要删除本地服务器上名为 Sales Reports 的卷，请键入：
+
+macfile volume /remove /name:"Sales Reports"
+
+
+
+XOX
+
+
+
+
+
+
+
+
+

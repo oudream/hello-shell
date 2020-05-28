@@ -1,0 +1,55 @@
+Loadhigh
+
+
+
+将一个程序加载到高端内存区域 (UMA)。将程序加载到 UMA 为其他程序在常规内存中留出更多的空间。使用 systemroot\System32\Config.nt 文件，或程序的程序信息文件 (PIF) 中指定的等价启动文件指定加载到高端的程序。
+
+
+语法
+
+
+
+loadhigh [drive:][path] filename [parameters]
+
+
+
+参数
+
+
+
+	[drive:][path] filename}
+
+	指定要加载的程序的位置和名称。需要 Filename。
+
+	parameters
+
+	指定程序所需要的任何命令行信息。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+XOX
+ 要使用 loadhigh 命令，必须在 Config.nt 或等价的启动文件中包含 dos=umb 命令。有关 dos=umb 命令的详细信息，请参阅“”中的 dos。
+在将程序装入高内存区之前，您必须安装 Himem.sys 扩展内存管理程序。使用 Config.nt 或同等的启动文件中的 device 命令安装 Himem.sys。
+ 如果使用 loadhigh 命令加载程序，Windows XP 尝试将程序加载到 UMA 中。如果 UMA 中没有足够的磁盘空间，则将程序加载到常规内存中，但不指定使用的内存区域。
+使用 loadhigh 命令的最简便方法是将它包含在 Autoexec.nt 或等价的启动文件中。
+
+
+
+
+范例
+
+
+
+ 要将驱动程序加载到高端内存区 (HMA)，请将以下行添加到 Autoexec.nt 或等价的启动文件中：
+
+ lh %systemroot%\system32\dosx
+
+XOX
+
+
+

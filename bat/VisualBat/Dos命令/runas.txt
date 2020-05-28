@@ -1,0 +1,107 @@
+Runas
+
+
+
+允许用户用其他权限运行指定的工具和程序，而不是用户当前登录提供的权限。
+
+
+语法
+
+
+
+runas [{/profile|/noprofile}] [/env] [/netonly] [/smartcard] [/showtrustlevels] [/trustlevel] /user:UserAccountName program
+
+
+参数
+
+
+
+	/profile
+	加载用户的配置文件。/profile 是默认值。
+	/no profile
+
+	/noprofile 指定不加载用户的配置文件。这使应用程序载入的更加快速，但是在一些应用程序中也会引起错误。
+
+
+	/env
+
+	指定当前使用的网络环境，而不是用户的本地环境。
+
+	/netonly
+
+	指明指定的用户信息只用于远程访问。
+
+		
+	/smartcard
+
+	/smartcard 表示凭据是否是由智能卡提供的。
+
+		/showtrustlevels
+
+	列出 /trustlevel 开关项。
+
+/trustlevel
+指定应用程序运行所在的授权级别。使用 /showtrustlevels 查看可用的信任级别。
+
+	/user:UserAccountName
+
+	指定在其下运行程序的用户帐户的名称。用户帐户的格式应是 user@domain 或 domain\user。
+
+	程序
+
+	指定要用在 /user 中指定的帐户运行的程序或命令。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 管理员可以使用一个权限受限制的帐户执行日常、非管理性的任务，只有在执行特定管理任务时，才使用一个权限更大的帐户。要不经过注销再重新登录就完成这样的任务，可以用一般帐户登录，然后使用 runas 命令来运行需要更大权限的工具。
+    
+ 有关 runas 命令的使用范例，请参阅“”。
+    
+尽管 runas 通常由 Administrator 帐户使用，但并非仅限于 Administrator 帐户。任何拥有多个帐户的用户均可以利用备用凭据，使用 runas 运行程序、MMC 控制台或“控制面板”项。
+如果要在计算机上使用 Administrator 帐户，对于 /user:，键入下列参数之一：
+/user:AdministratorAccountName@ComputerName 
+/user:ComputerName\AdministratorAccountName
+如果想以域管理员身份使用这个命令，键入下列参数之一：
+/user:AdministratorAccountName@DomainName 
+/user:DomainName\AdministratorAccountName
+runas 命令允许您运行程序 (*.exe)、保存的 MMC 控制台 (*.msc)、程序和保存的 MMC 控制台的快捷方式及“控制面板”项。作为另一组（例如“Users”或“Power Users”组）的成员登录到计算机时，可以以管理员的身份运行。
+可以使用 runas 命令来启动任何程序、MMC 控制器或“控制面板”项。只要提供适当的用户帐户和密码信息，用户帐户就具有登录到计算机的能力，并且程序、MMC 控制台、“控制面板”项在系统中及对该用户帐户均可用.
+runas 命令允许您管理其他域的服务器（运行工具的计算机和要管理的服务器在不同的域中）。
+如果尝试使用 runas 从网络位置启动程序、MMC 控制台或“控制面板”项，可能会因为用来连接网络共享的凭据与用来启动程序的凭据不同而失败。后者的凭据可能无法访问同一网络共享。
+有些项，例如“打印机”文件夹和桌面项，间接由 Windows 2000 打开，而不能使用 runas 命令启动。
+如果 runas 命令失败，则可能是没有运行 RunAs 服务或使用的用户帐户无效。要检查 RunAs 服务的状态，请在“计算机管理”中单击“服务和应用程序”，然后单击“服务”。要测试用户帐户，请尝试使用该帐户登录合适的域。
+
+
+
+
+范例
+
+
+
+ 要在本地计算机上以管理员身份启动 Windows 2000 命令提示行实例，请键入： runas  /user:localmachinename\administrator cmd
+
+ 系统提示时，键入管理员密码。
+
+ 要使用名为 companydomain\domainadmin 的域管理员帐户启动“计算机管理”管理单元实例，请键入： runas /user:companydomain\domainadmin "mmc %windir%\system32\compmgmt.msc"
+
+ 当提示时，键入帐户密码。
+
+
+ 要使用名为 domain.microsoft.com 的域中的域管理员帐户 user 启动“记事本”实例，请键入： runas /user:user@domain.microsoft.com "notepad my_file.txt"
+
+ 当提示时，键入帐户密码。
+
+ 要启动命令提示符行窗口、保存的 MMC 控制台、控制面板项或管理其他地点服务器的程序的一个实例，请键入： runas /netonly /user:domain\username "command" 
+
+ domain\username 必须是有足够权限管理服务器的用户。当提示时，键入帐户密码。
+
+XOX
+
+
+

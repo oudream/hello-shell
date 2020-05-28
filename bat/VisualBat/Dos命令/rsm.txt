@@ -1,0 +1,551 @@
+Rsm
+
+
+
+使用“可移动存储”管理媒体资源。使用 rsm 命令可以为当前不支持“可移动存储 API”的应用程序运行批处理脚本。
+
+
+从媒体池中分配媒体 
+
+语法 
+
+
+rsm allocate /mmedia_pool_name /o{errunavail|new|next} {/l{g|f}logical_media_id | /p{g|f}partition_id} [/lnlogical_media_name] [/ldlogical_media_description] [/pnpartition_name] [/pdpartition_description] [/ttimeout] [/b]
+   
+
+参数
+
+   
+
+	/mmedia_pool_name
+	从指定的媒体池中分配媒体。这意味着将从该池中分配媒体。
+
+
+	/o
+	允许使用下表列出的参数之一。
+
+
+值
+说明
+
+
+errunavail
+如果因指定限制而无法分配媒体时，阻止提交新媒体的操作员请求。
+
+
+new
+分配一个不与其他应用程序共享的分区。该参数可用于保留双面媒体中的第 2 面。
+
+
+next
+
+分配以前通过 new 参数分配的媒体的下一面。
+
+
+
+
+
+	/l{g|f}logical_media_id
+	使用逻辑媒体 ID 来指定要分配的媒体。可以使用 GUID（与 lg 命令行选项一起使用）或好记的名称（与 lf 命令行选项一起使用）。logical_media_id 指定要分配的多面媒体的下一面。该参数可选，并要同 /o 命令行选项和 next 参数一起使用。当对该媒体解除分配之后，此逻辑媒体 ID 将无效。
+
+
+/p{g|f}partition_id
+	使用分区 ID 来指定要分配的媒体面。可以使用 GUID（与 pg 命令行选项一起使用）或好记的名称（与 pf 命令行选项一起使用）。该参数是可选的，即使该媒体解除分配之后仍保持有效。
+
+/lnlogical_media_name}
+
+	使用逻辑媒体名来指定要分配的媒体。
+
+	/ldlogical_media_description}
+
+	使用逻辑媒体描述来指定要分配的媒体。
+
+	/pnpartition_name}
+
+	使用分区名来指定要分配的分区。
+
+	/pdpartition_description}
+
+	使用分区描述来指定要分配的分区。
+
+	/ttimeout}
+	指定命令的超时值，单位为毫秒。默认超时值为无限期。
+
+/b
+	只显示 allocate 操作的 GUID。这有助于在编写脚本时只要通过最少的解析就可以将命令输出传递给下一个命令。
+
+
+	
+/?在命令提示符显示帮助。
+
+
+注释
+
+
+逻辑媒体名和面名可以在其他命令中使用，以便分别作为 /lf 或 /pf 开关的参数来指定媒体。如果逻辑媒体名称（好记的名称）没有与分配命令一起使用，那么只能在后面的命令中使用 GUID 来指定逻辑媒体。
+	
+ 
+
+
+创建媒体池 
+
+语法 
+
+	
+rsm createpool /mmedia_pool_name /a{existing|always|new} [/t{g|f}media_pool_type_id] [/d] [/r]
+
+参数
+
+   
+	/mmedia_pool_name
+	指定要创建媒体池的名称。
+
+/a
+	允许使用下表列出的参数之一。
+
+
+值
+说明
+
+
+existing
+打开现有媒体池，如果指定的媒体池不存在，则返回一个错误。
+
+
+always
+打开现有媒体池，如果指定的媒体池不存在，则新建一个媒体池。
+
+
+new
+
+新建一个媒体池，如果指定的媒体池已存在，则返回一个错误。
+
+
+
+	/tgmedia_pool_type_id
+	使用 GUID 指定媒体池中包含的媒体的类型。默认类型是包含其它媒体池的媒体池。
+	/tfmedia_pool_type_id
+	使用好记的名称来指定媒体池中包含的媒体的类型。默认类型是包含其它媒体池的媒体池。
+
+
+	/d
+	允许媒体池可以从可用媒体池中自动抽取媒体。如果不包含 /d 开关，则不允许媒体池从可用媒体池中抽取媒体。
+	/r
+	允许媒体池将媒体自动返回到可用媒体池。如果不包含 /r 开关，则不允许媒体池将媒体返回到可用媒体池。
+
+/?在命令提示符显示帮助。
+ 
+
+
+解除分配媒体 
+
+语法 
+
+	
+rsm deallocate /l[g|f]logical_media_id | /p[g|f]partition_id
+
+参数
+
+   
+	/lglogical_media_id
+	使用 GUID 指定要解除分配的逻辑媒体。
+/lflogical_media_id
+	使用好记的名称指定要解除分配的逻辑媒体。
+
+	/pgpartition_id
+	使用 GUID 指定要解除分配的媒体面。
+/pfpartition_id
+	使用好记的名称指定要解除分配的媒体面。
+
+/?在命令提示符显示帮助。
+
+
+注释
+
+
+ 逻辑媒体名或分区名可用来指定要解除分配的逻辑媒体，只要这些名称之一曾在 allocate 命令中用 /ln 或 /pn 开关项分别指定过。否则，就必须指定逻辑媒体 ID (LMID) 或分区 ID (PARTID)。
+	
+ 
+
+
+删除媒体池 
+
+语法 
+
+	
+rsm deletepool /mmedia_pool_name
+
+参数
+
+   
+	/mmedia_pool_name
+	指定要删除的媒体池的名称。
+
+/?在命令提示符显示帮助。
+ 
+
+
+从驱动器卸除媒体。 
+
+语法 
+
+	
+rsm dismount {/l{g|f}logical_media_id | /p{g|f}partition_id
+ rsm dismount [/o[deferred]]}
+
+参数
+
+   
+	/lglogical_media_id
+	使用 GUID 指定要卸除的逻辑媒体。
+/lflogical_media_id
+	使用好记的名称指定要卸除的逻辑媒体。
+
+	/pgpartition_id
+	使用 GUID 指定要卸除的媒体面。
+/pfpartition_id
+	使用好记的名称指定要卸除的媒体面。
+	/o
+	如果这个可选的开关与可选的 deferred 参数一起使用，则将媒体标记为可卸除，但媒体仍保留在驱动器中。以后的 mount 命令将无法正常完成。如果不使用该开关和参数，则媒体马上就会从驱动器中卸除。
+/?在命令提示符显示帮助。
+
+
+注释
+
+
+ 逻辑媒体名或分区名可用来指定要卸除的逻辑媒体，只要这些名称之一曾在 allocate 命令中用 /ln 或 /pn 开关项分别指定过。否则，就必须指定逻辑媒体 ID (LMID) 或分区 ID (PARTID)。
+	
+ 
+
+
+从库中弹出媒体 
+
+要弹出的媒体可以由下面的三种方式之一来指定：
+
+ 可以使用物理 ID (PMID) 或物理媒体名称来指定要弹出的物理媒体名称。
+    
+ 可以在指定库的指定插槽中弹出媒体。
+    
+ 可以在指定库的指定驱动器中弹出媒体。
+    
+
+
+语法 
+
+	
+rsm eject {/p{g|f}physical_media_id | /s{g|f}slot_id /l{g|f}library_id | /d{g|f}drive_id /l{g|f}library_id 
+ rsm eject [/oeject_operation_id]
+ rsm eject [/a{start|stop|queue}]
+ rsm eject [/b]
+
+参数
+
+   
+		/pgphysical_media_id
+	使用 GUID 指定要弹出的物理媒体。
+/pfphysical_media_id
+	使用好记的名称指定要弹出的物理媒体。
+
+		/sgslot_id
+	使用 GUID 指定保存要弹出媒体的插槽。
+/sfslot_id
+	使用好记的名称指定保存要弹出媒体的插槽。
+
+	/lglibrary_id
+	使用 GUID 指定包含有要从中弹出媒体的插槽或驱动器的库。
+/lflibrary_id
+	使用好记的名称指定包含有要弹出媒体的插槽或驱动器的库。
+	/dgdrive_id
+	使用 GUID 指定保存要弹出媒体的驱动器。
+/dfdrive_id
+	使用好记的名称指定保存要弹出媒体的驱动器。
+
+
+	/oeject_operation_id
+	用来为特定弹出操作指定 GUID。可选的 /o 开关可与 /a 开关及 stop 参数结合使用，以终止弹出操作。也可以与 /a 开关和 start 参数结合使用，以显示弹出操作的 GUID。
+	/a
+	允许使用下表列出的参数之一。
+
+
+值
+说明
+
+
+Start
+默认值是立即开始弹出操作。除非超时或者又发出了另一个 eject 命令，并带有 /a 命令行选项和 stop 参数，否则媒体将被弹出。该 eject 命令还必须用 /o 命令行选项指定弹出操作的 GUID。超时参数在库对象中指定（对于所有弹出操作）。要设置该超时参数，必须使用可移动存储 API。该参数也可以与 /o 开关结合使用，以显示弹出操作的 GUID。
+
+
+Stop
+在超时之前终止弹出操作。弹出操作可以用 GUID 终止。该 GUID 是在使用 start 参数和 /a 开关及 /o 开关时显示的。
+
+
+Queue
+将媒体排队以便稍后弹出。该选项用于带有多个插入/弹出 (IE) 口的库。
+
+
+
+	/b
+	出于编写脚本的目的，只显示弹出操作 GUID。
+
+/?在命令提示符显示帮助。
+ 
+
+
+从 ATAPI 转换器中弹出媒体 
+
+语法 
+
+	
+rsm ejectatapi /natapi_changer_number
+
+参数
+
+   
+	/natapi_changer_number
+	指定转换器数字。atapi_changer_number 是转换器的设备名称字符串结尾的数字。例如，\\.\CdChanger0 将 0 作为 ATAPI 转换器号。
+
+/?在命令提示符显示帮助。
+
+
+注释
+
+
+ 在运行这个命令之前，请手动停止 ntmssvc 服务。
+	
+ 
+
+
+在指定的自动化库中清点媒体。 
+
+语法 
+
+	
+rsm inventory /l{g|f}library_id /a{full|fast|default|none|stop}
+
+参数
+
+   
+	/lflibrary_id
+	使用好记的名称指定要清点的库。
+	/lglibrary_id
+	使用 GUID 指定要清点的库。
+
+	/a
+	必需。指定要执行的清点操作类型。下表列出了有效的清点操作。
+
+
+值
+说明
+
+
+Full
+执行库的完整媒体清点。“可移动存储”装入库中的每个磁带和磁盘并读取媒体上的标识符。
+
+
+Fast
+如果指定库安装了条形码阅读器，执行条形码清点。如果该库没有条形码阅读器，“可移动存储”检查存储插槽，读取先前为空的插槽中的媒体上的标识符。
+
+
+Default
+使用库的“属性”对话框中指定的默认方法执行清点。
+
+
+None
+不执行清点。
+
+
+Stop
+停止当前对指定库的清点，如果正在执行的话。
+
+
+
+
+/?在命令提示符显示帮助。
+ 
+
+
+在指定库中装入媒体 
+
+要装入的逻辑媒体可通过逻辑媒体 ID 或逻辑媒体名称指定。
+
+语法 
+
+	
+rsm mount {/l{g|f}logical_media_id | /p{g|f}partition_id | [/s{g|f}slot_id  /c{g|f}changer_id}
+ rsm mount [/d{g|f}drive_id]
+ rsm mount /o{errunavail|drive|read|write|offline}
+ rsm mount [/r{normal|high|low|highest|lowest}]
+ rsm mount [/ttimeout]
+
+参数
+
+   
+/lflogical_media_id
+	使用好记的名称指定要装入的逻辑媒体。
+
+	/pfpartition_id
+	使用好记的名称指定要装入的媒体面。
+	/pgpartition_id
+/lglogical_media_id
+	使用 GUID 指定要装入的逻辑媒体。
+	使用 GUID 指定要装入的媒体面。
+
+	/cgchanger_id
+
+	使用 GUID 指定包含要装入媒体的转换器。该选项只能与 /sg 开关和媒体槽 GUID 一起使用。/cfchanger_id
+	使用好记的名称指定包含有要装入媒体的转换器。该选项只能与 /sg 开关和媒体槽 GUID 一起使用。
+
+	/sgslot_id
+	使用 GUID 指定包含要装入媒体的媒体槽。该选项只能与 /cg 开关和转换器 GUID 一起使用。/sfslot_id
+	使用好记的名称指定包含有要装入媒体的媒体槽。该选项只能与 /cg 开关和转换器 GUID 一起使用。
+
+	/dgdrive_id
+	使用 GUID 指定装入可用媒体的特定驱动器。该参数是可选的，必须与 /o 开关和 drive 参数一起使用。/dfdrive_id
+	使用好记的名称指定装入可用媒体的特定驱动器。该参数是可选的，必须与 /o 开关和 drive 参数一起使用。
+	/o
+	允许使用下表列出的参数之一。
+
+
+值
+说明
+
+
+Errunavail
+如果媒体或驱动器不可用，该参数将产生一个错误。
+
+
+Drive
+指定要装入的特定驱动器。该参数与 /d 开关一起使用。
+
+
+Read
+
+装入媒体用于读取访问。
+
+
+Write
+装入媒体用于写入访问。如果使用该参数，将装入完整的媒体。
+
+
+Offline
+如果媒体脱机，该参数产生一个错误。
+
+
+
+	/r
+	可选择的指定装入的顺序或优先权。装入优先权也可以使用下列参数之一来指定：normal（默认值）、high、low、highest 或 lowest。
+	/t
+	可选择的指定命令超时值，以毫秒为单位。默认超时值是无期限。
+
+/?在命令提示符显示帮助。
+
+
+注释
+
+
+ 在使用 mount 命令时，可以通过 /l 开关、/p 开关或 /s 开关与 /c 开关的组合指定要装入的媒体。
+	
+ 
+
+
+刷新库、物理媒体或特定媒体类型的所有设备。 
+
+该命令只选出一个目标设备，以确保可移动存储数据库包含当前设备的状态。该命令在媒体插入或弹出操作之后非常有用。
+
+
+语法 
+
+	
+rsm refresh {/l{g|f]library_id | /p{g|f}physical_media_id | /tgmedia_type_id}
+
+参数
+
+   
+	/lglibrary_id
+	使用 GUID 指定要刷新的库。
+/lflibrary_id
+	使用好记的名称指定要刷新的库。
+
+
+	/pgphysical_media_id
+	使用 GUID 指定要刷新的物理媒体。
+/pfphysical_media_id
+	使用好记的名称指定要刷新的物理媒体。
+	/tgmedia_type_id
+	media_type_id 指定要刷新的媒体类型。只能指定 GUID。该参数通过指定“可移动媒体”的 GUID，刷新所有可移动媒体设备。该 GUID 可以使用下面的 view 命令来确定：rsm view /tmedia_type /guiddisplay。 /?在命令提示符显示帮助。 
+
+
+显示媒体对象列表 
+
+语法 
+
+	
+rsm view /t{drive|library|changer|storageslot|iedoor|ieport|physical_media| media_pool|partition|logical_media|media_type|drive_type|librequest}
+ rsm view [/cgcontainer_id]
+ rsm view [/guiddisplay]
+ rsm view [/b]
+
+参数
+
+   
+	/t {drive|library|changer|storageslot|iedoor|ieport|physical_media| media_pool|partition|logical_media|media_type|drive_type|librequest}
+	显示指定类型的媒体对象列表。当使用不带任何参数的 /t 命令时，该命令显示“可移动存储”系统（库的集合）中所有媒体池的列表。
+	/cgcontainer_id]
+
+	指定对象容器的 GUID。容器的类型取决于由 /t 开关指定的对象类型（参数）。如果没有指定容器 ID，将显示适用对象类型的所有实例。
+	/guiddisplay
+	显式对象的 GUID 和好记的名称。
+	/b
+	出于编写脚本的目的，只显示对象的 GUID。 /?在命令提示符显示帮助。
+
+
+注释
+
+
+ 如果没有使用 /guid_display 开关和 /b 开关，则只显示对象的好记的名称。
+	
+ 
+
+
+注释
+
+
+如果命令成功，将返回 ERROR_SUCCESS。所有失败的命令都将返回一个错误码，可在编写脚本时使用错误码。错误代码可能是系统定义的错误代码，或者是下表列出的错误代码之一。
+
+
+
+错误代码:
+说明
+
+
+536870913
+指定了无效参数。通常，这是由于在参数开关后加了空格所致。例如，使用了 /t 50 而不是 /t50。
+
+
+536870914
+指定了重复的参数开关。例如，allocate 命令使用了 2 个 /m 开关。
+
+
+536870915
+没有与好记的名称匹配的GUID。请检查大小写，因为好记的名称是区分大小写的。
+
+
+536870916
+指定的参数开关的参数数目不够。请检查是否漏掉了必需的开关。
+
+
+536870917
+指定无效的 GUID。请使用 view 命令确定该对象的正确 GUID。
+
+
+536870918
+该错误码只由 ejectatapi 命令返回。请检查 ATAPI 转换器是否正常工作。
+
+
+
+
+
+XOX
+
+
+

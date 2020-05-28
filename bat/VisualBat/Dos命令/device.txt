@@ -1,0 +1,55 @@
+Device
+
+
+
+将指定的设备驱动程序加载到内存。
+
+
+语法
+
+
+
+device=[Drive:][Path] FileName [dd-parameters]
+
+
+参数
+
+
+
+	[Drive:][Path] FileName
+
+	指定要加载的设备驱动程序的位置和名称。需要 Filename。
+
+	[dd-parameters]
+
+	指定设备驱动程序所需要的任何命令行信息。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 使用 systemroot\System32\Config.nt 文件或某个程序的程序信息文件 (PIF) 中指定的等价启动文件加载 MS-DOS 子系统的设备驱动程序。
+    
+
+
+
+
+范例
+
+
+
+ 要使用 ANSI 取消顺序控制 MS-DOS 子系统的屏幕和键盘，请将以下内容键入 Config.nt 或等价的启动文件中： 
+
+ device=c:\winnt\system32\ansi.sys 
+
+XOX
+
+
+
+
+
+ 

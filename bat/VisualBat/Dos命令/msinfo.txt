@@ -1,0 +1,85 @@
+Msinfo32
+
+
+
+显示硬件、系统组件和软件环境的详尽视图。
+
+
+语法
+
+
+
+msinfo32 [/?][/pch] [/nfo FileName]  [/report FileName] [/computer ComputerName] [/showcategories] [/category categoryID]  [/categories categoryID] 
+
+
+参数
+
+
+
+	FileName
+	指定要打开的文件。这些文件可能是扩展名为 .nfo、.xml、.txt 或.cab 的文件。
+
+	/?
+	显示 msinfo32 命令的帮助。
+
+	/pch
+	显示历史视图。
+
+	/nfo FileName
+	将导出文件保存为 .nfo 文件。
+
+	/report FileName
+	将导出文件保存为 .txt 文件。
+
+	/computer ComputerName
+	启动指定远程计算机的系统信息。
+
+	/showcategories
+	启动显示所有可用类别 ID 的系统信息。
+
+	/category categoryID
+	启动选择指定类别的系统信息。采用 /showcategories 来显示可用 ID 目录列表。
+
+	/categories categoryID
+	启动仅显示指定类别的系统信息。该参数同时将输出限制到选择的类别。采用 /showcategories 来显示可用 ID 目录列表。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+	有些系统信息类别包含大量数据。可以使用 start /wait 命令优化这些类别的报告性能。有关详细信息，请参阅“”。
+
+
+
+
+范例
+
+
+
+要列举可用的类别 ID，请键入：
+
+msinfo32 /showcategories
+
+
+要启动显示所有可用信息的系统信息（已装载模块除外），请键入：
+
+msinfo32 /categories +all -loadedmodules
+
+
+要仅显示系统摘要信息并创建名为 syssum.nfo 的 .nfo 文件（该文件包含系统摘要类别的信息），请键入：
+
+msinfo32 /nfo syssum.nfo /categories +systemsummary
+
+
+要显示名为 conflicts.nfo 的 .nfo 文件（该文件包含有关资源冲突的信息），请键入：
+
+msinfo32 /nfo conflicts.nfo /categories +componentsproblemdevices+resourcesconflicts+resourcesforcedhardware
+
+XOX
+
+
+

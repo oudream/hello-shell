@@ -1,0 +1,62 @@
+System File Checker (sfc)
+
+
+
+在重新启动计算机后扫描和验证所有受保护的系统文件。
+
+
+语法
+
+
+
+sfc [/scannow] [/scanonce] [/scanboot] [/revert] [/purgecache] [/cachesize=x]
+
+
+参数
+
+
+
+	/scannow
+
+	立即扫描所有受保护的系统文件。
+
+	/scanonce
+
+	一次扫描所有受保护的系统文件。
+
+	/scanboot
+
+	每次重新启动计算机时扫描所有受保护的系统文件。
+
+	/revert
+
+	将扫描返回到默认操作。
+
+	/purgecache
+
+	立即清除“Windows 文件保护”文件高速缓存，并扫描所有受保护的系统文件。
+
+	/cachesize=x
+
+	设置“Windows 文件保护”文件高速缓存的大小，以 MB 为单位。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+	 必须以“Administrators”组成员的身份登录才能运行 sfc。
+	
+	 如果 sfc 发现受保护的文件已经被覆盖，则它将从 %systemroot%\system32\dllcache 文件夹找回该文件的正确版本，然后替换不正确的文件。
+	
+	 如果 %systemroot%\system32\dllcache 文件夹已经损坏或者不能使用，则使用 sfc /scannow、sfc /scanonce 或 sfc /scanboot 修复 Dllcache 目录的内容。
+	
+
+
+XOX
+
+
+

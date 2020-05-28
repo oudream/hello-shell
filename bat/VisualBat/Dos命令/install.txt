@@ -1,0 +1,55 @@
+Install
+
+
+
+将内存驻留程序加载到内存。使用 systemroot\System32\Config.nt 文件，或程序的程序信息文件 (PIF) 中等价的启动文件来指定要安装的程序。
+
+
+语法
+
+
+
+install=[Drive:][Path] FileName [CommandParameters]
+
+
+参数
+
+
+
+	[drive:][path] filename]
+
+	指定要运行的内存驻留程序的位置和名称。
+
+	CommandParameters
+
+	指定为 Filename 指定的程序的参数。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+Install 应该用于在启动需要内存驻留程序的应用程序之前，将内存驻留程序加载到内存。如果内存驻留程序使用 Autoexec.nt 文件来载入内存，该内存驻留程序在每次启动命令提示符时将被载入并浪费内存。
+    
+ 不使用 Install 来加载使用环境变量或快捷键的程序，或需要 Cmd.exe 处理关键错误的程序。
+    
+
+
+
+
+范例
+
+
+
+ 要在 Config.nt 文件中将程序加载到内存，请键入：
+
+ install
+
+XOX
+
+
+
+

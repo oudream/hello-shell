@@ -1,0 +1,147 @@
+Cipher
+
+
+
+在 NTFS 卷上显示或改变文件的加密。如果在不含带参数的情况下使用，则 cipher 将显示当前文件夹及其所含文件的加密状态。
+
+
+语法
+
+
+
+cipher [{/e|/d}] [/s:dir] [/a] [/i] [/f] [/q] [/h]  [/k] [/u[/n]]  [PathName [...]] |  [/r:PathNameWithoutExtension] |  [/w:PathName]
+
+
+参数
+
+
+
+	/e
+
+	加密指定的文件夹。文件夹做过标记后，使得以后添加到该文件夹的文件也被加密。
+
+	/d
+
+	将指定的文件夹解密。文件夹做过标记后，使得以后添加到该文件夹的文件也被加密。
+
+	/s: dir
+
+	在指定文件夹及其全部子文件夹中执行所选操作。
+
+	/a
+
+	执行文件和目录操作。
+
+	/i
+
+	即使发生错误，仍然继续执行指定的操作。默认情况下，cipher 遇到错误时将停止。
+
+	/f
+
+	对所有指定的对象进行加密或解密。默认情况下，cipher 会跳过已加密或已解密的文件。
+
+	/q
+
+	只报告最基本的信息。
+
+	/h
+
+	显示带隐藏或系统属性的文件。默认情况下，这些文件是不加密或解密的。
+
+	/k
+
+	为运行 cipher 的用户创建新的文件加密。如果使用该选项，cipher 将忽略所有其他选项。
+
+	/u
+
+	 更新用户文件的加密密钥或将代理密钥恢复为本地驱动器上所有已加密文件中的当前文件（如果密钥已经改变）。该选项仅随 /n 一起使用。
+
+	/n
+
+	防止密钥更新。使用该选项可以查找本地驱动器上所有已加密的文件。该选项仅随 /u 一起使用。
+
+	PathName
+
+	指定样式、文件或文件夹。
+
+	/r:PathNameWithoutExtension
+
+	生成新的恢复代理证书和私钥，然后将它们写入文件（该文件的名称在 PathNameWithoutExtension 中指定）。如果使用该选项，cipher将忽略所有其他选项。
+
+	/w:PathName
+
+	删除卷上的未使用部分的数据。PathName 表示所要求卷上的任何目录。如果使用该选项，cipher将忽略所有其他选项。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+使用 /w
+	
+/w 删除可以访问的卷的部分数据并且没有分配给文件或目录。由于它不锁定驱动器，所以其他程序可以获取该驱动器上的空间，此空间 cipher 无法删除。由于该选项在硬盘卷的大部分空间执行写入操作，所以要全部完成将花费较长时间并且只在必要时使用。
+
+ 加密或解密文件
+	
+要防止加密文件在修改时变为解密，建议您将文件和其存放的文件夹两者一同加密。
+    
+
+ 使用只读文件和文件夹
+	
+Cipher 无法将标记为只读的文件加密。
+    
+
+
+ 使用多个文件夹名称
+	
+可以使用多个文件夹名称和通配符。
+    
+ 使用多个参数
+	
+每个参数之间至少有一个空格分隔。
+	
+
+
+
+
+范例
+
+
+
+要使用 cipher 加密 MonthlyReports 文件夹中的 May 子文件夹，请键入： 
+
+ cipher /e monthlyreports\may 
+
+
+要加密 MonthlyReports 文件夹中的 January 到 December 子文件夹以及 month 子文件夹中的 Manufacturing 子文件夹，请键入：
+
+ cipher /e /s:monthlyreports 
+
+如果只想加 May 子文件夹中的 Marketing.xls 文件，请键入：
+
+ cipher /e /a monthlyreports\may\marketing.xls
+
+要加密 May 文件夹中的 Marketing.xls 文件、Maintenance.doc 文件以及 Manufacturing 子文件夹，请键入：
+
+cipher /e /a monthlyreports\may\ma*
+
+要确定 May 是否已加密，请键入：
+
+ cipher monthlyreports\may 
+
+要确定 May 文件夹中哪些文件已加密，请键入：
+
+ cipher monthlyreports\may\* 
+
+XOX
+
+
+
+
+
+ 

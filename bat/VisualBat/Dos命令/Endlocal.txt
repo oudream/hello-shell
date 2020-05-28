@@ -1,0 +1,65 @@
+Endlocal
+
+
+
+结束批处理文件中环境更改的本地化，将环境变量还原为匹配 setlocal 命令前的值。
+
+
+语法
+
+
+
+endlocal
+
+
+参数
+
+
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+	 必须在脚本或批处理文件中使用 endlocal。如果在脚本或批处理文件之外使用 endlocal，则该命令无效。
+ 在批处理文件的结尾处有一个隐含的 endlocal 命令。
+	
+	 通过启用命令扩展名（即，默认值），endlocal 命令将命令扩展名的状态（即，已启用或已禁用）还原到执行匹配 setlocal 命令之前的状态。有关启用和禁用命令扩展名的详细信息，请参阅“”中的 cmd。
+    
+
+
+
+
+范例
+
+
+
+ 在批处理文件中可以本地化环境变量。例如：
+
+
+@echo off
+
+ rem This program starts the superapp batch program on the network,
+
+ rem directs the output to a file, and displays the file
+
+ rem in Notepad.
+
+ setlocal
+
+ path=g:\programs\superapp;%path%
+
+ call superapp>c:\superapp.out
+
+ endlocal
+
+ start notepad c:\superapp.out
+
+XOX
+
+
+
+ 

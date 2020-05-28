@@ -1,0 +1,786 @@
+使用 Netsh
+
+
+
+ Netsh 是一个命令行脚本实用程序，可让用户从本地或远程显示或修改当前运行的计算机的网络配置。Netsh 还提供了允许用户使用批处理模式对指定的计算机运行一组命令的脚本功能。Netsh 实用程序也可以将配置脚本以文本文件保存，以便存档或帮助配置其他服务器。
+
+
+Netsh 上下文
+
+
+ Netsh 利用动态连接库 (DLL) 文件与其他操作系统组件交互操作。每一个 Netsh 帮主程序 DLL 都提供了称作上下文的功能集，这种上下文是一组与特定的网络组件相关的命令组。这些上下文通过提供对一个或多个服务、实用程序或协议的配置和监视支持而扩展了 netsh 功能。例如，Dhcpmon.dll 提供了用于配置和管理 DHCP 服务器的 netsh 上下文和命令集。
+
+
+要运行 netsh 命令，必须从 Cmd.exe 提示符启动 netsh 并切换到包含要使用命令的上下文中。用户可以使用的上下文取决于用户已安装的网络组件。例如，如果在 Netsh 命令提示符下键入 dhcp，则将切换到 DHCP 上下文中，但如果没有 DHCP，则将显示下面的消息：
+
+
+The following command was not found:dhcp.
+
+
+有关 Netsh 上下文的详细信息，请参阅下列主题：
+
+用于 AAAA 的 Netsh 命令
+
+用于 DHCP 的 Netsh 命令
+
+Netsh 诊断 (diag) 命令
+
+接口 IP 的 Netsh 命令
+
+用于 RAS 的 Netsh 命令
+
+用于路由选择的 Netsh 命令
+
+用于 WINS 的 NetSh 命令
+
+
+
+使用多个上下文
+
+
+
+一个上下文中可以包含另一个上下文。例如，在路由选择上下文中，可以更改到 IP 和 IPX 子上下文。
+
+
+要显示可以在上下文中使用的命令和子上下文列表，请在 netsh 提示符下键入上下文名称，然后键入 /? 或 help。例如，要显示可以在路由选择上下文中使用的子上下文和命令列表，请在 netsh 提示符下（即 netsh>）键入如下命令：
+
+
+routing /?
+
+routing help
+
+
+要不离开当前上下文而执行另一上下文中的任务，可以在 netsh 提示符下键入要使用的命令的上下文路径。例如，要在 IGMP 上下文中添加 Local Area Connection 接口，而不切换到 IGMP 上下文，请在 netsh 提示符下键入：
+
+
+routing ip igmp add interface "Local Area Connection" startupqueryinterval=21
+
+
+从 Cmd.exe 命令提示符运行 Netsh 命令
+
+
+
+从 Cmd.exe 命令提示符运行 Netsh 命令时，netsh 使用下面的语法。要在远程 Windows 2000 Server 上运行这些 Netsh 命令，必须首先使用“远程桌面连接”连接到运行终端服务器的 Windows 2000 Server。Windows 2000 和 Windows XP 上的 Netsh 上下文命令之间可能存在功能性差异。
+
+
+要查看该命令语法，请单击以下命令：
+
+
+netsh 
+
+
+Netsh 是一个命令行脚本实用程序，可让用户从本地或远程显示或修改当前运行的计算机的网络配置。使用不带参数的 netsh 可以打开 Netsh.exe 命令提示符（即 netsh>）。
+
+
+语法
+
+
+
+netsh [-a AliasFile] [-c Context] [-r RemoteComputer] [{NetshCommand|-f ScriptFile}]
+
+
+参数
+
+
+
+	-a
+
+	运行 AliasFile 后返回到 netsh 提示符。
+
+	AliasFile
+
+	指定包含一个或多个 netsh 命令的文本文件的名称。
+
+	-c
+
+	更改到指定的 netsh 上下文。
+
+	Context 
+
+	指定 netsh 上下文。下表列出了可用的 netsh 上下文。
+	
+
+上下文菜单
+说明
+
+
+AAAA
+显示和设置由 Internet 身份认证服务 (IAS) 以及路由和远程访问服务中使用的身份验证、授权、记帐和审核 (AAAA) 数据库的配置。
+
+
+DHCP
+管理 DHCP 服务器并提供与基于控制台的管理相同的功能。
+
+
+Diag
+管理操作系统和网络服务参数以及对其进行疑难解答。
+
+
+Interface
+配置 TCP/IP 协议（包括地址、默认网关、DNS 服务器和 WINS 服务器）并显示配置和统计信息。
+
+
+RAS
+管理远程访问服务器。
+
+
+Routing
+管理路由选择服务器。
+
+
+WINS
+管理 WINS 服务器。
+
+
+	
+
+	-r
+
+	配置远程计算机。
+
+	RemoteComputer
+
+	指定要配置的远程计算机。
+
+	NetshCommand
+
+	指定要运行的 netsh 命令。
+
+	-f
+
+	运行脚本后退出 Netsh.exe。
+
+	ScriptFile
+
+	指定要运行的脚本。
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	使用 -r
+	
+如果在另一个命令前面指定 -r，则 netsh 将在远程计算机上执行该命令，然后返回到 Cmd.exe 命令提示符。如果没有在另一个命令中指定 -r，则将以远程模式打开 netsh。该过程类似于在 Netsh 命令提示符下使用 set machine 命令。使用 -r 时，可以只为 netsh 的当前实例设置目标计算机。退出然后重新输入 netsh 后，目标计算机将重置为本地计算机。可在远程计算机上运行 netsh 命令，方法是指定存储在 WINS 中的计算机名、一个 UNC 名和一个由 DNS 服务器解析的 Internet 名，或数字 IP 地址。
+	
+ 
+
+
+从 Netsh.exe 命令提示符运行 Netsh。
+
+
+
+ Netsh 在所有上下文中都使用下面标准的命令，用户可以从 Netsh.exe 命令提示符（即 netsh>）运行这些命令。要在远程 Windows 2000 Server 上运行这些 Netsh 命令，必须首先使用“远程桌面连接”连接到运行终端服务器的 Windows 2000 Server。Windows 2000 和 Windows XP 上的 Netsh 环境命令之间可能存在功能性差异。
+
+
+若要查看该命令语法，请单击以下命令：
+
+.. 
+
+
+转到上一级的上下文。
+
+
+语法
+
+
+
+.. 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+ 
+
+
+abort 
+
+
+丢弃脱机模式下进行的所有更改。Abort 在联机模式中不起作用。
+
+
+语法
+
+
+
+abort
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+ 
+
+
+add helper 
+
+
+安装 netsh 中的帮助程序 DLL。
+
+
+语法
+
+
+
+add helper DLLName 
+
+
+参数
+
+
+
+	DLLName
+	必需。指定要安装的帮助程序 DLL 的名称。
+
+	/?在命令提示符显示帮助。
+ 
+
+
+alias 
+
+
+添加由用户定义的字符串组成的别名，netsh 将用户定义的字符串与其他字符串同等处理。使用没有参数的 alias 可以显示所有可用的别名。
+
+
+语法
+
+
+
+alias [AliasName] [string1 [string2 ...]]
+
+
+参数
+
+
+
+	alias [AliasName]
+
+	显示指定的别名。
+
+	alias [AliasName][string1[string2 ...]]
+
+	将 AliasName 设置为指定的字符串。
+
+	/?在命令提示符显示帮助。
+
+
+
+范例
+
+
+下面的 netsh 示例脚本设置了两个 netsh 别名（Shaddr 和 Shp），然后退出 Interface IP 上下文的 Netsh 命令提示符：
+
+ alias shaddr show interface ip addr
+ alias shp show helpers
+ interface ip
+
+如果在 Netsh 命令提示符下键入 shaddr，Netsh.exe 会将其解释为命令 show interface ip addr。如果在 Netsh 命令提示符下键入 shp，则 Netsh.exe 会将其解释为命令 show helpers。 
+
+
+bye 
+
+
+退出 Netsh.exe。
+
+
+语法
+
+
+
+bye
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+ 
+
+
+commit 
+
+
+将脱机模式下所作的全部更改提交到路由器。Commit 在联机模式下无效。
+
+
+语法
+
+
+
+commit 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+ 
+
+
+delete helper 
+
+
+从 netsh 中删除帮助程序 DLL。
+
+
+语法
+
+
+
+delete helper DLLName
+
+
+参数
+
+
+
+	DLLName
+
+	必需。指定要卸载的帮助程序 DLL 的名称。
+
+	/?在命令提示符显示帮助。
+ 
+
+
+dump 
+
+
+创建一个包含当前配置的脚本。如果将该脚本保存到文件中，则可以使用该文件恢复已更改的配置设置。使用不带参数的 dump 可以显示所有 netsh 上下文配置。
+
+
+语法
+
+
+
+dump [FileName]
+
+
+参数
+
+
+
+	[?FileName}
+
+	指定要重定向其输出的文件的名称。
+
+	/?在命令提示符显示帮助。
+
+
+
+
+
+exec 
+
+
+加载脚本文件并执行其中的命令。
+
+
+语法
+
+
+
+exec ScriptFile
+
+
+参数
+
+
+
+	ScriptFile
+
+	必需。指定要加载并运行的脚本的名称。
+
+
+
+注释
+
+
+	ScriptFile 可以运行在一台或多台计算机上。
+
+
+
+
+
+exit 
+
+
+退出 Netsh.exe。
+
+
+语法
+
+
+
+exit 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+ 
+
+
+help 
+
+
+显示帮助。
+
+
+语法
+
+
+
+{/?|?|help|h}
+
+
+参数
+
+
+
+	无
+ 
+
+
+offline 
+
+
+将当前模式设置成脱机。
+
+
+语法
+
+
+
+offline 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	本模式中所做的更改将会保存起来，但需要运行 commit 或 online 命令设置路由器中的更改。
+	从脱机模式切换到联机模式时，在脱机模式中所做的更改将在当前运行的配置中反映出来。
+	在联机模式中所做的更改会立即在当前运行的配置中反映出来。
+
+
+
+
+
+
+online 
+
+
+将当前模式设置成联机。
+
+
+语法
+
+
+
+online 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	在联机模式中所做的更改会立即在当前运行的配置中反映出来。
+	从脱机模式切换到联机模式时，在脱机模式中所做的更改将在当前运行的配置中反映出来。
+
+
+
+
+
+popd 
+
+
+从堆栈恢复一个上下文。
+
+
+语法
+
+
+
+popd 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	当与 pushd 一起使用时，popd 使用户能够更改上下文，在新的上下文中运行命令，然后返回到先前的上下文。
+
+
+
+范例
+
+
+
+下面的示例脚本将上下文从根上下文更改到 interface ip 上下文，添加静态 IP 路由，然后返回到根上下文：
+
+netsh>pushd
+ netsh>interface ip
+ netsh interface ip>set address local static 10.0.0.9 255.0.0.0 10.0.0.1 1
+ netsh interface ip>popd netsh> 
+
+
+pushd 
+
+
+保存先进后出 (FILO) 堆栈上的当前上下文。
+
+
+语法
+
+
+
+pushd 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	当与 popd 一起使用时，pushd 使用户能够更改上下文，在新的上下文中运行命令，然后返回到先前的上下文。
+ 
+
+
+quit 
+
+
+退出 Netsh.exe。
+
+
+语法
+
+
+
+quit 
+
+
+参数
+
+
+
+	/?在命令提示符显示帮助。
+ 
+
+
+set file 
+
+
+将命令提示符窗口的输出复制到文件中。
+
+
+语法
+
+
+
+set file {open FileName|append FileName|close} 
+
+
+参数
+
+
+
+	open FileName
+
+	将命令提示符窗口的输出发送到指定的文件中。
+
+	append FileName
+
+	将命令提示符窗口的输出追加到指定的现有文件中。
+
+	close
+
+	停止发送输出并关闭文件。
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	使用 FileName
+	
+如果指定的 FileName 当前不存在，则 netsh 将以该名称创建一个新文件。如果指定的 FileName 当前存在，则 netsh 将覆盖现有的数据。
+	
+
+
+范例
+
+
+要创建称为 Session.log 的新日志文件并将所有随后的 netsh 输入和输出复制到 Session.log，请键入：
+
+set file open c:\session.log 
+
+
+set machine 
+
+
+设置当前计算机执行配置任务。使用不带参数的 set machine 设置本地计算机。
+
+
+语法
+
+
+
+set machine [[ComputerName=]string] 
+
+
+参数
+
+
+
+	ComputerName
+
+	指定要执行配置任务的计算机的名称。
+
+	字符串 
+
+	指定远程计算机的位置。
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	在多台计算机上执行配置任务。
+	
+可以通过一个脚本在多台计算机上运行命令。可以在脚本中使用 set machine 指定目标计算机（例如 ComputerA），然后运行该计算机（即 ComputerA）上 set machine 后面的命令。可以使用 set machine 指定另一台目标计算机（例如 ComputerB），然后运行该计算机（即 ComputerB）上的命令。
+	
+ 
+
+
+set mode 
+
+
+设置当前模式为联机或脱机。
+
+
+语法
+
+
+
+set mode {online|offline}
+
+
+参数
+
+
+
+	online
+
+	将当前模式设置成联机。
+
+	脱机
+
+	将当前模式设置成脱机。
+
+	/?在命令提示符显示帮助。
+ 
+
+
+show 
+
+
+显示别名、帮助程序和模式信息。
+
+
+语法
+
+
+
+show {alias|helper|mode}
+
+
+参数
+
+
+
+	alias 
+
+	列出所有定义过的别名。
+
+	helper 
+
+	列出所有顶级帮助程序。
+
+	mode 
+
+	显示当前模式。
+
+	/?在命令提示符显示帮助。
+ 
+
+
+unalias 
+
+
+删除指定的别名。
+
+
+语法
+
+
+
+unalias AliasName
+
+
+参数
+
+
+
+	AliasName
+
+	必需。指定别名的名称。
+
+	/?在命令提示符显示帮助。
+ 
+
+XOX
+
+
+

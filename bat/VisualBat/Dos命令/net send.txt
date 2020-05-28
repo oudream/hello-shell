@@ -1,0 +1,74 @@
+Net send
+
+
+
+将消息发送到网络上的其它用户、计算机或者消息名称。
+
+
+语法
+
+
+
+net send {name | * | /domain[:name] | /users} message 
+
+
+参数
+
+
+
+	name
+	指定用于发送消息的用户名、计算机名或消息发送名。如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。当将长用户名用作 NetBIOS 名称时有可能出现问题。NetBIOS 名称被限制为 16 个字符，第 16 个字符将被保留。
+
+	*
+	将消息发送给在您域或工作组中的所有名称。
+
+	/domain:name
+	将消息发送给计算机域中的所有名称。可以指定发送消息到指定域或工作组中所有名称的 name。
+
+	/users
+	将消息发送给所有连接服务器的用户。
+
+	消息
+	必需。指定消息的文本。
+
+	net help command
+	显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+可以只将邮件发送给一个在网络上活动的名字。如果发送消息到用户名，该用户必须登录并运行“信使”服务才能接收消息。
+可以向计算机所在的域（使用 * 或 /domain），或者其他域 (/domain:domainname) 中的所有名字广播消息。广播消息最多包含 128 个字符。把信息发送到多个用户时使用判断力。
+	 /users 选项允许您向所有参与服务器会话的用户发送消息。把信息发送到多个用户时使用判断力。
+必须运行“信使”服务接收邮件。有关如何启动服务的详细信息，请参阅“”。
+
+
+
+范例
+
+
+
+要将消息 Meeting changed to 3 P.M. Same place. 发送到用户 robertf，请键入：
+
+net send robertf Meeting changed to 3 P.M. Same place.
+
+
+要将邮件发送到与服务器连接的所有用户，请键入：
+
+net send /users This server will shut down in 5 minutes.
+
+
+要发送包含斜线 (/) 的邮件，请键入： 
+
+net send robertf "Format your disk with FORMAT /4"
+
+XOX
+
+
+
+
+
+ 

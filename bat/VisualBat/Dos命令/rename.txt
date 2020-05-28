@@ -1,0 +1,71 @@
+Rename (ren)
+
+
+
+更改一个文件或一组文件的名称。
+
+
+语法
+
+
+
+rename [drive:][path] filename1 filename2
+
+
+ren [drive:][path] filename1 filename2
+
+
+参数
+
+
+
+	[drive:][path] filename1
+
+	指定要重命名的文件或文件集的位置和名称。
+
+	filename2
+
+	为文件指定新的名称。如果使用通配符（* 和 ?），filename2 为多个文件指定新名称。重新命名文件时不能指定新的驱动器或路径。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ renaming files
+
+可以重命名符合指定文件名的所有文件。不能使用 rename 命令重命名驱动器之间的文件或者将文件移动到不同的目录位置。
+    
+ 在重命名中使用通配符
+	
+在任何文件名参数中均可以使用通配符（* 和 ?）。如果在 filename2 中使用通配符，则通配符代表的字符与 filename1 中的相应字符完全相同。
+    
+ 如果 filename2 已经存在，重命名将无效
+	
+ 对于 filename2，如果指定的文件名已经存在，rename 将显示以下消息： 
+
+ Duplicate file name or file not found 
+    
+
+
+
+
+范例
+
+
+
+ 假定您要更改当前目录中扩展名为 .txt 的所有文件的扩展名。例如，要将 .txt 扩展名更改为 .doc 扩展名。要作此更改，请键入 
+
+ ren *.txt *.doc 
+
+ 要将名为 Chap10 的文件或目录重命名为 Part10，请键入： 
+
+ ren chap10 part10 
+
+XOX
+
+
+

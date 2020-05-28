@@ -1,0 +1,214 @@
+Pagefileconfig.vbs
+
+
+
+使管理员可以显示和配置系统页面文件“虚拟内存”的设置。
+
+
+要查看该命令语法，请单击以下命令：
+
+
+pagefileconfig change
+
+
+
+更改系统现有的页面文件“虚拟内存”设置。
+
+
+语法
+
+
+
+pagefileconfig[.vbs] /change [/s Computer [/u Domain\User [/p Password]]] {[/i InitialPageFileSize]|[/m  MaximumPageFileSize]} /vo {VolumeLetter|*} [/vo {VolumeLetter2|*} [...]]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 user 或 domain\user.指定用户的帐户权限脚本。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/i InitialPageFileSize
+指定使用于以特定的页面文件的新的起始尺寸 (MB)。
+
+/m MaximumPageFileSize
+指定使用于以特定的页面文件的新的最大尺寸 (MB)。
+
+/vo {VolumeLetter|*}
+指定要更改页面文件设置的卷。用一个带冒号的字母指定卷（例如：“C：”）。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 pagefileconfig /change 命令：
+
+pagefileconfig.vbs /change /m 400 /vo c:
+ pagefileconfig.vbs /change /s srvmain /u maindom\hiropln /m 400 /vo c:
+ pagefileconfig.vbs /change /s srvmain /u maindom\hiropln /i 20 /vo *
+ pagefileconfig.vbs /change /s srvmain /u maindom\hiropln /p p@ssW23 /i 200 /m 500 /vo c:/vo d:
+
+
+
+
+pagefileconfig create
+
+
+
+创建或添加其它页面文件到系统中。
+
+
+语法
+
+
+
+pagefileconfig.vbs /create [/s Computer [/u Domain\User [/p Password]]] /i InitialPageFileSize /m MaximumPageFileSize /vo {VolumeLetter|*} [/vo {VolumeLetter2|*} [...]]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 user 或 domain\user.指定用户的帐户权限脚本。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/i InitialPageFileSize
+指定使用于以特定的页面文件的新的起始尺寸 (MB)。
+
+/m MaximumPageFileSize
+指定使用于以特定的页面文件的新的最大尺寸 (MB)。
+
+/vo {VolumeLetter|*}
+指定要创建页面文件设置的卷。用一个带冒号的字母指定卷（例如：“C：”）。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 pagefileconfig /create 命令：
+
+pagefileconfig.vbs /create /i 140 /m 300 /vo d:
+ pagefileconfig.vbs /create /s srvmain /u maindom\hiropln /i 150 /m 300 /vo d:
+ pagefileconfig.vbs /create /s srvmain /u maindom\hiropln /i 50 /m 200 /vo *
+ pagefileconfig.vbs /create /s srvmain /u maindom\hiropln /p p@ssW23 /i 100 /m 600 /vo d:/vo e:f:
+
+
+
+
+pagefileconfig delete
+
+
+
+从系统中删除页面文件。
+
+
+语法
+
+
+
+pagefileconfig.vbs /delete [/s Computer [/u Domain\User [/p Password]]] /vo {VolumeLetter|*} [/vo {VolumeLetter2|*} [...]]
+
+
+参数
+
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 user 或 domain\user.指定用户的帐户权限脚本。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/vo {VolumeLetter|*}
+指定要删除页面文件设置的卷。用一个带冒号的字母指定卷（例如：“C：”）。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 pagefileconfig /delete 命令：
+
+pagefileconfig.vbs /delete /vo d:
+ pagefileconfig.vbs /delete /s srvmain /u maindom\hiropln /vo d:
+ pagefileconfig.vbs /delete /s srvmain /u maindom\hiropln /p p@ssW23 /vo d:/vo e:f: 
+
+
+pagefileconfig query
+
+
+
+查询和显示系统的页面文件“虚拟内存”设置。
+
+
+pagefileconfig.vbs /query  [/s Computer [/u Domain\User [/p Password]]] [/fo {TABLE|LIST|CSV}]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 user 或 domain\user.指定用户的帐户权限脚本。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fo {TABLE|LIST|CSV}
+指定查询结果输出的格式。有效值为 TABLE、LIST 和 CSV。默认值是 LIST。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 pagefileconfig /query 命令：
+
+pagefileconfig.vbs /query
+ pagefileconfig.vbs /query /fo table
+ pagefileconfig.vbs /query /s srvmain /u maindom\hiropln
+ pagefileconfig.vbs /query /s srvmain /u maindom\hiropln /p p@ssW23 /fo list 
+
+
+注释
+
+
+最大的页面文件大小限制在可用磁盘空间之内，少于启动驱动器的故障转储恢复设置的大小。
+ XOX
+
+
+

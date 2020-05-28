@@ -1,0 +1,89 @@
+Rsh
+
+
+
+在运行 RSH 服务的远程计算机上运行命令。Windows XP 和 Windows 2000 不提供 RSH 服务。Windows 2000 Server Resource Kit 提供名为 Rshsvc.exe 的 RSH 服务。使用不带参数的 rsh 显示帮助。
+
+
+语法
+
+
+
+rsh [Host] [-l UserName] [-n] [Command]
+
+
+参数
+
+
+
+	Host
+
+	指定运行 command 的远程计算机。
+
+	-l UserName
+
+	指定远程计算机上使用的用户名。在省略情况下，使用当前登录用户的名称。
+
+	-n
+
+	将 rsh 的输入重定向到 NULL 设备。这防止本地计算机命令结果的显示。
+
+	Command
+
+	指定要运行的命令。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 标准操作
+	
+rsh 命令将标准输入复制到远程 command，将远程 command 的标准输出复制到其标准输出，将远程 command 的标准错误复制到其标准错误。Rsh 通常在远程命令终止时终止。
+    
+ 使用重定向符号
+	
+ 为了使重定向在远程计算机上发生，要以引号引住重定向符号（例如 ">>"）。如果不使用引号，重定向会在本地计算机发生。例如，以下命令将远程文件“RemoteFile”附加到本地文件“LocalFile”中：
+
+ rsh othercomputer cat remotefile >> localfile
+
+ 以下命令将远程文件 Remotefile 附加到远程文件 otherremotefile 中：
+
+ rsh othercomputer cat remotefile ">>" otherremotefile
+使用 rsh
+
+在使用已登录到某个域并且运行 Windows XP Professional 的计算机时，该域的主域控制器必须可用于确认用户名或 rsh 命令失败。
+    
+ .rhosts 文件
+	
+ .rhosts 文件通常许可 UNIX 系统的网络访问权限。.rhosts 文件列出可以访问远程计算机的计算机名及关联的登录名。在正确配置了 .rhosts 文件的远程计算机上运行 rcp、rexec 或 rsh 命令时，您不必提供远程计算机的登录和密码信息。
+
+ .rhosts 文件是一个文本文件，该文件中每一行为一个条目。条目由本地计算机名、本地用户名和有关该条目的所有注释组成。每个条目均由制表符或空格分开，注释用符号 (#) 打头。例如：
+
+ host7   #This computer is in room 31A
+
+ .rhosts 文件必须在远程计算机的用户主目录中。有关远程计算机 .rhosts 文件特定执行的详细信息，请参阅远程系统的文档。
+    
+ 只有当网际协议 (TCP/IP) 协议在 网络连接中安装为网络适配器属性的组件时，该命令才可用。
+    
+
+
+
+范例
+
+
+
+要以名称 admin1 在远程计算机 vax1 上执行 telcon 命令，请键入：
+
+rsh vax1 -l admin1 telcon
+
+
+
+XOX
+
+
+
+ 

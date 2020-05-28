@@ -1,0 +1,55 @@
+Popd
+
+
+
+将当前目录更改到由 pushd 命令存储的目录。
+
+
+语法
+
+
+
+popd
+
+
+参数
+
+
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+每次使用 pushd 命令时，都存储一个目录供用户使用。但是，可以通过多次使用 pushd 命令存储多个目录。
+
+目录按顺序储存到一个虚拟堆栈中。如果第一次使用 pushd 命令，该命令所在的目录就会被置于栈底。如果您再次使用该命令，则第二个目录就会被置于第一个目录之上。每次使用 pushd 命令时都将重复该过程。
+
+可以使用 popd 命令将当前目录更改为最近由 pushd 命令存储的目录。如果使用 popd 命令，位于堆栈顶端的目录将从堆栈中删除，当前目录转变为栈顶目录。如果再次使用 popd 命令，则删除堆栈中的下一个目录。
+ 如果启用了命令扩展，popd 命令将删除由 pushd 创建的任何驱动盘符指派。
+    
+    
+
+
+
+范例
+
+
+
+ 可以在批处理程序中使用 pushd 和 popd 将批处理程序运行的目录更改为当前目录，然后将其改回来。下面的批处理程序实例将说明如何做到这一点： @echo off
+rem This batch file deletes all .txt files in a specified directory
+pushd %1
+del *.txt
+popd
+cls
+echo All text files deleted in the %1 directory
+
+XOX
+
+
+
+
+ 

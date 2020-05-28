@@ -1,0 +1,35 @@
+Echoconfig
+
+
+
+处理 MS-DOS 子系统 Config.nt 和 Autoexec.nt 程序信息文件期间，显示消息。如果此命令不存在，将不会显示消息。
+
+
+参数
+
+
+无
+
+
+
+注释
+
+
+ 必须将该命令添加到 MS-DOS 子系统 Config.nt 文件中。下面的范例显示 Config.nt 可能的样子：
+
+ 
+dos=high,umb
+ device=%systemroot%\system32\himem.sys
+ files=40
+ echoconfig
+
+
+    
+    
+
+XOX
+
+
+
+
+ 

@@ -1,0 +1,58 @@
+Net computer
+
+
+
+从域数据库中添加或删除计算机。
+
+
+语法
+
+
+
+net computer \\ComputerName {/add | /del}
+
+
+参数
+
+
+
+	\\computername
+
+	指定要从域中添加或删除的计算机。
+
+	{/add | /del}
+
+	从域中添加或删除指定的计算机。
+
+
+	net help command
+显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+  Net computer 将所有添加和删除的计算机转发到域控制器。
+    
+    
+
+
+
+范例
+
+
+
+ 要将计算机 Grizzlybear 添加到域中，请键入：
+
+ net computer \\grizzlybear /add
+
+XOX
+
+
+
+
+
+
+ 

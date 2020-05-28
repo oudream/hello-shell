@@ -1,0 +1,48 @@
+Unlodctr
+
+
+
+从系统注册表中删除某服务或设备驱动程序的“性能”计数器名称与“解释”文本。
+
+
+语法
+
+
+
+Unlodctr [\\ComputerName] DriverName
+
+参数
+
+
+
+[\\ComputerName] DriverName
+
+从 Windows XP 系统注册表中删除驱动程序或服务 DriverName 的“性能”计数器名称设置和“解释”文本。如果不指定 ComputerName，默认情况下，Windows XP 将使用本地计算机。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+如果您提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+
+要从计算机 comp1 上删除 RSVP 的当前“性能”注册表设置与计数器“解释”文本，请键入：
+
+
+unlodctr \\comp1 RSVP
+
+XOX
+
+
+
+
+
+
+

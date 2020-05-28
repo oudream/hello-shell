@@ -1,0 +1,61 @@
+Shell
+
+
+
+指定希望 Windows XP 用于 MS-DOS 子系统的备用命令解释程序的名称和位置。
+
+
+语法
+
+
+
+shell=[[Drive:]Path] FileName [parameters]
+
+
+参数
+
+
+
+	[[Drive:]Path] FileName
+
+	指定命令解释程序的位置和名称。
+
+	parameters
+
+	指定可与指定的命令解释程序一起使用的任何命令行参数或命令行选项。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 默认设置
+	
+默认情况下，MS-DOS 子系统使用特殊版本的 Command.com，与其他 Windows XP 子系统（包括子系统之间的管道传送和重定向）完全兼容，所以不需要 shell 命令。
+    
+ 指定 16 位命令解释程序
+	
+ 您仍可以使用 shell 命令指定自己的 16 位命令解释程序，尽管并不建议这样做。
+    
+ 将命令行选项与命令行解释程序一起使用
+	
+ shell 命令本身不接受任何命令行选项，但是如果命令解释程序接受，您就可以将其包含在 shell 命令行中。
+    
+
+
+
+
+范例
+
+
+ 假定文件 Newshell.com 位于启动驱动器的 /Bin 目录中，并且您要将 Newshell.com 作为命令解释程序使用。为此，请将以下命令添加到 Config.nt 文件中： 
+
+ shell=\bin\newshell.com 
+
+XOX
+
+
+

@@ -1,0 +1,68 @@
+Finger
+
+
+
+显示有关运行 Finger 服务或 Daemon 的指定远程计算机（通常是运行 UNIX 的计算机）上用户的详细信息。该远程计算机指定显示用户信息的格式和输出。如果不使用参数，Finger 将显示帮助。
+
+
+语法
+
+
+
+finger [-l] [User] [@host] [...] 
+
+
+参数
+
+
+
+	-l
+
+	以长列表格式显示用户信息。
+
+	用户
+
+	指定要获得与其相关的信息的用户。如果忽略 User 参数，finger 将显示有关指定计算机上所有用户的信息。
+
+	@host
+
+	指定运行 Finger 服务（它正在查找用户信息）的远程计算机。可以指定计算机名或 IP 地址。
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 可以指定多个 User@host 参数。
+
+ 必须以连字号 (-) 而不是斜线 (/) 作为 finger 参数的前缀。
+
+ 只有当网际协议 (TCP/IP) 协议在 网络连接中安装为网络适配器属性的组件时，该命令才可用。 
+Windows 2000 和 Windows XP 不提供 Finger 服务。
+
+
+
+范例
+
+
+
+要显示计算机 users.microsoft.com 上的 user1 信息，请键入如下命令：
+
+finger user1@users.microsoft.com
+
+
+
+要显示计算机 users.microsoft.com 上的所有用户信息，请键入如下命令：
+
+finger @users.microsoft.com
+
+
+XOX
+
+
+
+
+ 
+ 

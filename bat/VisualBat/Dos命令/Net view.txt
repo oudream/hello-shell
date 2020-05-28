@@ -1,0 +1,80 @@
+Net view
+
+
+
+显示域、计算机或由指定计算机共享资源的列表。如果在没有参数的情况下使用，则 net view 显示当前域中的计算机列表。
+
+
+语法
+
+
+
+net view [\\ComputerName] [/domain[:DomainName]]
+
+
+net view /network:nw [\\ComputerName]
+
+
+参数
+
+
+
+	\\Computername
+	指定包含要查看共享资源的计算机。
+
+	/domain[:domainname]
+	指定要查看其可用计算机的域。如果省略 DomainName，/domain 将显示网络上的所有域。
+
+	/network:nw
+	显示 NetWare 网络上所有可用的服务器。如果指定计算机名，/network:nw 将通过 NetWare 网络显示该计算机上的可用资源。也可以指定添加到系统中的其他网络。
+
+	net help command
+	显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+使用 net view 命令显示计算机列表。输出内容与以下相似：
+	
+ 服务器名称            注释
+	
+ -------------------------------------------------
+	
+ \\Production          Production file server
+	
+ \\Print1              Printer room, first floor
+	
+ \\Print2              Printer room, second floor
+    
+
+
+
+
+范例
+
+
+
+要查看由 \\Production 计算机共享的资源列表，请键入：
+
+net view \\production
+
+要查看 NetWare 服务器 \\Marketing 上的可用资源，请键入：
+
+net view /network:nw \\marketing
+
+要查看销售域或工作组中的计算机列表，请键入：
+
+net view /domain:sales
+
+要查看 NetWare 网络中的所有服务器，请键入：
+
+net view /network:nw
+
+XOX
+
+
+
+

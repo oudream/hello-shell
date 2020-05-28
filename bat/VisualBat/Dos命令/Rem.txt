@@ -1,0 +1,70 @@
+Rem
+
+
+
+使您可以在批处理文件或配置文件中加入注释。
+
+
+语法
+
+
+
+rem [comment]
+
+
+参数
+
+
+
+	comment
+
+	指定要作为注释的任何字符串。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 使用 echo 命令显示注释
+	
+ rem 命令不在屏幕上显示注释。必须在批处理或 Config.nt 文件中使用 echo on 命令才能在屏幕上显示注释。
+    
+ 对批处理文件注释的限制
+	
+ 在批处理文件注释中不能使用重定向字符“(”或“)”或管道 (|)。
+    
+ 使用 rem 增加垂直间距。
+	
+ 尽管您可以使用没有注释的 rem 为批处理文件增加垂直间距，但也可以使用空行来增加间距。在处理批处理程序时会忽略空行。
+    
+
+
+
+
+范例
+
+
+
+ 以下范例显示为解释和垂直间距使用注释的批处理文件： 
+
+ @echo off 
+ rem This batch program formats and checks new disks. 
+ rem It is named Checknew.bat. 
+ rem 
+ echo Insert new disk in drive B. 
+ pause 
+ format b:/v 
+ chkdsk b: 
+
+ 假定要在 Config.nt 文件中的 prompt 命令前包含解释性注释。为此，请将以下行添加到 Config.nt 中： 
+
+ rem Set prompt to indicate current directory 
+ prompt $p$g
+
+XOX
+
+
+

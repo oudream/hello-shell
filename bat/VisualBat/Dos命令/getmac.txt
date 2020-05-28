@@ -1,0 +1,66 @@
+Getmac
+
+
+
+返回计算机中所有网卡的媒体访问控制 (MAC) 地址以及每个地址的网络协议列表，既可以从本地方返回，也可以通过网络返回。
+
+
+
+
+语法
+
+
+
+getmac[.exe] [/s Computer [/u Domain\User [/p Password]]] [/fo {TABLE|LIST|CSV}] [/nh] [/v]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 user 或 domain\user.指定用户的帐户权限命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fo {TABLE|LIST|CSV}
+指定查询结果输出的格式。有效值为 TABLE、LIST 和 CSV。输出的默认格式为 TABLE。
+
+
+/nh
+在输出中压缩列头标。当将 /fo 参数设置为 TABLE 或 CSV 时有效。
+
+/v
+指定输出显示详细信息。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+ Getmac 可用于将 MAC 地址输入网络分析器中，或确定计算机上当前使用的各个网络适配器的协议。
+
+
+
+范例
+
+
+下面的范例说明了如何使用 getmac 命令：
+
+getmac /fo table /nh /v
+ getmac /s srvmain
+ getmac /s srvmain /u maindom\hiropln
+ getmac /s srvmain /u maindom\hiropln /p p@ssW23
+ getmac /s srvmain /u maindom\hiropln /p p@ssW23 /fo list /v
+ getmac /s srvmain /u maindom\hiropln /p p@ssW23 /fo table /nh
+
+XOX
+
+
+

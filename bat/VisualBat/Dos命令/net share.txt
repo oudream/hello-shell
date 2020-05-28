@@ -1,0 +1,103 @@
+Net share
+
+
+
+管理共享资源。使用不带参数的 net share 显示本地计算机上所有共享资源的信息。
+
+
+语法
+
+
+
+net share [ShareName] net share [ShareName=Drive:Path [{/users:number|/unlimited}] [/remark:"text"] [/cache: {manual|automatic|no}]] net share [ShareName [{/users:number|unlimited}] [/remark:"text"] [/cache: {manual|automatic|no}]] net share [{ShareName|Drive:Path} /delete]
+
+
+参数
+
+
+
+	ShareName
+	指定共享资源的网络名称。键入带参数 ShareName 的 net share  命令仅显示有关该共享的信息。
+
+	drive:path
+	指定要共享目录的绝对路径。
+
+	/users:number
+	设置可以同时访问共享资源的最多用户数。
+
+	/unlimited
+	指定可以同时访问共享资源的、数量不受限制的用户。
+
+	/remark:"text"
+	添加关于资源的描述注释。给文本加上引号。
+
+
+	/cache:automatic
+	启用带自动重新集成的脱机客户缓存。
+
+	/cache:manual
+	启用带手动重新集成的脱机客户缓存。
+
+	/cache:no
+	提醒客户脱机缓存不合适。
+
+	/delete
+	停止共享资源。
+
+	net help command
+	显示指定 net 命令的帮助。
+
+
+
+注释
+
+
+要共享带有包含空格字符路径的目录，请使用引号将目录的驱动器和路径引起来（例如， "C:\Path Name"）。
+当显示计算机上的所有共享资源时，将显示资源的共享名、与资源相关的设备名或路径，以及与资源有关的描述性注释。输出内容与以下相似：
+
+
+share name  resource                     remark
+------------------------------------------------------
+ADMIN$     C:\WINNT                     Remote Admin
+C$         C:\                          Default Share for Internal Use
+print$     C:\WINNT\SYSTEM\SPOOL
+IPC$                                    Remote IPC
+LASER      LPT1               Spooled   Laser printer
+
+	在服务器上创建共享时，这些共享将被保存。在停止 Server 服务时，所有共享都断开，但是在下一次启动 Server 服务或者重新启动计算机时将自动重新连接它们。有关服务的详细信息，请参阅服务。
+	当从远程计算机浏览本地计算机时，将不显示以字符 $ 结尾的共享资源名。
+
+
+
+范例
+
+
+
+要显示有关计算机上共享资源的信息，请键入：
+
+网络共享
+
+
+要使用共享名 DataShare 共享计算机的 C:\Data 目录并包括注释，请键入：
+
+net share DataShare=c:\Data /remark:"For department 123."
+
+
+要停止上例中创建的 DataShare 文件夹共享，请键入：
+
+net share DataShare /delete
+
+
+要使用共享名 List 共享计算机的 C:\Art Lst 目录，请键入：
+
+net share list="c:\art lst"
+
+XOX
+
+
+
+
+
+
+ 
+ 

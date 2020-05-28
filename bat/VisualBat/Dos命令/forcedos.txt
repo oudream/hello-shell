@@ -1,0 +1,62 @@
+Forcedos
+
+
+
+启动 MS-DOS 子系统中指定的程序。该命令只对 Windows XP 不能识别的 MS-DOS 程序是必需的。
+
+
+语法
+
+
+
+forcedos [/d directory] FileName [parameters]
+
+
+参数
+
+
+
+	/d directory
+
+	为要使用的指定程序指定当前目录。
+
+	FileName
+
+	必需指定要启动的程序。如果不在当前目录或路径中，必须将驱动器号或目录指定到该程序。
+
+	parameters
+
+	指定传递到程序的参数。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+XOX
+	 XOX
+	
+ Windows XP 不能将一些 MS-DOS 程序识别为 MS-DOS 程序。使用 forcedos 以启动这些程序。
+    
+ 所有通过 forcedos 启动的程序都被当作 MS-DOS 应用程序打开。
+    
+
+
+
+
+范例
+
+
+
+ 要启动 \Oldapps 目录中的 Myprog 程序以便可以使用 \Reports 目录，请键入：
+
+ forcedos /d reports \oldapps\myprog
+
+XOX
+
+
+
+
+
+ 

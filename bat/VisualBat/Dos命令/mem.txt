@@ -1,0 +1,129 @@
+Mem
+
+
+
+显示有关分配内存区域、可用内存区域和当前在 MS-DOS 子系统中加载进内存的程序信息。键入不带参数的 mem 显示 MS-DOS 子系统的已使用和可用内存的状态。
+
+
+语法
+
+
+
+mem [{/program | /debug | /classify}]
+
+
+参数
+
+
+
+	/program
+
+	显示正加载进入内存的程序状态。
+
+	/debug
+
+	显示当前加载程序和内部驱动程序的状态，以及其他程序信息。
+
+	/classify
+
+	显示加载到常规内存和高端内存区 (UMA) 的程序状态。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+XOX
+	 XOX
+	
+ 使用 /program
+	
+不能使用带 /debug 或 classify 的 /program。可以将 /program 缩写为 /p。
+    
+ 使用 /debug
+	
+不能使用带 /program 或 /classify 的 /debug。可以将 /debug 缩写为 /d。
+    
+ 使用 /classify
+
+/classify 以十进制和十六进制标记列出了每个程序的大小，并且提供了内存使用摘要，并列出了可用的最大内存块。不能使用带 /program 或 /debug 的 /classify。可以将 /classify 缩写为 /c。
+	
+	 显示内存状态
+	
+只要分配内存超过 1 MB，MS-DOS 子系统就会显示扩展内存的状态。
+	
+
+
+
+
+范例
+
+
+
+ 假定 MS-DOS 子系统配置在扩展内存。要显示系统总内存（即常规内存、扩展内存和扩充内存）的状态以及当前加载到内存的程序列表，请键入： 
+
+ mem /program 
+
+ 结果看起来与下面内容相似： 
+
+ 
+Address       name         size       type
+
+000000                   000400     Interrupt Vector
+000400                   000100     ROM Communication Area
+000500                   000200     DOS Communication Area
+
+ 000700      IO           000310     System Data
+
+ 000A10      MSDOS        0014D0     Syetem Data
+
+ 001EE0      IO           0018D0     System Data
+KBD        000800      System Program
+HIMEM      000420      DEVICE=
+000340      FILES=
+000090      FCBS=
+000170      LASTDRIVE=
+000710      STACKS=
+0037C0      COMMAND      000A40     Program
+004210      MSDOS        000070     - Free -
+004290      COMMAND      0001F0     Environment
+004490      MEM          0001D0     Environment
+004670      MEM          017550     Program
+01BBD0      MSDOS        084410     - Free -
+09FFF0      SYSTEM       028000     System Program
+
+ 0C8000      IO           0083D0     System Data
+MOUSE      0083C0      System Program
+0D03E0      MSDOS        000050     - Free -
+0D0440      REDIR        0009F0     Program
+0D0E40      DOSX         007CA0     Program
+0D8AF0      DOSX         001030     Data
+0D9B30      MSDOS        0164C0     - Free -
+
+ 
+655360 bytes total conventional memory
+655360 bytes available to MS-DOS
+637296 largest executable program size
+
+ 1048576 bytes total contiguous extended memory
+0 bytes available contiguous extended memory
+405504 bytes available XMS memory
+MS-DOS resident in High Memory Area
+
+
+ Total conventional memory 是指分配给 MS-DOS 子系统的最多可达第一个 640KB 的虚拟内存大小。
+ Available MS-DOS 是指分配的常规内存大小，包括 Cmd.exe 需要的内存。
+ Largest executable program size 是程序可用的常规内存的最大连续块。
+ Total EMS memory （上例未显示）是指为 MS-DOS 子系统配置的扩展内存大小。
+ Free EMS memory(下面范例中没有显示)是指程序可用的扩展内存数量。
+ Total contiguous extended 是指 1 MB 以上的内存数。
+ Available contiguous extended memory 是指可用于中断 15h 接口的扩展内存。该内存不由扩展内存管理程序管理，例如 Himem.sys。某些较早的程序使用这种不同的扩展内存方案。 Available XMS memory 是指由扩展内存管理程序（如 Himem.sys）管理且程序可以使用的内存。
+
+
+XOX
+
+
+
+ 

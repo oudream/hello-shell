@@ -1,0 +1,111 @@
+网络本地组
+
+
+
+添加、显示或修改本地组。使用不带参数的 net localgroup 命令显示计算机上服务器和本地组的名称。
+
+
+语法
+
+
+
+net localgroup [GroupName [/comment:"text"]] [/domain]
+
+
+net localgroup [GroupName {/add [/comment:"text"] | /delete} [/domain]]
+
+
+net localgroup [GroupName name [ ...]{/add | /delete} [/domain]]
+
+
+参数
+
+
+
+	GroupName
+
+	指定要添加、扩展或删除的本地组的名称。使用不带其他参数的 net localgroup GroupName 显示本地组中的用户列表或全局组。
+
+	/comment:"text"
+
+	为新建或已经存在的组添加注释。评注最多可以包含 48个字符。给文本加上引号。
+
+	/domain
+
+	对当前域的主域控制器执行操作。否则，操作将在本地计算机上执行。
+
+	name [ ...]
+
+	列出一个或多个用户名或组名以添加或从本地组中删除。
+
+	/add
+
+	添加全局组名称或者向本地组中添加用户名称。必须在使用此命令将用户或全局组添加到本地组之前先为其建立帐户。
+
+	/delete
+
+	从本地组中删除组名称或用户名。
+
+	net help command
+显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+ 使用 /domain
+
+ /domain 仅适用于成为域成员的 Windows XP Professional 计算机。默认情况下，服务器计算机将在主域控制器上执行操作。
+    
+ 使用 name
+	
+用空格分隔多项。名称可以是本地用户、其他域的用户或全局组，但不能是其他本地组。如果用户来自另一个域，请在用户名的开头添加域名（例如 SALES\RALPHR）。
+    
+	 用户分组
+	
+使用 net localgroup 命令以相同或相似方式将使用计算机或网络的用户分组。在对本地组指定权限时，本地组的每个成员都自动获得相同的权限。
+	
+   
+
+
+
+范例
+
+
+
+ 要显示本地服务器上所有本地组的列表，请键入： 
+
+ net localgroup
+
+ 要将本地组 exec 添加到本地用户帐户数据库，请键入： 
+
+ net localgroup exec /add
+
+ 要将本地组 exec 添加到域用户帐户数据库，请键入： 
+
+ net localgroup exec /add /domain
+
+ 要将现有用户帐户 stevev、ralphr（来自 SALES 域）和 jennyt 添加到本地计算机上的 exec 本地组，请键入： 
+
+ net localgroup exec stevev sales\ralphr jennyt /add
+
+ 要将现有用户帐户 stevev、ralphr 和 jennyt 添加到域中的 exec 本地组，请键入： 
+
+ net localgroup exec stevev ralphr jennyt /add /domain
+
+ 要显示 exec 本地组中的用户，请键入： 
+
+ net localgroup exec
+
+ 要将注释添加到 exec 本地组记录，请键入： 
+
+ net localgroup exec /comment:"The executive staff."
+
+XOX
+
+
+
+
+ 

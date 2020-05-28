@@ -1,0 +1,58 @@
+Driverquery
+
+
+显示所有已安装的设备驱动程序及其属性的列表。
+
+
+
+语法
+
+
+
+driverquery [/s Computer] [/u Domain\User /p Password] [/fo {TABLE|LIST|CSV}]  [/nh] [/v] [/si]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User 指定的用户的帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fo {TABLE|LIST|CSV}
+指定显示驱动程序信息的格式。有效值为 TABLE、LIST 和 CSV。输出的默认格式为 TABLE。
+
+/nh
+省略显示的驱动程序中的标题行。当 /fo 参数设置为 TABLE 或 CSV 时有效。
+
+/v
+指定显示详细驱动程序信息。
+
+/si
+显示已签名和未签名的设备驱动程序的数字签名信息。
+
+/?在命令提示符显示帮助。
+
+
+
+范例
+
+
+下面的范例说明如何使用 driverquery 命令：
+
+driverquery
+ driverquery /fo csv
+ driverquery /nh
+ driverquery /s ipaddress
+ driverquery /s server1 /u hirpln /v driverquery /s server1 /u maindom\hirpln /p p@ssw3d /fo list
+
+XOX
+
+
+

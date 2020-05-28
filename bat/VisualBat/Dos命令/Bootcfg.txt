@@ -1,0 +1,671 @@
+Bootcfg
+
+
+
+配置、查询或更改 Boot.ini 文件设置。
+
+
+若要查看该命令语法，请单击以下命令：
+
+
+bootcfg addsw
+
+
+
+为指定的操作系统项添加操作系统加载选项。
+
+
+语法
+
+
+
+bootcfg /addsw [/s Computer [/u Domain\User /p Password]] [/mm MaximumRAM] [/bv] [/so] [/ng]  /id OSEntryLineNum
+
+
+参数
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user 指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/mm MaximumRAM
+将 /maxmem 开关添加到指定的 OSEntryLineNum，并且设置操作系统可以使用的最大内存数。
+
+/bv
+将 /basevideo 开关添加到指定的 OSEntryLineNum，从而控制操作系统使用已安装视频驱动器的标准 VGA 模式。
+
+/so
+将 /sos 开关添加到指定的 OSEntryLineNum，从而控制操作系统在设备驱动程序名称加载时显示它们。
+
+/ng
+将 /noguiboot 开关添加到指定的 OSEntryLineNum，从而禁用在 CTRL+ALT+DEL 登录提示之前显示的 Windows XP Professional 进度栏。
+
+/id OSEntryLineNum
+对于添加有操作系统加载项的 Boot.ini 文件，指定其 [operating systems] 区段中的操作系统项的行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /addsw 命令：
+
+bootcfg /addsw /mm 64 /id 2
+ bootcfg /addsw /so /id 3
+ bootcfg /addsw /so /ng /s srvmain /u hiropln /id 2
+ bootcfg /addsw /ng /id 2
+ bootcfg /addsw /mm 96 /ng /s srvmain /u maindom\hiropln /p p@ssW23 /id 2 
+
+
+
+
+bootcfg copy
+
+
+
+制作另外的操作系统实例副本，可为其添加开关。
+
+
+语法
+
+
+
+bootcfg /copy [/s Computer [/u Domain\User /p Password]] [/d Description] [/id OSEntryLineNum]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/d description
+为新的操作系统项指定说明。
+
+/id OSEntryLineNum
+在根下的[操作系统]区段内的 .ini 文件中指定操作系统登录的行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /copy 命令：
+
+bootcfg /copy /d "\ABC Server\" /id 1
+ 
+bootcfg /copy /s srvmain /u maindom\hiropln /p p@ssW23 /d "Windows XP" /id 2
+ bootcfg /copy /u hiropln /p p@ssW23 /d "AB Ver 1.001" /id  2 
+
+
+bootcfg dbg1394
+
+
+
+为指定的操作系统项配置 1394 端口调试。
+
+
+语法
+
+
+
+bootcfg /dbg1394 {ON|OFF|EDIT} [/s Computer [/u Domain\User /p Password]] [/ch channel] /id OSEntryLineNum
+
+
+参数
+
+
+
+ON|OFF|EDIT
+指定用于 1394 端口调试的值。
+
+
+值
+说明
+
+
+ON
+通过将 /dbg1394 开关添加到指定的 OSEntryLineNum，从而启用远程调试支持。
+
+
+OFF
+通过将 /dbg1394 开关从指定的 OSEntryLineNum 删除，从而禁用远程调试支持。
+
+
+EDIT
+通过更改与指定 OSEntryLineNum 的 /dbg1394 开关有关的信道值，从而允许端口和波特率设置发生变化。
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/ch channel
+指定用于调试的信道：有效值为 1 到 64 之间的某个整数。如果禁用 1394 端口调试，则不要使用 /ch channel 参数。
+
+/id OSEntryLineNum
+对于添加有 1394 端口调试选项的 Boot.ini 文件，指定其 [operating systems] 区段中的操作系统项的行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /dbg1394 命令：
+
+bootcfg /dbg1394 /id 2
+ bootcfg /dbg1394 on /ch 1 /id 3
+ bootcfg /dbg1394 edit /ch 8 /id 2
+ bootcfg /s srvmain /u maindom\hiropln /p p@ssW23 /dbg1394 off /id 2 
+
+
+bootcfg debug
+
+
+
+添加或更改用于指定操作系统项的调试设置。
+
+
+语法
+
+
+
+bootcfg /debug {ON|OFF|EDIT} [/s Computer [/u Domain\User /p Password]] [/port {COM1|COM2|COM3|COM4}] [/baud {9600|19200|38400|57600|115200}] [/id OSEntryLineNum]
+
+
+参数
+
+
+
+on | off
+指定用于调试的值。
+
+
+值
+说明
+
+
+ON
+通过将 /debug 开关添加到指定的 OSEntryLineNum，从而启用远程调试支持。
+
+
+OFF
+通过将 /debug 开关从指定的 OSEntryLineNum 删除，从而禁用远程调试支持。
+
+
+EDIT
+通过更改与指定 OSEntryLineNum 的 /debug 开关有关的值，从而允许端口和波特率设置发生变化。
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/port {COM1|COM2|COM3|COM4}
+指定用于调试的 COM 端口。如果调试被禁用，则不要使用 /port 参数。
+
+/baud {9600|19200|38400|57600|115200}
+指定用于调试的波特率。如果禁用调试，则不要使用 /baud 参数。
+
+/id OSEntryLineNum
+对于添加有调试选项的 Boot.ini 文件，指定其 [operating systems] 区段中的操作系统项的行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果需要 1394 端口调试，请使用 bootcfg /dbg1394。
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /debug 命令：
+
+bootcfg /debug on /port com1 /id 2
+ bootcfg /debug edit /port com2 /baud 19200 /id 2
+ bootcfg /s srvmain /u maindom\hiropln /p p@ssW23 /debug off /id 2 
+
+
+bootcfg default
+
+
+
+指定作为默认指派的操作系统项。
+
+
+语法
+
+
+
+bootcfg /default [/s Computer [/u Domain\User /p Password]] [/id OSEntryLineNum]
+
+
+参数
+
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/id OSEntryLineNum
+对于 Boot.ini 文件，指定其 [operating systems] 区段中的作为默认委派的操作系统项行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /default 命令：
+
+bootcfg /default /id 2
+ bootcfg /default /s srvmain /u maindom\hiropln /p p@ssW23 /id 2
+
+
+
+bootcfg delete
+
+
+
+删除 Boot.ini 文件中位于 [operating systems] 区段的某个操作系统项。
+
+
+语法
+
+
+
+bootcfg /delete [/s Computer [/u Domain\User /p Password]] [/id OSEntryLineNum]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/id OSEntryLineNum
+对于 Boot.ini 文件，指定其 [operating systems] 区段中要删除的操作系统项的行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /delete 命令：
+
+bootcfg /delete /id 1
+ bootcfg /delete /s srvmain /u maindom\hiropln /p p@ssW23 /id 3 
+
+
+bootcfg ems
+
+
+
+允许用户添加或更改将 EMS 控制台重定向到远程计算机的设置。通过启用 EMS，可以在 Boot.ini 文件的 [boot loader] 区段添加“redirect=Port#”语句行，并且在指定的操作系统项语句中添加 /redirect 开关。只有在服务器上才可启用 EMS 功能。
+
+
+语法
+
+
+bootcfg /ems {ON|OFF|EDIT} [/s Computer [/u Domain\User /p Password]] [/port {COM1|COM2|COM3|COM4|BIOSSET}] [/baud {9600|19200|38400|57600|115200}] [/id OSEntryLineNum] 
+
+
+参数
+
+
+
+on | off
+指定用于 EMS 重定向的值。
+
+
+值
+说明
+
+
+ON
+为指定的 OSEntryLineNum 启用远程输出。将 /redirect 开关添加到指定 OSEntryLineNum，并且将 redirect=comX 设置添加到 [boot loader] 区段。comX 的值由 /port 参数设置。
+
+
+OFF
+禁用输出到远程计算机。将 /redirect 开关从指定 OSEntryLineNum 删除，并将 redirect=comX 设置从 [boot loader] 区段删除。
+
+
+EDIT
+允许通过更改 [boot loader] 区段中的 redirect=comX 设置来更改端口设置。comX 值恢复为 /port 参数所指定的值。
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/port {COM1|COM2|COM3|COM4|BIOSSET}
+指定用于重定向的 COM 端口。BIOSSET 控制 EMS 获得 BIOS 设置以确定用于重定向的端口。如果禁用了远程管理输出，请不要使用 /port 参数。
+
+/baud {9600|19200|38400|57600|115200}
+指定用于重定向的波特率。如果禁用了远程管理输出，请不要使用 /baud 参数。
+
+/id OSEntryLineNum
+指定在 Boot.ini 文件的 [operating systems] 区段中，将要添加 EMS 选项的操作系统项的行号。[operating systems] 标题区域后的首行是 1。当 EMS 的值被设成 ON 或 OFF 时，要求使用该参数。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+有关紧急管理服务 (EMS) 的详细信息，请参阅“帮助和支持中心”。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /ems 命令：
+
+bootcfg /ems on /port com1 /baud 19200 /id 2
+ bootcfg /ems on /port biosset /id 3
+ bootcfg /s srvmain /ems off /id 2
+ bootcfg /ems edit /port com2 /baud 115200
+ bootcfg /s srvmain /u maindom\hiropln /p p@ssW23 /ems off /id 2 
+
+
+
+
+
+
+bootcfg query
+
+
+
+查询并显示来自 Boot.ini 文件的 [boot loader] 以及 [operating systems] 区段项。
+
+
+语法
+
+
+
+bootcfg /query [/s Computer [/u Domain\User /p Password]]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+以下是 bootcfg /query 输出的一个示例：启动加载程序设置
+--------------------
+timeout: 30
+default:multi(0)disk(0)rdisk(0)partition(1)\WINDOWS
+
+启动项目
+------------
+启动项目 ID：   1
+好记的名称："Microsoft Windows XP Professional"
+路径：multi(0)disk(0)rdisk(0)partition(1)\WINDOWS
+OS 加载选项:/fastdetect /debug /debugport=com1:
+该 bootcfg query 输出的启动加载程序设置部分显示了 Boot.ini 的 [boot loader] 区段中的所有项。
+该 bootcfg query 输出的启动项部分显示了 Boot.ini 的 [operating systems] 区段中的这些操作系统项：启动项 ID、友好名、路径以及 OS 加载项。
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /query 命令：
+
+bootcfg /query
+ bootcfg /query /s srvmain /u maindom\hiropln /p p@ssW23
+ bootcfg /query /u hiropln /p p@ssW23 
+
+
+bootcfg raw
+
+
+
+以字符串形式在 Boot.ini 文件的 [operating systems] 区段中向操作系统项添加指定的操作系统加载项。
+
+
+语法
+
+
+
+bootcfg [/s Computer [/u Domain\User /p Password]] /raw OSLoadOptionsString [/id OSEntryLineNum]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+OSLoadOptionsString
+指定要添加到操作系统项的操作系统加载项。这些加载项会替代任何已有的和该操作系统项有关的加载项。OSLoadOptions 没有得到确认。
+
+/id OSEntryLineNum
+指定在 Boot.ini 文件的 [operating systems]区段内要更新的操作系统项的行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+Bootcfg raw 可将文本添加到某个操作系统项的末尾，该过程会覆盖任何已有的操作系统项选项。所添加的文本应包含有效的 OS 加载项，比如 /debug、/fastdetect、/nodebug、/baudrate、/crashdebug 以及 /sos 等。比如使用下述命令可将“/debug /fastdetect”添加到首个操作系统项的末尾，并会替代此前的任何操作系统项选项：
+
+bootcfg /raw "/debug /fastdetect" /id 1
+有关可选 OS 加载项以及 Windows 在启动期间如何使用 Boot.ini 文件的详细信息，请参阅 Microsoft Knowledge Base 中编号为 Q170756 的技术文章，其标题为“Windows NT Boot.ini 文件的可用开关项”。
+(http://www.microsoft.com/)
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /raw 命令：
+
+bootcfg /raw "/debug /sos" /id 2
+ bootcfg /raw /s srvmain /u maindom\hiropln /p p@ssW23 "/crashdebug " /id 2 
+
+
+bootcfg rmsw
+
+
+
+删除指定操作系统项的操作系统加载项。
+
+
+语法
+
+
+
+bootcfg /rmsw [/s Computer [/u Domain\User /p Password]] [/mm] [/bv] [/so] [/ng]  /id OSEntryLineNum
+
+
+参数
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user.指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/mm
+从指定的 OSEntryLineNum 删除 /maxmem 开关及与其关联的最大内存值。/maxmem 开关指定操作系统可以使用的最大内存数量。
+
+/bv
+从指定的 OSEntryLineNum 删除 /basevideo 开关。/basevideo 开关控制操作系统使用已安装视频驱动器的标准 VGA 模式。
+
+so
+从指定的 OSEntryLineNum 删除 /sos 开关。/sos 开关控制操作系统当加载设备驱动程序名称时显示这些名称。
+
+/ng
+从指定的 OSEntryLineNum 删除 /noguiboot 开关。/noguiboot 开关禁用在 CTRL+ALT+DEL 登录提示之前出现的 Windows XP Professional 进度栏。
+
+/id OSEntryLineNum
+指定在 Boot.ini 文件的 [operating systems] 区段中，将要从其删除 OS 加载项的操作系统项的行号。[operating systems] 标题区域后的首行是 1。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /rmsw 命令：
+
+bootcfg /rmsw /mm 64 /id 2
+ bootcfg /rmsw /so /id 3
+ bootcfg /rmsw /so /ng /s srvmain /u hiropln /id 2
+ bootcfg /rmsw /ng /id 2
+ bootcfg /rmsw /mm 96 /ng /s srvmain /u maindom\hiropln /p p@ssW23 /id 2
+
+
+
+
+bootcfg timeout
+
+
+
+更改操作系统超时值。
+
+
+语法
+
+
+
+bootcfg /timeout TimeOutValue [/s Computer [/u Domain\User /p Password]] 
+
+
+参数
+
+
+
+
+TimeOutValue
+ 指定位于 [boot loader] 区段的超时值。该值表示在 NTLDR 加载默认的操作系统之前可供用户从启动加载程序画面选择操作系统的秒数。如果该值为 0，则 NTLDR 将不显示启动加载程序画面而直接启动默认的操作系统。
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+对于由 user 或 domain\user指定的用户，运行具有其帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下述范例显示了如何使用 bootcfg /timeout 命令：
+
+bootcfg /timeout 30
+ bootcfg /s srvmain /u maindom\hiropln /p p@ssW23 /timeout 50 
+
+XOX
+
+
+

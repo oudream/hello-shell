@@ -1,0 +1,69 @@
+Dos
+
+
+
+指定 MS-DOS 子系统将维护高端内存区 (UMA) 的链接，或者将自身的一部分加载到高端内存区 (HMA)。
+
+
+语法
+
+
+
+dos={high|low}[{,umb|,noumb}]
+
+
+dos={[high,|low,}]{umb|noumb}
+
+
+参数
+
+
+
+	{high|low}
+
+	指定 MS-DOS 子系统是否应该尝试将自己的一部分加载到 HMA。使用 high 允许 MS-DOS 子系统将自身加载到 HMA。使用 low 将整个 MS-DOS 子系统保存在常规内存中。默认的设置为 low。
+
+	{umb|noumb}
+
+	指定 MS-DOS 子系统是否应该维护常规内存和 UMA 之间的链接。Umb 提供此链接。Noumb 则断开此链接。默认的设置为 noumb。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+ 为 Himem.sys 安装 dos=umb 或 dos=high
+	
+ 在指定 dos=umb 或 dos=high 之前必须安装 Himem.sys 设备驱动程序。
+    
+ 使用 umb
+	
+必须指定 dos=umb 将程序和设备驱动程序加载到上端内存区 (UMA)。使用 UMA 可以在常规内存中为程序释放更多的空间。另外，必须安装高位内存块 (UMB) 提供程序。
+    
+	 使用 high 参数
+	
+如果指定 high 参数，MS-DOS 子系统尝试将它本身的一部分加载到高端内存区 (HMA)。将部分 MS-DOS 加载到 HMA 中为程序释放常规内存。
+	
+	 合并参数
+	
+ 如果指定 high 参数，MS-DOS 子系统尝试将它本身的一部分加载到高端内存区 (HMA)。将部分 MS-DOS 加载到 HMA 中。可为程序释放常规内存。
+
+ 在单个 dos 命令行上可以包含多个参数（用逗号分隔）。例如，如下语法有效： 
+
+ dos=umb,low
+ dos=high,umb
+
+ 可以将 dos 命令放在 Config.nt 或等价的启动文件中的任何位置。
+	
+
+
+XOX
+
+
+
+ 

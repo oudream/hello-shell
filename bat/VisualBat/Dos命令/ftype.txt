@@ -1,0 +1,82 @@
+Ftype
+
+
+
+显示或者修改在文件名扩展关联中使用的文件类型。使用不带参数的 ftype 显示带有已定义的打开命令串的文件类型。
+
+
+语法
+
+
+
+Ftype [FileType[=[OpenCommandString]]]
+
+
+参数
+
+
+
+	FileType
+
+	单击要显示或更改的文件类型。
+
+	OpenCommandString
+
+	指定打开此类型的文件时要使用的打开命令。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 在 openCommandString 内，ftpe 将替换下列变量：
+
+ 使用要打开的文件名替换 %0 或 %1。
+
+ 使用所有参数替换 %*。
+
+ 使用所有剩余参数替换 %~n，从第 n 个参数开始替换，此处 n 可以是 2 到 9 中的任意一个数。
+
+ 使用第一个参数替换 %2，用第二个参数替换 %3，依此类推。
+
+
+    
+
+
+
+
+范例
+
+
+ 要显示具有已定义的打开命令字符串的当前文件类型，请键入：
+
+ ftype
+
+ 要显示特定文件类型的当前打开命令字符串，请键入：
+
+ ftype FileType
+
+ 要删除特定文件类型的打开命令字符串，请键入：
+
+ ftype FileType=
+
+ 键入：    ASSOC .pl=PerlScript FTYPE PerlScript=perl.exe %1 %*
+
+ 调用 Perl 角本，请输入：
+
+    script.pl 1 2 3
+
+
+ 要避免键入扩展，请键入：    set PATHEXT=.pl;%PATHEXT%
+
+ 调用 Perl 角本，请输入：    script 1 2 3
+
+XOX
+
+
+
+
+ 

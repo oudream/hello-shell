@@ -1,0 +1,1447 @@
+SC
+
+
+
+与“服务控制器”和已安装设备通讯。SC.exe 检索和设置有关服务的控制信息。可以使用 SC.exe 来测试和调试服务程序。可以设置存储在注册表中的服务属性来控制如何在启动时和作为后台程序运行时启动服务应用程序。SC.exe 的参数可以配置指定的服务，检索当前服务的状态，也可以停止和启动服务。可以生成批处理文件来调用不同的 SC.exe 命令以自动启动或关闭服务序列。SC.exe 提供的功能类似于“控制面板”中“管理工具”项中的“服务”。
+
+
+有关命令的语法，请单击下面任一 sc 命令：
+
+
+sc boot
+
+
+
+表明最近的启动是否应该存储为上次已知的正常配置。
+
+
+语法
+
+
+
+sc [ServerName]  boot [{bad|OK}]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。名称必须采用通用的命名惯例 (UNC) 格式（"\\myserver"）。若要在本机上运行 SC.exe，请忽略此参数。
+
+[{bad|OK}]
+指定最近的启动是否错误或它是否应该存储为上次已知的正常配置。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc boot 命令：
+
+sc boot ok
+ sc boot bad 
+
+
+sc config 
+
+
+
+修改注册表和“服务控制管理器”数据库中的服务项的值。
+
+
+语法
+
+
+
+sc [ServerName] config [ServiceName] [type= {own|share|kernel|filesys|rec|adapt|interact type= {own|share}}] [start= {boot|system|auto|demand|disabled}] [error= {normal|severe|critical|ignore}] [binpath= BinaryPathName] [group= LoadOrderGroup] [tag= {yes|no}] [depend= dependencies] [obj= {AccountName|ObjectName}] [displayname= DisplayName] [password= Password]
+
+
+参数
+
+
+
+
+ServerName
+指定服务所在的远程服务器名称。名称必须采用通用的命名惯例（UNC）格式（"\\myserver"）。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+type= {own|share|kernel|filesys|rec|adapt|interact type= {own|share}}
+指定该服务类型。
+
+
+值
+说明
+
+own
+服务以其自身的进程运行。不与其它服务共享可执行文件。这是默认设置。
+
+
+share
+服务作为共享进程运行。它与其它服务共享一可执行文件。
+
+
+kernel
+驱动程序
+
+
+filesys
+文件系统驱动程序。
+
+
+rec
+文件系统识别驱动器（表示计算机上使用的文件系统）。
+
+
+adapt
+适配器驱动器（表示键盘、鼠标、磁盘驱动器这样的硬件项）。
+
+
+interact
+服务可以与桌面交互作用，接收用户的输入。交互服务必须以在 LocalSystem 帐户下运行。该类型必须与 type= own 或 type= shared（例如， type= interact type= own）结合使用。自身使用 type= interact 将会产生一个无效参数错误。
+
+
+
+start= {boot|system|auto|demand|disabled}
+指定服务的起始类型。
+
+
+值
+说明
+
+boot
+由启动引导程序加载的设备驱动器。
+
+
+system
+在核心初始化过程中启动的设备驱动器。
+
+auto
+每次计算机重新启动时，甚至没有人登录计算机时，都能自动开始的服务。
+
+demand
+必须手动启动的服务。如果没有指定“start=”，这就默认值。
+
+disabled
+不能启动的服务。要启动一个禁用的服务，把启动类型更改为其他值。
+
+
+
+error= {normal|severe|critical|ignore}
+如果在启动中，服务器启动失败，则指定错误的严重性。
+
+
+值
+说明
+
+normal
+将记录错误，并且显示消息对话框，通知用户服务启动失败。启动将会继续这是默认设置。
+
+
+severe
+记录错误（如果存在）。计算机尝试以最新的有效配置重新启动。这可能是由于计算机能够重新启动，但服务器却仍然不能运行。
+
+
+critical
+记录错误（如果存在）。计算机尝试以最新的有效配置重新启动。如果上次已知正常的配置失败，启动也将失败，启动过程就会以“蓝屏”错误而停止。
+
+
+ignore
+错误已记录，启动继续。记录错误超出在事件日志的范围，不再给用户作出提示。
+
+
+
+binpath= BinaryPathName
+指定一个进入服务二进制文件的路径。
+
+group= LoadOrderGroup
+指定一个该服务为其中成员的组名。组列表储存在注册中的 HKLM\System\CurrentControlSet\Control\ServiceGroupOrder 子项中。默认设置为空值。
+
+tag= {yes | no}
+指定是否在“CreateService”调用中获得 TagID。标记仅用于根启动或系统启动驱动程序。
+
+depend= dependencies
+指定必须在此项服务之前启动的服务名或组名。前面斜线 (/) 分离开来的名字。
+
+obj= {AccountName|ObjectName}
+指定一个将运行的服务的账户名，或指定一个将会运行的驱动程序的 Windows 驱动程序对象名。默认设置为 LocalSystem。
+
+displayname= DisplayName
+指定一个可以在用户界面程序用来为用户标识服务的友好的、有意义的名称。例如，一项服务的子项名是对用户没有帮助的 wuauserv，而显示的名称是“自动更新”。
+
+password:password
+指定一个密码。如果使用了一个不是 LocalSystem 的帐户，则此项是必需的。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果参数及其值之间没有空格，（例如，是 type= own, 而不是 type=own），则操作会失败。
+
+
+
+范例
+
+
+下面范例显示了如何使用 sc config 命令：
+
+sc config NewService binpath= "ntsd -d c:\windows\system32\NewServ.exe" 
+
+
+sc continue
+
+
+
+为了继续暂停的服务，要给服务发送一个 CONTINUE 控制请求。
+
+
+语法
+
+
+
+sc [ServerName]  continue [ServiceName]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+ 使用 continue 操作来继续暂停的服务。
+    
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc continue 命令：
+
+sc continue tapisrv 
+
+
+sc control
+
+
+
+发送给服务CONTROL B。
+
+
+语法
+
+
+
+sc [ServerName] control [ServiceName]  [{paramchange|netbindadd|netbindremove|netbindenable|netbinddisable|UserDefinedControlB}]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+{paramchange|netbindadd|netbindremove|netbindenable|netbinddisable|UserDefinedControlB}
+指定要发送到服务的控制。
+
+/?在命令提示符显示帮助。
+
+
+
+
+
+
+sc create
+
+
+
+为服务在注册表和“服务控制管理器”中创建子项和入口。
+
+
+语法
+
+
+
+sc [ServerName] create [ServiceName] [type= {own|share|kernel|filesys|rec|adapt|interact type= {own|share}}] [start= {boot|system|auto|demand|disabled}] [error= {normal|severe|critical|ignore}] [binpath= BinaryPathName] [group= LoadOrderGroup] [tag= {yes|no}] [depend= dependencies] [obj= {AccountName|ObjectName}] [displayname= DisplayName] [password= Password]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+type= {own|share|kernel|filesys|rec|adapt|interact type= {own|share}}
+指定该服务类型。默认类型为 type= own。
+
+值
+说明
+
+own
+服务以其自身的进程运行。不与其它服务共享可执行文件。这是默认设置。
+
+
+share
+服务作为共享进程运行。它与其它服务共享一可执行文件。
+
+
+kernel
+驱动程序
+
+
+filesys
+文件系统驱动程序。
+
+
+rec
+文件系统识别驱动器（表明在计算机上使用的文件系统）。
+
+
+interact
+服务可以与桌面交互作用，接收用户的输入。交互服务必须以在 LocalSystem 帐户下运行。该类型必须与 type= own 或 type= shared（例如， type= interact type= own）结合使用。自身使用 type= interact 将会产生一个无效参数错误。
+
+
+
+start= {boot|system|auto|demand|disabled}
+指定服务的起始类型。默认的起始类型是 start= demand。
+
+boot
+由启动引导程序加载的设备驱动器。
+
+
+system
+在核心初始化过程中启动的设备驱动器。
+
+auto
+每次计算机重新启动时，甚至没有人登录计算机时，都能自动开始的服务。
+
+demand
+必须手动启动的服务。如果没有指定“start=”，这就默认值。
+
+disabled
+不能启动的服务。要启动一个禁用的服务，把启动类型更改为其他值。
+
+
+
+error= {normal|severe|critical|ignore}
+如果在启动中，服务器启动失败，则指定错误的严重性。默认设置为 ascii。
+
+normal
+将记录错误，并且显示消息对话框，通知用户服务启动失败。启动将会继续这是默认设置。
+
+
+severe
+记录错误（如果存在）。计算机尝试以最新的有效配置重新启动。这可能是由于计算机能够重新启动，但服务器却仍然不能运行。
+
+
+critical
+记录错误（如果存在）。计算机尝试以最新的有效配置重新启动。如果上次已知正常的配置失败，启动也将失败，启动过程就会以“蓝屏”错误而停止。
+
+
+ignore
+错误已记录，启动继续。记录错误超出在事件日志的范围，不再给用户作出提示。
+
+
+
+binpath= BinaryPathName
+指定一个进入服务二进制文件的路径。binpath= 没有默认值，必须要给出此字符串。
+
+group= LoadOrderGroup
+指定一个该服务为其中成员的组名。组列表储存在注册中的 HKLM\System\CurrentControlSet\Control\ServiceGroupOrder 子项中。默认设置为空值。
+
+/hidden:{yes | no}
+指定是否在“CreateService”调用中获得 TagID。标记仅用于根启动或系统启动驱动程序。
+
+depend= dependencies
+指定必须要在此项服务之前启动的服务名或组名。前面斜线 (/) 分离开来的名字。
+
+obj= {AccountName|ObjectName}
+指定一个将运行的服务的账户名，或指定一个将会运行的驱动程序的 Windows 驱动程序对象名。
+
+displayname= DisplayName
+指定被用户界面程序用来标识服务的友好名称。
+
+password:password
+指定一个密码。如果使用的不是 LocalSystem 的帐户，密码是必需的。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果参数及其值之间没有空格，（例如，是 type= own, 而不是 type=own），则操作会失败。
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc create 命令：
+
+sc \\myserver create NewService binpath= c:\windows\system32\NewServ.exe
+ sc create NewService binpath= c:\windows\system32\NewServ.exe type= share start= auto depend= "+TDI Netbios" 
+
+sc delete
+
+
+
+从注册表中删除服务子项。如果服务正在运行或者另一个进程有一个该服务的打开句柄，那么为了删除而标记该服务。
+
+
+语法
+
+
+
+sc [ServerName] delete [ServiceName]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	使用“添加或删除程序”删除 DHCP、DNS 或任何其它内置的操作系统服务。“添加或删除程序”不只删除该服务的注册表子项，而且还卸除该服务并删除其所有的快捷方式。
+	
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc delete 命令：
+
+sc delete newserv 
+
+sc description
+
+
+
+设置服务的描述字符串。
+
+
+语法
+
+
+
+sc [ServerName] description [ServiceName]  [Description]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+说明
+为指定服务指定描述。如果没有指定字符串，则不会修改该服务的描述。对包含在服务描述中的字符数量没有限制。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc description 命令：
+
+sc description newserv "Runs quality of service control." 
+
+
+sc enumdepend
+
+
+
+列出只有运行了指定服务才能够运行的服务。
+
+
+语法
+
+
+
+sc [ServerName] enumdepend [ServiceName] [BufferSize]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+BufferSize
+以字节为单位指定枚举缓存区的大小。默认值为 1024 字节。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+	如果缓冲区不够大，enumdepend 操作只会部分输出依存服务，并指定输出所有依存服务所需的额外缓冲区大小。如果输出被截断，重新运行该操作并指定更大的缓冲区大小。
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc enumdepend 命令：
+
+sc enumdepend rpcss 5690
+ sc enumdepend tapisrv 
+
+sc failure
+
+
+
+指定服务失败时要采取的操作。
+
+
+语法
+
+
+
+sc [ServerName] failure [ServiceName] [reset= ErrorFreePeriod] [reboot= BroadcastMessage] [command= CommandLine] [actions= FailureActionsAndDelayTime]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+reset= ErrorFreePeriod
+指定没有失败的周期长度（单位为秒），此后失败计算器的应该重置为 0。这个参数必须与 actions= 参数结合使用。
+
+reboot= BroadcastMessage
+指定服务失败时要广播的消息。
+
+command= CommandLine
+指定服务失败时要运行的命令行。有关在失败时如何运行批处理或 VBS 文件的信息，请参阅“注释”。
+
+actions= FailureActionsAndDelayTime
+指定失败操作及其延迟时间（单位为毫秒），以正斜杠 (/) 隔开。下列操作有效：run、restart 和 reboot。此参数必须与 reset= 参数结合使用。在失败时不采取操作请使用 actions= ""。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+	不是所有的服务都允许更改其失败选项。其中一些作为服务集的一部分运行。
+	要在失败时运行批处理文件，请指定 cmd.exe Drive:\FileName.bat 为 command= 的参数，其中 Drive:\FileName.bat 是批处理文件的完整的合格名称。	
+	要在失败时运行 VBS 文件，请指定 cscript drive:\myscript.vbs 为 command= 的参数，其中 drive:\myscript.vbs 是脚本文件的完整的合格名称。
+	可以将三种不同的操作指定为 actions= 的参数，它们将会在服务的第一次、第二次、第三次失败时使用。
+如果参数及其值之间没有空格，（例如，是 type= own，而不是 type=own），则操作会失败。
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc failure 命令：
+
+sc failure msftpsvc reset= 30 actions= restart/5000
+ sc failure dfs reset= 60 command= c:\windows\services\restart_dfs.exe actions= run/5000
+ sc failure dfs reset= 60 actions= reboot/30000
+ sc failure dfs reset= 60 reboot= "The Distributed File System service has failed. Because of this, the computer will reboot in 30 seconds."  actions= reboot/30000
+ sc failure myservice reset= 3600 reboot= "MyService crashed -- rebooting machine" command= "%windir%\MyServiceRecovery.exe" actions= restart/5000/run/10000/reboot/60000 
+
+sc getdisplayname
+
+
+
+获得与特定服务关联的显示名称。
+
+
+语法
+
+
+
+sc [ServerName] getdisplayname [ServiceName] [BufferSize]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+BufferSize
+指定缓冲区大小（以字节为单位）。默认值为 1024 字节。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc getdisplayname 命令：
+
+sc getdisplayname clipsrv
+ sc getdisplayname tapisrv
+ sc getdisplayname sharedaccess 
+
+sc getkeyname
+
+
+
+使用特定服务的显示名称作为输入会获得与其相关联的键名。
+
+
+语法
+
+
+
+sc [ServerName] getkeyname [ServiceDisplayName]  [BufferSize]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceDisplayName
+指定服务的显示名称。
+
+BufferSize
+指定缓冲区大小（以字节为单位）。默认值为 1024 字节。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果 ServiceDisplayName 包含空格，请使用引号将文本引起来（例如，"Service Display Name"）。
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc getkeyname 命令：
+
+sc getkeyname "remote procedure call (rpc)"
+ sc getkeyname "internet connection sharing"
+ sc getkeyname clipbook 
+
+sc interrogate
+
+
+
+向服务发送一个 INTERROGATE 控制请求。
+
+
+语法
+
+
+
+sc [ServerName] interrogate [ServiceName]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+使用“服务控制管理器”向服务发送 INTERROGATE 会导致该服务使用“服务控制管理器”更新其状态。
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc interrogate 命令：
+
+sc interrogate sharedaccess
+ sc interrogate rpcss 
+
+sc lock
+
+
+
+锁定“服务控制管理器”的数据库。
+
+
+语法
+
+
+
+sc [ServerName] lock
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+锁定“服务控制管理器”的数据库会阻止启动任何服务。
+如果要确保服务在停止之后不会启动，请使用这个命令。这允许您不受干扰的进行一些操作（例如，删除服务）。
+使用 lock 操作锁定“服务控制管理器”的数据库，然后通过键入 u 来使数据库解锁。也可以从锁定数据库的进程中关闭该进程。
+
+
+
+范例
+
+
+下面的范例显示了如何使用sc lock 命令：
+
+sc lock 
+
+sc pause
+
+
+
+发送 PAUSE 控制请求到服务。
+
+
+语法
+
+
+
+sc [ServerName] pause [ServiceName]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+在终止服务之前使用 pause 操作来暂停它。
+不是所有的服务都能够被暂停。
+在暂停时不是所有的服务都执行同样的操作。一些服务继续为已有的客户端服务，但不会接受新的客户端。其他的会终止对已有客户端的服务，而且也不会接受新的客户端。	
+
+
+
+范例
+
+
+下面的范例显示了如何使用sc pause 命令：
+
+sc pause tapisrv 
+
+sc qc
+
+
+
+查询服务的配置信息。
+
+
+语法
+
+
+
+sc [ServerName] qc [ServiceName] [BufferSize]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+BufferSize
+指定缓冲区大小（以字节为单位）。默认值为 1024 字节。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+ qc 操作显示有关服务的下列信息：SERVICE_NAME（服务在注册表中的子键名）、TYPE、ERROR_CONTROL、BINARY_PATH_NAME、LOAD_ORDER_GROUP、TA、DISPLAY_NAME、DEPENDENCIES 和 SERVICE_START_NAME。
+
+
+管理员可以使用 SC 来确定任一服务的二进制名称，并查明它是否与其它服务共享一个进程，在命令行键入下列命令：
+
+
+sc qc ServiceName
+
+
+SC 有助于将 Microsoft 管理控制台 (MMC) 中的服务与“系统监视器”中的进程匹配起来。如果二进制名称是 Services.exe，那么服务共享“服务控制器”进程。
+
+
+Services.exe 启动所有的服务。为保存系统资源，几个为 Windows 开发的 Win32 服务被编写为共享 Services.exe 进程。这些服务不作为独立的进程列在“系统监视器”或“任务管理器”之中。Svchost.exe 也是如此，它是很多操作服务共享的服务主进程。
+
+
+因为第三方 Win32 服务也可以配置为共享进程，所以不可能为每一个 Win32 服务创建一个进程。SC 可以用来获得这些服务的配置信息。但是，如果一项服务不与其他服务共享其进程，那么在服务运行时，“系统监视器”中会出现其进程。
+
+
+
+因为 SC 与包含在 Windows 中的 Services.exe 相比，提供了更为详细和准确的、关于服务的信息，所以对于服务开发员来说 SC 更有用处。Services.exe 可以确定服务是在运行、停止还是正在暂停。尽管这些工具对于正在平稳运行的已调试程序已经足够，但是它们提供的关于正在开发的服务的信息却会使人误解。例如，一项正在启动的服务不管其实际运行与否都显示为已启动。
+
+
+SC 执行对所有 Windows 服务控制应用编程接口 (API) 函数的调用。通过在命令行指定这些函数来将其设置为参数。
+
+
+使用 SC，可以查询服务状态，检索存储在状态结构域中的值。Services.exe 不能提供服务的完整状态，但 SC 显示了精确的服务状态，以及最新的检查点号码和等待提示。可以将检查点用作调试工具，原因在于它表明了在程序停止响应之前初始化进行了多远。SC 也可以用来指定远程计算机名，以便于在远程计算机上调用服务 API 函数或查看服务状态结构。
+
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc qc 命令：
+
+sc qc \\myserver newsrvice
+ sc qc rpcss 248 
+
+sc qdescription
+
+
+
+显示服务的描述字符串。
+
+
+语法
+
+
+
+sc [ServerName] qdescription [ServiceName] [BufferSize]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+BufferSize
+指定缓冲区大小（以字节为单位）。默认值为 1024 字节。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc qdescription 命令：
+
+sc qdescription rpcss
+ sc qdescription rpcss 138 
+
+sc qfailure
+
+
+
+显示指定服务失败时要执行的操作。
+
+
+语法
+
+
+
+sc [ServerName] qfailure [ServiceName] [BufferSize]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+BufferSize
+指定缓冲区大小（以字节为单位）。默认值为 1024 字节。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+ qfailure 操作显示了下面有关服务的信息：SERVICE_NAME（服务在注册表中的子键名）、RESET_PERIOD、REBOOT_MESSAGE、COMMAND_LINE 和 FAILURE_ACTIONS。
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc qfailure 命令：
+
+sc qfailure rpcss
+ sc qfailure rpcss 20 
+
+sc query
+
+
+
+获得和显示关于指定的服务、驱动器、服务类型或驱动器类型的信息。
+
+
+语法
+
+
+
+sc [ServerName] query [ServiceName] [type= {driver|service|all}] [type= {own|share|interact|kernel|filesys|rec|adapt}] [state= {active|inactive|all}] [bufsize= BufferSize] [ri= ResumeIndex] [group= GroupName]
+
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。此 query 参数不与其他的 query 参数结合使用（除了 ServerName）。
+
+type= {driver|service|all}
+指定需要列出的内容。默认类型为 service。
+
+
+值
+说明
+
+
+driver
+仅指定需要枚举的驱动程序。
+
+
+service
+仅指定需要枚举的服务。
+
+
+all
+指定需要枚举的驱动程序和服务器。
+
+
+
+type= {own|share|interact|kernel|filesys|rec|adapt}
+指定需要枚举的服务类型或驱动程序。
+
+
+值
+说明
+
+
+own
+服务以其自身的进程运行。不与其它服务共享可执行文件。这是默认设置。
+
+
+share
+服务作为共享进程运行。它与其它服务共享一可执行文件。
+
+
+interact
+服务可以与桌面交互作用，接收用户的输入。交互服务必须以在 LocalSystem 帐户下运行。
+
+
+kernel
+驱动程序
+
+
+filesys
+文件系统驱动程序。
+
+
+
+state= {active|inactive|all}
+指定用来枚举的服务的已开始状态。默认状态是active。
+
+值
+说明
+
+
+active
+指定所有的激活服务。
+
+
+inactive
+指定所有暂停或停止的服务。
+
+all
+指定所有服务。
+
+
+
+bufsize= BufferSize
+以字节为单位指定枚举缓存区的大小。默认大小为 1024 字节。当从查询返回的显示结果超过 1024 个字节时，增加枚举缓冲区的大小。
+
+ri= ResumeIndex
+指定开始或继续枚举的索引数。默认值为 0。在查询返回的信息超过默认缓冲区能够显示的大小时，请与 bufsize= 参数结合使用这个参数。
+
+group= GroupName
+指定枚举的服务组。默认设置为所有组。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果参数及其值之间没有空格，（例如，是 type= own，而不是 type=own），则操作会失败。
+query 操作显示了以下关于服务的信息：SERVICE_NAME （服务在注册表中的子键名）、TYPE、STATE（也是不可用的状态）、WIN32_EXIT_B、SERVICE_EXIT_B、CHECKPOINT 和 WAIT_HINT。
+在某些情况下，“type=”参数可以使用两次。“type=”参数的第一次出现指定是否查询服务、驱动器或所有这些。“type=”参数的第二次出现指定一个由“create”操作来进一步缩小查询范围的类型。
+当 query 命令的显示结果超过了枚举缓冲区的大小时，显示类似于以下的消息：
+
+Enum:数据超出，在索引 79 处重新启动需要 1822 字节
+
+要显示剩余的 query 信息，重新运行 query，设置 bufsize= 为字节数，设置 ri= 为指定的索引。例如，在命令行键入下列指令会显示剩余的输出：
+
+sc query bufsize= 1822 ri= 79
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc query 命令：
+
+sc query
+ sc query messenger
+ sc query type= driver
+ sc query type= service
+ sc query state= all
+ sc query bufsize= 50
+ sc query ri= 14
+ sc query type= service type= interact
+ sc query type= driver group= ndis 
+
+sc queryex
+
+
+
+获得和显示关于服务、驱动器、服务类型或驱动器类型的扩展信息。
+
+
+语法
+
+
+
+sc [ServerName] queryex [type= {driver|service|all}] [type= {own|share|interact|kernel|filesys|rec|adapt}] [state= {active|inactive|all}] [bufsize= BufferSize] [ri= ResumeIndex] [group= GroupName]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。此 queryex 参数不与 ServerName 之外的任何其它 queryex 参数结合使用。
+
+type= {driver|service|all}
+指定需要列出的内容。默认类型为 service。
+
+
+值
+说明
+
+driver
+仅指定需要枚举的驱动程序.
+
+
+service
+仅指定需要枚举的服务。
+
+
+all
+指定需要枚举的驱动程序和服务器。
+
+
+
+type= {own|share|interact|kernel|filesys|rec|adapt}
+指定需要枚举的服务类型或驱动程序。
+
+值
+说明
+
+
+own
+服务以其自身的进程运行。不与其它服务共享可执行文件。这是默认设置。
+
+
+share
+服务作为共享进程运行。它与其它服务共享一可执行文件。
+
+
+interact
+服务可以与桌面交互作用，接收用户的输入。交互服务必须以在 LocalSystem 帐户下运行。
+
+
+kernel
+驱动程序
+
+
+filesys
+文件系统驱动程序。
+
+
+
+state= {active|inactive|all}
+指定用来枚举的服务的已开始状态。默认状态是 active。
+
+值
+说明
+
+
+active
+指定所有的激活服务。
+
+
+inactive
+指定所有暂停或停止的服务。
+
+all
+指定所有服务。
+
+
+
+bufsize= BufferSize
+以字节为单位指定枚举缓存区的大小。默认大小为 1024 字节。
+
+ri= ResumeIndex
+指定开始或继续枚举的索引数。默认值为 0。
+
+group= GroupName
+指定枚举的服务组。默认设置为所有组。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+如果参数及其值之间没有空格，（例如，是 type= own，而不是 type=own），则操作会失败。
+queryex 操作显示以下有关服务的信息：SERVICE_NAME（服务在注册表中的子键名）、TYPE、STATE（也是不可用的状态）、WIN32_EXIT_B、SERVICE_EXIT_B、CHECKPOINT、WAIT_HINT、PID 和 FLAGS。
+在某些情况下，“type=”参数可以使用两次。“type=”参数的第一次出现指定是否查询服务、驱动器或所有这些。“type=”参数的第二次出现指定一个由“create”操作进一步缩小查询范围的类型。
+在 queryex 命令的显示结果超过了枚举缓冲区大小时，显示类似于以下的消息：
+
+Enum:数据超出，在索引 75 处重新启动需要 2130 个字节
+
+要显示 queryex 的剩余信息，重新运行 queryex，设置 bufsize= 为字节数， ri= 为指定索引。例如，在命令行键入下面的指令会显示剩余的输出：
+
+sc queryex bufsize= 2130 ri= 75
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc queryex 命令：
+
+sc queryex messenger
+ sc queryex group= "" 
+
+sc querylock
+
+
+
+查询和显示“服务控制管理器”数据库的锁定信息。
+
+
+语法
+
+
+
+sc [ServerName] querylock
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+/?在命令提示符显示帮助。
+ 
+
+sc sdset
+
+
+
+使用“服务描述符定义语言” (SDDL) 来设置服务的安全描述符。
+
+
+语法
+
+
+
+sc [ServerName] sdset ServiceName ServiceSecurityDescriptor
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+ServiceSecurityDescriptor
+在 SDDL 中指定服务描述符。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+有关 SDDL 的信息，请参阅 MSDN 联机知识库中的“安全描述符定义语言”。(http://www.microsoft.com/)
+ 
+
+sc sdshow
+
+
+
+使用 SDDL 显示服务的安全描述符。
+
+
+语法
+
+
+
+sc [ServerName] sdshow ServiceName
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+有关 SDDL 的信息，请参阅 MSDN 联机知识库 中的“安全描述符定义语言”。(http://www.microsoft.com/)
+
+
+
+
+范例
+
+
+sc sdshow rpcss 
+
+sc start
+
+
+
+启动正在运行的服务。
+
+
+语法
+
+
+
+sc [ServerName] start ServiceName [ServiceArguments]
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+ServiceArguments
+指定传递给要启动的服务的服务参数。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc start 命令：
+
+sc start tapisrv 
+
+sc stop
+
+
+
+向服务发送 STOP 控制请求。
+
+
+语法
+
+
+
+sc  [ServerName] stop ServiceName
+
+
+参数
+
+
+
+ServerName
+指定服务所在的远程服务器名称。该名称必须使用 UNC 格式 ("\\myserver")。若要在本机上运行 SC.exe，请忽略此参数。
+
+ServiceName
+指定由 getkeyname 操作返回的服务名。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+不是所有的服务都可以被停止。
+
+
+
+范例
+
+
+下面的范例显示了如何使用 sc stop 命令：
+
+sc stop tapisrv 
+
+
+注释
+
+
+
+

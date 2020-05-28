@@ -1,0 +1,92 @@
+Label
+
+
+
+创建、修改或删除磁盘的卷标（名称）。使用不带参数的 lable 更改当前卷标或删除现有卷标。
+
+
+语法
+
+
+
+label [drive:][label]
+
+
+label [/MP][volume][label]
+
+
+参数
+
+
+
+drive:
+
+指定要命名的磁盘的驱动器号（冒号分隔）。
+
+label
+
+指定卷名称。
+
+/MP
+
+指定应作为装入点或卷名的卷。
+
+__
+
+指定驱动器号（冒号分隔）、装入点或卷名。如果指定了卷名，则不需要 /MP 参数。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+Windows 将卷标显示为目录列表的一部分。如果存在卷序列号，Windows 也会显示此号码。
+对命令消息贴上标签
+
+如果在使用 lable 命令时不指定标签，lable 将按如下格式显示信息： 
+
+ Volume in drive A is xxxxxxxxxxx 
+ Volume Serial Number is xxxx-xxxx 
+ Volume label (11 characters, ENTER for none)?
+ 
+
+如果磁盘没有序列号，消息的“卷序列号”部分将不显示。
+
+可以键入需要的卷标，或者按 ENTER 键删除当前卷标。如果磁盘有卷标，而您没有进行任何输入就按了 ENTER 键，lable 将提示下列消息： 
+
+Delete current volume label (Y/N)?
+
+Press Y to delete the label; press N to keep the label.
+
+卷标名的限制
+
+对于 NTFS 卷来说，其卷标可以最多包含 32 个字符，对于 FAT 卷来说，其卷标最多可以包含 11 个字符，卷标中可以包含空格，但是不能包括制表符。
+
+FAT 卷标不能包含下列字符：
+
+* ? / \ | . , ; : + =   [ ] < > "
+
+该限制并不应用于 NTFS 卷。
+
+对于 FAT 卷，不论卷标是否含有小写字母都将以大写字母存储。NTFS 卷标将保留并显示创建卷标时使用的大小写。
+
+
+
+
+范例
+
+
+
+要为包含 7 月份销售信息的驱动器 A 创建卷标，请键入：
+
+label a:sales-july
+
+XOX
+
+
+

@@ -1,0 +1,55 @@
+Title
+
+
+
+为命令提示符窗口创建标题。
+
+
+语法
+
+
+
+title [string]
+
+
+参数
+
+
+
+	string
+
+	指定命令提示符窗口的标题。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 要对批处理程序使用窗口标题，请在批处理程序的开头包含 title 命令。
+    
+ 设置后，窗口标题只能使用 title 命令重设。
+    
+    
+
+
+
+范例
+
+
+
+ 要设置批处理程序的窗口标题，请键入： rem This batch program updates the employee data:
+cls
+@echo off
+title Updating Files
+copy \\server\share\*.xls c:\users\common\*.xls
+echo Files Updated.
+title Command Prompt
+
+XOX
+
+
+
+

@@ -1,0 +1,137 @@
+Chdir (Cd)
+
+
+
+显示当前目录的名称，或更改当前的文件夹。使用时仅带一个驱动器号（例如，chdir C:），则 chdir 显示当前驱动器名称和文件夹。在不含参数的情况下使用，chdir 显示当前驱动器和目录。
+
+
+语法
+
+
+
+chdir [[/d] [Drive:][Path] [..]] [[/d] [Drive:][Path] [..]]
+
+
+cd [[/d] [Drive:][Path] [..]] [[/d] [Drive:][Path] [..]]
+
+
+参数
+
+
+
+	/d
+
+	更改当前驱动器或驱动器的当前目录。
+
+	[drive:][Path]
+
+	指定要改为的驱动器（如果不是当前驱动器）和目录。
+
+	[..]
+
+	指明要改到父文件夹。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+	使用命令扩展
+	
+如果启用命令扩展（即默认情况下），则当前目录路径会使用相同的大写或小写文件夹名称格式与文件夹名精确匹配，就像它们在硬盘上显示的一样。例如，如果硬盘上的文件夹名为 C:\Temp，则 CD C:\TEMP 会将当前目录设置为 C:\Temp，与硬盘上该文件夹的文件夹名称格式相匹配。
+
+ 要禁用某个特殊过程的命令扩展，请键入：
+
+ cmd e:off
+
+当禁用命令扩展时，chdir 不会将空格作为分隔符处理。这样，不用将 [Path] 放在引号中，就可以更改到含有空格的子目录名。比如，下述路径可更改到 \Start menu 子目录：
+
+ cd \winnt\profiles\username\programs\start menu
+
+有关启用和禁用命令扩展的详细信息，请参阅“”中的 cmd。
+	
+	 更改到根目录
+	
+根目录是驱动器的目录树状结构的顶层。要返回到根目录，请键入： 
+
+ cd\
+	
+ 从其他驱动器更改某个驱动器上的默认目录
+	
+要从您所在的驱动器上更改某个驱动器上的默认目录，请键入下述命令之一：
+	
+chdir [Drive:\[directory]]
+	
+cd [Drive:\[directory]]
+	
+要验证对该目录所作的更改，请键入下述命令之一：
+	
+chdir [Drive:]
+	
+cd [Drive:]
+	
+ 在故障恢复控制台提供了带有不同参数的 chdir 命令。
+    
+
+
+
+范例
+
+
+
+ 如果使用时含有驱动器号，则 chdir 将显示该驱动器的当前目录。例如，当在 C:\Temp 目录提示下键入 cd c:，会显示下述信息：
+
+ C:\Temp
+
+ 要将当前目录更改到名为 Reports 的目录，则可键入下述命令之一： 
+
+ chdir \reports
+
+ cd \reports 
+
+ 要将当前目录更改到 \Specials\Sponsors 子目录，则可键入： 
+
+ cd \specials\sponsors
+
+ 或者，如果您的当前目录是 \Specials，可以键入下面的命令来更改到 \Specials\Sponsors 子目录： 
+
+ cd sponsor
+
+ 要从某个子目录更改到它的父目录，请键入： 
+
+ cd ..
+
+ 要显示当前目录的名称，可以使用不带参数的 chdir 或 cd 命令。例如，如果当前目录为 B 驱动器上的 \Public\Jones，则键入 chdir 会有如下显示： 
+
+ B:\Public\Jones 
+
+ 要在 D 驱动器上工作，并希望将 C 盘中 \Public\Jones 和 \Public\Lewis 目录下的所有文件复制到 D 盘的根目录下，请输入： 
+
+ chdir c:\public\jones 
+
+ copy c:*.* d:\ 
+
+ chdir c:\public\lewis 
+
+ copy c:*.* d:\ 
+
+ 如果要将 \Public\Jones and \Public\Lewis 目录下的所有文件复制到驱动器 D 上的当前位置时，请键入： 
+
+ chdir c:\public\jones 
+
+ copy c:*.* d: 
+
+ chdir c:\public\lewis 
+
+ copy c:*.* d: 
+
+XOX
+
+
+
+
+
+ 

@@ -1,0 +1,551 @@
+Msiexec
+
+
+
+提供从命令行对 Windows Installer 进行安装、修改和执行操作的方法。
+
+
+安装或配置产品
+	
+
+语法
+
+
+msiexec /i {package|ProductCode}
+
+参数
+
+
+/i
+安装或配置产品。
+package
+指定 Windows 安装程序包文件的名称。
+  ProductCode 
+指定 Windows 安装程序包的全球单一标识符 (GUID)。
+
+
+
+注释
+
+
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+要从 A:\Example.msi 安装某一产品，请键入：
+
+msiexec /I A:\Example.msi
+
+
+
+
+使用管理安装选项
+	
+
+语法
+
+
+msiexec /a package
+
+参数
+
+
+/a
+应用管理安装选项。
+package
+Windows 安装程序包文件的名称。
+
+
+
+注释
+
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+
+
+
+修复产品
+	
+
+语法
+
+
+msiexec /f [p][o][e][d][c][a][u][m][s][v]{package|ProductCode}
+
+参数
+
+
+/f
+  启用下表中的一个或多个命令行选项。
+
+
+命令
+说明
+
+
+p
+只有文件丢失时才重新安装。
+
+
+o
+如果文件丢失或安装了旧版本，则重新安装。
+
+
+e
+如果文件丢失或安装了相同或更旧的版本，则重新安装。
+
+
+d
+如果文件丢失或安装了不同的版本，则重新安装。
+
+
+c
+如果文件丢失或存储的校验和不符合计算值，则重新安装。
+
+
+a
+强制重新安装所有文件。
+
+
+u
+重新写入全部所需的特定用户注册表项。
+
+
+m
+重新写入全部所需的特定计算机注册表项目。
+
+
+s
+覆盖所有现有的快捷方式。
+
+
+v
+从资源运行或重新缓存本地程序包。
+
+  
+  
+package   
+ Windows 安装程序包文件名称。
+  ProductCode
+Windows 安装程序包的全球单一标识 (GUID)。
+
+
+
+注释
+
+
+  该选项将忽略从命令行键入的任何属性值。
+该命令行选项的默认参数是“/fpecms”。 
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+要修复安装程序包，请键入：
+
+msiexec /fpecms example.msi
+
+
+
+卸载产品
+
+
+语法
+
+
+msiexec /x {package|ProductCode}
+
+参数
+
+
+/x 
+卸载产品。
+package
+ Windows 安装程序包的名称。
+  ProductCode
+Windows 安装程序包的全球单一标识 (GUID)。
+
+
+
+注释
+
+
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+要删除或卸载程序包，请键入：
+
+msiexec /x Example.msi
+
+
+
+
+公布产品
+	
+
+语法
+
+
+msiexec /j [{u|m}] package
+
+msiexec {u|m} package /t TransformList 
+
+msiexec {u|m} package /g LanguageID
+
+参数
+
+
+/j
+公布产品。
+u
+向当前用户公布。
+m
+向计算机的所有用户公布。
+pakage   
+ 指定 Windows 安装程序包文件。
+/g LanguageID
+标识语言。
+/t TransformList
+应用变换到公布的程序包。
+
+
+
+注释
+
+
+该选项将忽略通过命令行键入的任何属性值。
+如果要用高级特权安装应用程序，请使用“/jm”选项。
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+要将程序包公布给计算机的所有用户，请键入：
+
+msiexec /jm Example.msi
+
+要将程序包公布给计算机的所有用户，请键入：
+
+msiexec /jm Example.msi
+
+
+
+设置登录级别
+	
+
+语法
+
+
+msiexec /L [i][w][e][a][r][u][c][m][p][v][+][!]LogFile.txt
+
+参数
+
+
+/L
+指定日志文件的路径。
+i
+  记录状态消息。
+w
+  记录非严重警告。 
+e
+  记录所有错误消息。 
+a
+  记录启动操作。 
+r
+  记录特定的操作纪录。 
+u
+  记录用户请求。 
+c
+  记录初始用户界面参数。 
+m
+记录内存不足。 
+p
+  记录终端属性。 
+v
+  记录详细输出。要使用“v”选项，请指定“/L*v”。 
+  +
+  添加到现有文件。 
+  !
+刷新日志的每一行 
+  *
+  记录除“v”选项外的所有信息。这是通配符。 
+  LogFile.txt
+  文本日志文件的名称和路径。
+  
+  
+
+注释
+
+  
+Windows 安装程序命令行选项不区分大小写。
+要在使用通配符标志的日志文件中包括“v”选项，请在命令提示符后键入“/L*v”。
+Windows 安装日志文件选项也可以与卸载和修复过程一起使用。	
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+要安装程序包并创建包含状态、内存不足和错误消息等相关信息的日志文件，请使用下面的命令：
+
+msiexec /i Example.msi /Lime logfile.txt
+
+
+
+应用修补程序
+	
+
+语法
+
+
+msiexec /p PatchPackage
+
+参数
+
+
+/p 
+应用修补程序。
+PatchPackage 
+  特定修补程序。
+  
+  
+
+注释
+
+
+要将修补程序应用到管理安装程序包，请使用下面的语法：  
+
+msiexec /p PatchPackage /a Example.msi
+
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+
+
+
+使用命令行安装变换
+	
+
+语法
+
+
+msiexec /i packageTRANSFORMS=TransformList
+
+参数
+
+
+/i
+安装或配置产品。
+pakage
+指定 Windows 安装程序包文件。
+TRANSFORMS=
+用于指定哪些变换 (.mst) 文件应该应用到程序包的属性。
+TransformList
+由分号分隔的路径列表。
+
+
+
+注释
+
+
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+
+
+
+使用命令行通过变换安装并公布产品
+
+
+语法
+
+
+msiexec /i package /j[u][m] /t TransformList
+
+
+参数
+
+
+	/i
+	安装或配置产品。
+	pakeage
+	Windows 安装程序包文件的名称。
+/j 
+公布产品。该选项忽略所有在命令行输入的属性值。
+u
+向当前用户公布。
+m
+向计算机的所有用户公布。
+/t
+将变换应用到已公布的程序包。
+TransformList
+由分号分隔的路径列表。
+
+
+
+注释
+
+
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+
+
+
+设置用户界面级别
+	
+
+语法
+
+
+msiexec /q{n|b|r|f|n+|b+|b-}
+
+参数
+
+
+  /qn 
+  不显示用户界面。 
+  /qb 
+  显示基本用户界面。 
+  /qr 
+在安装结束时显示带模式对话框的简化用户界面。 
+  /qf 
+结束时显示带模式对话框的完整用户界面。 
+  /qn+ 
+除了结束时显示模式对话框之外不显示用户界面。 
+  /qb+ 
+结束时显示带模式对话框的基本用户界面。 
+  /qb- 
+显示不带模式对话框的基本用户界面。
+  
+  
+
+注释
+
+
+“/qb+-”不是受支持的用户界面级别。如果用户取消安装，则不显示模式对话框。
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+要在安装程序包 Example.msi 期间显示基本用户界面选项，请键入：  
+
+msiexec /qb Example.msi
+
+
+
+显示 Windows 安装程序的版权信息
+	
+
+语法
+
+
+msiexec {/?|/h}
+
+参数
+
+
+	{/?|/h]
+	显示 Windows 安装程序版本和版权信息。
+	
+	
+注释
+
+
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+
+
+
+调用系统 API DllRegisterServer 在命令行自注册模块。
+	
+
+语法
+
+
+msiexec /y module
+
+参数
+
+
+/y 
+调用系统 API DllRegisterServer 在命令行自注册模块。 
+module 
+指定模块的文件名。
+
+
+
+注释
+
+
+该选项只用于不能使用 .msi 文件注册表添加的注册信息。
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序命令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+下例说明了如何使用“msiexec /y”命令：
+
+msiexec /y my_file.dll
+
+
+
+调用系统 API DllUnRegisterServer 在命令行取消注册的模块。
+
+
+语法
+
+
+msiexec /z module
+
+参数
+
+
+/z 
+调用系统 API DllUnRegisterServer 在命令行取消注册的模块。 
+module 
+模块文件名。
+
+
+
+注释
+
+
+该选项只用于不能使用 .msi 文件注册表添加的注册信息。
+Windows 安装程序命令行选项不区分大小写。
+有关 Windows 安装程序令行选项的详细信息，请参阅“”。
+
+
+范例
+
+
+下例说明了如何使用“msiexec /z”命令：
+
+msiexec /z my_file.dll
+
+XOX
+
+

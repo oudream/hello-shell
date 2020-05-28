@@ -1,0 +1,688 @@
+Reg
+
+
+添加、更改和显示注册表项中的注册表子项信息和值。
+
+
+若要查看该命令语法，请单击以下命令：
+
+reg add
+
+
+
+将新的子项或项添加到注册表中。
+
+
+语法
+
+
+
+reg add KeyName [/v EntryName|/ve] [/t DataType] [/s separator] [/d value] [/f]
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。
+
+/v EntryName
+指定要添加到指定子项下的项名称。
+
+/ve
+指定添加到注册表中的项为空值。
+
+/t DataType
+指定项值的数据类型。DataType 可以是以下几种类型：
+
+
+REG_SZ
+
+REG_MULTI_SZ
+
+REG_DWORD_BIG_ENDIAN
+
+REG_DWORD
+
+REG_BINARY
+
+REG_DWORD_LITTLE_ENDIAN
+
+REG_LINK
+
+REG_FULL_RESOURCE_DESCRIPTOR
+
+REG_EXPAND_SZ
+
+/s separator
+指定用于分隔多个数据实例的字符。当 REG_MULTI_SZ 指定为数据类型且需要列出多个项时，请使用该参数。如果没有指定，将使用默认分隔符为 \。
+
+/d value
+指定新注册表项的值。
+
+/f
+不用询问信息而直接添加子项或项。
+
+/?在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+该操作不能添加子树。该版本的 Reg 在添加子项时无需请求确认。
+下表列出了 reg add 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下列范例说明了如何使用 reg add 命令：
+
+reg add \hklm\software\myco /v data /t reg_binary /d fe340ead
+ reg add "hkcu\software\microsoft\winmine" /v Name3 /t reg_sz /d Anonymous
+ reg add "hkcu\software\microsoft\winmine" /v Time3 /t reg_dword /d 5 
+
+
+reg compare
+
+
+
+比较指定的注册表子项或项。
+
+
+语法
+
+
+
+reg compare KeyName1 KeyName2 [/v EntryName | /ve]  {[/oa]|[/od]|[/os]|[on]}  [/s] 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。如果指定远程计算机，则只可使用 HKLM 和 HKU 子目录树。
+
+
+/v EntryName
+比较子项下的特定项。
+
+/ve
+指定只可以比较没有值的项。
+
+{[/oa]|[/od]|[/os]|[on]}
+指定不同点和匹配点的显示方式。默认设置是 /od。
+
+
+值说明
+
+
+/oa指定显示所有不同点和匹配点。默认情况下，仅列出不同点。
+
+/od指定仅显示不同点。这是默认操作。
+
+/os指定仅显示匹配点。默认情况下，仅列出不同点。
+
+/on指定不显示任何内容。默认情况下，仅列出不同点。
+
+
+
+
+/s Separator
+比较所有子项和项。
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg compare 操作的返回值。
+
+
+值说明
+
+0比较成功且结果相同。
+1比较失败。
+2比较成功并找到不同点。
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg compare 命令：
+
+
+
+
+reg compare "hkcu\software\microsoft\winmine" "hkcu\software\microsoft\winmine" /od /s 
+
+
+reg copy
+
+
+
+将一个注册表项复制到本地或远程计算机的指定位置。
+
+
+语法
+
+
+
+reg copy KeyName1 KeyName2 [/s] [/f] 
+
+
+参数
+
+
+
+KeyName1
+指定要复制子项的完整路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。如果指定远程计算机，则只可使用 HKLM 和 HKU 子目录树。
+
+KeyName2
+指定子项目的地的完整路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。如果指定远程计算机，则只可使用 HKLM 和 HKU 子目录树。
+
+/s
+复制指定子项下的所有子项和项。
+
+/f
+无需请求确认而直接复制子项。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+该版本的 Reg 在复制子项时无须请求确认。
+下表列出了 reg copy 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下列范例说明了如何使用 reg copy 命令：
+
+reg copy "hkcu\software\microsoft\winmine" "hkcu\software\microsoft\winminebk" /s /f
+ reg copy "hkcu\software\microsoft\winminebk" "hkcu\software\microsoft\winmine" /s 
+
+
+reg delete
+
+
+
+从注册表删除项或子项
+
+
+语法
+
+
+
+reg delete KeyName  [{/v EntryName|/ve|/va}] [/f] 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。
+
+/v EntryName
+删除子项下的特定项。如果未指定项，则将删除子项下的所有项和子项。
+
+/ve
+指定只可以删除为空值的项。
+
+/va
+删除指定子项下的所有项。使用本参数不能删除指定子项下的子项。
+
+/f
+无需请求确认而删除现有的注册表子项或项。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg delete 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg delete 命令：
+
+reg delete "hkcu\software\microsoft\winmine" /v Name1
+ reg delete "hkcu\software\microsoft\winmine" /v Time1
+ reg delete "hkcu\software\microsoft\winmine" /va 
+
+
+reg export
+
+
+
+将指定子项、项和值的副本创建到文件中，以便将其传输到其它服务器。
+
+
+语法
+
+
+
+reg export KeyName FileName 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。Export 操作仅可在本地计算机上工作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。
+
+FileName
+指定要导出文件的名称和路径。该文件必须具有 .reg 扩展名。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg export 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg export 命令：
+
+reg export "hkcu\software\microsoft\winmine" c:\data\regbackups\wmbkup.reg 
+
+
+reg import
+
+
+
+将包含导出的注册表子项、项和值的文件复制到本地计算机的注册表中。
+
+
+语法
+
+
+
+reg import FileName 
+
+
+参数
+
+
+
+FileName
+指定将复制到本地计算机注册表中的文件的名称和路径。必须预先使用 reg export 命令创建该文件。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg import 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg import 命令：
+
+reg import hkcu\software\microsoft\winmine" c:\data\regbackups\wmbkup.reg 
+
+
+reg load
+
+
+
+将保存的子项和项写回到注册表的不同子项中。其目的是保存到一个临时文件中，而该文件可用于注册表项的疑难解答或编辑注册表项。
+
+
+语法
+
+
+
+reg load KeyName FileName 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。
+
+FileName
+指定要加载的文件的名称和路径。必须使用带 .hiv 扩展名的 reg save 操作创建该文件。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg load 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg load 命令：
+
+reg load "hkcu\software\microsoft\winminebk2" wmbkup.hiv 
+
+
+
+reg query
+
+
+
+返回注册表的子项下的项和下一层子项的列表。
+
+
+语法
+
+
+
+reg query KeyName [{/v EntryName|/ve}] [/s] 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。如果指定远程计算机，则只可使用 HKLM 和 HKU 子目录树。
+
+
+/v EntryName
+返回特定的项及其值。该参数只返回直接位于指定子项的下一层中的项。将会找不到当前子项下的子项中的项。如果省略 EntryName，则将返回子项下的所有项。
+
+/ve
+指定仅返回为空值的项。
+
+/s
+将返回各个层中的所有子项和项。如果不使用该参数，将只返回下一层的子项和项。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg query 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg query 命令：
+
+reg query "hklm\system\currentcontrolset\control\session manager" /v maxstacktracedepth
+
+reg query "hkcu\software\microsoft\winmine" /s 
+
+
+reg restore
+
+
+
+将保存的子项和项写回到注册表。
+
+
+语法
+
+
+
+reg restore KeyName FileName 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。Restore 操作仅在本地计算机上工作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。
+
+
+FileName
+指定将写回到注册表中的文件的名称和路径。必须使用带 .hiv 扩展名的 reg save 操作预先创建该文件。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+该操作用于覆盖已编辑的注册表项。编辑注册表项之前，请使用 reg save 操作保存父亲子项。如果编辑失败，则可以使用本操作恢复子项。
+下表列出了 reg restore 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg restore 命令：
+
+reg restore "hkcu\software\microsoft\winmine" wmbkup.hiv 
+
+
+reg save
+
+
+
+将指定的子项、项和注册表值的副本保存到指定文件中。
+
+
+语法
+
+
+
+reg save KeyName FileName 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。
+
+FileName
+指定所创建的文件的名称和路径。如果未指定路径，则使用当前路径。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg save 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg save 命令：
+
+reg save "hkcu\software\microsoft\winmine" wmbkup.hiv 
+
+
+reg unload
+
+
+
+使用 reg load 操作删除已加载的部分注册表。
+
+
+语法
+
+
+
+reg unload KeyName 
+
+
+参数
+
+
+
+KeyName
+指定子项的完全路径。对于远程计算机，请在 \\ComputerName\PathToSubkey 中的子项路径前包含计算机名称。忽略 ComputerName 会导致默认对本地计算机进行操作。以相应的子目录树开始路径。有效子目录树为 HKLM、HKCU、HKCR、HKU 以及 HKCC。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+下表列出了 reg unload 操作的返回值。
+
+
+值说明
+
+0成功
+1失败
+
+
+
+
+范例
+
+
+下面的范例说明了如何使用 reg unload 命令：
+
+reg unload "hkcu\software\microsoft\winminebk2" 
+
+
+小心
+
+编辑注册表不当可能会严重损坏您的系统。在更改注册表之前，应备份计算机上任何有价值的数据。
+
+
+
+小心
+
+只有在别无选择的情况下，才直接编辑注册表。注册表编辑器会忽略标准的安全措施，从而使得这些设置会降低性能、破坏系统，甚至要求用户重新安装 Windows。可以利用“控制面板”或“Microsoft 管理控制台 (MMC)”中的程序安全更改多数注册表设置。如果必须直接编辑注册表，则请首先将其备份。详细信息，请参阅“注册表编辑器帮助”。
+
+
+
+注释
+
+
+使用 Reg 直接编辑本地或远程计算机的注册表。这些更改有可能造成计算机无法操作并需要重新安装操作系统。所以不要直接编辑注册表，而应尽可能利用“控制面板”或“Microsoft 管理控制台 (MMC)”更改注册表。
+有些操作可以查看或配置本地或远程计算机的注册表项，而另外一些则只允许配置本地计算机的注册表设置。同时，远程访问注册表也可能会限制用于某操作的参数。请检查每个操作的语法以便验证该操作可以用于远程计算机，以及验证可用于那种情况下的参数。
+
+
+
+

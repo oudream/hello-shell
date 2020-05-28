@@ -1,0 +1,50 @@
+Change port
+
+
+
+列出或更改 COM 端口映射以便与 MS-DOS 应用程序兼容。
+
+
+语法
+
+
+
+change port [{portx=porty|/d portx|/query}]
+
+
+参数
+
+
+portx=porty
+
+将 COM 端口 x 映射为 porty。
+
+/d portx
+
+删除对 COM 端口 x 的映射。
+
+/query
+
+显示当前端口映射。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+ 大多数 MS-DOS 应用程序只支持 COM1 到 COM4 的串行端口。change port 命令将串行端口映射为不同的端口号，允许不支持较高编号的 COM 端口的应用程序访问该串行端口。例如，要把 COM12 映射到 COM1 以便让基于 MS-DOS 的应用程序使用，请键入 change port com12=com1。重新映射只能用于当前会话，而且在您从会话注销然后再次登录时不保留。
+	 不带任何参数使用 change port 将显示可用的 COM 端口及其当前映射。
+    
+
+
+XOX
+
+
+
+
+

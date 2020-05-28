@@ -1,0 +1,55 @@
+Reset session
+
+
+
+允许您从终端服务器重置（删除）会话。
+
+
+语法
+
+
+reset session {SessionName|SessionID} [/server:ServerName] [/v]
+
+
+参数
+
+
+
+SessionName
+要重置的会话的名称。要确定会话的名称，请使用 query session 命令。
+
+SessionID
+要重置的会话的 ID。
+
+/server:ServerName
+指定包含要重置的会话的终端服务器。否则使用当前终端服务器。
+
+/v
+显示关于要执行的操作的信息。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+注释
+
+
+	 可以始终重置您自己的会话，但必须有完全控制访问权限才能重置另一用户的会话。
+    
+	注意没有警告地重置用户会话可能会导致该会话中的数据丢失。
+	
+ 应该只在会话出现故障或停止响应时重置会话。
+    
+	 只有从远程服务器使用 reset session 时才需要 /server 参数。
+    
+
+
+XOX
+
+
+
+
+

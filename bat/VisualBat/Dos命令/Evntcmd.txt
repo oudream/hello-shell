@@ -1,0 +1,132 @@
+Evntcmd
+
+
+
+按照配置文件中的信息，将事件转换配置给陷阱、陷阱目标或两者都配置。
+
+
+语法
+
+
+
+evntcmd [/s ComputerName] [/v VerbosityLevel] [/n] FileName
+
+
+参数
+
+
+
+	/s ComputerName
+
+	按名称指定计算机（要在该计算机上将事件转换配置到陷阱、陷阱目标或两者都配置）。如果不指定计算机，配置就在本地计算机进行。
+
+	/v VerbosityLevel
+
+	指定配置陷阱和陷阱目标时显示哪些类型的状态消息。此参数必须是 0 和 10 之间的整数。如果指定 10，则出现各种类型的消息，其中包括有关陷阱配置是否成功的跟踪消息和警告。如果指定 0，则不出现任何消息。
+
+	/n
+
+	如果此计算机接收到陷阱配置更改，指定不重新启动 SNMP 服务。
+
+FileName
+
+	按名称指定配置文件（该文件包含有关配置陷阱和陷阱目标的事件转换的详细信息）。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+如果要配置陷阱而不是陷阱目标，可以使用“陷阱转换器事件”（一种图形工具）来创建一个有效的配置文件。如果已安装 SNMP 服务，可以通过在命令提示符下键入 evntwin 来启动“陷阱转换器事件”。定义所需陷阱之后，单击“导出”以创建适合于与 evntcmd 一起使用的文件。利用“陷阱转换器事件”可以容易地创建配置文件，然后通过命令提示符下的 evntcmd 使用该配置文件，从而在多台计算机上迅速配置陷阱。
+
+配置陷阱的语法如下：
+
+#pragma ADD EventLogFile EventSource EventID [Count [Period]]
+
+文本 #pragma 必须出现在文件中每个项目的开头。
+参数 ADD 指定您要向陷阱配置添加事件。
+参数 EventLogFile、EventSource 和 EventID 是必需的。参数 EventLogFile 指定记录事件的文件。参数 EventSource 指定生成事件的应用程序。参数 EventID 指定识别每个事件的唯一编号。要查找与特定事件相对应的值，请通过在命令提示符下键入 evntwin 来启动“陷阱转换器事件”。单击“自定义”，然后单击“编辑”。在“事件来源”下，浏览文件夹，直到查找到要配置的事件，单击此事件，然后单击“添加”。有关事件来源、事件日志文件以及事件 ID 的详细信息分别出现在“来源”、“日志”和“陷阱指定 ID”下。
+
+Count 参数是可选的，它指定发送陷阱消息之前事件必须发生的次数。如果不使用 Count 参数，则在事件发生一次之后发送陷阱消息。
+Period 参数是可选的，但是它要求使用 Count 参数。Period 参数指定事件必须发生指定次数（该次数是在发送陷阱消息之前通过 Count 参数指定的）的时间长度。如果不使用 Period 参数，就在事件发生通过 Count 参数指定的次数之后发送陷阱消息，而不管各个事件之间出现的间隔长短。
+
+
+
+删除陷阱的语法如下：
+
+#pragma DELETE EventLogFile EventSource EventID
+
+文本 #pragma 必须出现在文件中每个项目的开头。
+参数 DELETE 指定要删除陷阱配置的某个事件。
+参数 EventLogFile、EventSource 和 EventID 是必需的。参数 EventLogFile 指定记录事件的日志。参数 EventSource 指定生成事件的应用程序。EventID 参数指定识别每个事件的唯一编号。
+
+
+
+配置陷阱目标的语法如下：
+
+#pragma ADD_TRAP_DEST CommunityName HostID
+
+文本 #pragma 必须出现在文件中每个项目的开头。
+参数 ADD_TRAP_DEST 指定要将陷阱消息发送到某个团体内的指定主机。
+参数 CommunityName 按名称指定发送陷阱消息的团体。
+参数 HostID 按名称或 IP 地址指定要向其发送陷阱消息的主机。
+
+
+
+删除陷阱目标的语法如下：
+
+#pragma DELETE_TRAP_DEST CommunityName HostID
+
+文本 #pragma 必须出现在文件中每个项目的开头。
+参数 DELETE_TRAP_DEST 指定不想将陷阱消息发送到某个团体内的指定主机。
+参数 CommunityName 按名称指定发送陷阱消息的团体。
+参数 HostID 按名称或 IP 地址指定不想向其发送陷阱消息的主机。
+
+
+
+
+
+
+范例
+
+
+下面的范例说明 evntcmd 命令的配置文件中的项目。它们不是设计为在命令提示符中键入。
+
+
+要在重新启动事件日志服务时发送陷阱消息，请键入：
+
+#pragma ADD System "Eventlog" 2147489653
+
+
+如果三分钟内事件日志服务重新启动两次，则要发送陷阱消息，请键入：
+
+#pragma ADD System "Eventlog" 2147489653 2 180
+
+
+要在重新启动事件日志服务时停止发送陷阱消息，请键入：
+
+#pragma DELETE System "Eventlog" 2147489653
+
+
+要将名为 Public 的团体内的陷阱消息发送到 IP 地址为 192.168.100.100 的主机，请键入：
+
+#pragma ADD_TRAP_DEST public 192.168.100.100
+
+
+要将名为 Private 的团体内的陷阱消息发送到名为 Host1 的主机，请键入：
+
+#pragma ADD_TRAP_DEST private Host1
+
+
+要停止将名为 Private 的团体内的陷阱消息发送到正在配置陷阱目标的同一台计算机，请键入：
+
+#pragma DELETE_TRAP_DEST private localhost
+
+XOX
+
+
+
+

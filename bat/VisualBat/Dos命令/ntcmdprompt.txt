@@ -1,0 +1,45 @@
+Ntcmdprompt
+
+
+
+在运行 TSR 或从 MS-DOS 应用程序中启动命令提示符后，运行命令解释程序 Cmd.exe，而不是 Command.com。
+
+
+语法
+
+
+
+ntcmdprompt
+
+
+参数
+
+
+
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 运行 Command.com 时，Cmd.exe 的某些功能（例如命令历史记录的 doskey 显示）将无效。如果要在启动 TSR 或从基于 MS-DOS 的应用程序中启动命令提示符后运行 Cmd.exe 命令解释程序，可以使用 ntcmdprompt 命令。不过请谨记，运行 Cmd.exe 时，TSR 可能无法使用。可以将 ntcmdprompt 命令包含在 Config.nt 文件或应用程序的程序信息文件 (PIF) 中相应的自定义启动文件中。
+    
+   
+
+
+
+范例
+
+
+
+ 要将 ntcmdprompt 包含在 Config.nt 文件或 PIF 中指定的配置启动文件中，请键入：
+
+ ntcmdprompt
+
+XOX
+
+
+

@@ -1,0 +1,78 @@
+Query user
+
+
+
+显示有关终端服务器上的用户会话的信息。
+
+
+语法
+
+
+query user [{UserName|SessionName|SessionID}] [/server:ServerName]
+
+
+参数
+
+
+UserName
+指定待查询用户的登录名。
+
+SessionName
+指定待查询会话的名称。
+
+SessionID
+指定待查询会话的 ID。
+
+/server:ServerName
+指定要查询的终端服务器。否则使用当前终端服务器。
+
+/?
+在命令提示符显示帮助。
+
+
+
+
+
+
+注释
+
+
+	 如果特定用户登录到特定的终端服务器，则可以使用该命令查找。Query user 返回以下信息：
+
+用户名
+终端服务器上的会话的名称
+会话 ID
+会话的状态（活动或断开连接）
+空闲时间（在该会话中自上次击键或鼠标移动以来经过的分钟数）
+用户登录的日期和时间
+	
+	
+	 要使用 query user，您必须有完全控制权限或查询信息的特殊访问权限。
+    
+ 如果您不指定用户名、会话名称或会话标识而直接使用 query user 命令，则会返回一个登录到该服务器的所有用户的列表。另外，也可以使用 query session 显示服务器上所有会话的列表。
+    
+	 当 query user 返回信息时，在当前会话前将显示小于号 (>)。
+    
+	 只有在从远程服务器使用 query user 时才需要 /server 参数。
+    
+
+
+
+范例
+
+
+
+要显示有关登录到系统的所有用户的信息，请键入：
+
+query user
+
+要显示有关服务器 SERVER1 上用户 USER1 的信息，请键入：
+
+query user USER1 /server:SERVER1
+
+XOX
+
+
+
+
+

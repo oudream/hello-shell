@@ -1,0 +1,140 @@
+Tasklist
+
+
+
+显示运行在本地或远程计算机上的所有任务的应用程序和服务列表，带有过程 ID (PID)。
+
+
+语法
+
+
+
+tasklist[.exe] [/s computer] [/u domain\user [/p password]] 
+[/fo
+{TABLE|LIST|CSV}] [/nh] [/fi FilterName [/fi FilterName2 [ ... ]]] 
+[/m [ModuleName] | /svc |  /v] 
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User.指定用户的帐户权限命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fo {TABLE|LIST|CSV}
+指定输出所用的格式。有效值为 TABLE、LIST 和 CSV。输出的默认格式为 TABLE。
+
+/nh
+取消输出结果中的列标题。当 /fo 参数设置为 TABLE 或 CSV 时有效。
+
+/fi FilterName
+指定该查询包括或不包括的过程类型。下表列出了有效的筛选器名称、运算符和值。
+
+
+名称
+运算符
+值
+
+
+状态
+eq, ne
+RUNNING|NOT RESPONDING
+
+
+Imagename
+eq, ne
+任何有效字符串。
+
+
+PID
+eq, ne, gt, lt, ge, le
+任何有效的正整数。
+
+
+会话
+eq, ne, gt, lt, ge, le
+任何有效的会话数。
+
+
+SessionName
+eq, ne
+任何有效字符串。
+
+
+CPUTime
+eq, ne, gt, lt, ge, le
+hh:mm:ss 格式的有效时间。mm 参数和 ss 参数应在 0 到 59 之间，hh 参数可以是任何一个有效的无符号的数值。
+
+
+Memusage
+eq, ne, gt, lt, ge, le
+任何有效的整数。
+
+
+用户名
+eq, ne
+任何有效的用户名 ([Domain\]User)。
+
+
+服务
+eq, ne
+任何有效字符串。
+
+
+
+Windowtitle
+eq, ne
+任何有效字符串。
+
+
+
+Modules
+eq, ne
+任何有效字符串。
+
+
+
+
+
+/m [ModuleName]
+指定显示每个过程的模块信息。指定模块时，将显示使用此模块的所有过程。没有指定模块时，将显示所有模块的所有过程。不能与 /svc 或 /v 参数一起使用。
+
+/svc
+无间断地列出每个过程的所有服务信息。当 /fo 参数设置为 TABLE 时有效。不能与 /m 或 /v 参数一起使用。
+/v
+
+指定显示在输出结果中的详细任务信息。不能与 /svc 或 /m 参数一起使用。
+
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+Tasklist 可以替代 TList 工具。
+
+
+
+范例
+
+
+下面的范例说明如何使用 tasklist 命令：
+
+tasklist /v /fi "PID gt 1000" /fo csv
+ tasklist /fi "USERNAME ne NT AUTHORITY\SYSTEM" /fi "STATUS eq running"
+ tasklist /v /fi "STATUS eq running"
+ tasklist /s srvmain /nh
+ tasklist /s srvmain /s srvny
+ tasklist /s srvmain /u maindom\hiropln /p p@ssW23 /nh XOX
+
+
+

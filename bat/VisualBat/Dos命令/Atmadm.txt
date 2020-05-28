@@ -1,0 +1,245 @@
+Atmadm
+
+
+
+ATM 呼叫管理器在异步传输模式 (ATM) 网络上注册的监视器连接和地址。可以使用 atmadm 来显示 ATM 适配器上传入和传出呼叫的统计信息。如果在不含参数的情况下使用，则 atmadm 将显示监视活动 ATM 连接状态的统计信息。
+
+
+语法
+
+
+
+atmadm [/c][/a] [/s]
+
+
+参数
+
+
+
+	/c
+
+	显示有关到在此计算机上安装的 ATM 网卡的所有当前连接的呼叫信息。
+
+	/a
+
+	显示安装在该计算机中的每个适配器的注册 ATM 网络服务访问点 (NSAP) 地址。
+
+	/s
+
+	显示监视活动的 ATM 连接状态的统计。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+
+显示呼叫信息
+
+
+ 对于安装在此计算机上的 ATM 网络适配器，要显示所有当前连接到它的呼叫信息，请键入：
+
+atmadm /c
+
+
+使用 atmadm /c 命令会输出类似如下所示的结果： 
+Windows ATM 调用管理器统计
+
+ATM Connections on Interface :[009] Olicom ATM PCI 155 Adapter
+
+Connection   VPI/VCI   Remote Address/
+Media Parameters (rates in bytes/sec)
+In  PMP SVC    0/193   47000580FFE1000000F21A2E180020481A2E180B
+Tx:UBR,Peak 1516,Avg 0,MaxSdu 0
+Rx:UBR,Peak 16953936,Avg 16953936,MaxSdu 1516
+Out P-P SVC    0/192   47000580FFE1000000F21A2E180020481A2E180B
+Tx:UBR,Peak 1516,Avg 16953936,MaxSdu 16953936
+Rx:UBR,Peak 16953936,Avg 16953936,MaxSdu 1516
+In  PMP SVC    0/191   47000580FFE1000000F21A2E180020481A2E180B
+Tx:UBR,Peak 1516,Avg 0,MaxSdu 0
+Rx:UBR,Peak 16953936,Avg 16953936,MaxSdu 1516
+Out P-P SVC    0/190   47000580FFE1000000F21A2E180020481A2E180B
+Tx:UBR,Peak 1516,Avg 16953936,MaxSdu 16953936
+Rx:UBR,Peak 16953936,Avg 16953936,MaxSdu 1516
+In  P-P SVC    0/475   47000580FFE1000000F21A2E180000C110081501
+Tx:UBR,Peak 9188,Avg 16953984,MaxSdu 16953984
+Rx:UBR,Peak 16953936,Avg 16953936,MaxSdu 9188
+Out PMP SVC    0/194   47000580FFE1000000F21A2E180000C110081501 (0)
+Tx:UBR,Peak 9180,Avg 16953984,MaxSdu 16953984
+Rx:UBR,Peak 0,Avg 0,MaxSdu 0
+Out P-P SVC    0/474   4700918100000000613E5BFE010000C110081500
+Tx:UBR,Peak 9188,Avg 16953984,MaxSdu 16953984
+Rx:UBR,Peak 16953984,Avg 16953984,MaxSdu 9188
+In  PMP SVC    0/195   47000580FFE1000000F21A2E180000C110081500
+Tx:UBR,Peak 0,Avg 0,MaxSdu 0
+Rx:UBR,Peak 16953936,Avg 16953936,MaxSdu 9180
+
+
+
+下表包含了对 atmadm /c 输出示例中每个元素的描述。
+
+
+
+日期类型
+屏幕显示
+说明
+
+
+连接信息
+In/Out
+呼叫方向。In 表示从其他设备到 ATM 网络适配器。Out 表示从 ATM 网络适配器到其他设备。
+
+
+
+PMP
+点对多点呼叫。
+
+
+
+P-P
+点对点呼叫。
+
+
+
+SVC
+通过可切换的虚拟交换电路实现连接。
+
+
+
+PVC
+通过永久性虚拟电路实现连接。
+
+
+VPI/VCI 信息
+VPI/VCI
+传入和传出呼叫的虚拟路径和虚拟信道。
+
+
+远程地址/媒体参数
+47000580FFE1000000F21A2E180000C110081500
+呼叫（输入）或被呼叫（输出）的 ATM 设备的 NSAP 地址。
+
+
+
+Tx
+Tx 参数包括以下三个元素：
+
+默认或指定的传输率类型（UBR、CBR、VBR 或 ABR）
+默认或指定的线路速度
+指定的服务数据单位 (SDU) 的大小
+
+
+
+
+Rx
+Rx 参数包含以下三个元素：
+
+默认或指定的传输率类型（UBR、CBR、VBR 或 ABR）
+默认或指定的线路速度
+指定的 SDU 的大小
+
+
+
+
+
+列出所有已注册的地址
+
+
+对于安装在该计算机中的每个适配器，显示其注册的 ATM 网络服务访问点 (NSAP) 的地址。
+
+atmadm /a
+
+
+使用 atmadm /a 命令会输出类似如下所示的结果：
+
+
+Windows ATM 调用管理器统计
+
+ATM Addresses for Interface :[009] Olicom ATM PCI 155 Adapter
+
+47000580FFE1000000F21A2E180000C110081500
+
+
+
+显示统计信息
+
+
+要显示监视活动的 ATM 连接状态的统计信息，请键入：
+
+ atmadm /s
+
+
+使用 atmadm /s 会输出类似如下所示的结果：
+
+
+Windows ATM 调用管理器统计
+
+ATM Call Manager statistics for Interface :[009] Olicom ATM PCI 155 Adapter
+
+	Current Active calls                        = 4
+	Total successful Incoming calls             = 1332
+	Total successful Outgoing calls             = 1297
+	Unsuccessful Incoming calls                 = 1
+	Unsuccessful Outgoing calls                 = 1
+	Calls Closed by Remote                      = 1302
+	Calls Closed Locally                        = 1323
+	Signalling and ILMI Packets Sent            = 33655
+	Signalling and ILMI Packets Received        = 34989
+
+
+
+下表包含了对 atmadm /s 输出示例中每个元素的描述。
+
+
+
+呼叫管理器统计量
+说明
+
+
+当前活动呼叫
+安装在此计算机上的 ATM 适配器当前正在呼叫。
+
+
+全部成功的传入呼叫
+成功接收来自此 ATM 网络上其他设备的呼叫。
+
+
+全部成功的传出呼叫
+从此计算机呼叫网络上其他 ATM 设备成功完成。
+
+
+失败的传入呼叫
+传入的呼叫未能连接到此计算机。
+
+
+失败的传出呼叫
+与网络上的其他设备连接失败的传出呼叫。
+
+
+远程关闭的呼叫
+呼叫被网络上的远程设备关闭。
+
+
+本地关闭的呼叫
+呼叫被此计算机关闭。
+
+
+信号和发送的 ILMI 数据包
+发送到该计算机正在连接的交换机的集成本地管理接口 (ILMI) 数据包的数量。
+
+
+信号和接收的 ILMI 数据包
+从 ATM 交换机接收的 ILMI 数据包的数量。
+
+
+
+XOX
+
+
+
+
+

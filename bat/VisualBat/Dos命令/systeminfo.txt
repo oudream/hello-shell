@@ -1,0 +1,51 @@
+Systeminfo
+
+
+
+显示关于计算机及其操作系统的详细配置信息，包括操作系统配置、安全信息、产品 ID 和硬件属性，如 RAM、磁盘空间和网卡。
+
+
+语法
+
+
+
+systeminfo[.exe] [/s Computer [/u Domain\User [/p Password]]] [/fo {TABLE|LIST|CSV}]  [/nh]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机名称或 IP 地址（不能使用反斜杠）。默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\user 指定用户的帐户权限命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fo {TABLE|LIST|CSV}
+指定输出所用的格式。有效值为 TABLE、LIST 和 CSV。输出的默认格式为 LIST。
+
+/nh
+取消输出结果中的列标题。当 /fo 参数设置为 TABLE 或 CSV 时有效。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下面的范例说明如何使用 systeminfo 命令：
+
+systeminfo.exe /s srvmain
+ systeminfo.exe /s srvmain /u maindom\hiropln
+ systeminfo /s srvmain /u maindom\hiropln /p p@ssW23 /fo table
+
+XOX
+
+
+

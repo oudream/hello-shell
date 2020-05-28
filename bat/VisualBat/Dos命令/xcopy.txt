@@ -1,0 +1,295 @@
+Xcopy
+
+
+
+复制文件和目录，包括子目录。
+
+
+语法
+
+
+
+xcopy Source [Destination] [/w] [/p] [/c] [/v] [/q] [/f] [/l] [/g] [/d[:mm-dd-yyyy]] [/u] [/i] [/s [/e]] [/t] [/k] [/r] [/h] [{/a|/m}] [/n] [/o] [/x] [/exclude:file1[+[file2]][+[file3]] [{/y|/-y}] [/z]
+
+
+参数
+
+
+
+	Source
+
+	必需的。指定要复制的文件的位置和名称。该参数必须包含驱动器或路径。
+
+	Destination
+
+	指定要复制的文件的目标。该参数可以包含驱动器盘符和冒号、目录名、文件名或者它们的组合。
+
+	/w
+
+	在开始复制文件之前将显示以下消息并等待您的响应：
+
+ Press any key to begin copying file(s) 
+
+	/p
+
+	提示您确认是否要创建每个目标文件。
+
+	/c
+
+	忽略错误。
+
+	/v 
+
+	在写入目标文件时验证每个文件，以确保目标文件与源文件完全相同。
+
+	/q
+
+	禁止显示 xcopy 消息。
+
+	/f
+
+	复制时显示源文件名和目标文件名。
+
+	/l
+
+	显示要复制的文件列表。
+
+	/g
+
+	创建解密的目标文件。
+
+	/d[:mm-dd-yyyy]
+
+	只复制那些在指定日期或指定日期之后更改过的源文件。如果不包括 mm-dd-yyyy 值，xcopy 会复制比现有 Destination 文件新的所有 Source 文件。该命令行选项使您可以更新更改过的文件。
+
+	/u
+
+	只从 source 复制 destination 中已有的文件。
+
+	/i
+
+	如果 Source 是一个目录或包含通配符，而 Destination 不存在，xcopy 会假定 destination 指定目录名并创建一个新目录。然后，xcopy 会将所有指定文件复制到新目录中。默认情况下，xcopy 将提示您指定 destination 是文件还是目录。
+
+	/s
+
+	复制非空的目录和子目录。如果省略 /s，xcopy 将在一个目录中工作。
+
+	/e
+
+	复制所有子目录，包括空目录。同时使用 /e、/s 和 /t 命令行选项。
+
+	/t
+
+	只复制子目录结构（即目录树），不复制文件。要复制空目录，必须包含 /e 命令行选项。
+
+	/k
+
+	复制文件，如果源文件具有只读属性，则在目标文件中保留该属性。默认情况下，xcopy 会删除只读属性。
+
+	/r
+
+	复制只读文件。
+
+	/h
+
+	复制具有隐藏和系统文件属性的文件。默认情况下，xcopy 不复制隐藏或系统文件。
+
+	/a
+
+	只复制那些具有存档文件属性设置的源文件。/a 不修改源文件的存档文件属性。有关如何通过使用 attrib 来设置存档文件属性的信息，请参阅“”。
+
+	/m
+
+	复制具有存档文件属性设置的源文件。与 /a 不同，/m 关闭在源中指定的文件的存档文件属性。有关如何通过使用 attrib 来设置存档文件属性的信息，请参阅“”。
+
+	/n
+
+	使用 NTFS 短文件或目录名创建副本。将文件或目录从 NTFS 卷复制到 FAT 卷或者当目标文件系统需要 FAT 文件系统命名约定（即 8.3 个字符）时，需要 /n。目标文件系统可以是 FAT 或 NTFS。
+
+	/o
+
+	复制文件所有权与自由选择的访问控制列表 (DACL) 信息。
+
+	/x
+
+	复制文件审核设置和系统访问控制列表 (SACL) 信息（包含 /o）。
+
+	/exclude:filename1[+[filename2]][+[filename3]]
+
+	指定包含字符串的文件列表。
+
+	/y
+
+	禁止提示您确认要覆盖现存的目标文件。
+
+	/-y
+
+	提示您确认要覆盖现有目标文件。
+
+	/z
+
+	在可重启模式中通过网络复制。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+	使用 /v
+	
+XOX
+	
+	使用 /exclude
+	
+列出每个文件的单独行中的每个字符串。如果列出的任何字符串与要复制的文件的绝对路径的任何部分匹配，就从复制进程排除该文件。例如，如果指定字符串 "\Obj\"，则会排除 Obj 目录下的所有文件。如果指定字符串 ".obj"，则排除具有 .obj 扩展名的所有文件。
+	
+	 使用 /z
+	
+如果在复制过程中丢失连接（例如，如果用于连接的服务器脱机），复制过程将在重新建立连接后恢复。/z 也显示每个文件完成的复制操作的百分比。
+ 在 COPYCMD 环境变量中使用 /y
+	
+可在 COPYCMD 环境变量中使用 /y。在命令行上使用 /-y 可以覆盖该命令。默认情况下，会提示您覆盖，除非您从批处理脚本内运行 copy。
+    
+	复制加密的文件
+	
+将加密文件复制到不支持 EFS 的卷会导致错误。应首先解密文件或将文件复制到支持 EFS 的卷中。
+	
+ 附属文件
+
+要附加文件，请指定单个目标文件，多个源文件（使用通配符或文件 1 + 文件 2 + 文件 3 格式）。
+	
+ Destination 的默认值
+	
+如果省略 Destination，xcopy 命令将文件复制到当前目录。
+	
+	 指定 Destination 是文件还是目录
+	
+如果 Destination 不包含现有目录且不以反斜杠 (\) 结尾，会出现下列消息： 
+
+ Does destination specify a file name 
+ or directory name on the target 
+ (F = file, D = directory)? 
+
+ 如果要将一个或多个文件复制到一个文件，请按 F。如果要将一个或多个文件复制到一个目录，请按 D。
+
+ 使用 /i 命令行选项可抑制显示该消息，从而导致 xcopy 认定在源是多个文件或一个目录的情况下，目标是一个目录。
+	
+	 使用 xcopy 命令设置 Destination 文件的存档属性
+	
+ xcopy 命令创建具有存档属性设置的文件，无论源文件中是否设定了此属性。有关文件属性和 attrib 的详细信息，请参阅“”。
+	
+	 比较 xcopy 和 diskcopy
+	
+如果磁盘的子目录中包含文件，要将其复制到具有不同格式的磁盘中，请使用 xcopy 命令，而不要使用 diskcopy。因为 diskcopy 命令是一个磁道接一个磁道地复制磁盘，所以需要源磁盘和目标磁盘的格式必须相同。xcopy 命令没有该要求。通常情况下请使用 xcopy，除非您需要完整的磁盘图像副本。
+	
+	 xcopy 的退出码
+	
+ 要处理 xcopy 返回的退出码，请在批处理程序的 if 命令行上使用 errorlevel 参数。有关使用“if”处理退出码的批处理程序的范例，请参阅“”。下表列出每一个退出码和说明。
+	
+
+退出码
+说明
+
+
+0
+文件复制没有错误。
+
+
+1
+没有找到要复制的文件。
+
+
+2
+用户按 CTRL+C 终止了 xcopy。
+
+
+4
+出现了初始化错误。没有足够的内存或磁盘空间，或命令行上输入了无效的驱动器名称或语法。
+
+
+5
+出现了磁盘写入错误。
+
+
+	
+
+
+
+
+范例
+
+
+
+ 要从驱动器 A 将所有文件和子目录（包括所有空的子目录）复制到驱动器 B，请键入： 
+
+ xcopy a:b:/s /e 
+
+ 要包含上一示例中的任何系统或隐藏文件，请按如下所示添加 /h 命令行选项：
+
+ xcopy a:b:/s /e /h
+
+ 要使用 \Rawdata 目录中 1993 年 12 月 29 日后更改的文件更新 \Reports 目录中的文件，请键入： 
+
+ xcopy \rawdata \reports /d:12-29-1993 
+
+ 要更新上例中 \Reports 中存在的所有文件，而不考虑日期，请键入：
+
+ xcopy \rawdata \reports /u
+
+ 如果只想获得前一个命令要复制的文件列表，而不复制文件，请键入：
+
+ xcopy \rawdata \reports /d:12-29-1993 /l > xcopy.out
+
+ 文件 Xcopy.out 列出了要复制的所有文件。
+
+ 要将 \Customer 目录和所有子目录复制到网络驱动器 H: 上的目录 \\Public\Address，保留只读属性，并在 H: 上创建新文件时对您做出提示，请键入：
+
+ xcopy \customer h:\public\address /s /e /k /p
+
+ 要发出上一个命令，确保在 \Address 目录不存在时 xcopy 会创建该目录，同时应抑制显示创建新目录时要显示的消息，请按如下所示添加 /i 命令行选项：
+
+ xcopy \customer h:\public\address /s /e /k /p /i
+
+ 可以创建批处理程序执行 xcopy 操作，并且使用 if 批处理命令在发生错误时处理退出码。例如，以下的批处理程序使用可替换的 xcopy 源和目标参数： 
+
+
+@echo off 
+ rem COPYIT.BAT transfers all files in all subdirectories of
+ rem the source drive or directory (%1) to the destination 
+
+ rem drive or directory (%2) 
+ 
+ xcopy %1 %2 /s /e 
+ 
+ if errorlevel 4 goto lowmemory 
+ if errorlevel 2 goto abort 
+ if errorlevel 0 goto exit 
+ 
+ :lowmemory 
+ echo Insufficient memory to copy files or 
+ echo invalid drive or command-line syntax. 
+ goto exit 
+ 
+ :abort 
+ echo You pressed CTRL+C to end the copy operation. 
+ goto exit 
+ 
+ :exit 
+
+ 要使用该批处理程序将 C:\Prgmcode 目录和其子目录中的所有文件复制到驱动器 B 中，请键入： 
+
+ copyit c:\prgmcode b: 
+
+ 该命令解释程序将用 C:\Prgmcode 替换 %1 与 B:。对于 %2，然后使用 xcopy 与 /e 和 /s 命令行选项。如果 xcopy 遇到错误，批处理程序将读取退出码并转到相应 IF ERRORLEVEL 语句中指示的标签，然后显示相应的消息并退出批处理程序。
+
+XOX
+
+
+
+
+
+

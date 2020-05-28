@@ -1,0 +1,132 @@
+Openfiles
+
+
+
+查询、显示打开的文件。同时查询、显示或断开由网络用户打开的文件。
+
+
+若要查看该命令语法，请单击以下命令：
+
+openfiles disconnect
+
+
+
+断开一个或多个连接到打开的共享文件的远程用户。
+
+
+语法
+
+
+
+openfiles.exe /disconnect [/s Computer [/u Domain\User [/p Password]]] {[/id OpenFileID]|[/a  UserName]|[/o OpenMode]} [/se SessionName] [/op OpenFileName]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机的名称或 IP 地址。（不要使用反斜线。）默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\user 指定的用户的帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/id OpenFileID
+断开通过 /s 参数指定的计算机上的指定数字 OpenFileID 来打开的文件。使用 openfiles.exe /query 获得文件 ID。通配符 (*) 可用来断开指定计算机上所有打开的文件。
+
+/a UserName
+断开所有打开的文件，这些文件由 /s 参数指定的计算机上的指定用户访问。通配符 (*) 可用来断开指定计算机上的所有打开文件的连接。
+
+/o OpenMode
+通过 /s 参数指定的计算机上所指定的 OpenMode，断开所有打开的文件。OpenMode 参数包括读/写模式和读取模式。通配符 (*) 可用来断开指定计算机上的所有打开文件的连接。
+
+/se SessionName
+断开所有打开的文件，这些文件由 /s 参数指定的计算机上的指定会话所创建。通配符 (*) 可用来断开指定计算机上的所有打开文件的连接。
+
+/op OpenFileName
+断开打开的文件，此文件通过 /s 参数指定的计算机上指定 OpenFileName 所创建。通配符 (*) 可用来断开指定计算机上的所有打开文件的连接。
+
+/?在命令提示符显示帮助。
+
+
+
+
+
+范例
+
+
+下列范例显示如何使用 openfiles /disconnect 命令：
+
+openfiles.exe /disconnect /id 1
+
+openfiles.exe /disconnect /a hiropln
+
+openfiles.exe /disconnect /o read/write
+
+openfiles.exe /disconnect /op "c:\my documents\somedoc.doc"
+
+openfiles /disconnect /session machine /id 5
+
+openfiles.exe /disconnect /s srvmain /u maindom\hiropln /id 5
+
+openfiles /disconnect /s srvmain /u maindom\hiropln /p p@ssW23 /id *
+
+
+
+openfiles query
+
+
+
+查询和显示所有打开的文件。
+
+
+语法
+
+
+openfiles.exe /query [/s Computer [/u Domain\User [/p Password]]] [/fo {TABLE|LIST|CSV}] [/nh] [/v]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机上的名称或 IP 地址。（不要使用反斜线。）默认值是本地计算机。
+
+/u Domain\User
+运行具有由 User 或 Domain\User 指定的用户的帐户权限的命令。默认值是当前登录发布命令的计算机的用户权限。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/fo {TABLE|LIST|CSV}
+指定查询结果输出的格式。有效值为 TABLE、LIST 和 CSV。输出的默认值为 TABLE。
+
+/nh
+在输出中压缩列的开头。只有在 /fo 参数设置为 TABLE 或 CSV 时有效。
+
+/v
+指定显示在输出结果中的详细任务信息。
+
+/?在命令提示符显示帮助。
+
+
+
+
+范例
+
+
+下列范例显示如何使用 openfiles /query 命令：
+
+openfiles.exe /query
+ openfiles.exe /query /fo table /nh
+ openfiles.exe /query /fo list /v
+ openfiles.exe /query /s srvmain /u maindom\hiropln /p p@ssW23 
+
+XOX
+
+
+

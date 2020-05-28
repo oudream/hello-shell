@@ -1,0 +1,76 @@
+Tftp
+
+
+
+向运行平凡文件传输协议 (TFTP) 服务或 daemon 的远程计算机（尤其是运行 UNIX 的计算机）传输文件或从运行平凡文件传输协议 (TFTP) 服务或 daemon 的远程计算机（尤其是运行 UNIX 的计算机）传输文件。
+
+
+语法
+
+
+
+tftp [-i] [Host] [{get | put}] [Source] [Destination]
+
+
+参数
+
+
+
+	-i
+
+	指定二进制图像传送模式（也称为八进制模式）。在二进制图像模式下，文件以一个字节为单位进行传输。在传送二进制文件时使用该模式。如果省略了 -i，文件将以 ASCII 模式传送。这是默认的传送模式。该模式将行尾 (EOL) 字符转换为指定计算机的适当格式。传送文本文件时使用该模式。如果文件传送成功，将显示数据传输率。
+
+	Host
+
+	指定本地或远程计算机。
+
+	put
+
+	将本地计算机上的 Destination 文件传送到远程计算机上的 Source 文件。因为 TFTP 协议不支持用户身份验证，所以用户必须登录到远程计算机，同时文件在远程计算机上必须可写。
+
+	get
+
+	将远程计算机上的 Destination 文件传送到本地计算机上的 Source 文件。
+
+	Source
+
+	指定要传送的文件。
+
+	Destination
+
+	指定将文件传送到的位置。如果省略了 Destination，将假定它与 Source 同名。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 使用 get 参数
+	
+如果将本地计算机上的文件 FileTwo 传送到远程计算机上的文件 FileOne，则指定 put。如果将远程计算机上的文件 FileTwo 传送到远程计算机上的文件 FileOne，则指定 get。
+    
+ Windows XP 或 Windows 2000 不提供一般用途的 TFTP 服务器。Windows 2000 提供的 TFTP 服务器服务只为 Windows XP 和 Windows 2000 客户端计算机提供远程引导功能。
+    
+ 只有当网际协议 (TCP/IP) 协议在 网络连接中安装为网络适配器属性的组件时，该命令才可用。
+    
+    
+
+
+范例
+
+
+
+要从本地计算机将文件 Users.txt 传送到远程计算机 vax1 上的 Users19.txt，请键入：
+
+tftp vax1 put users.txt users19.txt
+
+
+XOX
+
+
+
+
+ 

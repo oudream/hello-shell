@@ -1,0 +1,291 @@
+For
+
+
+
+对一组文件中的每个文件运行指定的命令。
+
+
+语法
+
+
+
+for {%variable|%%variable} in (set) do command [  CommandLineOptions]
+
+
+参数
+
+
+
+	{%variable|%%variable}
+
+	必需。代表可替换的参数。使用 %variable 通过命令提示符执行 for 命令。使用 %%variable 在批处理文件中执行 for 命令。变量要区分大小写，并且必须用 Alpha 值表示，例如，%A、%B 或 %C。
+
+	(set)
+
+	必需。指定要用指定命令处理的一个或多个文件、目录、数值范围以及文本字符串。需要括号。
+
+	command
+
+	必需。指定要对包括在指定 (set) 中的每个文件、目录、数值范围以及文本字符串所执行的命令。
+
+	CommandLineOptions
+
+	指定要通过指定命令使用的任何命令行选项。
+/?在命令提示符显示帮助。
+
+
+
+
+注释
+
+
+使用 for
+
+可以在批处理文件中或直接从命令提示符使用 for 命令。
+    
+ 使用批处理参数
+	
+下列属性适用于 for 命令：
+	
+		 for 命令使用指定 set 中的每个文本字符串替换 %variable 或 %%variable，直到 command 处理所有文件为止。
+		
+		 记住，for variable名是区分大小写、全局的，并且每次总共不超过 52 个是活动的。
+		
+		 要避免批处理参数从 %0 到 %9 混淆，对 variable 可以使用除数字 0 到 9 之外的任何字符。对于简单的批处理文件，单个字符即可奏效，例如 %%f。
+		
+		 在复杂的批处理文件中可以使用 variable 的多个值来区分不同的可替换变量。
+		
+	
+	
+	显示一组文件
+
+set 参数可以代表单个或多个文件组。可以使用通配符（即，* 和 ?）指定文件组。以下为有效文件组： 
+
+(*.doc)
+
+(*.doc *.txt *.me)
+
+(jan*.doc jan*.rpt feb*.doc feb*.rpt)
+
+(ar??1991.* ap??1991.*)
+
+
+在使用 for 命令时，set 中的第一个值代替 %variable 或 %%variable，然后由指定的命令处理该值。这一直会继续下去，直到处理完与 set 值相对应的所有文件（或文件组）为止。
+	
+	 使用 in 和 do 关键字
+	
+In 和 do 不是参数，但必须将它们与 for 一起使用。如果省略其中任何一个关键字，就会出现错误消息。
+	
+	 使用 for 的其它形式
+	
+ 如果命令扩展名处于启用状态（即，默认设置），则支持 for 的下列其它形式：
+
+
+仅为目录
+
+ 如果 set 包含通配符（* 和 ?），则为匹配 set 的每个目录（而不是指定目录中的文件组）而执行指定的 command。语法是： 
+
+ for /D {%% | %}variable in (set) do command [CommandLineOptions] 
+
+递归
+
+ 进入根目录树 [Drive:]Path，在树的每个目录中执行 for 语句。如果在 /R 后没有指定目录，则假定为当前目录。如果 set 只是一个句号 (.)，则只列举目录树。语法是： 
+
+ for /R [[Drive :]Path] {%% | %}variable in (set) do command [CommandLineOptions]
+
+重复数值范围
+
+使用迭代变量设置起始值 (start#) ，然后一步步执行一系列设置范围的值，直到该值超过设置的终止值 (end#)。/L 将通过对 start# 与 end# 进行比较，执行迭代变量。如果 start# 小于 end#，就会执行该命令。如果迭代变量超过 end#，则命令解释程序退出此循环。也可以使用负 step# 以递减数值的方式一步步执行此范围内的值。例如，(1,1,5) 生成顺序 1 2 3 4 5，而 (5,-1,1) 则生成顺序 (5 4 3 2 1)。语法是： 
+
+ for /L {%% | %}variable in (start#,step#,end#) do command [CommandLineOptions]
+
+重复和文件解析
+
+ 使用文件解析过程处理命令输出、字符串和文件内容。使用迭代变量定义要检查的内容或字符串，以及使用各种 ParsingKeywords 选项进一步修改解析方式。使用 ParsingKeywords 令牌选项指定哪些令牌应该传递为迭代程序变量。注意：在没有使用令牌选项时，/F 将仅检查第一个令牌。
+
+
+文件解析过程包括读取输出、字符串或文件内容、分成独立的文本行及然后将每行解析成零个或更多个令牌。然后通过设置为令牌的迭代程序变量值，调用 for 循环。默认情况下，/F 传递每个文件每一行的第一个空白分隔符号。跳过空行。语法的不同点为：
+
+ for /F ["ParsingKeywords"] {%% | %}variable in (filenameset) do command [CommandLineOptions]
+
+ for /F ["ParsingKeywords"] {%% | %}variable in ("LiteralString") do command [CommandLineOptions]
+
+ for /F ["ParsingKeywords"] {%% | %}variable in ('command') do command [CommandLineOptions]
+
+
+ filenameset 参数指定一个或多个文件名称。在继续到 filenameset 中的下一个文件之前，每个文件都会被打开、读取和处理。要覆盖默认解析行为，指定 "ParsingKeywords"。这是一个引用字符串，它包含一个或多个关键字以指定不同的解析选项。
+
+
+
+如果使用 usebackq 选项，请使用如下语法之一：
+
+ for /F ["usebackqParsingKeywords"] {%% | %}variable in ("filenameset") do command [CommandLineOptions]
+
+ for /F ["usebackqParsingKeywords"] {%% | %}variable in ('LiteralString') do command [CommandLineOptions]
+
+ for /F ["usebackqParsingKeywords"] {%% | %}variable in (`command`) do command [CommandLineOptions]
+
+下表列出可以用于 ParsingKeywords 的解析关键字。
+
+
+ 关键字
+说明
+
+
+eol=c
+指定行尾字符（只一个字符）。
+
+
+skip=n
+指定在文件的开头跳过的行数。
+
+
+delims=xxx
+指定定界符集合。这将替换空格和制表符的默认分隔符集。
+
+
+tokens=x,y,m-n
+指定将哪些令牌从每行传递到每个迭代的 for 正文。结果就分配了附加变量名称。m-n 格式是一个范围，指定从 mth 到 nth 的令牌。如果 tokens=字符串中最后一个字符是星号 (*)，则将分配附加的变量，并在解析的最后一个令牌后在行上接收剩余的文本。
+
+
+usebackq
+指定可以使用引号引用 filenameset 中的文件名称，将后面带有引号的字符串作为一个命令执行，而带有单引号的字符串是文字字符串命令。
+
+
+
+变量替换
+
+ 已经增强了 for 变量引用的替换修改程序。下表列出可选语法（对于任意变量 I）。
+
+
+带有修改程序的变量
+说明
+
+
+%~I
+展开删除任何前后引号 ("") 的 %I。
+
+
+%~fI
+将 %I 展开到完全合格的路径名。
+
+
+%~dI
+只将 %I 展开到驱动器号。
+
+
+%~pI
+只将 %I 展开到路径。
+
+
+%~nI
+只将 %I 展开到文件名。
+
+
+%~xI
+只将 %I 展开到文件扩展名。
+
+
+%~sI
+展开路径以只包含短名称。
+
+
+%~aI
+将 %I 展开到文件的文件属性。
+
+
+%~tI
+将 %I 展开到文件的日期和时间。
+
+
+%~zI
+将 %I 展开到文件大小。
+
+
+%~$PATH:I
+搜索 PATH 环境变量所列出的目录,并将 %I 展开到第一个找到的完全合格的名称。如果没有定义环境变量名称，或搜索没有找到文件，则此修改程序扩展成空字符串。
+
+
+
+ 下表列出可用来获得综合结果的修改程序组合。
+
+
+变量（使用组合的修改程序）
+说明
+
+
+%~dpI
+只将 %I 展开到驱动器号和路径。
+
+
+%~nxI
+只将 %I 展开到文件名和扩展名。
+
+
+%~fsI
+将 %I 展开到只包含短名称的完整路径名。
+
+
+%~dp$PATH:I
+在 PATH 环境变量中所列出的目录中搜索 %I，并展开到第一个找到结果的驱动器号和路径。
+
+
+%~ftzaI
+将 %I 展开到输出行（如 dir一样）。
+
+
+
+在上述范例中，可以用其它有效值替换 %I 和 PATH。有效的 for 变量名终止 %~ syntax。
+
+使用大写变量名（例如 %I），可以使代码更具可读性，并且避免与不区分大小写的修改程序混淆。
+
+
+    
+	 解析字符串
+	
+ 通过将 Filenameset 包括在圆括号内，并且外面再带上单引号（即，'filenameset'），可以使用 for /F 对直接字符串解析逻辑。将 Filenameset 视为从某个文件输入的单行，然后接受解析。
+	
+	 解析输出
+	
+ 通过将圆括号之间的 filenameset 变为后面带有引号的字符串，可以利用 for /F 命令解析命令输出。将它作为命令行，此命令被传递给子 Cmd.exe，并将输出捕获到内存并进行解析，就象它是一个文件一样。
+
+	
+
+
+
+
+范例
+
+
+ 要在批处理文件中使用 for，请使用以下语法： 
+
+ for %%variable in (set) do command [CommandLineOptions]
+
+ 要通过使用可替换变量 %f 显示当前目录中扩展名为 .doc 或 .txt 的所有文件的内容，请键入： 
+
+ for %f in (*.doc *.txt) do type %f 
+
+ 在前述范例中，当前目录中扩展名为 .doc 或 .txt 的每个文件都被替代为变量 %f ，直到每个文件的内容都显示为止。要在批处理文件中使用该命令，只需使用 %%f 替换 %f 的每个事件。否则忽略此变量，并显示一条错误消息。
+
+
+要解析文件，同时忽略注释行，请键入：
+
+
+for /F "eol=; tokens=2,3* delims=," %i in (myfile.txt) do @echo %i %j %k
+
+
+ 这个命令解析 myfile.txt 文件的每一行，忽略以分号开头的行，将第二和第三个令牌从各行传递到 FOR 正文（令牌通过逗号或空格分隔）中。FOR 语句的正文引用 %i 以获得第二个令牌，引用 %j 以获得第三个令牌，引用 %k 以获得其余全部令牌。如果您提供的文件名包含空格，请使用引号将文本引起来（例如，"File Name"）。要使用引号，必须使用 usebackq。否则，就将引号解释为定义要解析的文字字符串。
+
+ %i 在 FOR 语句中明确声明，并且 %j 和 %k 使用 tokens= 隐含声明。只要它不会引起尝试声明高于字母“z”或“Z”的某个变量，则使用 tokens= 可以指定最多 26 个令牌。
+
+ 要通过将 filenameset 放在括号之间来解析命令输出，请键入： for /F "usebackq delims==" %i IN (`set`) DO @echo %i
+
+ 这个范例列举当前环境中的环境变量名。
+
+XOX
+
+
+
+
+
+ 

@@ -1,0 +1,51 @@
+Dosonly
+
+
+
+防止用户从 Command.com 提示符启动其它不基于 MS-DOS 的应用程序。
+
+
+语法
+
+
+
+dosonly
+
+
+参数
+
+
+
+	无
+
+
+
+注释
+
+
+退出基于 MS-DOS 的应用程序时，Windows XP 返回到命令解释程序 Cmd.exe。运行驻留内存程序 (TSR) 或临时挂起基于 MS-DOS 的应用程序返回到命令提示符，Windows XP 运行 MS-DOS 环境的命令解释程序 Command.com。这样就保留了 MS-DOS 环境，允许您立即使用 TSR。
+
+ 因为从 Command.com 提示符启动和运行其它类型的应用程序可能会破坏 TSR 或挂起的基于 MS-DOS 的应用程序，Windows XP 提供 dosonly 命令。通过 dosonly，可以从 Command.com 提示符处启动只基于 MS-DOS 的应用程序。可以在 Config.nt 文件或者应用程序的程序信息文件 (PIF) 中等价的自定义启动文件中，添加 dosonly 命令。
+    
+ Config.nt 用来初始化 MS-DOS 环境，除非在应用程序的 PIF 中指定不同的启动文件。
+    
+
+
+
+
+范例
+
+
+
+ 在 Config.nt 文件或 PIF 中指定的 Config 启动文件中包括 dosonly。下列范例显示 Config.nt 的可能的样子。
+
+ dos=high,umb
+ device=%systemroot%\system32\himem.sys
+ files=40
+ @echo off
+ dosonly
+
+
+
+
+ 

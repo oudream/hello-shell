@@ -1,0 +1,109 @@
+Ipconfig
+
+
+
+显示所有当前的 TCP/IP 网络配置值、刷新动态主机配置协议 (DHCP) 和域名系统 (DNS) 设置。使用不带参数的 ipconfig 可以显示所有适配器的 IP 地址、子网掩码、默认网关。
+
+
+语法
+
+
+
+ipconfig [/all] [/renew [Adapter]] [/release [Adapter]] [/flushdns] [/displaydns] [/registerdns] [/showclassid Adapter] [/setclassid Adapter [ClassID]]
+
+
+参数
+
+
+
+		/all
+
+	显示所有适配器的完整 TCP/IP 配置信息。在没有该参数的情况下 ipconfig 只显示 IP 地址、子网掩码和各个适配器的默认网关值。适配器可以代表物理接口（例如安装的网络适配器）或逻辑接口（例如拨号连接）。
+
+	/renew [adapter]
+
+	更新所有适配器（如果未指定适配器），或特定适配器（如果包含了 Adapter 参数）的 DHCP 配置。该参数仅在具有配置为自动获取 IP 地址的网卡的计算机上可用。要指定适配器名称，请键入使用不带参数的 ipconfig 命令显示的适配器名称。
+
+	/release [adapter]
+
+	发送 DHCPRELEASE 消息到 DHCP 服务器，以释放所有适配器（如果未指定适配器）或特定适配器（如果包含了 Adapter 参数）的当前 DHCP 配置并丢弃 IP 地址配置。该参数可以禁用配置为自动获取 IP 地址的适配器的 TCP/IP。要指定适配器名称，请键入使用不带参数的 ipconfig 命令显示的适配器名称。
+
+	/flushdns
+
+	清理并重设 DNS 客户解析器缓存的内容。如有必要，在 DNS 疑难解答期间，可以使用本过程从缓存中丢弃否定性缓存记录和任何其他动态添加的记录。
+
+	/displaydns
+
+	显示 DNS 客户解析器缓存的内容，包括从本地主机文件预装载的记录以及由计算机解析的名称查询而最近获得的任何资源记录。DNS 客户服务在查询配置的 DNS 服务器之前使用这些信息快速解析被频繁查询的名称。
+
+	/registerdns
+
+	初始化计算机上配置的 DNS 名称和 IP 地址的手工动态注册。可以使用该参数对失败的 DNS 名称注册进行疑难解答或解决客户和 DNS 服务器之间的动态更新问题，而不必重新启动客户计算机。TCP/IP 协议高级属性中的 DNS 设置可以确定 DNS 中注册了哪些名称。
+
+	/showclassid adapter
+
+	显示指定适配器的 DHCP 类别 ID。要查看所有适配器的 DHCP 类别 ID，可以使用星号 (*) 通配符代替 Adapter。该参数仅在具有配置为自动获取 IP 地址的网卡的计算机上可用。
+
+	/setclassid Adapter [ClassID]
+
+	配置特定适配器的 DHCP 类别 ID。要设置所有适配器的 DHCP 类别 ID，可以使用星号 (*) 通配符代替 Adapter。该参数仅在具有配置为自动获取 IP 地址的网卡的计算机上可用。如果未指定 DHCP 类别 ID，则会删除当前类别 ID。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+ipconfig 等价于 winipcfg，后者在 Windows Millennium Edition、Windows 98 和 Windows 95 上可用。尽管 Windows XP 没有提供象 winipcfg 命令一样的图形化界面，但可以使用“网络连接”查看和更新 IP 地址。要做到这一点，请打开 网络连接，右键单击某一网络连接，单击“状态”，然后单击“支持”选项卡。
+ 该命令最适用于配置为自动获取 IP 地址的计算机。它使用户可以确定哪些 TCP/IP 配置值是由 DHCP、自动专用 IP 地址 (APIPA) 和其他配置配置的。
+    
+	如果 Adapter 名称包含空格，请在该适配器名称两边使用引号（即 "Adapter Name"）。
+	
+
+ 对于适配器名称，ipconfig 可以使用星号 (*) 通配符字符指定名称为指定字符串开头的适配器，或名称包含有指定串的适配器。例如，Local* 可以匹配所有以字符串 Local 开头的适配器，而 *Con* 可以匹配所有包含字符串 Con 的适配器。
+
+ 只有当网际协议 (TCP/IP) 协议在 网络连接中安装为网络适配器属性的组件时，该命令才可用。
+    
+
+
+
+范例
+
+
+
+要显示所有适配器的基本 TCP/IP 配置，请键入：
+
+ipconfig
+
+
+要显示所有适配器的完整 TCP/IP 配置，请键入：
+
+ipconfig /all
+
+
+仅更新“本地连接”适配器的由 DHCP 分配 IP 地址的配置，请键入：
+
+ipconfig /renew "Local Area Connection"
+
+
+要在排除 DNS 的名称解析故障期间清理 DNS 解析器缓存，请键入：
+
+ipconfig /flushdns
+
+
+要显示名称以 Local 开头的所有适配器的 DHCP 类别 ID，请键入：
+
+ipconfig /showclassid Local*
+
+
+要将“本地连接”适配器的 DHCP 类别 ID 设置为 TEST,请键入：
+
+ipconfig /setclassid "Local Area Connection" TEST
+
+XOX
+
+
+
+
+ 

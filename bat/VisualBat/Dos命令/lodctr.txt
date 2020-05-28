@@ -1,0 +1,60 @@
+Lodctr
+
+
+
+注册服务或设备驱动程序的新性能计数器名称和解释文本，同时保存并恢复计数器设置和解释文本。
+
+
+语法
+
+
+
+lodctr [\\ComputerName] FileName [/s:FileName] [/r:FileName]
+
+参数
+
+
+
+[\\ComputerName] filename
+
+注册初始化文件 FileName 中的性能计数器名称设置和解释文本，.如果不指定 ComputerName，在默认情况下 lodctr 将使用本地本计算机。
+
+/s:FileName
+
+将性能计数器注册表设置和解释文本存入 FileName 文件中。
+
+/r:filename
+
+恢复文件 FileName 中的性能计数器注册表设置和解释文本。
+小心
+
+ 如果使用 lodctr /r 命令，则将利用在指定文件中定义的配置替换性能计数器注册表设置和解释文本，从而将其覆盖。
+    
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+
+要将当前的性能注册表设置和计数器解释文本保存到文件 perf backup1.txt 中，请键入：
+
+
+lodctr /s:"perf backup1.txt"
+
+XOX
+
+
+
+
+
+

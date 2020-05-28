@@ -1,0 +1,462 @@
+Ipseccmd
+
+
+
+在目录服务或本地（远程）注册表中配置 Internet 协议安全 (IPSec) 策略。Ipseccmd 是与 IP 安全策略 Microsoft 管理控制台 (MMC) 管理单元功能相同的另一种命令行管理工具，具有三种模式：动态模式 (dynamic mode)、静态模式 (static mode) 和查询模式 (query mode)。
+
+
+若要查看该命令语法，请单击以下命令：
+
+ipseccmd dynamic mode 
+
+
+可以利用 Ipseccmd 动态模式将匿名规则添加到现有的 IPSec 策略中，方法是将这些规则添加到 IPSec 安全策略数据库。即使重新启动 IPSEC 服务后，所添加的规则也会存在。使用动态模式的好处在于所添加的规则可以与域中的策略共存。动态模式是 Ipseccmd 的默认模式。
+
+
+语法
+
+
+要添加规则，可以使用以下语法：
+
+ipseccmd [\\ComputerName] -f FilterList [-n NegotiationPolicyList] [-t TunnelAddr] [-a AuthMethodList] [-1s SecurityMethodList] [-1k MainModeRekeySettings] [-1p] [-1f MMFilterList] [-1e SoftSAExpirationTime] [-soft] [-confirm] [{-dialup | -lan}]
+
+要删除所有动态策略，请使用如下语法：
+
+ipseccmd -u
+
+
+
+参数
+
+
+
+	\\computername
+
+	指定要向其添加规则的远程计算机的名称。
+
+	-f FilterList
+
+	第一个语法要求。为快速模式安全关联 (SAs) 指定一个或多个由空格分割的筛选器规格。每个筛选器规格都定义一套受该规则影响的网络流量。
+
+	-n NegotiationPolicyList
+
+	指定由筛选器列表定义的安全流量的一个或多个安全方法（由空格分割）。
+
+	-t TunnelAddr
+
+	指定隧道模式为 IP 地址或 DNS 域名的隧道终结点。
+
+	-a AuthMethodList
+
+	指定一个或多个身份认证方法（由空格分割）。
+
+	-1s SecurityMethodList
+
+	指定一个或多个密钥交换安全方法（由空格分割）。
+
+	-1k MainModeRekeySettings
+
+	指定主模式 SA rekey设置。
+
+	-1p
+
+	启用主密钥完全向前保密。
+
+	-1f MMFilterList
+
+	指定一个或多个主模式 Sas 的筛选器规格（由空格分割）。
+
+	-1e SoftSAExpirationTime
+
+	指定软 SAs 的过期时间（单位为：秒）。
+
+	-soft
+
+	启用软 SAs。
+
+	-confirm
+
+	指定在添加规则或策略之前显示确认提示。
+
+	{-dialup | -lan}
+
+	指定规则是否仅应用于远程访问或拨号连接，或是否仅应用于局域网 (LAN) 连接。
+
+	-u
+
+	第二个语法要求。指定删除所有的动态规则。
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+ Ipseccmd 不可用于配置运行 Windows 2000 计算机的规则。
+
+	 如果不指定 ComputerName 参数，则该规则将添加到本地计算机。
+	
+	 如果使用了 ComputerName 参数，则此参数必须在其他所有参数之前使用，而且必须具有欲向其添加规则的计算机的管理员权限。
+	
+	 对于 -f 参数，一种筛选器规格是由空格分割且由如下格式定义的一个或多个筛选器：
+
+
+SourceAddress/SourceMask:SourcePort=DestAddress/DestMask:DestPort:Protocol
+
+
+ SourceMask、SourcePort、DestMask 和 DestPort 是可选项。如果忽略这些参数，则该筛选器将使用子网掩码 255.255.255.255 和所有端口。
+
+ Protocol 是可选项。如果省略它，则筛选器将使用所有协议。如果指定一种协议，则必须指定端口或在协议前使用两个冒号 (::)。（请参见动态模式的第一个范例。）此协议必须是筛选器的最后一项。可以使用下面的协议符号：ICMP、UDP、RAW 和 TCP。
+
+ 可以通过使用加号 (+) 替代等号 (=) 创建镜像筛选器。
+
+ 可以将 SourceAddress/SourceMask 或 DestAddress/DestMask 替换为下表中的值：
+
+
+值
+说明
+
+
+0
+我的地址或地址
+
+
+*
+任意地址
+
+
+DNSName
+DNS 域名如果 DNS 名称解析多个地址，则会忽略它。
+
+
+GUID
+本地网络接口的全球单一标识 (GUID)，形式为 {12345678-1234-1234-1234-123456789ABC}。当在静态模式下使用 -n 参数时，则不能指定 GUID。
+
+
+
+ 通过指定“默认”的筛选器规格，可以启用默认的响应规则。
+ 将筛选器规格放在圆括号中可以指定许可筛选器。将筛选器规格放在中括号 ([ ]) 中可以指定阻挡筛选器。
+
+ 如果使用的 Internet 地址是分类的子网掩码（以八位字节为边界定义的子网掩码），则可使用通配符指定子网掩码。例如，10.*.*.* 与 10.0.0.0/255.0.0.0 相同，10.92.*.* 与 10.92.0.0/255.255.0.0 相同。
+
+
+
+
+筛选器范例
+
+
+要创建可以筛选 Computer1 和 Computer2 之间的 TCP 流量的镜像筛选器，请键入：
+
+Computer1+Computer2::TCP
+
+要创建子网范围为 172.31.0.0/255.255.0.0 到 10.0.0.0/255.0.0.0（端口 80）之间的所有 TCP 流量的筛选器，请键入：
+
+
+172.31.0.0/255.255.0.0:80=10.0.0.0/255.0.0.0:80:TCP
+
+ 要创建允许本地 IP 地址和 IP 地址为 10.2.1.1 之间流量的镜像筛选器，请键入：
+
+
+(0+10.2.1.1)
+
+
+	对于 -n 参数，可由空格分割一个或多个协商策略并采用以下的形式：
+	
+
+ esp[EncrypAlg,AuthAlg]RekeyPFS[Group]
+
+ ah[HashAlg]
+
+ ah[HashAlg]+esp[EncrypAlg,AuthAlg]
+
+
+
+
+
+其中，EncrypAlg 可以是 none、des 或 3des；AuthAlg 可以是 none、md5 或 sha；HashAlg 可以是 md5 或 sha。
+
+
+ 不支持 esp[none,none] 配置。
+
+ sha 参数是指 SHA1 散列算法。
+
+ Rekey 参数是可选项，它可以指定千字节的数量（通过在数字后加 K 表示），或秒数（通过在数字后加 S 表示）这些指定值位于快速模式 SA 的 rekey 之前。要指定两个 rekey 的参数，请使用斜线 (/) 将两个数分开。例如，要每隔 1 小时和每 5 兆 的数据流量后 rekey 一次快速模式 SA，请键入：
+
+
+3600S/5000K
+  PFS 参数是可选项，该参数可以启用会话密钥完全向前保密。默认情况下，会话密钥完全向前保密是禁用的。
+
+ Group 参数是可选项，该参数可指定会话密钥完全向前保密的 Diffie-Hellman 组。对于 Low(1) Diffie-Hellman 组，指定 PFS1 或 P1。对于 Medium(2) Diffie-Hellman 组，指定 PFS2 或 P2。默认情况下，会话密钥完全向前保密的组值来自当前主模式设置值。
+
+ 如果不指定协商策略，则默认的协商策略如下：
+
+
+ esp[3des,sha]
+
+ esp[3des,md5]
+
+ esp[des,sha]
+
+ esp[des,md5]
+
+
+
+
+
+
+	 如果忽略 -t 参数，则使用 IPSec 传输模式。
+	
+	对于 -a 参数，由空格分割一种或多种身份验证方式，并使用以下某种形式：
+	
+
+
+ preshare:"PresharedKeyString"
+
+ kerberos
+
+ cert:"CAInfo"
+
+
+
+
+ PresharedKeyString 参数指定预共享密钥的字符串。CAInfo 参数指定 IP 安全策略管理单元中显示的证书区别名，此时证书被选择为某规则的身份验证方式。PresharedKeyString 和 CAInfo 参数区分大小写。可以使用首字母简化此方法：p, k 或 c。如果忽略 -a 参数，则默认的身份验证方式为 Kerberos。
+
+	对于 -1s 参数，单个或多个密钥交换安全方式由空格分割且定义成下面的格式：
+
+
+EncrypAlg-HashAlg-GroupNum
+
+
+其中，EncrypAlg 可以是 des 或 3des；HashAlg 可以是 md5 或 sha；GroupNum 可以是 1（对于 Low(1) Diffie-Hellman 组）或 2（对于 Medium(2) Diffie-Hellman 组）。如果忽略 -1s 参数，则默认的密钥交换安全方式是 3des-sha-2、3des-md5-2、des-sha-1 和 des-md5-1。
+	对于 -1k 参数，可以指定快速模式 SAs 的数量（通过在数字后加 Q 表示）或秒数（通过在数字后面加 S 表示）来 rekey 主模式 SA。要指定两个 rekey 的参数，必须使用斜线 (/) 将两个数分开。例如，要在每 10 个快速模式 SAs 和每隔 1 小时后 rekey 主模式，请键入：
+
+10Q/3600S
+
+如果忽略 -1k 参数，主模式 rekey 的默认值为无限个主模式 SAs 和 480 分钟。
+	 主密钥完全向前保密在默认情况下是禁用的。
+	
+	对于 -1f 参数，指定主模式筛选器规格的语法与 -1f 参数相同，差别在于不可以指定许可筛选器、阻挡筛选器、端口或协议。如果忽略 -1f 参数，将根据快速模式筛选器自动创建主模式筛选器。
+	如果忽略 -1e 参数，软 SAs 的过期时间为 300 秒。然而，软 SAs 在未使用 -soft 参数时总是禁用的。
+	
+	 只有动态模式才可使用确认。
+	
+	 如果未指定参数 -dialup 和 -lan，则规则将应用于所有适配器。
+	
+
+
+
+
+范例
+
+
+要创建进出本地计算机的所有流量的使用 MD5 散列身份认证头标 (AH) 的规则，请键入：
+
+
+ipseccmd -f 0+* -n ah[md5]
+
+
+
+要创建来自 10.2.1.1 和 10.2.1.13（隧道终结点为 10.2.1.13）的流量的隧道规则（该规则带有利用 SHA1 散列算法的 AH 隧道模式，并启用了主密钥完全向前保密和在创建之前带有规则确认提示），请键入：
+
+
+ipseccmd -f 10.2.1.1=10.2.1.13 -t 10.2.1.13 -n ah[sha] -1p -c
+
+
+要在名为 corpsrv1 的计算机上创建名为 corpsrv1 和 corpsrv2 的计算机之间所有流量的规则（该规则同时带有 AH 和加密安全负载 (ESP)，以及预共享的密钥身份验证），请键入：
+
+
+ipseccmd \\corpsrv1 -f corpsrv2+corpsrv1 -n ah[md5]+esp[des,sha]  -a p:"corpauth" 
+
+
+ipseccmd static mode 
+
+
+可是使用 Ipseccmd 静态模式创建命名策略和命名规则。也可以使用静态模式修改最初由 Ipseccmd 创建的现有策略和规则。静态模式的语法结合了带参数的动态模式的语法，该参数可使其在策略级的水平工作。
+
+
+语法
+
+
+
+ipseccmd DynamicModeParameters -w Type[:Location] -p PolicyName[:PollInterval] -r RuleName [{-x | -y}] [-o]
+
+
+参数
+
+
+
+	DynamicModeParameters
+
+	必需。根据上面的介绍为 IPSec 规则指定一套动态模式参数集。
+
+	-w Type[:Location]
+
+	必需。指定写入本地注册表、远程计算机的注册表或活动目录域的策略和规则。
+
+	-p PolicyName[:PollInterval]
+
+	必需。指定策略名称和检查策略更改的频率（以分钟计）。如果 PolicyName 包含空格，请使用引号将文本引起来（例如，"PolicyName"）。
+
+
+
+	-r rulename
+
+	必需。指定规则的名称。如果 RuleName 包含空格，请使用引号将文本引起来（例如，"RuleName"）。
+
+	[{-x | -y}]?
+
+	指定是否分配本地注册表策略。-x 参数指定分配了本地注册表策略。-y 参数指定未分配本地注册表册策略。
+
+	-o
+
+	指定应该删除规则或策略。
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+	 对于 -w 参数，Type 既可以是指定本地或远程计算机注册表的 reg，也可以是指定活动目录的 ds。
+
+如果指定 Type 参数为 reg，但没有使用 Location 参数，则将创建本地计算机的注册表规则。
+如果指定 Type 参数为 reg，并指定了 Location 参数的远程计算机名，则将创建指定的本地计算机的注册表规则。
+如果指定 Type 参数为 ds，但没有使用 Location 参数，则将创建本地计算机所在的活动目录域的规则。
+如果指定 Type 参数为 ds，且指定了 Location 参数的活动目录域，则将创建指定域的规则。
+	
+
+	对于 -p 参数，如果已经存在该名称的策略，则指定的规则将添加到策略中。否则，将创建指定名称的策略。如果指定 PollInterval 参数的值为整数，则该策略的轮询时间间隔将设置为该整数的分钟数。
+	
+	对于 -r 参数，如果已经存在该名称的规则，则将根据命令中指定的参数修改该规则。例如，如果在现有规则中使用 -f 参数，则只替换该规则的筛选器。如果不存在指定名称的规则，则将创建该名称的规则。
+	
+	对于 -o 参数，会删除指定策略的所有方面。如果具有指向要删除的策略中对象的其他策略，则不要使用该参数。
+	
+	
+	
+静态模式的使用有一个方面与动态模式不同。使用动态模式，可以在 FilterList 中指定许可和阻挡筛选器，可以利用 -f 参数识别这些筛选器。使用静态模式，可以在 NegotiationPolicyrList 中指定许可和阻挡筛选器，可以利用 -n 参数识别这些筛选器。除了动态模式下讲述的 NegotiationPolicyList 参数外，也可以在静态模式下使用 block、pass 或 inpass 参数。下表列出了这些参数及其对各自行为的说明。
+
+
+
+
+参数
+说明
+
+
+block
+NegotiationPolicyList 中策略的其余部分将被忽略，且所有筛选器都将创建为阻挡筛选器。
+
+
+pass
+NegotiationPolicyList 中策略的其余部分将被忽略，且所有筛选器都将创建为许可筛选器。
+
+
+inpass
+内传筛选器将允许未加安全的初始通讯，但响应将通过 IPSec 加强其安全性。
+
+
+	
+
+
+
+
+范例
+
+
+
+要利用 Kerberos 和预共享密钥身份认证方式创建名称为 Default Domain Policy 并在活动目录域（本地计算机需属于该域成员）中具有 30 分钟轮询时间间隔，而且在本地计算机和名为 SecuredServer1 和 SecuredServer2 的计算机流量之间的规则名为 SevuredServer2 的策略，请键入：
+
+
+ipseccmd -f 0+SecuredServer1 0+SecuredServer2 -a k p:"corpauth" -w ds -p "Default Domain Policy":30 -r "Secured Servers" 
+
+
+要利用本地计算机的任意流量镜像筛选器以及预共享密钥身份验证来创建并分配规则名为 Secure My Traffic 、策略名为 Me to Anyone 的本地策略，请键入：
+
+
+ipseccmd -f 0+* -a p:"localauth" -w reg -p "Me to Anyone" -r "Secure My Traffic" -x 
+
+
+ipseccmd query mode 
+
+可以使用 Ipseccmd 查询模式显示 IPSec 安全策略数据库中的数据。
+
+
+
+语法
+
+
+
+ipseccmd [\\ComputerName] show {{[filters] | [policies]  | [auth] | [stats] | [sas]} | all}
+
+
+参数
+
+
+
+	\\computername
+
+	通过名称指定要显示其数据的远程计算机。
+
+	show
+
+	必需。指定必须以查询模式运行 Ipseccmd。
+
+	filters
+
+	显示主模式和快速模式筛选器。
+
+	policies
+
+	显示主模式和快速模式策略。
+
+	auth
+
+	显示主模式身份认证方式。
+
+	stats
+
+	显示有关 Internet 密钥交换 (IKE) 和 IPSec 的统计资料。
+
+	sas
+
+	显示主模式和快速模式安全关联 (SAs)。
+
+	all
+
+	显示上面各种类型的数据。
+
+	/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+ Ipseccmd 不可用于显示运行 Windows 2000 的 IPSec 数据。
+
+	 如果不使用 ComputerName 参数，则将显示关于本地计算机的信息。
+	
+	 如果使用了 ComputerName 参数，则此参数必须位于其他所有参数之前，且必须具有欲显示其信息的计算机的管理员权限。
+	
+
+
+
+
+范例
+
+
+要显示主模式和快速模式筛选器以及本地计算机的策略，请键入：
+
+ipseccmd show filters policies
+
+
+要显示远程计算机 Server1 的所有 IPSec 信息，请键入以下命令：
+
+ipseccmd \\Server1 show all 
+
+XOX
+
+
+
+

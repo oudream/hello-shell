@@ -1,0 +1,58 @@
+Winnt
+
+
+
+安装或升级到 Windows XP。如果您拥有与 Windows XP 兼容的硬件，则可在 Windows 3.x 或 MS-DOS 命令提示符下运行 winnt。
+
+
+语法
+
+
+
+winnt  [/s:SourcePath]  [/t:TempDrive]  [/u:answer file][/udf:ID [,UDB_file]] [/r:folder][/rx:folder][/e:command][/a]
+
+
+参数
+
+
+
+	/s:SourcePath
+
+	指定 Windows XP 文件的资源位置。该位置必须是格式为 x:\[Path] 或 \\server\share[\Path] 的完整路径。
+
+	/t:TempDrive
+
+	指示安装程序将临时文件存储在指定驱动器中，并在该驱动器上安装 Windows XP。如果没有指定位置，安装程序将尝试为您定位驱动器。
+
+	/u:answer file
+
+	使用应答文件可以执行无人参与的安装。该应答文件提供了在安装过程中最终用户响应部分或全部提示的答案。如果使用 /u，还必须使用 /s。
+
+	/udf:ID [,UDB_file]
+
+	指定安装程序用来指定“唯一数据库 (UDB)”文件如何修改应答文件（请参阅 /u 项）的标识符 (ID)。UDF 会覆盖应答文件中的一些值，且标识符会决定使用 UDF 中的哪些值。如果没有指定 UDB_file，安装程序将提示您插入包含 $Unique$.udb 文件的磁盘。
+
+	/r:folder
+
+	指定要安装的可选文件夹。安装完成之后，该文件夹会依然保留。
+
+	/rx:folder
+
+	指定要复制的可选文件夹。安装结束后，该文件夹会被删除。
+
+	/e:command
+
+	指定安装程序在执行最后阶段的安装前要执行的命令。
+
+	/a
+
+	启用辅助功能选项。
+
+	/?
+在命令提示符显示帮助。
+
+
+XOX
+
+
+

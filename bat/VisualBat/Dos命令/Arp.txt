@@ -1,0 +1,64 @@
+Arp
+
+
+显示和修改“地址解析协议 (ARP)”缓存中的项目。ARP 缓存中包含一个或多个表，它们用于存储 IP 
+地址及其经过解析的以太网或令牌环物理地址。计算机上安装的每一个以太网或令牌环网络适配器都有自己单独的表。如果在没有参数的情况下使用，则 arp 
+命令将显示帮助信息。
+
+语法
+
+
+arp [-a [InetAddr] [-N 
+IfaceAddr]] [-g [InetAddr] [-N 
+IfaceAddr]] [-d InetAddr [IfaceAddr]] 
+[-s InetAddr EtherAddr [IfaceAddr]]
+
+参数
+
+
+  -a [InetAddr] [-N IfaceAddr] 
+  显示所有接口的当前 ARP 缓存表。要显示指定 IP 地址的 ARP 缓存项，请使用带有 InetAddr 参数的 arp 
+  -a，此处的 InetAddr 代表指定的 IP 地址。要显示指定接口的 ARP 缓存表，请使用 -N 
+  IfaceAddr 参数，此处的 IfaceAddr 代表分配给指定接口的 IP 地址。-N 参数区分大小写。 
+  -g [InetAddr] [-N IfaceAddr] 
+  与 -a 相同。 
+  -d InetAddr [IfaceAddr] 
+  删除指定的 IP 地址项，此处的 InetAddr 代表 IP 地址。对于指定的接口，要删除表中的某项，请使用 
+  IfaceAddr 参数，此处的 IfaceAddr 代表分配给该接口的 IP 地址。要删除所有项，请使用星号 (*) 
+  通配符代替 InetAddr。 
+  -s InetAddr EtherAddr [IfaceAddr] 
+  向 ARP 缓存添加可将 IP 地址 InetAddr 解析成物理地址 EtherAddr 
+  的静态项。要向指定接口的表添加静态 ARP 缓存项，请使用 IfaceAddr 参数，此处的 IfaceAddr 
+  代表分配给该接口的 IP 地址。 
+  /? 
+  在命令提示符显示帮助。 
+
+注释
+
+
+  InetAddr 和 IfaceAddr 的 IP 地址用带圆点的十进制记数法表示。 
+  物理地址 EtherAddr 
+  由六个字节组成，这些字节用十六进制记数法表示并且用连字符隔开（比如，00-AA-00-4F-2A-9C）。 
+  通过 -s 参数添加的项属于静态项，它们不会 ARP 缓存中超时。如果终止 TCP/IP 
+  协议后再启动，这些项会被删除。要创建永久的静态 ARP 缓存项，请在批处理文件中使用适当的 arp 
+  命令并通过“计划任务程序”在启动时运行该批处理文件。 
+  只有当网际协议 (TCP/IP) 协议在 网络连接中安装为网络适配器属性的组件时，该命令才可用。 
+  
+
+范例
+
+
+要显示所有接口的 ARP 缓存表，可键入：
+
+arp -a
+
+对于指派的 IP 地址为 10.0.0.99 的接口，要显示其 ARP 缓存表，可键入：
+
+arp -a -N 10.0.0.99
+
+要添加将 IP 地址 10.0.0.80 解析成物理地址 00-AA-00-4F-2A-9C 的静态 ARP 缓存项，可键入：
+
+arp -s 10.0.0.80 00-AA-00-4F-2A-9CXOX 
+
+
+

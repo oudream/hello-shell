@@ -1,0 +1,39 @@
+Nlsfunc
+
+
+
+加载国家（地区）专用的信息。XOX
+
+
+语法
+
+
+
+nlsfunc [[Drive:][Path][FileName]]
+
+
+参数
+
+
+
+	[[Drive:}[Path][FileName]]
+
+	指定包含国家（地区）专用的信息的文件。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+XOX
+	 XOX
+	
+
+
+XOX
+
+
+
+ 

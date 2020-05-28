@@ -1,0 +1,42 @@
+Lpq
+
+
+
+显示运行 Line Printer Daemon (LPD) 的计算机上的打印队列状态。使用不带参数的 lpq 显示该命令的命令行帮助。
+
+
+语法
+
+
+
+lpq -S ServerName -P PrinterName [-l]
+
+
+参数
+
+
+
+	-S ServerName
+
+	必需按名称指定要显示其打印队列状态的计算机。
+
+	-p PrinterName
+
+	必需按名称指定要显示其打印状态的打印机。
+
+	-l
+
+	指定要显示打印队列状态的详细信息。
+
+	/?
+在命令提示符显示帮助。
+
+
+XOX
+
+
+
+
+
+ 
+ 

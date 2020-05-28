@@ -1,0 +1,1 @@
+assoc .txt=Word.Document.8

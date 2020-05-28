@@ -1,0 +1,80 @@
+Shift
+
+
+
+更改批处理文件中批处理参数的位置。
+
+
+语法
+
+
+
+shift 
+
+
+参数
+
+
+
+	无
+
+
+
+
+注释
+
+
+ 将 shift 命令行选项与命令扩展一起使用
+
+ 启用命令扩展（默认设置）后，shift 命令支持 /n 命令行选项，该选项通知命令在第 n 个参数处开始更改，n 可以是 0 到 8 的任何一个值。例如，
+
+SHIFT /2
+
+ 可以将 %3 改为 %2，将 %4 改为 %3 等等，而 %0 和 %1 保持不变。
+    
+ shift 命令的工作原理
+	
+ shift 命令通过将每个参数复制到前一个参数中，更改批处理参数 %0 到 %9 的值。也就是说，将 %1 的值复制到 %0，%2 的值复制到 %1，依次类推。该命令在撰写对任何数目的参数执行相同操作的批处理文件时非常有用。
+    
+ 使用 10 个以上的批处理参数
+	
+ 也可以使用 shift 命令创建可以接受 10 个以上批处理参数的批处理文件。如果在命令行上指定了 10 个以上的参数，第十个 (%9) 参数之后的参数将更改为 %9，一次更改一个。
+    
+	 将 %* 与 shift 一起使用
+	
+Shift 对 %* 批处理参数没有影响。
+	 恢复参数
+	
+ 没有反向的 shift 命令。执行了 shift 命令后，不能恢复更改前存在的第一个批处理参数 (%0)。
+	
+
+
+
+
+
+范例
+
+
+
+ 以下批处理文件 Mycopy.bat 显示了如何使用包含任意数目批处理参数的 shift 命令。该批处理文件将一列文件复制到特定的目录。批处理参数由目录和文件名参数表示。
+
+
+@echo off
+rem MYCOPY.BAT copies any number of files
+rem to a directory.
+rem The command uses the following syntax:
+rem mycopy dir file1 file2 ...
+set todir=%1
+:getfile
+shift
+if "%1"=="" goto end
+copy %1 %todir%
+goto getfile
+:end
+set todir=
+echo All done
+
+XOX
+
+
+

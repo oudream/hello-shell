@@ -1,0 +1,177 @@
+Relog
+
+
+
+将性能计数器从性能计数器日志提出为其它格式，例如，text-TSV（用于制表符分隔的文本）、 text-CSV （用于逗号分隔的文本）、binary-BIN 或 SQL。
+
+
+语法
+
+
+
+relog [FileName [filename ...]] [-a] [-c  Path [path ...]] [-cf FileName] [-f  {bin|csv|tsv|SQL}] [-t value] [-o {output file | DSN!counter_log}] [-b M/d/yyyy [[hh:]mm:]ss] [-e M/d/yyyy [[hh:]mm:]ss] [-config FileName] [-q]
+
+
+参数
+
+
+
+FileName [filename ...]
+
+指定现有性能计数器日志的路径名。可以指定多个输入文件。
+
+-a 
+
+附加输出文件，而不是覆盖。此选项不适用于总是默认为附加的 SQL 格式。
+
+-c Path [path ...]
+
+指定用来登录的性能计数器路径。要指定多个计数器路径，请用空格分隔它们，并用引号将计数器路径引起来（例如，"CounterPath1 CounterPath2"）。
+
+-cfFileName 
+
+指定列出要包括在重新记录文件中的性能计数器的文本文件的路径名。使用此选项在输入文件中列出计数器路径，每行列出一个路径名。默认设置是重新记录原始日志文件中的所有计数器。
+
+-f {bin|csv|tsv|SQL}
+
+指定输出文件格式的路径名。默认格式为 bin。对于 SQL 数据库，输出文件指定 DSN!counter_log。通过使用 ODBC 管理器配置 DSN （数据库系统名称），可以指定数据库位置。
+
+-t value
+
+在 "n" 中指定范例间隔。将各个第 n 个数据点包括在重新记录文件之内。默认设置是每个数据点。
+
+-o {output file | DSN!counter_log}
+
+指定要写入计数器的输出文件或 SQL 数据库的路径。
+
+-b M/d/yyyy hh[:mm[:ss]]
+
+指定从输入文件复制第一个记录的开始时间。必须以正确格式指定日期和时间M/d/yyyy hh:mm:ss
+
+-e M/d/yyyy hh[:mm[:ss]]
+
+指定从输入文件复制最后一个记录的结束时间。必须以正确的格式指定日期和时间 M/d/yyyy hh:mm:ss
+
+-config filename
+
+指定包含命令行参数的设置文件的路径名。
+
+-q
+
+显示输入文件中指定的日志文件的性能计数器和时间范围。
+
+/?
+在命令提示符显示帮助。
+
+
+注释
+
+
+
+计数器路径格式
+
+计数器路径的通用格式如下：[\\Computer]\object[parent/instance#index]\counter] where:
+
+父节点、事例、索引和格式的计数器组件可以是有效名或通配符。不是所有计数器都必须具有计算机、父节点、事例和索引组件。
+
+可以根据计数器本身决定计数器路径。例如，LogicalDisk 对象具有事例 index，所以必须提供 #index 或通配符。因此，可以使用如下格式：
+
+\LogicalDisk(*/*#*)\*
+
+相对而言，Process 对象不需要事例 index。因此，可以使用如下格式：
+
+\Process(*)\ID Process
+
+可用格式列表如下：
+
+\\machine\object(parent/instance#index)\counter
+\\machine\object(parent/instance)\counter
+\\machine\object(instance#index)\counter
+\\machine\object(instance)\counter
+\\machine\object\counter
+\object(parent/instance#index)\counter
+\object(parent/instance)\counter 
+\object(instance#index)\counter
+\object(instance)\counter
+\object\counter
+
+
+
+如果在父节点名称中指定了通配符，则将返回指定对象的所有与指定事例和计数器域匹配的事例。
+
+如果在事例名称中指定通配符，则将返回指定对象和父节点对象中的所有事例（如果指定索引相应的所有事例名称与通配符匹配）。
+
+如果在计数器名称中指定通配符，则将返回指定对象的所有计数器。
+
+不支持部分计数器字符匹配。
+
+计数器文件
+
+计数器文件是列出现有日志中一个或多个性能计数器的文本文件。从日志或 [\\Computer \ object [instance] \ counter] 格式的 -q 输出中复制完整的计数器名称。在每行上列出一个计数器路径。
+
+
+复制计数器
+
+执行时，Relog 从输入文件中的每个记录复制指定的计数器，同时如果需要，可转换格式。计数器文件中允许包含通配符路径。
+
+
+保存输入文件子集。
+
+使用 -t 参数指定按每隔 n 个记录将输入文件插入到输出文件之中。默认情况下，数据从每个记录重新记录。
+
+
+将 -b 和 -e 参数用于日志文件
+
+可以指定输出日志包括开始时间 (-b) 之前的记录，从而为需要格式化值的计算值的计数器提供数据。输出文件将包含具有来自输入文件（其时间戳小于结束时间 (-e) 参数）的最后记录。
+
+
+使用 -config 选项
+
+与  -config  选项一起使用的设置文件的内容应具有如下格式：
+
+[command_option}
+
+value
+其中 command_option 是命令行选项，然后在 value 指定其值。例如：
+
+[o]
+
+output.txt
+
+[f]
+
+csv
+
+[t]
+
+5
+
+
+
+
+有关如何将 Relog 合并到 Windows 管理工具 (WMI) 脚本中的详细信息，请参阅 Microsoft Windows 资源库网站上“脚本日志和监视”。(http://www.microsoft.com/)
+
+
+
+
+
+范例
+
+
+
+要以值为 30 的固定间隔浏览现有跟踪日志、列出计数器路径、输出文件和格式，请键入如下命令：
+
+
+Relog c:\perflogs\daily_trace_log.blg -cf counter_file.txt -o c:\perflogs\reduced_log.csv -t 30 -f csv
+
+
+要以值为 30 的固定间隔浏览现有跟踪日志、列出计数器路径和输出文件，请键入如下命令：
+
+
+Relog c:\perflogs\daily_trace_log.blg  -cf counter_file.txt -o c:\perflogs\reduced_log.blg -t 30
+
+XOX
+
+
+
+

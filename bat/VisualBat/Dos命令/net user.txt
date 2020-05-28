@@ -1,0 +1,150 @@
+Net user
+
+
+
+添加或修改用户帐户或者显示用户帐户信息。
+
+
+语法
+
+
+
+net user [UserName [Password | *] [options]] [/domain]
+
+
+net user [UserName {Password | *} /add [options] [/domain]]
+
+
+net user [UserName [/delete] [/domain]]
+
+
+参数
+
+
+
+	UserName
+
+	指定要添加、删除、修改或查看的用户帐户名。用户帐户名最多可有 20 个字符。
+
+	Password
+
+	为用户帐户指派或更改密码。输入星号（*）产生一个密码提示在密码提示行处键入密码时不显示密码。
+
+	/domain
+
+	在计算机主域的主域控制器执行操作。
+
+	options
+
+	指定命令行选项。下表列出了可以使用的有效命令行选项。
+	
+
+命令行选项语法
+说明
+
+
+/active:{no | yes}
+启用或禁用用户帐户。如果用户帐户不活动，该用户就无法访问计算机中的资源。默认设置为 yes （即活动状态）。
+
+
+/comment:"text"
+提供关于用户账户的描述性说明。该注释最多可以有 48 个字符。给文本加上引号。
+
+
+/countrycode:nnn
+使用操作系统“国家（地区）”代码为用户帮助和错误消息实现指定的语言文件。数值 0 代表默认的“国家（地区）”代码。
+
+
+/expires:{{mm/dd/yyyy | dd/mm/yyyy | mmm,dd ,yyyy} | never}
+使用户帐户根据指定的 date 过期。过期日期可以是 [mm/dd/yyyy], [dd/mm/yyyy] 或 [mmm,dd ,yyyy] 格式。它取决于国家（地区）代码。注意，帐户在指定日期开始时到期。对于月份值，可以使用数字、全称或三个字母的缩写（即 Jan、Feb、Mar、Apr、May、Jun、Jul、Aug、Sep、Oct、Nov、Dec）。对于年份值，可以使用两位数或四位数。使用逗号和斜杠分隔日期的各部分。不要使用空格。如果省略了 yyyy，将假定为下一次出现的日期（根据计算机的日期和时间而定）。例如，如果输入的日期在 1994 年 1 月 10 日到 1995 年 1 月 8 日之间，则下列日期项相等:
+ jan,9 
+ 1/9/95 
+ january,9,1995 
+ 1/9 
+
+
+/fullname:"name"
+指定用户的全名而不是用户名。将名称用引号括起来。
+
+
+/homedir:Path
+设置用户主目录的路径。该路径必须存在。
+
+
+/passwordchg:{yes | no}
+指定用户是否可以更改自己的密码。默认设置为 yes。
+
+
+/passwordreq:{yes | no}
+指定用户帐户是否必须有密码。默认设置为 yes。
+
+
+/profilepath:[Path]
+设置用户登录配置文件的路径。该路径指向注册表配置文件。
+
+
+/scriptpath:Path
+设置用户登录脚本的路径。Path 不能是绝对路径。Path 是 %systemroot%\System32\Repl\Import\Scripts 的相对路径。
+
+
+/times:{day[-day][,day[-day]] ,time[-time][,time[-time]] [;匽 | all}
+指定用户可以使用计算机的时间。Time 的增加值限制为 1 小时。对于 day 值，可以用全称或缩写（即 M、T、W、Th、F、Sa、Su）。可以使用 12 小时或 24 小时时间表示法。对于 12 小时表示法，请使用 AM、PM 或 A.M.、P.M.。all 值表示用户始终可以登录。空值（空白）意味着用户永远不能登录。用逗号分隔日期和时间，用分号分隔日期和时间单元（例如，M,4AM-5PM;T,1PM-3PM）。指定时间时不要使用空格。
+
+
+/usercomment:"text"
+指定管理员添加或更改帐户的“用户注释”。给文本加上引号。
+
+
+/workstations:{ComputerName[,...] | *}
+最多列出 8 个用户可以登录到网络的工作站。用逗号分隔列表中的多个项。如果 /workstations 没有列表，或列表为星号 *，则该用户可以从任何计算机登录。
+
+
+
+	net help command
+显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+如果在没有参数的情况下使用，则 net user 将显示计算机上用户帐户的列表。也可以键入 net users 。
+密码必须满足 net accounts /minpwlen 中设定的最小长度要求。最多可有 127 个字符。但是，如果运行 Windows 2000 或 Windows XP 的计算机所在的网络上另有运行 Windows 95 或 Windows 98 的计算机，则请考虑使用不超过 14 个字符的密码。Windows 95 和 Windows 98 最多支持 14 个字符的密码。如果密码过长，则可能无法从那些计算机登录网络。
+   
+
+
+
+范例
+
+
+
+ 要显示本地计算机上所有用户帐户的列表，请键入：
+
+ net user 
+
+ 要查看用户帐户 jimmyh 的信息，请键入：
+
+ net user jimmyh 
+
+ 要添加 Jay Jamison 的用户帐户，登录权限从星期一到星期五的早晨 8 点到下午 5 点（时间指定中没有间隔），且使用强制密码 (jayj) 和用户全名，请键入： 
+
+ net user jayj /add /passwordreq:yes /times:monday-friday,8am-5pm/fullname:"Jay Jamison" 
+
+ 要使用 24 小时制表示法设置 johnsw 的登录时间（早晨 8 点到下午 5 点），请键入： 
+
+ net user johnsw /time:M-F,08:00-17:00 
+
+ 要使用 12 小时制表示法设置 johnsw 的登录时间（早晨 8 点到下午 5 点），请键入： 
+
+ net user johnsw /time:M-F,8am-5pm 
+
+ 要指定 marysl 的登录时间为星期一的早晨 4 点到下午 5 点、星期二的下午 1 点到 3 点以及星期三到星期五的上午 8 点到下午 5 点，请键入： 
+
+ net user marysl /time:M,4am-5pm;T,1pm-3pm;W-F,8:00-17:00 
+
+XOX
+
+
+
+ 

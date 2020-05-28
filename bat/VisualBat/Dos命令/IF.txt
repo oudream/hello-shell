@@ -1,0 +1,190 @@
+If
+
+
+
+在批处理程序中执行条件处理。
+
+
+语法
+
+
+
+if [not] errorlevel number command [else expression]
+
+
+if [not] string1==string2 command [else expression]
+
+
+if [not] exist filename command [else expression]
+
+
+如果启用了命令扩展，请使用以下语法：
+
+
+if [/i] string1 compareop string2 command [else expression]
+
+
+if cmdextversion number command [else expression]
+
+
+if defined variable command [else expression]
+
+
+参数
+
+
+
+	not 
+
+	指定只有当条件为假时才执行该命令。
+
+	errorlevel number
+
+	只有当由 Cmd.exe 运行的前一个程序返回大于或等于 number 的退出代码时，才能指定真条件。
+
+	command
+
+	指定只有满足前面的条件时才应执行的命令。
+
+	string1==string2
+
+	只有当 string1 和 string2 相同时才能指定真条件。这些值可以是文字字符串或批处理变量（例如，%1）。对于文字字符串，不需要使用问号。
+
+	exist filename
+
+	如果 filename 存在，则指定真条件。
+
+	CompareOp
+
+	指定 3 个字母的比较运算符。下表列出了 compareop 的有效值。
+	
+
+运算符
+说明
+
+
+EQU
+等于
+
+
+NEQ
+不等于
+
+
+LSS
+少于
+
+
+LEQ
+少于或等于
+
+
+GTR
+大于
+
+
+GEQ
+大于或等于
+
+
+	
+
+	/i
+
+	强制字符串比较忽略大小写。可以在 if 的 string1==string2 形式上使用/i。这些比较是通用的，如果 string1 和 string2 都由所有的数字组成，那么字符串将被转换为数字并且将执行数字比较。
+
+	cmdextversion number
+
+	只有当与 Cmd.exe 的“命令扩展”功能相关的内部版本号等于或大于 number 时，才指定真条件。第一个版本是 1。当命令扩展的功能有重大增强时，则在此号码上加 1。当禁用了命令扩展时（默认情况下为启用），cmdextversion 条件不为真。
+
+	defined variable
+
+	如果定义了 variable，则指定条件为真。
+
+	expression
+
+	指定将传递给 else 子句中命令的命令行命令和任何参数。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 如果 if 命令中指定的条件为真，则系统将执行该条件后的命令。如果条件为假，则 if 子句中的命令将被忽略，同时执行 else 子句中的任何命令（如果指定）。
+	
+	 程序停止时，将返回退出码。可以利用 errorlevel 参数将退出码用作条件。
+    
+ 使用 defined variable
+	
+如果使用 defined variable，可以添加下面三个变量：%errorlevel%、 %cmdcmdline% 和 %cmdextversion%。
+
+ %errorlevel% 扩展到 errorlevel 当前值的字符串表达式，如果没有名为 ERRORLEVEL 的环境变量，就可取代它的值。下面的范例说明了如何在运行批处理程序后使用 errorlevel：
+
+goto answer%errorlevel%
+ :answer0
+ echo Program had return code 0
+ :answer1
+ echo Program had return code 1
+ goto end
+ :end
+ echo done! 
+
+ 也可以使用如下的 CompareOp 比较运算符： if %errorlevel% LEQ 1 goto okay
+
+ %cmdcmdline% 在任何 Cmd.exe 处理之前扩展传递到 Cmd.exe 的源命令行，如果没有名为 cmdcmdline 的环境变量，就可取代它的值。
+
+ %cmdextversion% 扩展到 cmdextversion 当前值的字符串表达式，如果没有名为 CMDEXTVERSION 的环境变量，就可取代它的值。
+    
+ 使用 else 子句
+	
+ else 子句必须出现在与 if 后的命令相同的行中。例如：    IF EXIST filename. (
+del filename.
+) ELSE (
+echo filename.missing.
+)
+
+ 下面的代码不起作用，因为必须通过重起一行中止 del 命令：    IF EXIST filename. del filename.ELSE echo filename.missing
+
+ 以下命令不起作用，因为 else 命令必须在与 if 命令的末尾相同的行上：    IF EXIST filename. del filename.
+ELSE echo filename.missing
+
+ 如果要完全在单行上格式化它，可以使用如下形式的原始声明：    IF EXIST filename.(del filename)ELSE echo filename.missing
+    
+
+
+
+
+范例
+
+
+
+ 如果没有找到文件 Product.dat，将会显示如下消息： 
+
+  if not exist product.dat echo Can't find data file 
+
+ 如果格式化驱动器 A 中的磁盘期间出现错误，则下面范例将会显示错误消息： 
+
+  :begin
+ @echo off
+ format a:/s
+ if not errorlevel 1 goto end
+ echo An error occurred during formatting.
+:end
+ echo End of batch program.
+
+如果没有出现错误，将跳过错误消息。
+
+ if 命令不能用于直接测试目录，但空 (NUL) 设备确实存在于每个目录中。因此，可以通过测试零设备确定目录是否存在。以下范例可测试目录的存在：
+
+  if exist c:mydir\nul goto process 
+
+
+XOX
+
+
+
+
+

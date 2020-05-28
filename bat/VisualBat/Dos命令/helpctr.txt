@@ -1,0 +1,53 @@
+Helpctr
+
+
+启动帮助和支持中心。使用不带参数的 helpctr 可以显示“帮助和支持中心”首页。
+
+
+语法
+
+
+ helpctr [/url [URL]] [/mode [URL]] [/hidden]  [/fromstarthelp] 
+
+
+参数
+
+
+/url [URL]
+指定要在“帮助和支持中心”中显示的统一资源标识符 (URL)。
+/mode [URL]
+指定符合 Launch_Description.dtd 计划的可扩展标记语言 (XML) 定义文件，该文件可以控制“帮助和支持中心”的上下文、布局和内容。
+/hidden
+不显示用户界面启动“帮助和支持中心”。该命令可以装载主题。可以使用本命令执行远程管理脚本。
+/fromstarthelp
+启动一个新的“帮助和支持中心”实例。
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 使用 URL
+
+使用 /url 和 /mode 时，可以使用 URL 的引号（即 "URL"）。如果 URL 中有空格，则可通过键入 %20 代替它（即 "URL%20Address"）。
+    
+
+
+
+
+范例
+
+
+要用.msrincident 文件启动一个远程帮助会话，请键入： 
+
+HelpCtr /mode "hcp://CN=Microsoft%20Corporation,L=Redmond,S=Washington,C=US/Remote%20Assistance/RAClientLayout.xml"/url  "hcp://CN=Microsoft%20Corporation,L=Redmond,S=Washington,C=US/Remote%20Assistance/Interaction/Client/rctoolScreen1.htm?IncidentFile=rahelp.msrincident"
+
+XOX
+
+
+
+
+
+ 

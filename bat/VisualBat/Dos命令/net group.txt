@@ -1,0 +1,113 @@
+Net group
+
+
+
+添加、显示或修改域中的全局组。
+
+
+语法
+
+
+
+net group [groupname [/comment:"text"]] [/domain]
+
+
+net group [groupname {/add [/comment:"text"] | /delete} [/domain]]
+
+
+net group [groupname username[ ...]{/add | /delete} [/domain]]
+
+
+参数
+
+
+
+	groupname
+
+	指定要添加、扩展或删除的组的名称。仅指定组名以查看组中的用户列表。
+
+	/comment:"text"
+
+	为新建或已经存在的组添加注释。注释可以包含多达 48 个字符。给文本加上引号。
+
+	/domain
+
+	在当前域的主域控制器上执行操作。否则，操作将在本地计算机上执行。
+
+
+	/add
+
+	添加组，或向组中添加用户名称。必须使用该命令为要添加到组中的用户创建帐户。
+
+	/delete
+
+	删除组，或从组中删除用户。
+
+UserName[ ...]
+
+	列出一个或多个用户名以添加到组或从组中删除。用空格分隔多个用户名项。
+
+	net help command
+显示指定 net 命令的帮助。
+ 	
+
+
+注释
+
+
+	使用不带参数的 net group 命令显示服务器名和服务器上组的名称。
+ 也可以键入 net groups 。
+    
+ 使用 net group 命令，并以相同或相似方式对使用网络的用户分组。在对组指定权限时，组的每个成员都自动获得这些权限。在输出中， net group 将优先输出包含带有星号的 (*) 用户和组的组。
+
+服务器上组的 net group 输出类似下面的形式： 
+
+ Group Accounts for \\PRODUCTION
+
+----------------------------------------------
+
+ *Domain Admins           *Domain Users
+    
+
+
+
+
+范例
+
+
+
+ 要显示本地服务器上所有组的列表，请键入： 
+
+ net group
+
+ 要将组 Exec 添加到本地用户帐户数据库，请键入： 
+
+ net group exec /add
+
+ 要将组 Exec 添加到域数据库，请键入： 
+
+ net group exec /add /domain
+
+ 要将现有用户帐户 stevev、ralphr 和 jennyt 添加到本地计算机上的 Exec 组，请键入： 
+
+ net group exec stevev ralphr jennyt /add
+
+ 要将现有用户帐户 stevev、ralphr 和 jennyt 添加到域数据库中的 Exec 组，请键入：
+
+ net group exec stevev ralphr jennyt /add /domain
+
+ 要显示 exec 组中的用户，请键入： 
+
+ net group exec
+
+ 要将备注添加到 exec 组记录，请键入： 
+
+ net group exec /comment:"The executive staff."
+
+XOX
+
+
+
+
+
+ 

@@ -1,0 +1,167 @@
+Prnjobs.vbs
+
+
+
+暂停、继续、取消和列出打印作业。如果不带参数，prnjobs.vbs 显示 prnjobs.vbs 命令的命令行帮助。
+
+
+暂停打印作业 
+
+
+语法
+
+
+cscript prnjobs -z [-s RemoteComputer] -p PrinterName -j JobNumber [-u UserName -w Password]
+
+
+参数
+
+
+-z 
+必需。指定要暂停打印作业。
+-s RemoteComputer
+按名称指定要暂停其所接收的打印作业的远程计算机。如果没有指定计算机，则使用本地计算机。
+-p PrinterName
+必需。按名称指定要暂停其打印作业的打印机。
+-j JobNumber
+必需。按 ID 号指定要暂停的打印作业。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要暂停其打印作业的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+要显示打印作业列表及其各自的 ID 号，请使用该命令（要带 -l 参数）。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要暂停 ID 为 27 的打印作业（该打印作业已发送到远程计算机 HRServer 的打印机 ColorPrinter 上），请键入：
+
+cscript prnjobs.vbs -z -s HRServer -p ColorPrinter -j 27 
+
+
+恢复打印作业 
+
+
+语法
+
+
+cscript prnjobs -m [-s RemoteComputer] -p PrinterName -j JobNumber [-u UserName -w Password] 
+
+
+参数
+
+
+-m
+必需。指定要恢复打印作业。
+-s RemoteComputer
+按名称指定要恢复其打印作业的远程计算机。如果没有指定计算机，则使用本地计算机。
+-p PrinterName
+必需。按名称指定要恢复其打印作业的打印机。
+-j JobNumber
+必需。按 ID 号指定要恢复的打印作业。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要恢复其打印作业的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+要显示打印作业列表及其各自的 ID 号，请使用该命令（要带 -l 参数）。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+ 
+
+
+取消打印作业 
+
+
+语法
+
+
+cscript prnjobs -x [-s RemoteComputer] -p PrinterName -j JobNumber [-u UserName -w Password] 
+
+
+参数
+
+
+x
+必需。指定要取消打印作业。
+-s RemoteComputer
+按名称指定要取消其打印作业的远程计算机。如果没有指定计算机，则使用本地计算机。
+-p PrinterName
+必需。按名称指定要取消其打印作业的打印机。
+-j JobNumber
+必需。按 ID 号指定要取消的打印作业。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要取消其打印作业的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+要显示打印作业列表及其各自的 ID 号，请使用该命令（要带 -l 参数）。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+ 
+
+
+列出打印队列中的打印作业 
+
+
+语法
+
+
+cscript prnjobs -l [-s RemoteComputer] [-p PrinterName] [-u UserName -w Password] 
+
+
+参数
+
+
+-l
+必需。指定要列出打印队列中的所有打印作业。
+-s RemoteComputer
+按名称指定要列出其打印队列中打印作业的远程计算机。如果没有指定计算机，则使用本地计算机。
+-p PrinterName
+按名称指定要列出其打印队列中打印作业的打印机。如果不指定打印机，则将列出所有打印队列中的所有打印作业。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要列出其打印队列中打印作业的的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+要显示打印作业列表及其各自的 ID 号，请使用该命令（要带 -l 参数）。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要列出本地打印机 ColorPrinter_2 的打印队列中所有当前打印作业，请键入：
+
+cscript prnjobs.vbs -l -p ColorPrinter_2 
+
+XOX
+
+
+
+
+ 
+ 

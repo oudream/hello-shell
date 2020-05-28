@@ -1,0 +1,52 @@
+Net help
+
+
+
+提供可以获得帮助的网络命令和主题列表，或关于特定命令的信息。使用不带参数的 net help 命令显示命令和可获得帮助的主题的列表。
+
+
+语法
+
+
+
+net help [command]
+
+
+参数
+
+
+
+	command
+
+	/help
+
+	显示命令的正确语法和帮助。
+
+	指定要获得帮助的命令。
+
+
+
+
+
+
+范例
+
+
+
+ 要显示 net use 命令的帮助，请键入： 
+
+ net help use
+
+ 或键入：
+
+ net use /help
+
+ 要查看 net use 命令的语法，请键入： 
+
+ Net help /?
+
+XOX
+
+
+
+ 

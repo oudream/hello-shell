@@ -1,0 +1,96 @@
+Net accounts
+
+
+
+将用户帐户数据库升级并修改所有帐户的密码和登录请求。
+
+
+语法
+
+
+
+net accounts [/forcelogoff:{minutes | no}] [/minpwlen:length] [/maxpwage:{days | unlimited}] [/minpwage:days] [/uniquepw:number] [/domain]
+
+
+参数
+
+
+
+	/forcelogoff:{minutes | no}
+
+	设置当用户帐户或有效登录时间到期时在结束用户与服务器的会话前要等待的分钟数。默认值 no 可以防止强制注销用户。
+
+	/minpwlen:length
+
+	设置用户帐户密码的最少字符数。字符数目范围是 0 到 127，默认值为 6 个字符。
+
+	/maxpwage:{days | unlimited}
+
+	设置用户帐户密码有效天数的最大值。数值 unlimited 的设置为无时间限制。/maxpwage 命令行选项必须大于 /minpwage 。天数范围是 1 到 49,710（即 unlimited 的值等于 49,710 天），默认值为 90 天。
+
+	/minpwage:days
+
+	设置在用户可以更改新密码前的最小天数。默认值为 0 天，从而不设置最短时间。该范围是 0 到 49,710 天。
+
+	/uniquepw::number
+
+	要求用户不要为更改密码时指定的 number 重复相同的密码。密码更改的范围是 0 到 24，默认值是 five password。
+
+	/domain
+
+	对当前域的主域控制器执行操作。否则，操作将在本地计算机上执行。
+
+net help command
+显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+Net Logon 服务必须运行在要更改帐户参数的计算机上。使用不带参数的 net accounts 显示密码、登录限制和域信息的当前配置。
+	 使用 net accounts 之前必须执行以下操作：
+
+ 创建用户帐户。使用用户管理器或 net user 创建用户帐户。
+    
+ 在所有可验证域中登录的服务器上运行 Net Logon 服务。系统启动时将自动启动 Net Logon。
+    
+
+	
+ 使用 /forcelogoff:minutes 时，在强制用户从网络注销之前几分钟将发送警告。如果打开了某些文件，系统也将通知用户。如果 minutes 少于 2，系统将警告用户立即从网络注销。
+    
+   
+
+
+
+范例
+
+
+
+要显示当前设置、密码要求以及服务器的服务器角色，请键入：
+
+ net accounts
+
+ 要设置不少于 7 个字符的用户帐户密码，请键入：
+
+ net accounts /minpwlen:7
+
+ 要指定用户只有在五次更改密码后才可以重新使用密码，请键入：
+
+ net accounts /uniquepw:5
+
+ 要防止用户在 7 天内更改密码，而且强制用户每 30 天才能更改一次密码，并在登录时间到期后用 5 分钟警告强制用户注销，请键入： 
+
+ net accounts /minpwage:7 /maxpwage:30 /forcelogoff:5
+
+ 要确保先前的设置只有在计算机登录到域后才生效，请键入： 
+
+ net accounts /minpwage:7 /maxpwage:30 /domain XOX
+
+
+
+
+
+ 
+ 

@@ -1,0 +1,64 @@
+Gpresult
+
+
+
+显示用户或计算机的组策略设置和策略的结果集 (RSOP)。
+
+
+语法
+
+
+
+gpresult [/s Computer [/u Domain\User /p Password]] [/user TargetUserName] [/scope {user|computer}] [/v] [/z]
+
+
+参数
+
+
+
+/s Computer
+指定远程计算机的名称或 IP 地址。（不要使用反斜线符号。）默认值是本地计算机。
+
+/u Domain\User
+运行由 user 或 domain\user 指定的带用户帐户权限的命令。默认情况，是指发布该命令的计算机上当前已注册用户的许可。
+
+/p Password
+指定用户帐户的密码，该用户帐户在 /u 参数中指定。
+
+/user:TargetUserName
+指定要显示RSOP 数据的用户的用户名。
+
+/scope {user | computer}
+显示 user 或 computer 的结果。/scope 的有效值参数是 user 或 computer。如果忽略 /scope 参数，则 gpresult 将同时显示 user 和 computer 的设置。
+
+/v
+指定输出显示详细的策略信息。
+
+/z
+指定输出显示关于“组策略”的所有可用信息。由于本参数可以比 /v 参数输出更多信息，所以在使用本参数时，应将输出重定向到文本文件（例如 gpresult /z >policy.txt）。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+
+要定义和控制组织中用户和计算机的程序、网络资源和操作系统的工作方式，组策略是主要的管理工具。在活动目录 (Active Directory) 环境中，根据用户或计算机在站点、域或组织单位中的成员身份，组策略被应用于这些用户或计算机。
+由于可以对任何计算机或用户应用嵌套的策略，所以组策略功能可以生成登录时的策略结果集。Gpresult 可以显示特定用户登录计算机时被加强的策略结果集。
+
+
+范例
+
+
+下面的范例说明了如何使用 Gpresult 命令：
+
+gpresult /user targetusername /scope computer
+ gpresult /s srvmain /u maindom\hiropln /p p@ssW23 /user targetusername /scope USER
+ gpresult /s srvmain /u maindom\hiropln /p p@ssW23 /user targetusername /z >policy.txt
+ gpresult /s srvmain /u maindom\hiropln /p p@ssW23
+
+XOX
+
+
+

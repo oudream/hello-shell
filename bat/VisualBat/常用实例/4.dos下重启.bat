@@ -1,0 +1,2 @@
+:DOSобжьфТ╣Гдт 
+ECHO G=FFFF:0000 | DEBUG

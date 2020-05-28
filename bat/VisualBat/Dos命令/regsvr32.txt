@@ -1,0 +1,57 @@
+Regsvr32
+
+
+
+这个命令行工具将 dll 文件注册为注册表中的命令组成。
+
+
+语法
+
+
+
+regsvr32 [/u] [/s] [/n] [/i[:cmdline]] dllname
+
+
+参数
+
+
+
+	/u
+
+	未注册服务器。
+
+	/s
+
+	指定 regsvr32 安静运行，且不显示任何消息框。
+
+	/n
+
+	指定不调用 DllRegisterServer。此选项必须与 /i 共同使用。
+
+	/i:cmdline
+
+	调用 DllInstall 将它传递到可选的 [cmdline]。在与 /u 共同使用时，它调用 dll 卸载。
+
+	dllname
+
+	指定要注册的 dll 文件名。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+
+
+范例
+
+
+
+要为“Active Directory Schema”注册 .dll，请键入
+
+regsvr32 schmmgmt.dll
+
+XOX
+
+
+

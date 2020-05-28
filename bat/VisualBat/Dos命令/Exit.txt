@@ -1,0 +1,41 @@
+Exit
+
+
+
+退出当前批处理脚本或 Cmd.exe 程序（即，命令解释程序）并返回到曾启动 Cmd.exe 的程序或返回到“程序管理器”。
+
+
+语法
+
+
+
+exit [/b] [ExitCode]
+
+
+参数
+
+
+
+	/b
+	退出当前批处理脚本。
+
+	ExitCode
+	指定数字编号。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+	如果在批处理脚本之外使用 /b，就会退出 Cmd.exe。
+	如果使用 /b，Cmd.exe 将 ERRORLEVEL 设置为指定的 ExitCode。如果退出 Cmd.exe，Cmd.exe 则使用指定的 ExitCode 设置进程退出代码。
+ XOX
+
+
+
+
+
+ 

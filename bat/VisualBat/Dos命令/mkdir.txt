@@ -1,0 +1,60 @@
+Mkdir
+
+
+
+创建目录或子目录。
+
+
+语法
+
+
+
+mkdir [Drive:]Path
+
+
+md [Drive:]Path
+
+
+参数
+
+
+
+	Drive:
+
+	指定要创建新目录的驱动器。
+
+	Path
+
+	必需。指定新目录的名称和位置。单个路径的最大长度由文件系统决定。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+在启用命令扩展（默认设置）后，可以使用单个 mkdir 命令在指定的路径中创建中介目录。有关启用和禁用命令扩展的详细信息，请参阅“”中的 cmd。
+    
+    
+
+
+范例
+
+
+
+要创建名为 Taxes、子目录名为 Property（包含名为 Current 的子目录），请键入： 
+
+mkdir \Taxes\Property\Current
+
+ 这与使用以下顺序并禁用命令扩展的命令是相同的：    mkdir \Taxes
+ chdir \Taxes
+ mkdir Property
+ chdir Property
+ mkdir Current
+
+XOX
+
+
+

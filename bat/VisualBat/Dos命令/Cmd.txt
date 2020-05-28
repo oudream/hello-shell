@@ -1,0 +1,283 @@
+Cmd
+
+
+
+启动命令解释器 Cmd.exe 的新实例。如果在不含参数的情况下使用，则 cmd 显示 Windows XP 的版本和版权信息。
+
+
+语法
+
+
+
+cmd [[{/c|/k}] [/s] [/q] [/d] [{/a|/u}] [/t:fg]  [/e:{on|off}] [/f:{on|off}] [/v:{on|off}] string]
+
+
+参数
+
+
+
+	/c
+
+	执行 string 指定的命令，然后停止。
+
+	/k 
+
+	执行 string 指定的命令并继续。
+
+	/s
+
+	修改位于 /c 或 /k 之后的 string 处理。
+
+	/q 
+
+	关闭回显。
+
+	/d
+
+	禁用自动运行命令执行。
+
+	/a 
+
+	创建美国国家标准协会 (ANSI) 输出。
+
+	/u 
+
+	创建 Unicode 输出。
+
+	/t:fg
+
+	设置前景 f 和背景 g 的颜色。下表列出了可用作 f 和 g 的值的有效十六进制数字。
+	
+
+值
+颜色
+
+
+0
+黑色
+
+
+1
+蓝色
+
+
+2
+绿
+
+
+3
+湖蓝色
+
+
+4
+红
+
+
+5
+紫色
+
+
+6
+黄
+
+
+7
+白色
+
+
+8
+灰色
+
+
+9
+浅蓝色
+
+
+A
+浅绿色
+
+
+B
+浅水绿
+
+
+C
+浅红色
+
+
+D
+浅紫色
+
+
+E
+浅黄色
+
+
+F
+亮白色
+
+
+
+
+	/e:on
+
+	启用命令扩展。
+
+	/e:off
+
+	禁用命令扩展。
+
+	/f:on
+
+	启用文件和目录名完成。
+
+	/f:off
+
+	禁用文件和目录名完成。
+
+	/v:on
+
+	启用延迟的环境变量扩展。
+
+	/v:off
+
+	禁用延迟的环境变量扩展。
+
+	string
+
+	指定要执行的命令。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 使用多个命令
+	
+可以在 string 中使用由 && 分隔的多个命令，不过这些命令必须置于引号之中（例如，"command&&command&&command"）。
+    
+ 处理引号
+	
+如果指定了 /c 或 /k，则在满足下述所有条件的情况下，cmd 会处理 string 中的其余命令而将引号保留：
+
+未使用 /s。
+正确使用一对引号。
+    在引号内未使用任何特殊字符（例如： &<>( ) @ ^ |}。
+	在引号内使用了一个或多个空格子符。
+	引号内的 string 为可执行文件的名称。
+
+
+ 如果上述条件不能满足，则处理 string 时将首先检查它的第一个字符以验证其是否为左引号。如果第一个字符是左引号，则它会与右引号分离开。跟在右引号之后的任何文本都会得到保留。
+    
+ 执行注册表子项
+	
+如果在 string 中未指定 /d，Cmd.exe 会查找下述注册表子项：
+
+ HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\AutoRun\REG_SZ
+    
+
+ HKEY_CURRENT_USER\Software\Microsoft\Command Processor\AutoRun REG_EXPAND_SZ
+
+ 如果上述的一个注册表子项或两个都存在，则会在执行其他变量之前执行它们。
+
+警告
+
+编辑注册表不当可能会严重损坏您的系统。在更改注册表之前，应备份计算机上任何有价值的数据。
+
+	
+	 启用和禁用命令扩展
+	
+在 Windows XP 中，命令扩展在默认情况下是启用的。对于特定过程可以使用 /e:off 将它们禁用。通过设置下述 REG_DWORD 值，可以在计算机上或用户会话中启用或禁用所有 cmd 命令行选项的扩展：
+
+ HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\EnableExtensions\REG_DWORD
+    
+
+ HKEY_CURRENT_USER\Software\Microsoft\Command Processor\EnableExtensions\REG_DWORD
+    
+	
+ 在注册表中使用 Regedit.exe 可以将 REG_DWORD 值设为 0&times;1（即启用）或 0&times;0（即禁用）。用户特定设置优先于计算机设置，并且命令行选项优先于注册表设置。
+
+警告
+
+编辑注册表不当可能会严重损坏您的系统。在更改注册表之前，应备份计算机上任何有价值的数据。
+
+
+
+ 启用命令扩展后，会影响到下述命令：
+	
+	assoc
+	call
+	chdir (cd)
+	color
+	del (erase)
+	endlocal
+	for
+	ftype
+	goto
+	if
+	mkdir (md)
+	popd
+	prompt
+	pushd
+	set
+	setlocal
+	shift
+	start（还包括将更改外部命令过程）
+	
+
+
+有关这些命令的详细信息，请参阅“”。
+	
+	 启用延迟的环境变量扩展
+	
+启用延迟的环境变量扩展，可以使用感叹号字符来替代运行时的环境变量值。
+	
+	 启用文件和目录名完成
+	
+ 默认情况下，禁用文件和目录名完成。对于特定的 cmd 命令处理，可以通过 /f:{on|off} 来启用或禁用该功能。通过设置下述 REG_DWORD 值，可以在计算机上或用户会话中启用或禁用所有 cmd 命令处理的文件和目录名完成：
+
+ HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\CompletionChar\REG_DWORD
+    
+
+ HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\PathCompletionChar\REG_DWORD
+    
+
+ HKEY_CURRENT_USER\Software\Microsoft\Command Processor\CompletionChar\REG_DWORD
+    
+	
+ HKEY_CURRENT_USER\Software\Microsoft\Command Processor\PathCompletionChar\REG_DWORD
+    
+
+ 要设置 REG_DWORD 值，请运行 Regedit.exe 并使用特定功能的控制字符的十六进制值（例如，用 0&times;9 表示 TAB 键，用 0&times;08 表示 BACKSPACE 键）。用户特定设置优先于计算机设置，并且命令行选项优先于注册表设置。
+
+警告
+
+编辑注册表不当可能会严重损坏您的系统。在更改注册表之前，应备份计算机上任何有价值的数据。
+
+
+
+ 如果使用 /f:on 启用了文件和目录名完成，则对于目录名完成，可使用 CTRL+D 组合键；而对于文件名完成，可使用 CTRL+F 组合键。要禁用注册表中特定字符的完成，请使用空格值 [0&times;20]，因为空格不是有效的控制字符。
+
+
+ 按 CTRL+D 或 CTRL+F 组合键时，cmd 会处理文件和目录名的完成操作。这些组合键的作用是在 string 后附加通配符（如果还未使用），并创建匹配的路径列表，然后显示第一个匹配的路径。如果所有路径都不匹配，文件和目录名完成操作会发出警告声，并且不更改所显示的内容。要逐个查看匹配路径列表中的路径，请重复按 CTRL+D 或 CTRL+F 组合键。要向后查看该列表，请在按 SHIFT 的同时按 CTRL+D 或 CTRL+F 组合键。要放弃已保存的匹配路径列表并生成新列表，可以编辑 string，然后按 CTRL+D 或 CTRL+F 组合键。如果在 CTRL+D 和 CTRL+F 组合键之间切换，将会放弃已保存的匹配路径列表并生成新列表。CTRL+D 组合键与 CTRL+F 组合键之间唯一的不同在于，CTRL+D 仅匹配目录名，而 CTRL+F 既匹配文件名，又匹配目录名。如果在任何内部目录命令（CD、MD 或 RD）中使用文件和目录名的完成，将仅使用目录的完成。
+
+如果将匹配路径置于引号之中，则文件和目录名完成会正确地处理含有空格或特殊字符的文件名。
+
+下述特殊字符需要有引号：& < > [ ] { } ^ = ; ! ' + , ` ~ [white space]
+
+如果您提供的信息包含空格，请将文本置于引号之中（例如，"Computer Name"）。
+
+如果从 string 中处理文件和目录名完成操作，则位于光标右侧的 [Path] 的任意部分都将放弃（即在 string 中处理完成操作的位置）。
+
+
+
+XOX
+
+
+
+
+
+ 

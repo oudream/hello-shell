@@ -1,0 +1,9 @@
+@echo off
+set D7Root=%~dp0%\
+set D7Root=%D7Root:\\=\%
+set path=%D7Root%bin;%D7Root%Projects\bpl;%D7Root%contron\dcu;%D7Root%contron\bpl;%path%
+rem rave7.05
+set path=%D7Root%Rave7.05\Win_System32_Dir;%path%
+set path=%D7Root%contron\components\AsyncPro\D7Build\bpl;%path%
+set path=%D7Root%contron\components\Fastr4\LibD7;%path%
+start %D7Root%bin\delphi32.exe

@@ -1,0 +1,239 @@
+Prnmngr.vbs
+
+
+
+添加、删除和列出打印机或打印机连接，以及设置和显示默认打印机。如果不带参数，prnmngr.vbs 显示 prnmngr.vbs 命令的命令行帮助。
+
+
+添加本地打印机 
+
+
+语法
+
+
+cscript prnmngr.vbs -a -p PrinterName [-s RemoteComputer] -m DriverName -r PortName [-u UserName -w Password] 
+
+
+参数
+
+
+-a
+必需。指定要添加本地打印机。
+-s RemoteComputer
+按名称指定要添加本地打印机的远程计算机。如果没有指定计算机，则打印机添加到本地计算机。
+
+-p PrinterName
+必需。按名称指定要添加的本地打印机。
+-m DriverName
+必需。按名称指定要添加的本地打印机的驱动程序。驱动程序通常以所支持的打印机型号命名。详细信息，请参阅打印机文档。
+-r PortName
+必需。指定打印机连接的端口。如果是串口或并口，请使用端口的 ID（例如 LPT1 或 COM1）。如果是 TCP/IP 端口，请使用添加端口时指定的端口名。有关详细信息，请参阅“”。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要添加本地打印机的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要添加名 Color Printer Driver_2 的打印机（该打印机连接到本地计算机的 LPT1 上），并使用打印机驱动程序 Color Printer Driver1，请键入：
+
+cscript prnmngr.vbs -a -p ColorPrinter_2 -m "Color Printer Driver1" -r lpt1: 
+
+
+添加打印机连接 
+
+
+语法
+
+
+cscript prnmngr.vbs -ac -p PrinterName 
+
+
+参数
+
+
+-ac
+必需。指定要添加打印连接。
+-p PrinterName
+必需。按名称指定要添加连接的打印机。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+ 
+
+
+
+删除打印机 
+
+
+语法
+
+
+cscript prnmngr.vbs -d -p PrinterName [-u UserName -w Password] [-s RemoteComputer]
+
+
+参数
+
+
+/d
+必需。指定要删除打印机。
+-p PrinterName
+必需。按名称指定要删除的打印机。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要从中删除打印机的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+-s RemoteComputer
+按名称指定要添加本地打印机的远程计算机。如果不指定计算机，则将打印机添加到本地计算机。
+
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+
+
+
+范例
+
+
+要将打印机 ColorPrinter_2 从远程计算机 HRServer 删除，请键入：
+
+cscript prnmngr.vbs -d -s HRServer -p ColorPrinter_2 
+
+
+
+从计算机删除所有打印机 
+
+
+语法
+
+
+cscript prnmngr.vbs -x  [-s RemoteComputer] [-u UserName] [-w Password] 
+
+
+参数
+
+
+-x
+必需。指定要从计算机删除所有打印机。
+-s RemoteComputer
+按名称指定要从中删除所有打印机的远程计算机。如果不指定计算机，将从本地计算机中删除所有打印机。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要从中删除所有打印机的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+ 
+
+
+
+显示默认打印机 
+
+
+语法
+
+
+cscript prnmngr.vbs -g
+
+
+参数
+
+
+-g
+必需。指定要显示默认打印机。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+ 
+
+
+设置默认打印机 
+
+
+语法
+
+
+cscript prnmngr.vbs -t -p PrinterName
+
+
+参数
+
+
+-t
+必需。指定要设置默认打印机。
+-p PrinterName
+必需。按名称指定要设置为默认打印机的打印机。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+ 
+
+
+列出计算机的所有打印机 
+
+
+语法
+
+
+cscript prnmngr.vbs -l [-s RemoteComputer]  [-u UserName -w Password]
+
+
+参数
+
+
+-l
+必需。指定列出计算机的所有打印机。
+-s RemoteComputer
+按名称指定要列出其所有打印机的远程计算机。如果不指定计算机，将列出添加到本地计算机的打印机。
+-u UserName -w Password
+指定具有权限的帐户（该权限可使用 Windows 管理工具 (WMI) 服务连接到要列出其打印机的计算机）。该计算机管理员组的所有成员都具有这些权限，不过也可以将这些权限授予其他用户。如果没有指定帐户，则必须使用具有这些权限的帐户进行登录，才能使用该命令。有关 WMI 的详细信息，请参阅“”。
+/?在命令提示符显示帮助。
+
+
+
+注释
+
+该命令启动 systemroot\system32 目录下的一个脚本。在该目录为当前目录时须在命令提示符键入该命令，或者必须在 cscript 命令的开始位置键入到该目录的完整路径。
+如果提供的信息包含空格，请使用引号将文本引起来（例如，"Computer Name"）。
+ 
+
+XOX
+
+
+
+
+ 
+ 

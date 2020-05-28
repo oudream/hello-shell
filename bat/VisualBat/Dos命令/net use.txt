@@ -1,0 +1,155 @@
+Net use
+
+
+
+将计算机与共享资源连接或断开，或者显示关于计算机连接的信息。该命令还控制持久网络连接。如果在没有参数的情况下使用，则 net use 检索网络连接列表。
+
+
+语法
+
+
+
+net use  [{DeviceName | *}] [\\ComputerName\ShareName[\volume]] [{Password | *}]] [/user:[DomainName\]UserName] [/user:[DottedDomainName\]UserName] [/user:[UserName@DottedDomainName] [/savecred] [/smartcard] [{/delete | /persistent:{yes | no}}]
+
+
+net use [DeviceName [/home[{Password | *}] [/delete:{yes | no}]]
+
+
+net use [/persistent:{yes | no}]
+
+
+参数
+
+
+
+	DeviceName
+
+	指派名称以便连接到资源或指定断开的设备。有两种类型的设备名： 磁盘驱动器（即 D: 到 Z:} 和打印机（即 LPT1:到 LPT3:}。键入星号而不是特定设备名，指派下一个可用的设备名。
+
+	\\ComputerName\ShareName
+
+	指定服务器和共享资源的名称。如果 ComputerName 包含有空格，请使用引号将从双反斜线符号 (\\) 到计算机名尾的整个计算机命名引起来（例如，"\\Computer Name\Share Name"）。计算机名长度可以是 1 到 15 个字符。
+
+	\volume
+
+	指定服务器上的 NetWare 卷。必须安装并运行 Client Service for NetWare（NetWare 客户服务）才能连接 NetWare 服务器。
+
+	Password
+
+	指定访问共享资源所需的密码。输入星号 (*) 产生一个密码提示在密码提示行处键入密码时不显示密码。
+
+	/user
+
+	指定建立连接的不同用户名。
+
+	DomainName
+
+	指定其他域。如果省略 DomainName， net use 将使用当前登录的域。
+
+	UserName
+
+	指定登录时使用的用户名。
+
+	DottedDomainName
+
+	指定用户帐户所在域完全合格的域名。
+
+	/savecred 
+
+	存储为重新使用提供的凭据。
+
+	/smartcard 
+
+	指定网络连接将使用的智能卡凭据。如果有多个智能卡可用，则需要指定凭据。
+
+	/delete
+
+	取消指定的网络连接。如果用户使用星号 (*) 指定连接，则所有网络连接均将取消。
+
+	/persistent:{yes | no}
+
+	控制持久网络连接的使用。默认值为最后一次使用的设置。非设备连接不会持久。Yes 将按其建立时的原样保存所有连接，并在下次登录时还原它们。No 则不保存已建立的连接或后续连接。现存的连接在下一次登录时还原。使用 /delete 删除持久连接。
+
+	/home
+
+	将用户连到主目录。
+
+	net help command
+显示指定 net 命令的帮助。
+
+
+
+
+注释
+
+
+
+连接和断开网路资源
+
+使用 net use 命令连接或断开网络资源，并查看当前与网络资源的连接。如果将共享目录作为当前驱动器或者某个活动进程正在使用共享目录，则无法断开与该共享目录的连接。
+
+查看连接信息
+
+要查看有关连接的信息，请执行以下某项操作：
+
+
+键入 net use DeviceName 获得有关特定连接的信息。
+键入 net use 获得所有计算机连接的列表。
+
+    
+
+ 使用非设备连接
+	
+非设备连接不会持久。
+    
+	 连接到 NetWare 服务器
+	
+安装并运行 Client Service for NetWare（NetWare 客户服务）后，可以在 Novell 网络上连接 NetWare 服务器。除非必须包含要连接的卷，否则请使用与连接 Windows Networking 服务器相同的语法。
+使用引号
+ 如果提供的 ServerName 包含空格，请使用引号将文本引起来（例如，"Server Name"）。如果省略该引号，则会出现错误消息。
+
+
+
+
+
+范例
+
+
+
+要将磁盘驱动器设备名 E：分配给 \\Financial 服务器上的 Letters 共享目录，请键入： 
+
+net use E:\\financial\letters 
+
+
+要将磁盘驱动器设备名 M：指派（映射）给 NetWare 服务器 \\Financial 上 Letters 卷中的目录 Mike，请键入：
+
+net use m:\\financial\letters\mike 
+
+
+要连接用户标识符 Dan 就好像是通过 Accounts 域创建的连接，请键入：
+
+net use d:\\server\share /user:Accounts\Dan 
+
+
+要断开 \\Financial\Public 目录，请键入： 
+
+net use f:\\financial\public /delete 
+
+
+要连接 \\Financial 2 服务器上的共享资源备忘录，请键入： 
+
+net use k:"\\financial 2" \memos 
+
+
+要在每次登录时还原当前连接而不考虑将来的更改，请键入： 
+
+ net use /persistent:yes 
+
+XOX
+
+
+
+
+
+
+ 

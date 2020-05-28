@@ -1,0 +1,78 @@
+Devicehigh
+
+
+
+将设备驱动程序加载到高端内存区域。这将为其他程序释放更多字节的常规内存。使用 systemroot\System32\Config.nt 文件或某个程序的 PIF 中指定的等价启动文件加载 MS-DOS 子系统的设备驱动程序。
+
+
+语法
+
+
+
+devicehigh=[Drive:][Path] FileName [dd-parameters]
+
+
+devicehigh size=hexsize [Drive:][Path] FileName [dd-parameters]
+
+
+参数
+
+
+
+	[Drive:][Path] FileName
+
+	指定要加载到高端内存区域的设备驱动程序的位置和名称。需要 Filename。
+
+	dd-parameter 
+
+	指定设备驱动程序所需要的任何命令行信息。
+
+	hexsize
+
+	必需。指定在 devicehigh 尝试将设备驱动程序加载到高端内存区之前必须可用的最小内存（字节数，十六进制格式）。必须同时使用 size 和 hexsize，如第二个语法行所示。
+
+	/?
+在命令提示符显示帮助。
+
+
+
+注释
+
+
+ 使用 dos=umb
+	
+要使用 devicehigh 命令，也必须在 Config.nt 或等价的启动文件中包含 dos=umb 命令。如果不指定 dos=umb，则会将所有设备驱动程序加载到常规内存，就象使用了 device 命令一样。有关 dos=umb 命令的详细信息，请参阅“”。
+    
+ 安装 Himem.sys
+	
+在可以将设备驱动程序加载到高端内存区之前，必须使用 device 命令来安装 Himem.sys 设备驱动程序。Device 必须在 Config.nt 或等价的启动文件中任何 devicehigh 命令之前出现。
+    
+	 指定大小限制
+	
+ 如果指定的设备驱动程序尝试分配比高端内存区中一块可用的空间更多的缓冲区空间，您的系统将锁定。使用 hexsize 来避免出现此问题。在 hexsize 中，以十六进制格式表明设备驱动程序需要的内存大小。要查找特定设备驱动程序的值，请将该驱动程序加载到常规内存，并运行 mem /debug。
+	
+	 加载到常规内存中
+	
+如果没有足够的高端内存区来加载在 devicehigh 中指定的设备驱动程序，则 MS-DOS 子系统将把该驱动程序载入常规内存（就象使用了 device 一样）。
+	
+
+
+
+
+范例
+
+
+
+ 要将名为 Mydriv.sys 的设备驱动程序加载到高端内存区之中，请在 Config.nt 或等价的启动文件中键入如下命令：
+
+ device=c:\winnt\system32\himem.sys 
+ dos=umb 
+ devicehigh=mydriv.sys 
+
+XOX
+
+
+
+
+
+ 
