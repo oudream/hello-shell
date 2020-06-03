@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
 
+docker run -d --net=host --name redis-manager  \
+-e DATASOURCE_DATABASE='redis_manager' \
+-e DATASOURCE_URL='jdbc:mysql://172.18.2.222:3306/redis_manager?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8' \
+-e DATASOURCE_USERNAME='root' \
+-e DATASOURCE_PASSWORD='******' \
+reasonduan/redis-manager
+
 # doc
 # https://redis.io/documentation
 # http://doc.redisfans.com/
@@ -23,6 +30,7 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist # Start Redis se
 launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist # Stop Redis on autostart on computer start.
 
 ## on ubuntu
+sudo apt install redis-server
 sudo systemctl start redis
 sudo systemctl enable redis
 sudo systemctl restart redis

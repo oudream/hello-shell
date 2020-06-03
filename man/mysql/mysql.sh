@@ -1,7 +1,22 @@
 #!/usr/bin/env bash
 
 
+explain SELECT * FROM `admin_country`
+
+
+# doc en
 open https://dev.mysql.com/doc/refman/8.0/en/mysql-commands.html
+# doc cn
+open https://www.docs4dev.com/docs/zh/mysql/5.7/reference/show-engines.html
+open https://dev.mysql.com/doc/refman/8.0/en/show-engines.html
+
+# sudo apt-get install mysql-server
+#    The following additional packages will be installed:
+#      mysql-client-5.7 mysql-client-core-5.7 mysql-common mysql-server-5.7 mysql-server-core-5.7
+#    Suggested packages:
+#      mailx tinyca
+#    The following NEW packages will be installed:
+#      mysql-client-5.7 mysql-client-core-5.7 mysql-common mysql-server mysql-server-5.7 mysql-server-core-5.7
 
 
 # 1.导出整个数据库
@@ -53,6 +68,8 @@ mysql>source /opt/tmp/db1.sql
     mysqladmin variables -u username -p password        # ——显示系统变量
     mysqladmin extended-status -u username -p password  # ——显示状态信息
 
+UPDATE user SET authentication_string='Aa.123456' WHERE user='root@localhost';
+update user set authentication_string=password("Aa.123456") where user="root";
 
 # explain分析查询
 # 使用 EXPLAIN 关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的。
@@ -111,8 +128,8 @@ sudo systemctl start mysql.service
     set global validate_password_number_count=3;
     set global validate_password_special_char_count=0;
     set global validate_password_length=3;
-    set password for 'root'@'localhost' = password('123456');
-    grant all on *.* to root@'%' identified by '123456';
+    set password for 'root'@'%' = password('Aa.123456');
+    grant all on *.* to root@'%' identified by 'Aa.123456';
     flush privileges;
 # 或者
 vim /etc/mysql/my.cnf
@@ -142,3 +159,7 @@ sudo systemctl restart mysql.service
 sudo mysql_secure_installation
 
 mysqlslap --concurrency=100 --iterations=1 --create-schema='sunboDataBase' --query='select * from Table1;' --number-of-queries=10 --debug-info -p123456 -uroot
+
+
+ssh root@35.232.133.92
+

@@ -30,6 +30,42 @@ ssh -p 56743 oudream@frp1.chuantou.org ls -l
 sshfs -o idmap=user pi@10.42.0.47:/home/pi ~/Pi
 
 
+# restart ssh
+# How to restart the SSHD daemon in Debian / Ubuntu Linux
+# Type the systemctl command:
+sudo systemctl restart ssh
+
+# CentOS / RHEL / Fedora / Redhat Linux Restart SSHD server
+sudo systemctl restart sshd
+
+# Restating the SSHD daemon on FreeBSD Unix
+/etc/rc.d/sshd restart
+# OR
+service sshd restart
+
+# OpenBSD Unix restart the SSHD service
+/etc/rc.d/sshd restart
+# OR
+/etc/rc.d/sshd restart
+
+# Solaris 10 command
+svcadm disable ssh
+svcadm enable ssh
+
+# Solaris version 9 and older users, try:
+/etc/init.d/sshd stop
+/etc/init.d/sshd start
+
+# AIX Unix command
+stopsrc -s sshd
+startsrc -s sshd
+
+# HP-UX Unix command
+# To restart sshd daemon on HP-UX, first stop it and again start it as follows:
+/sbin/init.d/secsh stop
+/sbin/init.d/secsh start
+
+
 ### ssh-keygen 用于：生成、管理和转换认证密钥
 # 通常，这个程序产生一个密钥对，并要求指定一个文件存放私钥，同时将公钥存放在附加了".pub"后缀的同名文件中。
 #      程序同时要求输入一个密语字符串(passphrase)，空表示没有密语(主机密钥的密语必须为空)。
