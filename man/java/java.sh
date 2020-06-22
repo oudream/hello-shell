@@ -8,6 +8,7 @@ https://docs.oracle.com/javase/9/tools/index.html
 /opt/fff/jd-gui-osx-1.4.0/JD-GUI.app/Contents/MacOS/universalJavaApplicationStub.sh
 
 
+
 ### install
 ## linux
 https://www.oracle.com/technetwork/java/javase/downloads/index.html
@@ -31,7 +32,6 @@ update-alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 100
 update-alternatives --install /usr/bin/javac javac ${JAVA_HOME}/bin/javac 100
 
 java -version
-
 
 
 

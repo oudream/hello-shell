@@ -44,14 +44,20 @@ done
 #The until construct tests for a condition, and if false, executes commands. It keeps looping as long as the condition is false (opposite of while construct)
 
 COUNT=1
-until [ $COUNT -gt 5 ]; do
-  echo "Value of count is: $COUNT"
+until [[ $COUNT -gt 5 ]] || nc -z 127.0.0.1 3306; do
+  sleep 1
   COUNT=$(($COUNT + 1))
 done
 #"break" and "continue" statements
 #break and continue can be used to control the loop execution of for, while and until constructs. continue is used to skip the rest of a particular loop iteration, whereas break is used to skip the entire rest of loop. A few examples:
 
 # Prints out 0,1,2,3,4
+until nc -z 127.0.0.1 3306; do sleep 1; done;
+
+
+COUNTNC=1; until [[ $COUNTNC -gt 20 ]] || nc -z 127.0.0.1 3306; do sleep 1; COUNTNC=$(($COUNTNC + 1)); done
+nc -l -p 3306
+
 
 COUNT=0
 while [ $COUNT -ge 0 ]; do

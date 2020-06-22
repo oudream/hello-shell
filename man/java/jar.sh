@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# 解压
+jar xvf original-esclient-0.0.1-SNAPSHOT.jar
+# 压缩
+# It has been compressed and nested jar files must be stored without compression.
+# You shoud add -0 to store only; use no ZIP compression
+# https://stackoverflow.com/questions/29999671/unable-to-run-repacked-spring-boot-jar-caused-by-unable-to-open-nested-entry
+# manifest : m
+jar -cvfm original-esclient-0.0.1-SNAPSHOT.jar META-INF/MANIFEST.MF META-INF/maven/ BOOT-INF/ org/
+
 
 https://docs.oracle.com/javase/9/tools/jar.htm
 

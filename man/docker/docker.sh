@@ -279,6 +279,13 @@ docker run -d -p 9000:9000 --restart=always --name portainer -v /var/run/docker.
 docker create  --name myrunoob  nginx:latest
 
 
+# -a :提交的镜像作者；
+# -c :使用Dockerfile指令来创建镜像；
+# -m :提交时的说明文字；
+# -p :在commit时，将容器暂停。
+docker commit -p 3089dd928de3 hello-twant:1.0.3
+
+
 ## docker export :将文件系统作为一个tar归档文件导出到STDOUT。
 # docker export [OPTIONS] CONTAINER
 # -o :将输入内容写到文件。

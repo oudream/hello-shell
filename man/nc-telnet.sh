@@ -59,6 +59,11 @@ curl localhost:8080
 ## ping
 until ping -c1 google.com; do sleep 1; done;
 until [$(nc -zv 13.112.200.162 7000) == "*succeeded*"]; do sleep 1; done;
+until $(nc -zv 127.0.0.1 3306) == "*succeeded*"; do sleep 1; done;
+
+until nc -z 127.0.0.1 3306; do sleep 1; done;
+until nc -z 127.0.0.1 1234; do sleep 1; done;
+
 
 ## 代理，端口转发
 nc -l 8000                      # 在 192.168.0.102 上开端口 8000

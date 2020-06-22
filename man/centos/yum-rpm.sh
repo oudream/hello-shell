@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+
+# 查找是否安装mysql
+rpm -qa | grep mysql
+# 列出软件包安装的文件
+rpm -ql mysql-shell-8.0.20-1.el7.x86_64
+# 查询系统中指定文件所属的软件包
+rpm -qf /usr/bin/mysql
+#   mysql-community-server-minimal-5.7.30-1.el7.x86_64
+
+
 rpm
 	-i 安装
 		--test 仅测试，不安装

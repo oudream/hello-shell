@@ -181,8 +181,9 @@ git push origin HEAD:master
 # 删除子模块比较麻烦，需要手动删除相关的文件，否则在添加子模块时有可能出现错误
 # 同样以删除assets文件夹为例
 # 删除子模块文件夹
-git rm --cached "man-pages"
-rm -rf "man-pages"
+git rm --cached "referto/pytorch-book"
+git rm -r --cached pytorch-book
+rm -rf "pytorch-book"
 # 删除.gitmodules文件中相关子模块信息
 #[submodule "assets"]
 #  path = assets
@@ -237,3 +238,6 @@ dd  # 删除最上面的(就是你要删除的目标commit)
 # 然后
 git push -f
 
+
+# filename-too-long-in-git-for-windows: https://stackoverflow.com/questions/22575662/filename-too-long-in-git-for-windows
+git config --system core.longpaths true

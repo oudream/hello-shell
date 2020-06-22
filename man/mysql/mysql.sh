@@ -161,5 +161,81 @@ sudo mysql_secure_installation
 mysqlslap --concurrency=100 --iterations=1 --create-schema='sunboDataBase' --query='select * from Table1;' --number-of-queries=10 --debug-info -p123456 -uroot
 
 
-ssh root@35.232.133.92
+### stop
+/usr/local/mysql/bin/mysqladmin -u root -p shutdown
+# Or:
+sudo mysqld stop
+# Or:
+sudo /usr/local/mysql/bin/mysqld stop
+# Or:
+sudo mysql.server stop
+# If you install the Launchctl in OSX you can try:
+# MacPorts
+sudo launchctl unload -w /Library/LaunchDaemons/org.macports.mysql.plist
+sudo launchctl load -w /Library/LaunchDaemons/org.macports.mysql.plist
+# Note: this is persistent after reboot.
+# Homebrew
+launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+# Binary installer
+sudo /Library/StartupItems/MySQLCOM/MySQLCOM stop
+sudo /Library/StartupItems/MySQLCOM/MySQLCOM start
+sudo /Library/StartupItems/MySQLCOM/MySQLCOM restart
+
+
+
+### log profile
+# https://juejin.im/post/5b7c0aabf265da438415b9eb
+# https://github.com/brunoric/docker-percona-toolkit
+# https://www.percona.com/downloads/percona-toolkit/3.2.0/binary/debian/bionic/
+# 错误日志
+show variables like 'log_error';
+# or
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+# 慢查询日志
+mysql> show variables like "%slow%";
+mysql> set global slow_query_log='ON';
+# or
+[mysqld]
+slow_query_log=1
+# 设置阈值 （ 0.05秒）
+mysql> show variables like 'long_query_time';
+mysql> set global long_query_time=0.05;
+# 查询日志
+mysql> show variables like "general_log%";
+mysql> set global general_log='ON';
+# 参数log_queries_not_using_indexes
+# 另一个和慢查询日志有关的参数是 log_queries_not_using_indexes,
+# 如果运行的SQL语句没有使用索引，则MySQL数据库同样会将这条SQL语句记录到慢查询日志文件。首先确认打开了log_queries_not_using_indexes;
+mysql> show variables like 'log_queries_not_using_indexes';
+# 例子，没有用到索引进行查询：
+mysql> explain select * from vote_record_memory where vote_id = 323;
+# 通过配置参数 log-bin[=name] 可以启动二进制日志。如果不指定name,则默认二进制日志文件名为主机名，后缀名为二进制日志的序列号
+[mysqld]
+log-bin
+# mysqld-bin.000001即为二进制日志文件，而mysqld-bin.index为二进制的索引文件，为了管理所有的binlog文件，MySQL额外创建了一个index文件，它按顺序记录了MySQL使用的所有binlog文件。如果你想自定义index文件的名称，可以设置 log_bin_index=file参数。
+# 查看二进制日志文件
+# 对于二进制日志文件来说，不像错误日志文件，慢查询日志文件那样用cat，head, tail等命令可以查看，它需要通过 MySQL 提供的工具 mysqlbinlog
+mysqlbinlog mysqld-bin.000001
+
+
+
+### 慢查询查看和设置命令
+# 1、数据库CPU负载高。一般是查询语句中有很多计算逻辑，导致数据库cpu负载。
+# 2、IO负载高导致服务器卡住。这个一般和全表查询没索引有关系。
+# 3、查询语句正常，索引正常但是还是慢。如果表面上索引正常，但是查询慢，需要看看是否索引没有生效。
+# 2.1、查询mysql的操作信息
+# show status -- 显示全部mysql操作信息
+show status like "com_insert%"; -- 获得mysql的插入次数;
+show status like "com_delete%"; -- 获得mysql的删除次数;
+show status like "com_select%"; -- 获得mysql的查询次数;
+show status like "uptime"; -- 获得mysql服务器运行时间
+show status like 'connections'; -- 获得mysql连接次数
+show [session|global] status like .... 如果你不写 [session|global] 默认是session 会话，只取出当前窗口的执行，如果你想看所有(从mysql 启动到现在，则应该 global)
+# 通过查询mysql的读写比例,可以做相应的配置优化;
+show variables like "%slow%";-- 是否开启慢查询;
+show status like "%slow%"; -- 查询慢查询SQL状况;
+show variables like "long_query_time"; -- 慢查询时间
 
