@@ -528,6 +528,13 @@ sudo shutdown -P 1:00 # linux
 
 
 
+### die 命令
+# 在 linux shell中执行命令后加上die命令，执行过程中如果出错会报出相应的原因与行号。如
+# 如果文件不存在，则会报出相应的错误。
+cat /usr/home/test.log || die $?
+
+
+
 ### open in browser
 # https://stackoverflow.com/questions/38147620/shell-script-to-open-a-url
 ## Linux

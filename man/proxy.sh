@@ -31,7 +31,7 @@ export GO111MODULE=off
 # 没有试的
 export http_proxy=socks5://127.0.0.1:1080		# 梯子的本地端口
 export https_proxy=$http_proxy
-go 1.11版本新增了 GOPROXY 环境变量，go get会根据这个环境变量来决定去哪里取引入库的代码
+# go 1.11版本新增了 GOPROXY 环境变量，go get会根据这个环境变量来决定去哪里取引入库的代码
 # 没有试的
 # go 1.11版本新增了 GOPROXY 环境变量，go get会根据这个环境变量来决定去哪里取引入库的代码
 export GOPROXY=https://goproxy.io

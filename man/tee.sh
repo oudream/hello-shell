@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 
+cat alpha.log | tee file1 file2 file3 | cat
+cat alpha.log | tee file1 file2 file3 >/dev/null
+
+
+# tee 多重定向
 # 利用管道和 tee 命令，该命令可以从标准输入中读入信息并将其写入标准输出或文件中，
 echo a |sudo tee 1.txt
 echo a |sudo tee -a 1.txt #  -a 是追加的意思，等同于 >>
