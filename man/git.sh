@@ -27,6 +27,10 @@ git reset HEAD~
 git pull origin next:master
 
 
+### Git 培训实战
+# https://heis.gitee.io/git-training/#5credentialhelperselector-
+
+
 ###
 echo "# wwwroot" >> README.md
 git init

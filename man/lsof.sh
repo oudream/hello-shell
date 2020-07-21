@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+lsof -i :80
+
 ## mac macos osx
 lsof -a -P -i tcp -p 1355
 lsof -n -P -i TCP -s TCP:LISTEN

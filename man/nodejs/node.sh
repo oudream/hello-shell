@@ -13,6 +13,16 @@ sudo apt install nodejs
 node -v
 npm -v
 
+### centos
+# 清理yum源缓存并选择最快的源重新生成缓存：
+curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+sudo yum clean all && sudo yum makecache fast
+# 安装编译环境：
+sudo yum install -y gcc-c++ make
+sudo yum install -y nodejs
+node -v
+
+
 ### on linux, debian, ubuntu
 sudo apt update
 sudo apt install nodejs
