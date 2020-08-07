@@ -25,8 +25,8 @@ git clone https://github.com/oudream/nginx-v1.9.7
 
 
 # centos
-sudo yum install epel-release
-sudo yum install nginx
+sudo yum -y install epel-release
+sudo yum -y install nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
 sudo systemctl status nginx

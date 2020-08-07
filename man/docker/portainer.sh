@@ -8,6 +8,7 @@ https://portainer.readthedocs.io/en/latest/deployment.html
 docker volume create portainer_data
 docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 docker run -d -p 2211:9000 -p 2210:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+docker run -d -p 9211:9000 -p 9210:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 open http://localhost:2211/
 
 username: admin

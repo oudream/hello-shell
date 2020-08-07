@@ -14,6 +14,7 @@ node -v
 npm -v
 
 ### centos
+sudo yum uninstall -y nodejs
 # 清理yum源缓存并选择最快的源重新生成缓存：
 curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 sudo yum clean all && sudo yum makecache fast
@@ -59,3 +60,8 @@ edit /etc/profile and add the following to the bottom
 export PATH=/opt/node-${NODE_VERSION}-${NODE_DISTRO}/bin:$PATH
 # Refresh profile
 . /etc/profile
+
+
+
+npm install --unsafe-perm node-sass
+

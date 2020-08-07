@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+
+docker run -d -p 22:22 --name=CentOS7S1 centos:centos7 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+docker run -d -p 2201:22 centos7s1 /usr/sbin/sshd -D
+
+
 docker rm -v $(docker ps -a -q -f status=exited)
 
 docker kill -s KILL $(docker ps -a -q)
@@ -363,7 +368,7 @@ docker run -d --rm alpine /bin/sh -c "while sleep 2;do printf aaabbbccc134\\n; d
 docker run -i -t crystal/mono-base bash -c "/usr/local/bin/mono /home/crystal/Downloads/BackgroundProcesser.exe & /bin/bash"
 
 
-### install
+### install - ubuntu
 sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get update
 sudo apt-get install \
@@ -381,3 +386,17 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo docker run hello-world
+
+### install - centos
+sudo yum install -y yum-utils
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum-config-manager --enable docker-ce-nightly
+sudo yum-config-manager --enable docker-ce-test
+sudo yum install docker-ce docker-ce-cli containerd.io
+#
+sudo systemctl start docker
+sudo docker run hello-world
+
+

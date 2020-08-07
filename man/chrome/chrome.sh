@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
 ### centos
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-sudo yum install ./google-chrome-stable_current_*.rpm
+sudo yum -y install wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+# sudo yum -y install ./google-chrome-stable_current_*.rpm
 google-chrome –version
+# CentOS 下如果使用上述的方式安装，安装时没问题，但真实调用时，会出现 Chromium 缺少依赖项的报错，通过安装以下依赖可以解决。
+#依赖库
+sudo yum -y install pango.x86_64 libXcomposite.x86_64 libXcursor.x86_64 libXdamage.x86_64 libXext.x86_64 libXi.x86_64 \
+ libXtst.x86_64 cups-libs.x86_64 libXScrnSaver.x86_64 libXrandr.x86_64 GConf2.x86_64 alsa-lib.x86_64 atk.x86_64 gtk3.x86_64
+# 中文字体
+sudo yum -y install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic \
+ xorg-x11-fonts-Type1 xorg-x11-fonts-misc
+
 
 ### doc
 # Run Chromium with flags:

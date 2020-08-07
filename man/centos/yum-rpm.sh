@@ -89,3 +89,7 @@ yum	[options] [command] [package ...]
 	groupremove group1 [group2] [...]      卸载包组
 	groupinfo group1 [...]		       查看包组信息
 
+
+### install
+yum -y install epel-release
+yum -y install htop

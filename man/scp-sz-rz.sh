@@ -26,6 +26,7 @@ scp -r local_folder remote_username@remote_ip:remote_folder
 scp -r /www root@192.168.5.19:/opt/deploy-v3/
 scp server.xml root@192.168.5.19:/opt/deploy-v3/
 scp /opt/deploy-v3.tar.gz root@104.154.148.101:/opt/
+scp /opt/h5-www.tar.gz root@34.69.71.181:/opt/
 
 # 从远程复制到本地
 scp -P 4588 remote@xx.com:/usr/local/sin.sh /home/administrator
