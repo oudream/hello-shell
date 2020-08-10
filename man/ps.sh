@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 # PID pid
 ps aux | grep redis | grep -v "grep" | tr -s ' ' | cut -d ' ' -f 2
 ps aux | grep -v "grep" | grep redis | awk '{print $2}'
@@ -26,6 +27,9 @@ pstree -c -p -A $(pgrep dockerd)
 
 # macos
 ps -Ao user,pid,%cpu,%mem,vsz,rss,tt,stat,start,time,command
+# centos
+ps -o pid,pgid,ppid,sid,comm
+#
 pstree
 
 # http://man7.org/linux/man-pages/man1/ps.1.html

@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 
-yum install epel-release
+
+yum -y install epel-release
+yum -y install htop
+yum install psmisc # pstree
+
+### CentOS7自动以root身份登陆gnome桌面
+vim /etc/gdm/custom.conf
+# 然后在[daemon]下面添加：
+#  [daemon]
+#  AutomaticLoginEnable=True
+#  AutomaticLogin=root  #你想自动登录的用户名
+
 
 # Bash Centos7 “which” command
 yum whatprovides *bin/which
