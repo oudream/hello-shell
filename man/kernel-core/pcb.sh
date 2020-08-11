@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# process control block (PCB)
+### process control block (PCB)
 # https://en.wikipedia.org/wiki/Process_control_block
+open https://en.wikipedia.org/wiki/Process_control_block
 # https://zh.wikipedia.org/wiki/%E8%A1%8C%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%A1%A8
 
 # 进程控制块（英语：Process Control Block，PCB）是操作系统核心中一种数据结构，主要表示行程状态。
@@ -22,6 +23,7 @@
 # getcwd(), getegid(), geteuid(), getgid(), getgroups(), gethostid(), getlogin(), getpgid(), getpgrp(), getpid(), getppid(), getsid(), getuid(), getwd(),
 # https://pubs.opengroup.org/onlinepubs/7908799/xsh/unistd.h.html
 # https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/unistd.h
+open https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/unistd.h
 # task_struct
 # 每一个进程都由task_struct 数据结构来定义. task_struct就是我们通常所说的PCB
 # https://github.com/torvalds/linux/blob/master/include/linux/sched.h
