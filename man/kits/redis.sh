@@ -32,6 +32,7 @@ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist # Stop Redis o
 ## on ubuntu
 sudo apt install redis-server
 sudo systemctl start redis
+sudo systemctl disable redis
 sudo systemctl enable redis
 sudo systemctl restart redis
 sudo systemctl stop redis

@@ -1,43 +1,30 @@
 #!/usr/bin/env bash
 
+### java8
+https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
+### java9
+https://docs.oracle.com/en/java/javase/11/
+https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html
 
-https://docs.oracle.com/javase/9/tools/java.htm
-https://docs.oracle.com/javase/9/tools/tools-and-command-reference.htm
-https://docs.oracle.com/javase/9/tools/index.html
+### install java on windows
+# C:\Program Files (x86)\Common Files\Oracle\Java\javapath
 
-/opt/fff/jd-gui-osx-1.4.0/JD-GUI.app/Contents/MacOS/universalJavaApplicationStub.sh
+### install java on ubuntu
+sudo apt install openjdk-8-jdk
+# sudo apt install openjdk-11-jdk
+vim /etc/environment # or /etc/profile
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+# export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$PATH:$JAVA_HOME/bin
 
+### java variable on macos
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export HADOOP_HOME=/usr/local/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
 
-
-### install
-## linux
-https://www.oracle.com/technetwork/java/javase/downloads/index.html
-mkdir /opt/fff/jdk
-tar -zxf jdk-8u5-linux-x64.tar.gz -C /opt/fff/jdk
-javaversion=jdk1.8.0_231
-export JAVA_HOME=/opt/fff/jdk/${javaversion}
-# or
-sudo nano /etc/environment
-# /etc/environment
-JAVA_HOME="/opt/jdk1.8.0_251"
-JRE_HOME=${JAVA_HOME}/jre
-CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
-#
-source /etc/environment
-#
-# 如果你安装了多个版本的jdk，你可以通过以下命令在这些版本之间切换：
-sudo update-alternatives –config java
-# or
-update-alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 100
-update-alternatives --install /usr/bin/javac javac ${JAVA_HOME}/bin/javac 100
-
-java -version
-
-
-
-set -ex
-
-# UPDATE THESE URLs
+### UPDATE THESE URLs
 export JDK_URL=http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
 export UNLIMITED_STRENGTH_URL=http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip
 # Download Oracle Java 8 accepting the license
@@ -68,9 +55,6 @@ export PATH=$PATH:/usr/lib/jvm/oracle_jdk8/bin:/usr/lib/jvm/oracle_jdk8/db/bin:/
 export JAVA_HOME=/usr/lib/jvm/oracle_jdk8
 export DERBY_HOME=/usr/lib/jvm/oracle_jdk8/db" | sudo tee -a /etc/profile.d/oraclejdk.sh
 
-
-
-
 ### java 版本切换
 ## macos
 export JAVA_HOME=$(/usr/libexec/java_home)
@@ -88,17 +72,13 @@ https://www.jianshu.com/p/87637b150026
     java [options] mainclass [args...]
     java [options] -jar jarfile [args...]
 
-java -h
-# 输出非标准选项的帮助
-java -X --help-extra
-
 -cp classpath
 # 指定JAVA搜寻类的类路径，会覆盖CLASSPATH环境变量的值。类路径为指定符号分隔（linux为冒号:，windows为分号;）的
 # 目录、jar包路径或zip包路径，用来指定搜索class文件的路径。其详细说明可查看ClassPath详解。
 
 -Dproperty=value
 # 指定一个系统属性值。属性和属性值都为字符形式，其中属性名不能含有空白字符，属性值如果需要空白字符，需要使用双引号"包裹。
-# 一个正确的示例如下
+# 一个正确的示例如下：
 -Dfoo="foo bar"
 # 该值可以在JAVA程序中使用如下代码获取：
 System.getProperty("foo")
@@ -148,41 +128,6 @@ java -cp test.jar com.ee2ee.test.PackageTest
 java xx # 执行class，不需要class后缀，加了报错
 java -cp
 java -jar # 执行jar文件，需要为可执行jar
-
-
-
-### javac
-javac [ options ] [ sourcefiles ] [ @argfiles ]
-# options：
-   -g                       # 生成所有调试信息
-   -g:none                  # 不生成任何调试信息
-   -g:{lines,vars,source}   # 只生成某些调试信息
-   -nowarn                  # 不生成任何警告
-   -verbose                 # 输出有关编译器正在执行的操作的消息
-   -deprecation             # 输出使用已过时的 API 的源位置
-   -classpath <path>        # 指定查找用户类文件的位置
-   -cp <path>               # 指定查找用户类文件的位置
-   -sourcepath <path>       # 指定查找输入源文件的位置
-   -bootclasspath <path>    # 覆盖引导类文件的位置
-   -extdirs <dir>           # 覆盖安装的扩展目录的位置
-   -endorseddirs <dir>      # 覆盖签名的标准路径的位置
-   -d <dir>                 # 指定存放生成的类文件的位置
-   # 使用-d参数，如类中定义了包，则编译时会自动生成包，  如：javac -d .  helloworld.java
-   # 表示在当前目录下编译Helloworld 类。.表示当前目录，如helloword中定义有包，则在当前目录下生成包：
-   -encoding <编码>          # 指定源文件使用的字符编码
-   -source <版本>            # 提供与指定版本的源兼容性
-   -target <版本>            # 生成特定 VM 版本的类文件
-   -version                 # 版本信息
-   -help                    # 输出标准选项的提要
-   -X                       # 输出非标准选项的提要
-   -J<标志>                  # 直接将 <标志> 传递给运行时系统
-
-javac -d targetdir xx.java # 指定class输出的目录
-javac -encoding utf-8 xx.java # 指定字符集
-javac -cp classpath:jars xx.java # 指定classpath
-javac -verbose xx.java # 输出编译细节
-
-
 
 
 ### hello

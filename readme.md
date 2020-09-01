@@ -1,6 +1,8 @@
 ## git pull
 
-`git clone https://github.com/oudream/hello-shell.git --recursive`
+```shell script
+git clone https://github.com/oudream/hello-shell.git --recursive
+```
 
 ### [man as ->](./man)
 

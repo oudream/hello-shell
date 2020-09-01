@@ -46,6 +46,7 @@ mysql>source /opt/tmp/db1.sql
 # 我们可以通过show命令查看MySQL状态及变量，找到系统的瓶颈：
 # Mysql>
     help
+    create database if not exists twdb default charset utf8 collate utf8_general_ci;
     create database if not exists db1 default charset utf8 collate utf8_general_ci;
     use mysqldata;
     show tables;
@@ -120,6 +121,7 @@ sudo systemctl start mysql.service
 # https://bugs.mysql.com/bug.php?id=93959
 # 远程访问 remote connect
 # mysql>
+    set global max_allowed_packet=1024*1024*128;
     select @@validate_password_policy;
     select @@validate_password_length;
     show variables like 'validate_password%';
@@ -129,6 +131,7 @@ sudo systemctl start mysql.service
     set global validate_password_special_char_count=0;
     set global validate_password_length=3;
     set password for 'root'@'%' = password('Aa.123456');
+    SET PASSWORD FOR 'root'@'localhost' = PASSWORD('Aa.123456');
     grant all on *.* to root@'%' identified by 'Aa.123456';
     flush privileges;
 # 或者
