@@ -28,3 +28,7 @@ yum install unzip
 
 # https://stackoverflow.com/questions/21802223/how-to-install-crontab-on-centos
 yum install cronie
+
+
+yum -y install gcc gcc-c++ automake autoconf libtool make epel-release wget java-1.8.0-openjdk && \
+    yum localinstall jdk-8u60-linux-x64.rpm

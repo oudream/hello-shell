@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+mklink "C:\ProgramData\DockerDesktop\version-bin\docker-compse" "C:\Program Files\Docker\Docker\resources\bin\docker-compose"
+mklink "C:\ProgramData\DockerDesktop\version-bin\docker-compse.exe" "C:\Program Files\Docker\Docker\resources\bin\docker-compose.exe"
+
 ln -s /ddd/dir1 link-dir1 # create link link-dir1
 
 # ln
@@ -104,8 +107,8 @@ ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
 
 
 # run as administrator
+# mklink Link Target
 mklink /D D:\hello-shell\tools\ftofs D:\ftofs
-
 # mklink - windows
 # MKLINK [[/D] | [/H] | [/J]] Link Target
 #

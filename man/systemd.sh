@@ -84,7 +84,7 @@ Description=Frp Client Service
 After=systemd-networkd.service network.target sshd.service
 
 [Service]
-Type=simple
+Type=forking
 User=nobody
 Restart=on-failure
 RestartSec=5s

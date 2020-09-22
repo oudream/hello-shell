@@ -17,6 +17,28 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export PATH=$PATH:$JAVA_HOME/bin
 
+### install java on centos
+yum install java-1.8.0-openjdk-devel.x86_64
+vi  /etc/profile
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el6_9.x86_64
+export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$PATH:$JAVA_HOME/bin
+source  /etc/profile
+java -version
+## or
+# https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
+wget http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz?AuthParam=1531155951_4e06a4d17c6c1dbfb8440352e19dd2ae
+mkdir /usr/local/java/
+tar -zxvf jdk-8u171-linux-x64.tar.gz -C /usr/local/java/
+vim /etc/profile
+export JAVA_HOME=/usr/local/java/jdk1.8.0_171
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
+source /etc/profile
+ln -s /usr/local/java/jdk1.8.0_171/bin/java /usr/bin/java
+java -version
+
 ### java variable on macos
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export JRE_HOME=${JAVA_HOME}/jre

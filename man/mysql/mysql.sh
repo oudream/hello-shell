@@ -154,9 +154,28 @@ mysqldump --all-databases --routines -u root -p > ~/fulldump.sql
 sudo apt install pv
 pv ~/fulldump.sql | mysql
 
-# restart service
+## restart service
 sudo systemctl stop mysql.service
 sudo systemctl restart mysql.service
+##
+systemctl start mariadb
+systemctl restart mariadb
+systemctl enable mariadb
+systemctl disable mariadb
+
+# 增加对mariadb的配置，开启binlog：
+# 如果启用了这一行，则会使得binlog更大，但是最安全。
+vim /etc/my.cnf.d/server.cnf
+# 在[mysqld]一节中增加下列配置：
+#  log-bin=mysql-bin
+#  max-binlog-size=1G
+#  expire_logs_days=180
+#  binlog_format=row
+#  server-id=1001
+# 保存后，重启mariadb服务：
+systemctl restart mariadb
+# 登录mysql后执行：
+SHOW VARIABLES LIKE 'log_bin';
 
 # reset password
 sudo mysql_secure_installation
@@ -239,6 +258,28 @@ show status like 'connections'; -- 获得mysql连接次数
 show [session|global] status like .... 如果你不写 [session|global] 默认是session 会话，只取出当前窗口的执行，如果你想看所有(从mysql 启动到现在，则应该 global)
 # 通过查询mysql的读写比例,可以做相应的配置优化;
 show variables like "%slow%";-- 是否开启慢查询;
+show variables like "%binlog%";-- 是否开启慢查询;
 show status like "%slow%"; -- 查询慢查询SQL状况;
 show variables like "long_query_time"; -- 慢查询时间
 
+
+
+### 忘记密码
+# 在/etc/my.cnf [mysqld] 配置部分添加"skip-grant-tables"
+# 重启mysql服务
+service mysqld restart
+# 登入mysql
+mysql -uroot -p mysql
+  update mysql.user set password=PASSWORD('root')where user='root';
+  flush privileges;
+# 删除/etc/my.cnf [mysqld] 配置部分的"skip-grant-tables"
+# 重启mysql服务
+
+
+### 需要在防火墙配置将3306端口开放。
+# （--permanent永久生效，没有此参数重启后失效）
+firewall-cmd --zone=public --add-port=3306/tcp --permanent
+# 重新载入
+firewall-cmd --reload
+# 查看
+firewall-cmd --zone=public --query-port=3306/tcp
