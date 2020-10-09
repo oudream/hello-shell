@@ -60,6 +60,7 @@ mysql>source /opt/tmp/db1.sql
     delete from mytable;
     update mytable set sex=”f” where name=’hyq’;
     show status                  ;  # ——显示状态信息（扩展show status like ‘XXX’）
+    show warnings;               ;  # ——显示警告
     show variables               ;  # ——显示系统变量（扩展show variables like ‘XXX’）
     show innodb status           ;  # ——显示InnoDB存储引擎的状态
     show processlist             ;  # ——查看当前SQL执行，包括执行状态、是否锁表等
@@ -130,8 +131,8 @@ sudo systemctl start mysql.service
     set global validate_password_number_count=3;
     set global validate_password_special_char_count=0;
     set global validate_password_length=3;
-    set password for 'root'@'%' = password('Aa.123456');
     SET PASSWORD FOR 'root'@'localhost' = PASSWORD('Aa.123456');
+    set password for 'root'@'%' = password('Aa.123456');
     grant all on *.* to root@'%' identified by 'Aa.123456';
     flush privileges;
 # 或者
@@ -147,6 +148,13 @@ mysql -h localhost -u root -p
 # mysql>
     uninstall plugin validate_password;
 sudo /etc/init.d/mysql restart
+# 还有可能是： plugin: auth_socket
+# 该插件不关心，也不需要密码
+# 运行以下命令：
+# mysql>
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Aa.123456';
+    # ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'testAa.123456;
+    SELECT User, Host, HEX(authentication_string) FROM mysql.user;
 
 
 # backup and restore

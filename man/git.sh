@@ -204,6 +204,13 @@ git clone <remote-address> --depth 1
 # 只克隆单个分支的最新一次提交
 # git clone --branch <branch_name> <remote-address> --depth 1
 
+# 子模块的提交
+#cd path/to/submodule
+cd 3rd/ccxx
+git add .
+git commit -m "update by submodule"
+git push origin HEAD:master
+
 
 ### 用户名 密码
 # 设置记住密码（默认15分钟）：

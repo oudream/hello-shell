@@ -37,12 +37,29 @@ pm2 flush               # Flush all logs
 pm2 reloadLogs          # Reload all logs 
 
 
+# PM2设置开机自启动
 # Init Systems Supported: systemd, upstart, launchd, rc.d
 # Generate Startup Script
 pm2 startup
 
+
+# 将当前pm2所运行的应用保存在/root/.pm2/dump.pm2下，当开机重启时，运行pm2-root服务脚本，并且到/root/.pm2/dump.pm2下读取应用并启动
 # Freeze your process list across server restart
 pm2 save
 
+
 # Remove Startup Script
 pm2 unstartup
+
+
+# 例子
+cat > twant-h5.json <<EOF
+{
+  "name" : "twant-h5",
+  "script" : "/usr/oudream/twant/node_modules/.bin/nuxt",
+  "args" : "start",
+  "cwd" : "/usr/oudream/twant",
+  "interpreter" : "/usr/oudream/node10/bin/node",
+}
+EOF
+pm2 start twant-h5.json

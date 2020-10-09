@@ -26,12 +26,12 @@ scp -r local_folder remote_username@remote_ip:remote_folder
 scp -r /www root@192.168.5.19:/opt/deploy-v3/
 scp server.xml root@192.168.5.19:/opt/deploy-v3/
 scp /opt/deploy-v3.tar.gz root@104.154.148.101:/opt/
-scp /opt/h5-www.tar.gz root@34.69.71.181:/opt/
+scp -r ${PWD}/env-v1/ root@192.168.5.29:/twant/docker/
 
 # 从远程复制到本地
 scp -P 4588 remote@xx.com:/usr/local/sin.sh /home/administrator
 scp -P 2231 root@34.69.62.252:/tmp/hello-*
-scp -r root@192.168.5.19:/opt/vue /www/
+scp -r root@192.168.5.29:/www ${PWD}/www
 
 scp /opt/limi/ionic3-components/platforms/android/build/outputs/apk/debug/android-debug.apk root@34.68.240.147:/opt/
 scp /opt/limi/ionic3-components/platforms/android/build/outputs/apk/debug/android-debug.apk root@122.51.12.151:/opt/
