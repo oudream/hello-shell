@@ -133,6 +133,3 @@ service crond start
 ntsysv
 # 加入开机自动启动:
 chkconfig --level 35 crond on
-
-
-

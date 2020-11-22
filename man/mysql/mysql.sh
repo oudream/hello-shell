@@ -3,6 +3,7 @@
 
 explain SELECT * FROM `admin_country`
 
+mysql -P 3306 -h 192.168.1.104 -u root -p'xxx'
 
 # doc en
 open https://dev.mysql.com/doc/refman/8.0/en/mysql-commands.html
@@ -18,6 +19,26 @@ open https://dev.mysql.com/doc/refman/8.0/en/show-engines.html
 #    The following NEW packages will be installed:
 #      mysql-client-5.7 mysql-client-core-5.7 mysql-common mysql-server mysql-server-5.7 mysql-server-core-5.7
 
+### centos
+# https://downloads.mysql.com/archives/community/
+#wget https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+# 先卸载Linux上已安装的mariadb相关的软件包，避免跟待安装的MySQL的rpm包冲突
+yum remove mariadb-libs -y
+# 安装基础依赖
+yum install -y numactl libaio
+#
+wget https://downloads.mysql.com/archives/get/p/23/file/mysql-community-common-5.7.28-1.el7.x86_64.rpm
+wget https://downloads.mysql.com/archives/get/p/23/file/mysql-community-libs-5.7.28-1.el7.x86_64.rpm
+wget https://downloads.mysql.com/archives/get/p/23/file/mysql-community-libs-compat-5.7.28-1.el7.x86_64.rpm
+wget https://downloads.mysql.com/archives/get/p/23/file/mysql-community-client-5.7.28-1.el7.x86_64.rpm
+wget https://downloads.mysql.com/archives/get/p/23/file/mysql-community-server-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-common-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-libs-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-libs-compat-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-client-5.7.28-1.el7.x86_64.rpm
+rpm -ivh mysql-community-server-5.7.28-1.el7.x86_64.rpm
+mysql --version
+mysql-community-libs-compat-5.7.28-1.el7.x86_64.rpm
 
 # 1.导出整个数据库
 # mysqldump -u 用户名 -p 数据库名 > 导出的文件名
@@ -167,6 +188,7 @@ sudo systemctl stop mysql.service
 sudo systemctl restart mysql.service
 ##
 systemctl start mariadb
+systemctl stop mariadb
 systemctl restart mariadb
 systemctl enable mariadb
 systemctl disable mariadb
@@ -180,6 +202,7 @@ vim /etc/my.cnf.d/server.cnf
 #  expire_logs_days=180
 #  binlog_format=row
 #  server-id=1001
+#  max_allowed_packet=128M
 # 保存后，重启mariadb服务：
 systemctl restart mariadb
 # 登录mysql后执行：
@@ -291,3 +314,6 @@ firewall-cmd --zone=public --add-port=3306/tcp --permanent
 firewall-cmd --reload
 # 查看
 firewall-cmd --zone=public --query-port=3306/tcp
+
+yum-config-manager --disable   mysql80-community
+yum-config-manager --enable   mysql57-community

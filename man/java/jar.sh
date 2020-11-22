@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 
+
 # 解压
 jar xvf original-esclient-0.0.1-SNAPSHOT.jar
+jar -xvf xxx.jar -C 路径 # 意思是将路径下的文件压缩到 jar 中
 # 压缩
 # It has been compressed and nested jar files must be stored without compression.
 # You shoud add -0 to store only; use no ZIP compression
 # https://stackoverflow.com/questions/29999671/unable-to-run-repacked-spring-boot-jar-caused-by-unable-to-open-nested-entry
 # manifest : m
 jar -cvfm original-esclient-0.0.1-SNAPSHOT.jar META-INF/MANIFEST.MF META-INF/maven/ BOOT-INF/ org/
+
+# 示例 1: 将两个类文件归档到一个名为 classes.jar 的档案中:
+jar cvf classes.jar Foo.class Bar.class
+# 示例 2: 使用现有的清单文件 'mymanifest' 并将 foo/ 目录中的所有文件归档到 'classes.jar' 中:
+jar cvfm classes.jar mymanifest -C foo/ .
 
 
 https://docs.oracle.com/javase/9/tools/jar.htm

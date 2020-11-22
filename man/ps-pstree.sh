@@ -25,6 +25,10 @@ ps -l --ppid=683
 pstree -c -p -A $(pgrep dockerd)
 
 
+### install psdtee on centor
+yum install psmisc
+
+
 # macos
 ps -Ao user,pid,%cpu,%mem,vsz,rss,tt,stat,start,time,command
 # centos

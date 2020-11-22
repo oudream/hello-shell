@@ -33,3 +33,6 @@ git clone https://github.com/oudream/hello-shell.git --recursive
 - [https://wangchujiang.com/linux-command/         ](https://wangchujiang.com/linux-command/         )
 - [https://github.com/tldr-pages/tldr              ](https://github.com/tldr-pages/tldr              )
 - [https://debian-handbook.info/browse/zh-CN/stable/index.html](https://debian-handbook.info/browse/zh-CN/stable/index.html                      )
+
+## bash
+- http://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html

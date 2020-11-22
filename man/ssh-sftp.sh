@@ -2,6 +2,8 @@
 
 # https://linux.die.net/man/1/ssh
 
+scp -i yours.pem  xxxxxxx@awsec2ip:/path/to/file
+
 
 # 打开调试模式
 ssh -v 192.168.0.103
@@ -64,6 +66,34 @@ startsrc -s sshd
 # To restart sshd daemon on HP-UX, first stop it and again start it as follows:
 /sbin/init.d/secsh stop
 /sbin/init.d/secsh start
+
+
+### 免密码登录
+cat >> /etc/hosts <<EOF
+192.168.5.32 twant32
+192.168.5.108 twant108
+192.168.5.109 twant109
+192.168.5.110 twant110
+192.168.5.111 twant111
+EOF
+### ssh login with no password
+ssh-keygen -t rsa
+ssh-copy-id root@twant32
+ssh-copy-id root@twant108
+ssh-copy-id root@twant109
+ssh-copy-id root@twant110
+ssh-copy-id root@twant111
+# cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
+
+
+### 远程执行，获取返回值
+result=`ssh root@twant108 "ps -ef | grep nginx | grep -v grep"`
+if [ -z "$result" ];then
+  echo "no kill"
+else
+  echo "kill"
+  ssh root@10.77.42.99 'ps -ef | grep nginx | grep -v grep | awk "{print \$2}" | xargs kill -9 && wait'
+fi
 
 
 ### ssh-keygen 用于：生成、管理和转换认证密钥
@@ -203,5 +233,3 @@ Thanks for Help. I added on client configuration file /etc/ssh/ssh_config this 3
 XAuthLocation /usr/bin/xauth
 ForwardX11 yes
 ForwardX11Trusted yes
-
-

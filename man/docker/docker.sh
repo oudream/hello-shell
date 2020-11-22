@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+# https://docs.docker.com/engine/reference/commandline/ps/#formatting
+docker ps --format "{{.ID}}: {{.Names}}: {{.Command}}: {{.Image}}: {{.CreatedAt}}: {{.Ports}}: {{.Status}}: {{.Size}}: {{.Mounts}}: {{.Networks}}"
+docker ps --format "{{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Networks}}"
+
+docker exec -it --user root  3c15 bash
 
 docker run -d -p 22:22 --name=CentOS7S1 centos:centos7 /bin/sh -c "while true; do echo hello world; sleep 1; done"
 docker run -d -p 2201:22 centos7s1 /usr/sbin/sshd -D
-
 
 docker rm -v $(docker ps -a -q -f status=exited)
 
@@ -394,7 +398,9 @@ sudo yum-config-manager \
     https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum-config-manager --enable docker-ce-nightly
 sudo yum-config-manager --enable docker-ce-test
-sudo yum install docker-ce docker-ce-cli containerd.io
+sudo yum -y install docker-ce docker-ce-cli containerd.io
 #
+sudo systemctl enable docker
 sudo systemctl start docker
+sudo systemctl restart docker
 sudo docker run hello-world

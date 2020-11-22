@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-
-
 ### docker es:7
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
 docker pull docker.elastic.co/elasticsearch/elasticsearch:7.7.0

@@ -1,27 +1,7 @@
-[
-  {
-    "alg": "RS256",
-    "kid": "A6AA1E6A66F67B9615CD1EBFAEA169882AC5660C",
-    "kid": "SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-    "typ": "JWT"
-  },
-  {
-    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/country": "USA",
-    "nameid": "Bob",
-    "email": "Bob@contoso.com",
-    "given_name": "Bob",
-    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/homephone": "555.1212",
-    "role": [
-      "Developer",
-      "Sales",
-      "role1"
-    ],
-    "unique_name": "Jean-Sébastien",
-    "roles": "roles1",
-    "nbf": 1598357926,
-    "exp": 1598444326,
-    "iat": 1598357926,
-    "iss": "http://Default.Issuer.com",
-    "aud": "http://Default.Audience.com"
+{
+  "code": 200,
+  "datas": {
+    "exp": 1605500429,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyTmFtZSI6InR3YW50X2phdmEiLCJleHAiOjE2MDU1MDA0Mjl9.DyGg68_1KvFcPz86uE-OZrrvE91Y4kaAoEUW6OnojYk"
   }
-]
+}

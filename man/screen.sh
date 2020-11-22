@@ -4,6 +4,9 @@ screen -ls | grep -i detached | cut -d. -f1 | tr -d [:blank:]| xargs kill
 
 screen -ls | grep Detached | cut -d. -f1 | awk ‘{print $1}’ | xargs kill
 
+# 当你挂起screen，会出现screen session的状态为Attached
+# -D -r 先踢掉前一用户，再登陆
+screen -D  -r yourname
 
 ### screen
 screen -S yourname -> 新建一个叫yourname的session

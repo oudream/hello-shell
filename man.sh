@@ -473,14 +473,9 @@ asciicast2gif -t solarized-dark -s 2 -S 1 118274.json demo.gif
 -w：暂停时间最多多少秒，如 asciinema rec -w 2.5 demo.json，录制终端保存到本地，暂停时间最多2.5秒
 
 
-
-
-Z.a-135246-a.Z
 # export
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
-
 
 # host
 # hosts所在文件夹：

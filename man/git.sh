@@ -1,14 +1,26 @@
 #!/usr/bin/env bash
 
 
-git pull origin master
+git update-index --chmod=+x path/to/file
 
-git status # 运行git status命令查看本地修改
-git diff readme.txt # 看看更改的地方（difference）
-git remote -v # git查看远程仓库地址命令
 
 # 下述命令其实相当于 git fetch + git merge
 git pull origin master
+
+
+git status # 运行git status命令查看本地修改
+git remote -v # git查看远程仓库地址命令
+
+
+### diff
+git diff readme.txt # 看看更改的地方（difference）
+git diff branch1..branch2 #
+git diff k73ud^..dj374 # 比较两不同的提交，Show diff between commits
+# And if you need to get only files names (e.g. to copy hotfix them manually):
+git diff k73ud dj374 --name-only
+# And you can get changes applied to another branch:
+git diff k73ud dj374 > my.patch
+git apply my.patch
 
 # git fetch 指令是下载远程仓库最新内容，不做合并
 # git reset 指令把HEAD指向master最新版本
@@ -208,7 +220,7 @@ git clone <remote-address> --depth 1
 #cd path/to/submodule
 cd 3rd/ccxx
 git add .
-git commit -m "update by submodule"
+git commit -m "update by submodule 2"
 git push origin HEAD:master
 
 
