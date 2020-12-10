@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
-
-# 查找是否安装mysql
-rpm -qa | grep mysql
+# 安装 example.rpm 包并在安装过程中显示正在安装的文件信息及安装进度；
+rpm -ivh example.rpm
+# 卸载 tomcat4 软件包
+rpm -e tomcat4
+# 查看 tomcat4 是否被安装；
+rpm -qa | grep tomcat4
 # 列出软件包安装的文件
 rpm -ql mysql-shell-8.0.20-1.el7.x86_64
 # 查询系统中指定文件所属的软件包
 rpm -qf /usr/bin/mysql
 #   mysql-community-server-minimal-5.7.30-1.el7.x86_64
-
+# 升级 example.rpm 软件包
+rpm -Uvh example.rpm
+# RPM 的其他附加命令
+--force     # 强制操作 如强制安装删除等；
+--requires  # 显示该包的依赖关系；
+--nodeps    # 忽略依赖关系并继续操作；
 
 rpm
 	-i 安装
@@ -93,3 +101,5 @@ yum	[options] [command] [package ...]
 ### install
 yum -y install epel-release
 yum -y install htop
+
+yum list installed

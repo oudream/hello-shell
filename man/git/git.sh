@@ -4,12 +4,17 @@
 git update-index --chmod=+x path/to/file
 
 
-# 下述命令其实相当于 git fetch + git merge
+## 下述命令其实相当于 git fetch + git merge
 git pull origin master
 
+git status # 运行 git status命令查看本地修改
+git remote -v # git 查看远程仓库地址命令
+git branch -v # git 查看当前分支
 
-git status # 运行git status命令查看本地修改
-git remote -v # git查看远程仓库地址命令
+## 免密
+git config --global credential.helper store
+git config --global user.email "oudream@126.com"
+git config --global user.name "oudream"
 
 
 ### diff
@@ -197,9 +202,9 @@ git push origin HEAD:master
 # 删除子模块比较麻烦，需要手动删除相关的文件，否则在添加子模块时有可能出现错误
 # 同样以删除assets文件夹为例
 # 删除子模块文件夹
-git rm --cached "referto/pytorch-book"
-git rm -r --cached pytorch-book
-rm -rf "pytorch-book"
+git rm --cached "referto/bash-it"
+git rm -r --cached "bash-it"
+rm -rf "--force"
 # 删除.gitmodules文件中相关子模块信息
 #[submodule "assets"]
 #  path = assets
@@ -222,6 +227,12 @@ cd 3rd/ccxx
 git add .
 git commit -m "update by submodule 2"
 git push origin HEAD:master
+
+
+### git config
+git config --system --list
+git config --global  --list
+git config --local  --list
 
 
 ### 用户名 密码

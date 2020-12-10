@@ -5,6 +5,14 @@ explain SELECT * FROM `admin_country`
 
 mysql -P 3306 -h 192.168.1.104 -u root -p'xxx'
 
+docker run arey/mysql-client -h "172.17.0.1" -P 3306 -u"root" -p'password' -e "SET PASSWORD FOR root@'%' = PASSWORD('new-password');"
+
+docker run -d --name mysql-client -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" mysql:5.7.28
+docker exec -it mysql-client bash
+mysql -h 192.168.5.110 -u root -p'Aa.123456'
+
+docker run -d --name mysql-client -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" mysql:5.7.28
+
 # doc en
 open https://dev.mysql.com/doc/refman/8.0/en/mysql-commands.html
 # doc cn
@@ -169,6 +177,7 @@ mysql -h localhost -u root -p
 # mysql>
     uninstall plugin validate_password;
 sudo /etc/init.d/mysql restart
+# error
 # 还有可能是： plugin: auth_socket
 # 该插件不关心，也不需要密码
 # 运行以下命令：
@@ -317,3 +326,9 @@ firewall-cmd --zone=public --query-port=3306/tcp
 
 yum-config-manager --disable   mysql80-community
 yum-config-manager --enable   mysql57-community
+
+
+### error
+# mysql错误类似：Incorrect date value: '0000-00-00' for column 'xxxx' at row 1
+# 2.修改mysql.int
+# 在[mysqld]添加一项：sql_mode=NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO，支持特殊的语法，这样就可以导入了，导入完毕后，移除兼容项即可。此方法简单，建议使用此方法。

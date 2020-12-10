@@ -30,3 +30,6 @@ jt -l
 
 # select theme...
 jt -t chesterish
+
+# jupyter notebook --...
+jupyter notebook --no-browser --port 8901 --ip=10.35.191.17

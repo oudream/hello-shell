@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 
-
 ### install special version node use apt
 # Then for the Latest release (version 12), add this PPA..
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -13,7 +12,23 @@ sudo apt install nodejs
 node -v
 npm -v
 
-### centos
+### Node.js 12 綠色運行
+wget https://nodejs.org/dist/latest-v12.x/node-v12.20.0-linux-x64.tar.gz
+tar zxvf node-v12.20.0-linux-x64.tar.gz
+# 修改目錄名
+mv node-v12.20.0-linux-x64 /usr/local/node12
+# 為編譯修改環境變量
+PATH_BAK=$PATH
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/node12/bin
+
+### Install Node.js 12 LTS on CentOS 7
+curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+sudo yum clean all && sudo yum makecache fast
+sudo yum install -y gcc-c++ make
+sudo yum install -y nodejs
+node -v
+
+### centos install node10
 sudo yum uninstall -y nodejs
 # 清理yum源缓存并选择最快的源重新生成缓存：
 curl -sL https://rpm.nodesource.com/setup_10.x | bash -
@@ -62,6 +77,4 @@ export PATH=/opt/node-${NODE_VERSION}-${NODE_DISTRO}/bin:$PATH
 . /etc/profile
 
 
-
 npm install --unsafe-perm node-sass
-

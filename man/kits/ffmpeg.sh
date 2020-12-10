@@ -65,6 +65,8 @@ ffmpeg -i out.mp4 -frames 3 -vf "select=not(mod(n\,1000)),scale=320:240,tile=2x3
 ffmpeg -i out.mp4 -t 10 -pix_fmt rgb24 out.gif
 # 转换视频为图片（每帧一张图）
 ffmpeg -i out.mp4 out%4d.png
+# quicktime mov 2 mp4
+ffmpeg -i input.mov -qscale 0 output.mp4
 # 图片转换为视频
 ffmpeg -f image2 -i out%4d.png -r 25 video.mp4
 # 切分视频并生成M3U8文件

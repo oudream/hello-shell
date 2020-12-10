@@ -34,5 +34,8 @@ git clone https://github.com/oudream/hello-shell.git --recursive
 - [https://github.com/tldr-pages/tldr              ](https://github.com/tldr-pages/tldr              )
 - [https://debian-handbook.info/browse/zh-CN/stable/index.html](https://debian-handbook.info/browse/zh-CN/stable/index.html                      )
 
-## bash
+## bash org man
 - http://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
+
+## Shell 风格指南
+-https://zh-google-styleguide.readthedocs.io/en/latest/google-shell-styleguide/contents/

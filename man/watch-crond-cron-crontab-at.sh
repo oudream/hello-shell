@@ -108,17 +108,16 @@ crontab [-u username]　#　　　//省略用户表表示操作当前用户的cr
 
 ## install
 # https://stackoverflow.com/questions/21802223/how-to-install-crontab-on-centos
-yum remove cronie
-yum install cronie
-yum install crontabs
-service crond start
-service crond stop
-
-yum install cronie # in centos
-# yum install vixie-cron
-yum install crontabs
+# centos7
+yum -y install vixie-cron
+yum -y install crontabs
 # vixie-cron软件包是cron的主程序；
 # crontabs软件包是用来安装、卸装、或列举用来驱动 cron 守护进程的表格的程序。
+# 启动
+systemctl start crond.service
+systemctl stop crond.service
+systemctl restart crond.service
+systemctl enable crond.service
 # //+++++++++++++++++++++++++++++++++++
 # cron 是linux的内置服务，但它不自动起来，可以用以下的方法启动、关闭这个服务：
 /sbin/service crond start # //启动服务

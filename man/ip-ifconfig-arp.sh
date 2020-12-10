@@ -181,6 +181,15 @@ sudo ip netns exec neta bash # ip netns exec 后面跟着 namespace 的名字，
 ip netns monitor # 命令用来监控对 network namespace 的操作。比如我们删除一个 network namespace 时就会收到相应的通知：
 
 
+### ifconfig
+# 127.0.0.1,localhost...
+# 127.0.0.1、localhost、10.31.58.*、10.31.16.*、hadoop-master、hadoop-slave1、hadoop-slave2、jianshu.com、ics-ubuntu1、ics-ubuntu2、ics-ubuntu3
+# ifconfig en0 ether
+sudo ifconfig en0 up
+sudo ifconfig en0 ether F0:DE:F1:B4:2A:82
+sudo ifconfig en0 down
+sudo ifconfig en0 up
+
 
 ## arp(选项)(参数)
 # 选项

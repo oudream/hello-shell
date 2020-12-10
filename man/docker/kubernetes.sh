@@ -6,6 +6,8 @@ kubectl --namespace monitoring port-forward svc/grafana 3000 --external-ip= --po
 kubectl port-forward --address 0.0.0.0 pod/mypod 8888:5000
 kubectl port-forward --address 0.0.0.0 svc/grafana --namespace monitoring 2230:3000
 
+# minikubestart
+minikube start --docker-env HTTP_PROXY=$http_proxy --docker-env HTTPS_PROXY=$https_proxy --docker-env NO_PROXY=$no_proxy
 
 ### token expired 过期
 

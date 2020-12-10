@@ -26,6 +26,14 @@ sudo mount -t cifs //192.168.0.103/ddd /ddd -o username=oudream,password=oudream
 sudo mount -t cifs //144.202.65.220/fff/ceph /eee/ceph -o username=root,password=Z.a-135246-a.Z,nounix,sec=ntlmssp
 
 
+# mount 215
+sudo mount -t cifs -o username=administrator,password=ygct@12345678 //10.31.58.215/d /eee/215d
+# mount 11
+sudo mount -t cifs //10.35.191.11/ddd /eee/11d -o username=oudream,password=oudream,nounix,sec=ntlmssp
+# ssh -X
+ssh -X 10.35.191.11 "DISPLAY=:0.0 pbcopy -i"
+
+
 # mount
 mount | column -t # 查看挂接的分区状态
 mount -t cifs -o username=Bob,password=123456 //192.168.0.102/Share /usr/local/bin/code

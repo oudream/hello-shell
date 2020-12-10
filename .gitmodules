@@ -7,3 +7,9 @@
 [submodule "referto/superglue"]
 	path = referto/superglue
 	url = https://github.com/imaginate/superglue.git
+[submodule "referto/acme.sh"]
+	path = referto/acme.sh
+	url = https://github.com/acmesh-official/acme.sh.git
+[submodule "referto/bash-it"]
+	path = referto/bash-it
+	url = https://github.com/Bash-it/bash-it.git
