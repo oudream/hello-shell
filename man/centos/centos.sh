@@ -38,4 +38,5 @@ yum install unzip
 yum install cronie
 
 yum -y install gcc gcc-c++ automake autoconf libtool make epel-release wget java-1.8.0-openjdk && \
-    yum localinstall jdk-8u60-linux-x64.rpm
+
+yum localinstall jdk-8u60-linux-x64.rpm

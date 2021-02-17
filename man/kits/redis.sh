@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-
+#
+docker run -it --name redis1 -v D:/twant/redis/data/dump.rdb:/data/dump.rdb -p 6379:6379 redis:3.2.12
+# https://hub.docker.com/_/redis
+docker run --name redis1 -d -p 6379:6379 redis
+# start with persistent storage
+docker run --name redis1 -d -p 6379:6379 redis redis-server --appendonly yes
+# connecting via redis-cli
+docker run -it --network network1 --rm -p 6379:6379 redis redis-cli -h redis1
+docker run -v /myredis/conf:/usr/local/etc/redis --name redis1 -p 6379:6379 redis redis-server /usr/local/etc/redis/redis.conf
+#
 docker run -d --net=host --name redis-manager  \
 -e DATASOURCE_DATABASE='redis_manager' \
 -e DATASOURCE_URL='jdbc:mysql://172.18.2.222:3306/redis_manager?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8' \
@@ -56,8 +65,6 @@ redis.conf
 
 
 
-
-
 # 测试
 # 测试服务器和客户端都开启了。
 redis-cli
@@ -65,7 +72,6 @@ redis-cli
 #    PONG
 #    127.0.0.1:6379> echo 'king'
 #    "king"
-
 
 
 

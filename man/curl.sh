@@ -35,7 +35,7 @@ curl -c cookies.txt https://www.google.com
 curl -d'login=emma＆password=123'-X POST https://google.com/login
 # 或者
 # 使用-d参数以后，HTTP 请求会自动加上标头Content-Type : application/x-www-form-urlencoded。并且会自动将请求转为 POST 方法，因此可以省略-X POST。
-$ curl -d 'login=emma' -d 'password=123' -X POST  https://google.com/login
+curl -d 'login=emma' -d 'password=123' -X POST  https://google.com/login
 # 读取data.txt文件的内容，作为数据体向服务器发送。
 curl -d '@data.txt' https://google.com/login
 

@@ -1,3 +1,6 @@
+
+tracert
+
 rem    用法: tracert [-d] [-h maximum_hops] [-j host-list] [-w timeout]
 rem                   [-R] [-S srcaddr] [-4] [-6] target_name
 rem

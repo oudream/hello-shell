@@ -14,7 +14,6 @@ cat /etc/group      # 定义用户所属的组
 # group1:x:1005:user3
 # user3:x:1006:
 
-
 useradd testuser
 passwd testuser
 cat /etc/passwd	    # 用户账户信息
@@ -32,6 +31,10 @@ cat /etc/group      # 定义用户所属的组
 # testgroup:x:1004:
 #
 
+# 添加 sudo 权限
+visudo
+# 添加
+  username ALL=(ALL) ALL
 
 ### 用户的管理工具或命令
 useradd      # 添加用户

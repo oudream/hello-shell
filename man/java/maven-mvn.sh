@@ -15,6 +15,8 @@ mvn clean compile
 mvn clean test
 # 先清理，再执行到package。
 mvn clean package
+# 單獨編譯模塊
+mvn clean package -pl admin -am
 
 mvn tomcat:run
 

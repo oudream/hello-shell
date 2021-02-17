@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# docker
+# simple static content
+# https://hub.docker.com/_/nginx
+docker run --name nginx1 -p 80:80 -d nginx
+docker run --name nginx1 -p 80:80 -v /some/content:/usr/share/nginx/html:ro -d nginx
+docker run --name nginx1 -p 80:80 -v /host/path/nginx.conf:/etc/nginx/nginx.conf:ro -d nginx
+
 # news release
 open http://hg.nginx.org/nginx/
 open http://nginx.org/en/docs/

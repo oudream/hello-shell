@@ -3,7 +3,14 @@
 # https://linux.die.net/man/1/ssh
 
 scp -i yours.pem  xxxxxxx@awsec2ip:/path/to/file
+chmod 600 yours.pem
 
+# 查看ssh用户登录日志/var/log/secure
+tail -20 /var/log/secure
+last                      # 查看最近登录日志
+less /var/log/messages    # 查看最近系统操作信息
+cat /etc/hosts.allow      #
+cat /etc/hosts.deny       # 配置文件限定ip登录
 
 # 打开调试模式
 ssh -v 192.168.0.103
@@ -12,7 +19,8 @@ ssh -X oudream@10.31.58.75 xclock
 ssh -Y oudream@10.31.58.75 xclock
 # 打开授权 auth -A
 ssh -AXY root@35.239.31.154
-
+# 访问特定端口
+ssh -p 2222 root@127.0.0.1
 
 # sftp
 sftp get -r /usr/local/hadoop/tmp /ddd/hadoop/hadoop-3.1.0

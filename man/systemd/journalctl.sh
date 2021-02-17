@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 sudo journalctl -f -u etcd
+sudo journalctl -f -u elastic --since yesterday
 
 ### Journalctl 查看和操作 Systemd 日志
 journalctl -b   # 当前引导的日志, 显示自最近重新引导以来收集的所有日记帐分录。

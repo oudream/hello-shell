@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+top -Hp <pid>
+
 open https://diabloneo.github.io/2019/08/29/How-to-use-top-command/
 
 # macos 下按键目前不支持

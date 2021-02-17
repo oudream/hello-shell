@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+scp -i /home/azureuser/tw-azure.pem.pem -r /usr/local/goeft2twant/projects/goeft2twant/deploy/images azureuser@23.102.236.223:/usr/local/goeft2twant/projects/goeft2twant/deploy/
+
 # scp [参数] [原路径] [目标路径]
 
 #-1  强制scp命令使用协议ssh1

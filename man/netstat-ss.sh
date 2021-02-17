@@ -5,7 +5,7 @@ netstat -s | grep "packets delivered"
 
 netstat -anp | grep 3306
 netstat -nat | grep 3306 # mac
-netstat -nat |grep LISTEN # mac
+netstat -nat | grep LISTEN # mac
 netstat -lntp # 查看所有监听端口
 netstat -antp # 查看所有已经建立的连接
 netstat -s # 查看网络统计信息

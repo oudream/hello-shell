@@ -16,8 +16,8 @@ go build -v -work -o hello.exe
 
 
 ### install
-wget https://golang.org/dl/go1.15.3.linux-amd64.tar.gz
-sudo tar -xvf go1.15.3.linux-amd64.tar.gz
+wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
+sudo tar -xvf go1.15.8.linux-amd64.tar.gz
 sudo mv go /usr/local
 
 cat >> ~/.bash_profile << EOF

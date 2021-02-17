@@ -18,14 +18,16 @@ docker rm $(docker ps -a -q)
 docker rmi $(docker images alpine-ssh* -q)
 docker rmi $(docker images -q)
 
-
 docker top $containerId
 docker ps --size
 docker ps -a --no-trunc
 
-
 docker network create --subnet=172.17.0.0/16 docker00
 
+docker update --restart=always <container>
+docker update --add-host lbm:10.0.0.12
+
+docker image prune -a --force # clean cache
 
 # The host has a changing IP address (or none if you have no network access). From 18.03 onwards our recommendation is to connect to the special DNS name host.docker.internal, which resolves to the internal IP address used by the host. This is for development purpose and will not work in a production environment outside of Docker Desktop for Mac.
 curl host.docker.internal:3306 # macos , windows 用 host.docker.internal 来访问宿主机.
@@ -399,8 +401,19 @@ sudo yum-config-manager \
 sudo yum-config-manager --enable docker-ce-nightly
 sudo yum-config-manager --enable docker-ce-test
 sudo yum -y install docker-ce docker-ce-cli containerd.io
-#
-sudo systemctl enable docker
-sudo systemctl start docker
-sudo systemctl restart docker
 sudo docker run hello-world
+# 修改docker工作目录
+mkdir -p /etc/docker
+mkdir -p /usr/local/docker/data
+cat >> /etc/docker/daemon.json <<EOF
+{
+    "data-root": "/usr/local/docker/data"
+}
+EOF
+# 啟動
+sudo systemctl enable docker
+sudo systemctl disable docker
+sudo systemctl start docker
+sudo systemctl stop docker
+sudo systemctl restart docker
+

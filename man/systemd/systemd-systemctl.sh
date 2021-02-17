@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 sudo journalctl -f -u etcd
+sudo journalctl -f -u systemd-sysctl
 
 # Ubuntu Desktop: Completley remove Ubuntu Desktop from a Ubuntu Server
 # INSTALL UBUNTU DESKTOP WITHOUT INSTALL RECOMMENDS

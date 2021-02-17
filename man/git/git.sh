@@ -16,7 +16,6 @@ git config --global credential.helper store
 git config --global user.email "oudream@126.com"
 git config --global user.name "oudream"
 
-
 ### diff
 git diff readme.txt # 看看更改的地方（difference）
 git diff branch1..branch2 #
@@ -35,6 +34,13 @@ git pull //可以省略
 # How do I undo the most recent local commits in Git? : https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git
 git reset HEAD~
 
+# tag
+# 因为tag相当于一个快照，git checkout tag_name 下来的代码是不能修改的。
+git checkout tag_name
+# 需要在tag代码基础上做修改，并创建一个分支：
+git checkout -b branch_name tag_name
+git checkout -b dev-2.2.1.RELEASE v2.2.1.RELEASE
+git checkout -b dev-1.4 canal-1.1.4
 
 ###
 # git pull使用给定的参数运行git fetch，并调用git merge将检索到的分支头合并到当前分支中。

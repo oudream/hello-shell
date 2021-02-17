@@ -1,4 +1,9 @@
 
+# https://www.jianshu.com/p/dadcee1c8c0f
+
+redis-cli -h 10.144.62.3 -p 30000
+
+
 ### redis持久化：一类是手动触发，另一类是自动触发。
 # https://www.cnblogs.com/traditional/p/13296648.html
 # 客户端中执行 save 命令，就会触发 Redis 的持久化，但同时也会使 Redis 处于阻塞状态，直到 RDB 持久化完成

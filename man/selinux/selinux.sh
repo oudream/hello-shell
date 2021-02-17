@@ -16,10 +16,12 @@ sepolicy
 
 
 setenforce 0
-# # 修改 SELinux 启动模式、临时生效
+### 修改 SELinux 启动模式、临时生效
 # 命令：setenforce [0|1]
 # 0：转成 permissive 宽容模式；
 # 1：转成 Enforcing 强制模式；
+### 永久生效，需要重启
+# 修改 /etc/selinux/config 文件中的 SELINUX="" 为 disabled
 
 getenforce
 # # 查看 当前 SELinux 模式

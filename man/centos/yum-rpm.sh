@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+
+yum list installed | grep docker
+rpm -ql containerd.io.x86_64
+rpm -ql docker-ce.x86_64
+rpm -ql docker-ce-cli.x86_64
+rpm -ql docker-ce-rootless-extras.x86_64
+
+
 # 安装 example.rpm 包并在安装过程中显示正在安装的文件信息及安装进度；
 rpm -ivh example.rpm
 # 卸载 tomcat4 软件包
@@ -18,6 +26,7 @@ rpm -Uvh example.rpm
 --requires  # 显示该包的依赖关系；
 --nodeps    # 忽略依赖关系并继续操作；
 
+
 rpm
 	-i 安装
 		--test 仅测试，不安装
@@ -33,7 +42,6 @@ rpm
 		--force 等同于--replacepkgs  --replacefiles  --oldpackage
 	-U 更新 如果装的有旧的，则升级，如果未装旧的，则安装新的。
 	-F 更新 如果装的有旧的，则升级，如果未装旧的，不安装新的。
-
 	-v 详细信息
 	-vv 更详细信息 *
 	-h 显示进度
@@ -64,7 +72,6 @@ rpm
 			G Group ownership differs
 			T mTime differs
 			P capabilities differ
-
 	-K|checksig  rpmfile  检查包的完整性和签名
 		--nosignature: 不检查来源合法性
 		--nodigest：不检查包完整性
