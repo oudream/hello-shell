@@ -407,7 +407,13 @@ mkdir -p /etc/docker
 mkdir -p /usr/local/docker/data
 cat >> /etc/docker/daemon.json <<EOF
 {
-    "data-root": "/usr/local/docker/data"
+  "data-root": "/usr/local/docker/data"
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "200m",
+    "max-file": "7"
+  },
+  "live-restore": true
 }
 EOF
 # 啟動
@@ -416,4 +422,13 @@ sudo systemctl disable docker
 sudo systemctl start docker
 sudo systemctl stop docker
 sudo systemctl restart docker
+# 修改完成后reload配置文件
+sudo systemctl daemon-reload
+# 重启docker服务
+sudo systemctl restart docker.service
 
+
+# 清理Docker占用的磁盘空间
+docker system df
+docker system prune     # 命令可以用于清理磁盘，删除关闭的容器、无用的数据卷和网络，以及 dangling 镜像(即无 tag 的镜像)。
+docker system prune -a  # 命令清理得更加彻底，可以将没有容器使用 Docker 镜像都删掉。

@@ -63,6 +63,10 @@ systemctl cat sshd.service # 查看配置文件
 #    Restart：no（默认值）：退出后不会重启；always：不管是什么退出原因，总是重启
 # [Install] 区块：Install区块，定义如何安装这个配置文件，即怎样做到开机启动。
 #    WantedBy：服务组，执行 systemctl enable sshd.service 命令后，就会在 /etc/systemd/system/multi-user.target.wants目录中存放 service 文件。
+rm /etc/systemd/system/filebeat-log4j.service
+rm /usr/lib/systemd/system/filebeat-log4j.service
+systemctl daemon-reload
+systemctl reset-failed
 
 
 [Unit]

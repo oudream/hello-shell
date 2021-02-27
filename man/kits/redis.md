@@ -17,3 +17,5 @@ docker run -it --name redis1 -v D:/twant/redis/data/dump.rdb:/data/dump.rdb -p 6
 ```shell
 127.0.0.1:6379> config set stop-writes-on-bgsave-error no
 ```
+216235_113_90a55cfe-ac72-4552-a0e5-213bbde0038e.jp
+216234_3267_53abf841-bc82-49b8-a6a9-8ab2b9792cfd.j
