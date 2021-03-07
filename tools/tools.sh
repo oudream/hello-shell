@@ -10,5 +10,5 @@ mklink /D bizpower C:\Users\user\iCloudDrive\oudream\bizpower
 
 
 # macos
-ln -s /Users/oudream/Library/Mobile Documents/com~apple~CloudDocs/oudream oudream
+ln -s "/Users/oudream/Library/Mobile Documents/com~apple~CloudDocs/oudream" oudream
 
