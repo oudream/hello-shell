@@ -38,6 +38,13 @@ export PATH=${JAVA_HOME}/bin:$PATH
 source /etc/profile
 ln -s /usr/local/java/jdk1.8.0_171/bin/java /usr/bin/java
 java -version
+## or
+# Install wget
+sudo yum install -y nano wget
+# Add latest EPEL release for CentOS 7
+sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo yum install java-11-openjdk
+sudo update-alternatives --config java
 
 ### java variable on macos
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle

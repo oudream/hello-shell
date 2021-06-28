@@ -5,6 +5,7 @@
 ### svn
 # svn checkout path # 1、将文件checkout到本地目录（path是服务器上的目录） 简写：svn co
 svn checkout svn://192.168.1.1/pro/domain /ddd/localpath
+svn checkout -r r191 https://svn.code.sf.net/p/gsoap2/code/ /opt/gsoap-2.8.108
 # svn add file # 2、往版本库中添加新的文件
 svn add test.php # (添加test.php)
 svn add *.php # (添加当前目录下所有的php文件)

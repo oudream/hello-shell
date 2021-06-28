@@ -179,3 +179,17 @@ gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test
 
 -share
 # 此选项将尽量使用动态库，所以生成文件比较小，但是需要系统由动态库
+
+
+### install
+# yum安装gcc等依赖
+yum -y install centos-release-scl
+yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils
+#scl命令启用只是临时的，退出shell或重启就会恢复原系统gcc版本
+scl enable devtoolset-9 bash
+#写入系统执行脚本文件，永久生效
+echo "source /opt/rh/devtoolset-9/enable" >>/etc/profile
+#
+# or
+#
+yum -y install gcc gcc-c++ automake autoconf libtool make epel-release

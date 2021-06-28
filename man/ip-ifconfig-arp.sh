@@ -6,6 +6,12 @@ cd /etc/sysconfig/network-scripts
 # Ubuntu 修改静态 IP
 vim /etc/network/interfaces:
 
+# ContOS 修改为DHCP 启动网卡
+### 1.输入“ip addr”并按回车键确定，发现无法获取IP(CentOS 7默认没有ifconfig命令)，记录下网卡名称(本例中为ens33，下图黄色框内)。
+cd /etc/sysconfig/network-scripts
+vi ifcfg-ens33
+# 把 ONBOOT=no 修改为 yes , 退出保存
+systemctl restart netwrok
 
 # ip [options] object [command [arguments]]
 # OPTIONS 是修改ip行为或改变其输出的选项。所有的选项都是以-字符开头，分为长、短两种形式。如link、addr、route、rule、tunnel 。

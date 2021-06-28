@@ -432,3 +432,14 @@ sudo systemctl restart docker.service
 docker system df
 docker system prune     # 命令可以用于清理磁盘，删除关闭的容器、无用的数据卷和网络，以及 dangling 镜像(即无 tag 的镜像)。
 docker system prune -a  # 命令清理得更加彻底，可以将没有容器使用 Docker 镜像都删掉。
+
+### arm64 buildx
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+mkdir ~/.docker
+cat << EOF > ~/.docker/config.json
+{
+  "experimental": "enabled"
+}
+EOF
+docker buildx ls
+

@@ -3,6 +3,8 @@
 mklink "C:\ProgramData\DockerDesktop\version-bin\docker-compse" "C:\Program Files\Docker\Docker\resources\bin\docker-compose"
 mklink "C:\ProgramData\DockerDesktop\version-bin\docker-compse.exe" "C:\Program Files\Docker\Docker\resources\bin\docker-compose.exe"
 
+mklink "C:\dev\hello-shell\tools\oudream" "C:\Users\Administrator\iCloudDrive\oudream"
+
 ln -s /ddd/dir1 link-dir1 # create link link-dir1
 
 # ln

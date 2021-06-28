@@ -42,3 +42,13 @@ ldconfig [-v|--verbose] [-n] [-N] [-X] [-f CONF] [-C CACHE] [-r ROOT] [-l] [-p|-
 -V # ：此选项打印出ldconfig的版本信息，而后退出。
 -? 或 --help 或 --usage # ：这三个选项作用相同，都是让ldconfig打印出其帮助信息，而后退出。
 
+
+nm
+# 功能：列出.o、.a、.so中的符号信息，包括符号的值，符号类型及符号名称等。所谓符号，通常指定义出的函数，全局变量等
+# 查看静态库或动态库定义了哪些函数
+nm -n --defined-only xxxx.a
+nm -g -C --defined-only xxxx.so
+nm -D xxxx.so
+
+# 显示hello.a 中的未定义符号，需要和其他对象文件进行链接.
+nm -u hello.o

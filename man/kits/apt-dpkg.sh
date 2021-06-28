@@ -3,6 +3,7 @@
 
 apt-cache search 键词
 apt-cache show 软件包名称
+sudo apt install -y gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev qt5-default libqt5svg5 libqt5svg5-dev qtcreator software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev
 
 
 apt-cache

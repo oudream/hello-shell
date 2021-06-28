@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
-### install
-sudo yum -y install net-tools
-sudo yum -y install telnet
+yum -y install net-tools
+yum -y install telnet
+yum -y install nc
+
+telnet 192.168.1.1 25
+# 如果不嫌多一步可以考虑用CTRL+]键，这时会强制退到telnet命令界面下，再用quit退出就行了，百试百灵。
+# 其它就是用CTRL +C或CTRL+D两种方式来强行断开与远程的连接，但能支持这种命令的比较少。
 
 ## ncat [OPTIONS...] [hostname] [port]
 ## nc [OPTIONS...] [hostname] [port]
@@ -33,13 +37,6 @@ sudo yum -y install telnet
 # -z 指定nc只扫描正在监听的守护进程，不发送任何数据。
 #     主机名可以是数字形式的IP或者是名字标志（除非使用了-h选项）。通常，主机名必须被指定，除非使用-l选项（这种情况下，本地主机正在使用）。
 #     端口可以是整数或一个范围（格式nn-mm）。通常，必须指定目标端口，除非使用-U选项（这种情况下，必须指定一个socket)。
-
-
-### network
-telnet 192.168.1.1 25
-# 如果不嫌多一步可以考虑用CTRL+]键，这时会强制退到telnet命令界面下，再用quit退出就行了，百试百灵。
-# 其它就是用CTRL +C或CTRL+D两种方式来强行断开与远程的连接，但能支持这种命令的比较少。
-# 最后的方法就是关掉telnet的窗口。
 
 
 ### 监听本地端口
@@ -142,3 +139,4 @@ ncat 192.168.1.100 10000
       --ssl-trustfile        # PEM file containing trusted SSL certificates
       --ssl-ciphers          # Cipherlist containing SSL ciphers to use
       --version              # Display Ncat's version information and exit
+

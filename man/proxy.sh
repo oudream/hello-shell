@@ -3,6 +3,11 @@
 ### proxy
 git config --global http.proxy http://127.0.0.1:1080
 git config --global https.proxy https://127.0.0.1:1080
+git config --global http.proxy http://192.168.1.35:1080
+git config --global https.proxy https://192.168.1.35:1080
+git config --global http.proxy http://192.168.91.223:1080
+git config --global https.proxy https://192.168.91.223:1080
+
 git config --global --unset http.proxy
 git config --global --unset https.proxy
 
@@ -27,6 +32,10 @@ minikube start --docker-env http_proxy=$http_proxy --docker-env https_proxy=$htt
 alias go='http_proxy=http://127.0.0.1:1080/ https_proxy=http://127.0.0.1:1080/ go'
 export https_proxy=http://127.0.0.1:1080/
 export http_proxy=http://127.0.0.1:1080/
+export GO111MODULE=off
+alias go='http_proxy=http://192.168.91.253:1080/ https_proxy=http://192.168.91.253:1080/ go'
+export https_proxy=http://192.168.91.253:1080/
+export http_proxy=http://192.168.91.253:1080/
 export GO111MODULE=off
 # 没有试的
 export http_proxy=socks5://127.0.0.1:1080		# 梯子的本地端口

@@ -61,3 +61,26 @@ go mod tidy        # 增加缺少的module，删除无用的module
 go mod vendor      # 将依赖复制到vendor下
 go mod verify      # 校验依赖
 go mod why         # 解释为什么需要依赖
+
+
+### ubuntu install
+wget https://golang.org/dl/go1.16.3.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.3.linux-amd64.tar.gz
+vim /etc/profile
+export GOROOT=/usr/local/go
+export GOPATH=/home/gopath
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+#
+export GOPROXY=https://goproxy.io
+export GO111MODULE=off
+
+### 交叉编译
+sudo apt-get install gcc-aarch64-linux-gnu
+export GO111MODULE=off
+CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build .
+
+
+### golang代理超时报错"https://proxy.golang.org/github.com/********** timeout make: *** [build_yaml] Error 1解决
+go env -w GOPROXY=https://goproxy.cn
+# go env -w GOPROXY=https://goproxy.cn,direct
+# go env -w GO111MODULE=on

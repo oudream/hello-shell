@@ -1,7 +1,11 @@
 {
-  "code": 200,
-  "datas": {
-    "exp": 1605500429,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyTmFtZSI6InR3YW50X2phdmEiLCJleHAiOjE2MDU1MDA0Mjl9.DyGg68_1KvFcPz86uE-OZrrvE91Y4kaAoEUW6OnojYk"
+  "code": "mask-add",
+  "session": "xx",
+  "params": {
+    "obj": {
+      "camera_id": 11,
+      "mask_name": "a1",
+      "mask_points": "226 126 208 285 575 261 439 69"
+    }
   }
 }

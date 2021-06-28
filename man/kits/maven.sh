@@ -86,6 +86,23 @@ mvn dependency:tree >> tree.txt
 
 # 通过在终端中键入以下命令来安装Maven：
 sudo yum install maven
+sudo apt install maven
 
 # 验证安装通过键入mvn -version命令：
 mvn -version
+
+mvn install:install-file \
+   -Dfile=spring-boot-maven-plugin-2.3.11.RELEASE.jar \
+   -DgroupId=org.springframework.boot \
+   -DartifactId=spring-boot-maven-plugin \
+   -Dversion=2.3.11.RELEASE \
+   -Dpackaging=jar \
+   -DgeneratePom=true   
+   
+mvn install:install-file \
+   -Dfile=jib-maven-plugin-3.0.0.jar \
+   -DgroupId=com.google.cloud.tools \
+   -DartifactId=jib-maven-plugin \
+   -Dversion=3.0.0 \
+   -Dpackaging=jar \
+   -DgeneratePom=true   

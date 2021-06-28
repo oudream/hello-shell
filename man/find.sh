@@ -26,6 +26,9 @@ find $PWD -name \*.pyc | while read dir; do rm $dir; done
 
 find $PWD -name \*.html
 
+for project in `ls $PWD`; do cd $project && mvn clean package -Dmaven.test.skip=true; cd ..; done
+for project in `ls $PWD`; do cd $project && mvn install; cd ..; done
+find $PWD -name \*.jar -exec cp {} /opt/tmp/ \;
 
 #按照文件名查找文件。
 -name

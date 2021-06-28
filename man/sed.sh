@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # 替换文本中的字符串：
-sed 's/book/books/' file
-sed 's/book/books/g' file # 全面替换标记g
+sed -i 's/book/books/' file # -i 直接修改读取的文件内容（起到保存作用）
+sed -i 's/book/books/g' file # 全面替换标记g
 # 正则表达式 \w\+ 匹配每一个单词，使用 [&] 替换它，& 对应于之前所匹配到的单词：
 echo this is a test line | sed 's/\w\+/[&]/g'
 #    [this] [is] [a] [test] [line]

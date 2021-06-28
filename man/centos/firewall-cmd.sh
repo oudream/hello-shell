@@ -21,7 +21,7 @@ systemctl disable firewalld.service
 
 ### firewall-cmd
 # 查看状态
-firewall-cmd --state
+  firewall-cmd --state
 
 # 获取活动的区域
 firewall-cmd --get-active-zones
