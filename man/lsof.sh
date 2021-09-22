@@ -8,6 +8,7 @@ lsof -n -P -i TCP -s TCP:LISTEN
 
 ## linux
 lsof -a -P -i tcp -p 1355
+lsof -a -P -i -p 1030
 
 
 # lsof（list open files）是一个列出当前系统打开文件的工具

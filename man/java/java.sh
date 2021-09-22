@@ -5,6 +5,8 @@ https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
 ### java9
 https://docs.oracle.com/en/java/javase/11/
 https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html
+### java11
+https://www.oracle.com/java/technologies/javase-jdk11-downloads.html
 
 ### install java on windows
 # C:\Program Files (x86)\Common Files\Oracle\Java\javapath
@@ -45,6 +47,10 @@ sudo yum install -y nano wget
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum install java-11-openjdk
 sudo update-alternatives --config java
+
+### 查看所有本机 JDK 版本
+sudo alternatives --config java
+
 
 ### java variable on macos
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle

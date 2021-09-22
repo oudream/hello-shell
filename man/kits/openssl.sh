@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
+### Compilation and Installation
+# https://wiki.openssl.org/index.php/Compilation_and_Installation
+# https://www.openssl.org/docs/man1.1.1/
+./config shared
+make -j 4
+
 ### openssl
 # openssl：多用途的命令行工具
 # libcrypto：加密算法库

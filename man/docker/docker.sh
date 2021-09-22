@@ -12,6 +12,7 @@ docker run -d -p 2201:22 centos7s1 /usr/sbin/sshd -D
 docker rm -v $(docker ps -a -q -f status=exited)
 
 docker kill -s KILL $(docker ps -a -q)
+docker kill --signal=SIGINT $(docker ps -a -q)
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 
@@ -28,6 +29,8 @@ docker update --restart=always <container>
 docker update --add-host lbm:10.0.0.12
 
 docker image prune -a --force # clean cache
+
+docker pull --platform=linux/arm64/v8 redis:6.2.5
 
 # The host has a changing IP address (or none if you have no network access). From 18.03 onwards our recommendation is to connect to the special DNS name host.docker.internal, which resolves to the internal IP address used by the host. This is for development purpose and will not work in a production environment outside of Docker Desktop for Mac.
 curl host.docker.internal:3306 # macos , windows 用 host.docker.internal 来访问宿主机.
@@ -310,6 +313,25 @@ docker export -o mysql-`date +%Y%m%d`.tar a404c6c174a2
 # 将镜像 runoob/ubuntu:v3 生成 my_ubuntu_v3.tar 文档
 docker save -o my_ubuntu_v3.tar runoob/ubuntu:v3
 
+###
+# error
+# docker pull --platform=linux/arm64/v8 redis:6.2.5
+
+docker pull aarch64/redis
+docker save -o aarch64-redis.tar aarch64/redis
+cat aarch64-redis.tar | docker import - aarch64/redis
+docker run --name redis1 -d -p 6379:6379 aarch64/redis redis-server
+docker run --rm aarch64/redis ls
+
+docker pull arm64v8/redis:5.0.13
+
+docker pull arm64v8/redis:6.2.5
+docker save -o arm64v8-redis-6.2.5.tar arm64v8/redis:6.2.5
+cat arm64v8-redis-6.2.5.tar | docker import - arm64v8/redis:6.2.5
+docker run --name redis1 -d -p 6379:6379 arm64v8/redis:6.2.5 /usr/local/bin/redis-server
+docker run --rm arm64v8/redis:6.2.5 ls
+docker run --name redis1 -d -p 6379:6379 arm64v8/redis:6.2.5 bash -c "while true; do echo hello world; sleep 1; done"
+docker rm redis1
 
 ## docker load : 导入使用 docker save 命令导出的镜像。
 # docker load [OPTIONS]

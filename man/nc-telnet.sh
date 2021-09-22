@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-yum -y install net-tools
+yum -y install net-tools telnet nc
 yum -y install telnet
 yum -y install nc
 

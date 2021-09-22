@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # -or
+find . -name auth.txt
 find . -name \*.cpp -or -name \*.js
 find . ! -name \*.cpp -and ! -name \*.js
 # “!”否定参数的含义

@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+# application/x-www-form-urlencoded
+# 最常见的一种 POST 请求，key=value
+curl localhost:3000/api/basic -X POST -d 'hello=world'
+
+# multipart/form-data
+# 这种请求一般涉及到文件上传。后端对这种类型请求的处理也复杂一些。
+curl localhost:3000/api/multipart -F raw=@raw.data -F hello=world
+curl localhost:3000/api/basic -X POST -d 'hello=world&xxx=yyy&a[]=ooo&a[]=mmm'
+# 把这个字符串直接作为 -d 的参数或者把它写到文件 data.txt 然后通过 -d @data.txt 的方式，发起 POST 请求，行为和结果是一样的。
+curl localhost:3000/api/basic -X POST -d @data.txt
+
+# application/json
+curl localhost:3000/api/json -X POST -d '{"hello": "world"}' --header "Content-Type: application/json"
+curl -H 'Content-Type: application/json' -d '{"login": "emma", "pass": "123"}' https://google.com/login
+
 # 抓取页面内容到一个文件中,用 -O（大写的）
 curl -O http://www.mydomain.com/linux/index.html
 
@@ -51,7 +66,6 @@ curl -G -d 'q=kitties' -d 'count=20' https://google.com/search
 # -H 参数添加 HTTP 请求的标头。
 curl -H 'Accept-Language: en-US' https://google.com
 curl -H 'Accept-Language: en-US' -H 'Secret-Message: xyzzy' https://google.com
-curl -H 'Content-Type: application/json' -d '{"login": "emma", "pass": "123"}' https://google.com/login
 
 # -k 参数指定跳过 SSL 检测。
 # 不会检查服务器的 SSL 证书是否正确。

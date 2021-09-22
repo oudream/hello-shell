@@ -2,6 +2,7 @@
 # https://www.jianshu.com/p/dadcee1c8c0f
 
 redis-cli -h 10.144.62.3 -p 30000
+redis-cli -h 192.168.91.237 -p 6379 -a wedoredis
 
 
 ### redis持久化：一类是手动触发，另一类是自动触发。

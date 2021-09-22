@@ -10,6 +10,8 @@ git pull origin master
 git status # 运行 git status命令查看本地修改
 git remote -v # git 查看远程仓库地址命令
 git branch -v # git 查看当前分支
+git branch -av # git 查看所有分支
+git checkout BranchName # git 切换到分支
 
 ## 免密
 git config --global credential.helper store

@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-mklink "C:\ProgramData\DockerDesktop\version-bin\docker-compse" "C:\Program Files\Docker\Docker\resources\bin\docker-compose"
-mklink "C:\ProgramData\DockerDesktop\version-bin\docker-compse.exe" "C:\Program Files\Docker\Docker\resources\bin\docker-compose.exe"
+mklink /D "C:\dev\hello-shell\tools\rknn" "C:\dev\tk\rknn"
+mklink /D "C:\dev\hello-shell\tools\iot" "C:\dev\tk\iot"
+mklink /D "C:\dev\hello-shell\tools\tk5web" "C:\dev\tk\tk5web"
+mklink /D "C:\dev\hello-shell\tools\topo" "C:\dev\tk\topo"
+mklink /D "C:\dev\hello-shell\tools\wedo-kafka" "C:\dev\wedo\wedo-kafka"
 
-mklink "C:\dev\hello-shell\tools\oudream" "C:\Users\Administrator\iCloudDrive\oudream"
-
-ln -s /ddd/dir1 link-dir1 # create link link-dir1
+ln -s /ddd/dir1 link-dir1(created) # create link link-dir1
 
 # ln
 ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)

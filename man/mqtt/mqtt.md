@@ -21,13 +21,46 @@ mosquitto_passwd /MosquittoTest/pwfile.example dissun
 # 111111
 ```
 
+### mosquitto
+```shell
+mosquitto -c /etc/mosquitto/mosquitto.conf
+```
+
 ### 订阅消息
 ```
 mosquitto_sub -u dissun -P 111111 -t 'dissun/topic' -v
+mosquitto_sub -t '/5g/data/request' -v
+mosquitto_sub -t '+/get/request/datacenter/model' -v
+
+mosquitto_sub -t 'Tk_mqtt_jiexi/get/request/datacenter/model' -v
+mosquitto_sub -t 'Tk_mqtt_jiexi/set/request/datacenter/model' -v
+mosquitto_sub -t 'Tk_mqtt_jiexi/get/request/datacenter/guid' -v
+mosquitto_sub -t 'Tk_mqtt_jiexi/set/request/datacenter/register' -v
+
+mosquitto_sub -t 'datacenter/get/response/Tk_mqtt_jiexi/model' -v
+mosquitto_sub -t 'datacenter/set/response/Tk_mqtt_jiexi/model' -v
+mosquitto_sub -t 'datacenter/get/response/Tk_mqtt_jiexi/guid' -v
+mosquitto_sub -t 'datacenter/set/response/Tk_mqtt_jiexi/register' -v
+mosquitto_sub -t 'Tk_mqtt_jiexi/notify/event/datacenter/Meter_single/Meter_single_dd0e6320-8adf-4f1c-be97-529f82087496' -v
 ```
 
 ### 发布消息
-```
+```shell
 mosquitto_pub -u dissun -P 111111 -t 'dissun/topic' -m '腰疼不加班'
+mosquitto_pub -t '/5g/data/reply' -m '腰疼不加班'
+
+# model get
+mosquitto_pub -t 'datacenter/get/response/Tk_mqtt_jiexi/model' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","body":[{"model":"Meter_single","body":[{"name":"tgP","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"总有功功率"},{"name":"tgPa","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相有功功率 "},{"name":"tgPb","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相有功功率 "},{"name":"tgPc","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相有功功率 "},{"name":"tgUa","type":"float","unit":"V","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相电压"},{"name":"tgUb","type":"float","unit":"V","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相电压"},{"name":"tgUc","type":"float","unit":"V","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相电压"},{"name":"tgIa","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相电流"},{"name":"tgIb","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相电流"},{"name":"tgIc","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相电流"},{"name":"tgI0","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"零线电流"},{"name":"tgSupWh","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"正向有功总电能"},{"name":"tgSupWhA","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相正向有功电能"},{"name":"tgSupWhB","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相正向有功电能"},{"name":"tgSupWhC","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相正向有功电能"}]}]}' 
+mosquitto_pub -t 'datacenter/get/response/Tk_mqtt_jiexi/model' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","body":[]}' 
+
+mosquitto_pub -t 'datacenter/set/response/Tk_mqtt_jiexi/model' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","status":"OK"}'
+mosquitto_pub -t 'datacenter/set/response/Tk_mqtt_jiexi/model' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","status":"FAILURE"}'
+
+mosquitto_pub -t 'datacenter/get/response/Tk_mqtt_jiexi/guid' -m '{"token":"234","timestamp":"2019-03-01T09:30:09.230+0800","body":[{"model":"Meter_single","port":"RS485-1","addr":"1","desc":"066c8751-427e-4980-b972-19b4be3c724b","guid":"dd0e6320-8adf-4f1c-be97-529f82087496","dev":"Meter_single_dd0e6320-8adf-4f1c-be97-529f82087496"}]}'
+mosquitto_pub -t 'datacenter/get/response/Tk_mqtt_jiexi/guid' -m '{"token":"234","timestamp":"2019-03-01T09:30:09.230+0800","body":[]}'
+
+mosquitto_pub -t 'datacenter/set/response/Tk_mqtt_jiexi/register' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","status":"OK"}'
+mosquitto_pub -t 'datacenter/set/response/Tk_mqtt_jiexi/register' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","status":"FAILURE"}'
+
 ```
 

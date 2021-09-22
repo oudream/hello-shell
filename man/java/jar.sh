@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 
+jar tf kafka-0.0.1-SNAPSHOT.jar | grep application
+jar xf kafka-0.0.1-SNAPSHOT.jar BOOT-INF/classes/application.yml
+vim BOOT-INF/classes/application.yml
+jar uf kafka-0.0.1-SNAPSHOT.jar BOOT-INF/classes/application.yml
+
+
 # 解压
 jar xvf original-esclient-0.0.1-SNAPSHOT.jar
 jar -xvf xxx.jar -C 路径 # 意思是将路径下的文件压缩到 jar 中
