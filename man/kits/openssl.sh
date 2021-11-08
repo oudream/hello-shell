@@ -2,10 +2,15 @@
 
 
 ### Compilation and Installation
+# linux macos
 # https://wiki.openssl.org/index.php/Compilation_and_Installation
 # https://www.openssl.org/docs/man1.1.1/
 ./config shared
 make -j 4
+# windows
+# https://wiki.openssl.org/index.php/Binaries
+# https://slproweb.com/products/Win32OpenSSL.html
+
 
 ### openssl
 # openssl：多用途的命令行工具

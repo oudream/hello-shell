@@ -4,6 +4,11 @@
 
 gdb $PID
 
+### setup install
+# ftp://sourceware.org/pub/gdb/releases/
+# https://ftp.gnu.org/gnu/gdb/
+
+
 #1. gdb 调试利器
 #GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。 对于一名Linux下工作的c++程序员，gdb是必不可少的工具；
 

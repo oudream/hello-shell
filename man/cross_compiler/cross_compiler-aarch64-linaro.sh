@@ -1,4 +1,3 @@
-
 ### 使用导出与PATH设置的方法来交叉编译
 
 ### cmake
@@ -13,15 +12,16 @@
 # https://gcc.gnu.org/onlinedocs/gcc/AArch64-Options.html
 # https://gcc.gnu.org/wiki/Building_Cross_Toolchains_with_gcc
 wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-
-# sudo apt-get install -y gcc-aarch64-linux-gnu
+# 编译C++时，需要安装以下
+sudo apt-get install -y gcc-aarch64-linux-gnu
+sudo apt-get install -y g++-aarch64-linux-gnu
 
 # /opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/lib64/
 vim /etc/profile
 export PATH=$PATH:/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/
 
 export CC=aarch64-linux-gnu-gcc
-export CXX=aarch64-linux-gnu-cpp
+export CXX=aarch64-linux-gnu-g++
 export AR=aarch64-linux-gnu-ar
 export RANLIB=aarch64-linux-gnu-ranlib
 # export host=aarch64-linux-gnu

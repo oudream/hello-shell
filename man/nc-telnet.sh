@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# compile and install
+# https://pkgs.org/download/nc
+
 yum -y install net-tools telnet nc
 yum -y install telnet
 yum -y install nc

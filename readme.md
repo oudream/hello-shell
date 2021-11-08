@@ -12,6 +12,9 @@ git clone https://github.com/oudream/hello-shell.git --recursive
 
 ### [reference as ->](./hello)
 
+### Linux C API 参考手册
+- [https://wizardforcel.gitbooks.io/linux-c-api-ref/content/280.html](https://wizardforcel.gitbooks.io/linux-c-api-ref/content/280.html)
+
 ## Man手册
 
 - http://man7.org/linux/man-pages/

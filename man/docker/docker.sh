@@ -333,6 +333,12 @@ docker run --rm arm64v8/redis:6.2.5 ls
 docker run --name redis1 -d -p 6379:6379 arm64v8/redis:6.2.5 bash -c "while true; do echo hello world; sleep 1; done"
 docker rm redis1
 
+
+docker pull arm64v8/mariadb:10.2
+docker save -o mysql.docker.tar arm64v8/mariadb:10.2
+cat mysql.docker.tar | docker import - arm64v8/mariadb:10.2
+docker run -p 127.0.0.1:3306:3306  --name some-mariadb -e MARIADB_ROOT_PASSWORD="Aa.123456" -d arm64v8/mariadb:10.2
+
 ## docker load : 导入使用 docker save 命令导出的镜像。
 # docker load [OPTIONS]
 # -i :指定导出的文件。
@@ -395,6 +401,10 @@ docker exec -it db env
 docker run -d --rm alpine /bin/sh -c "while sleep 2;do printf aaabbbccc134\\n; done;"
 docker run -i -t crystal/mono-base bash -c "/usr/local/bin/mono /home/crystal/Downloads/BackgroundProcesser.exe & /bin/bash"
 
+
+### install aarch64
+- https://www.jianshu.com/p/9ddcee50258e
+- https://download.docker.com/linux/static/stable/
 
 ### install - ubuntu
 sudo apt-get remove docker docker-engine docker.io containerd runc

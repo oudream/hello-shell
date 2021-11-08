@@ -17,7 +17,8 @@ go build -v -work -o hello.exe
 
 ### install
 wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
-sudo tar -xvf go1.15.8.linux-amd64.tar.gz
+wget https://golang.org/dl/go1.17.2.linux-amd64.tar.gz
+sudo tar -xvf go1.17.2.linux-amd64.tar.gz
 sudo mv go /usr/local
 
 cat >> ~/.bash_profile << EOF
@@ -74,11 +75,25 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 export GOPROXY=https://goproxy.io
 export GO111MODULE=off
 
-### 交叉编译
+### 交叉编译 aarch64
 sudo apt-get install gcc-aarch64-linux-gnu
 export GO111MODULE=off
 CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build .
 
+### 交叉编译 openwrt
+- https://github.com/eycorsican/go-tun2socks/issues/138
+- https://downloads.openwrt.org/snapshots/targets/rockchip/armv8/
+wget https://downloads.openwrt.org/snapshots/targets/rockchip/armv8/openwrt-sdk-rockchip-armv8_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+export PATH=/opt/openwrt-gcc-8.3.0/bin:$PATH
+export STAGING_DIR=/opt/openwrt-gcc-8.3.0
+cd /opt/tk/hello_iec104/projects/tkiec104_web/cmd
+CGO_ENABLED=1 GOARCH=arm64 CC=aarch64-openwrt-linux-musl-gcc CXX=aarch64-openwrt-linux-musl-g++ go build -o ./../deploy/tk5web .
+
+### windows
+set CGO_ENABLED=1
+set GOOS=linux
+set GOARCH=arm64
+go build .
 
 ### golang代理超时报错"https://proxy.golang.org/github.com/********** timeout make: *** [build_yaml] Error 1解决
 go env -w GOPROXY=https://goproxy.cn

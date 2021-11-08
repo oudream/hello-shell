@@ -1,7 +1,8 @@
 
 yum install nmap
 
-# 扫描1-200号端口
+## # 扫描1-200号端口
+# shellcheck disable=SC2218
 nmap -p1-200 10.128.71.1
 
 # -vv 参数表示结果详细输出
@@ -31,8 +32,7 @@ nmap -sS ip_address
 # 扫描一个网段使用默认端口扫描，结果同下面脚本
 nmap 10.1.1.1/24  
 
-nmap(选项)(参数)
-
+### nmap(选项)(参数)
 -O             # 激活操作探测；
 -P0            # 值进行扫描，不ping主机；
 -PT            # 是同TCP的ping；

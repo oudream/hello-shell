@@ -2,6 +2,7 @@
 
 ldd app
 
+export LD_LIBRARY_PATH=$PWD
 
 ###
 ldd --help
@@ -16,6 +17,11 @@ ldd --help
 
 #  For bug reporting instructions, please see:
 #  <http://www.gnu.org/software/libc/bugs.html>.
+
+
+### arm64 aarch64
+# https://stackoverflow.com/questions/6150000/cross-compiler-ldd
+arm-none-linux-gnueabi-readelf -a $1 | grep "Shared library:"
 
 
 ###
@@ -52,3 +58,6 @@ nm -D xxxx.so
 
 # 显示hello.a 中的未定义符号，需要和其他对象文件进行链接.
 nm -u hello.o
+
+# objdump
+objdump -tT xxx.so

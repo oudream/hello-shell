@@ -1,6 +1,23 @@
 ### download
 - https://mosquitto.org/download/
 - https://mosquitto.org/files/binary/win64/mosquitto-2.0.11-install-windows-x64.exe
+- ubuntu
+```shell
+sudo apt install mosquitto mosquitto-clients
+# service
+sudo systemctl restart mosquitto
+# QA
+# - https://blog.clang.cn/809.html
+# invoke-rc.d: syntax error: unknown option "--skip-systemd-native"
+# 首先查看init-system-helpers有什么版本可以安装：
+sudo apt-cache policy init-system-helpers
+# 看结果有1.22版本可以安装，使用命令安装：
+sudo apt-get install init-system-helpers=1.22
+#
+# test
+mosquitto_sub -h localhost -t test
+mosquitto_pub -h localhost -t test -m "hello world"
+```
 
 ### org
 - https://mosquitto.org/
@@ -61,6 +78,18 @@ mosquitto_pub -t 'datacenter/get/response/Tk_mqtt_jiexi/guid' -m '{"token":"234"
 
 mosquitto_pub -t 'datacenter/set/response/Tk_mqtt_jiexi/register' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","status":"OK"}'
 mosquitto_pub -t 'datacenter/set/response/Tk_mqtt_jiexi/register' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","status":"FAILURE"}'
+
+```
+
+
+### 清远
+- 平台端
+```shell
+mosquitto_sub -h 192.168.1.8 -p 1883 -u root -P root -t '/5g/data/reply'
+mosquitto_pub -h 192.168.1.8 -p 1883 -u root -P root -t '/5g/data/request' -m '{"deviceid": "pdfcxd0006","action":"current_power"}'
+
+mosquitto_sub -h 192.168.1.200 -p 1883 -u root -P root -t '/5g/data/reply'
+mosquitto_pub -h 192.168.1.200 -p 1883 -u root -P root -t '/5g/data/reply' -m '{"deviceid": "3321001ABCD","action":"current_power"}'
 
 ```
 

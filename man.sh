@@ -573,3 +573,9 @@ npm install node-sass@latest
 # npm install -f node-sass
 
 git clone --branch CommonComponents https://gitee.com/zhlgh603/ssrs-backend.git
+
+
+# loop
+# 死循环
+for ((;;));do date; sleep 1; done;
+for ((;;));do i=i+1; done;

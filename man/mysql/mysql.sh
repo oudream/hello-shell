@@ -19,7 +19,8 @@ docker run -d --name mysql-client -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_RO
 docker exec -it mysql-client bash
 mysql -h 192.168.5.110 -u root -p'Aa.123456'
 
-docker run -d --name mysql-client -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" mysql:5.7.28
+docker run -d -v /usr/local/mysql/data:/var/lib/mysql --name mysql-client -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" mysql:5.7.28
+docker run -d -v /userdata/mysql:/var/lib/mysql --name mysql-client -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" arm64v8/mariadb:10.5.12
 
 # 性能調試
 SHOW FULL PROCESSLIST;
@@ -465,3 +466,28 @@ log_bin_trust_function_creators = 1
 #  ALTER TABLE `stat_setting`
 #    ADD UNIQUE KEY `idx_title`(`title`) ;
 #  /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+
+
+### aarch64 arm64
+- https://blog.csdn.net/qq_24585103/article/details/110187699
+- https://dev.mysql.com/downloads/mysql/5.5.html?os=31&version=5.1
+wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.27-1.el8.aarch64.rpm-bundle.tar
+tar mysql-8.0.27-1.el8.aarch64.rpm-bundle.tar
+# 安装顺序：
+#common
+#libs
+#libs-compat
+#client
+#server
+#test（可选装，测试数据库使用）
+#devel（可选装，嵌入式数据库函数）
+#embedded-compat（可选装，兼容式数据库函数）
+
+rpm -ivh mysql-community-common-8.0.27-1.el8.aarch64.rpm --nodeps --force
+rpm -ivh mysql-community-libs-8.0.27-1.el8.aarch64.rpm --nodeps --force
+rpm -ivh mysql-community-libs-compat-8.0.27-1.el8.aarch64.rpm --nodeps --force
+rpm -ivh mysql-community-client-8.0.27-1.el8.aarch64.rpm --nodeps --force
+rpm -ivh mysql-community-client-plugins-8.0.27-1.el8.aarch64.rpm --nodeps --force
+rpm -ivh mysql-community-server-8.0.27-1.el8.aarch64.rpm --nodeps --force
+rpm -ivh mysql-community-devel-8.0.27-1.el8.aarch64.rpm --nodeps --force
+rpm -ivh mysql-community-embedded-compat-8.0.27-1.el8.aarch64.rpm --nodeps --force

@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-iptables -L # 查看防火墙设置
+# 查看防火墙设置 (-t nat 查nat表）
+iptables -L
+iptables -L -t nat
+
+# 增加 Dest NAT 端口映射
+iptables -t nat -A PREROUTING -p tcp -m tcp --dport 15623 -j DNAT --to-destination 172.17.0.1:15623
+# 删除 Dest NAT 端口映射
+iptables -t nat -D PREROUTING -p tcp -m tcp --dport 15623 -j DNAT --to-destination 172.17.0.1:15623
 
 ### close firewalld and clean iptables
 sudo systemctl status firewalld

@@ -5,8 +5,26 @@ https://gcc.gnu.org/onlinedocs/gcc
 
 
 ### gcc
+# https://blog.csdn.net/weixin_43976122/article/details/108053736?utm_source=app&app_version=4.17.0
+wget https://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.gz
+# wget https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.gz
+tar  xf  gcc-7.5.0.tar.gz && cd gcc-7.5.0
+./contrib/download_prerequisites
+mkdir gcc-7.5-build && cd gcc-7.5-build
+../gcc-7.5.0/configure -enable-checking=release  -enable-languages=c,c++  -disable-multilib
+make -j 4
+make install
+
+
 ./configure --build=i386-linux --host=arm-linux --target=mipsel-linux --prefix=$(pwd)/_install
 export LD_LIBRARY_PATH=/.../bin_d:$LD_LIBRARY_PATH
+
+
+### install
+- https://mirror.linux-ia64.org/gnu/gcc/releases/gcc-9.4.0/
+### centos
+- https://blog.csdn.net/qianbo042311/article/details/117216967
+yum install centos-release-scl -y && yum install devtoolset-9-gcc* -y && scl enable devtoolset-9 bash
 
 
 ## 1简介

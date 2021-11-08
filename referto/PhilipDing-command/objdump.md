@@ -144,8 +144,8 @@ a+=2;
 
 对以上源代码进行编译，如下： 
 
-```
-[root@localhost test]# g++ -c -g mytest.cpp 
+{```
+}[root@localhost test]# g++ -c -g mytest.cpp 
 ```
 
 这里，生成的文件是mytest.o，为了方便测试包含了调试的信息，对可执行文件的测试，显示的结果类似。 

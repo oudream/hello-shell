@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
 
 
-       tcpdump [ -AbdDefhHIJKlLnNOpqStuUvxX# ] [ -B buffer_size ]
-               [ -c count ]
-               [ -C file_size ] [ -G rotate_seconds ] [ -F file ]
-               [ -i interface ] [ -j tstamp_type ] [ -m module ] [ -M secret ]
-               [ --number ] [ -Q in|out|inout ]
-               [ -r file ] [ -V file ] [ -s snaplen ] [ -T type ] [ -w file ]
-               [ -W filecount ]
-               [ -E spi@ipaddr algo:secret,...  ]
-               [ -y datalinktype ] [ -z postrotate-command ] [ -Z user ]
-               [ --time-stamp-precision=tstamp_precision ]
-               [ --immediate-mode ] [ --version ]
-               [ expression ]
+# compile and install
+# https://pkgs.org/download/tcpdump
+# http://www.tcpdump.org/index.html
+# https://github.com/the-tcpdump-group/tcpdump
+# https://github.com/the-tcpdump-group/libpcap
 
+
+tcpdump [ -AbdDefhHIJKlLnNOpqStuUvxX# ] [ -B buffer_size ]
+        [ -c count ]
+        [ -C file_size ] [ -G rotate_seconds ] [ -F file ]
+        [ -i interface ] [ -j tstamp_type ] [ -m module ] [ -M secret ]
+        [ --number ] [ -Q in|out|inout ]
+        [ -r file ] [ -V file ] [ -s snaplen ] [ -T type ] [ -w file ]
+        [ -W filecount ]
+        [ -E spi@ipaddr algo:secret,...  ]
+        [ -y datalinktype ] [ -z postrotate-command ] [ -Z user ]
+        [ --time-stamp-precision=tstamp_precision ]
+        [ --immediate-mode ] [ --version ]
+        [ expression ]
 
 # tcpdump 默认只会截取前 96 字节的内容，要想截取所有的报文内容，可以使用 -s number， number
 #    就是你要截取的报文字节数，如果是 0 的话，表示截取报文全部内容。
