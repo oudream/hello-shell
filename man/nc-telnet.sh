@@ -57,6 +57,7 @@ nc -zv host.example.com 22           # 扫描 22 端口是否开放
 nc -zv host.example.com 22 80 443    # 扫描端口
 nc -zv host.example.com 20-30        # 扫描一个范围
 nc -zv -w 5 host.example.com 22-443  # -w 表示超时等待 5 秒
+nc -zv 127.0.0.1 15625
 
 ## 作为简单的 Web Server
 nc -l 8080 < index.html

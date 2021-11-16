@@ -5,9 +5,9 @@ iptables -L
 iptables -L -t nat
 
 # 增加 Dest NAT 端口映射
-iptables -t nat -A PREROUTING -p tcp -m tcp --dport 15623 -j DNAT --to-destination 172.17.0.1:15623
+iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25623 -j DNAT --to-destination 172.17.0.1:15623
 # 删除 Dest NAT 端口映射
-iptables -t nat -D PREROUTING -p tcp -m tcp --dport 15623 -j DNAT --to-destination 172.17.0.1:15623
+iptables -t nat -D PREROUTING -p tcp -m tcp --dport 25625 -j DNAT --to-destination 127.0.0.1:15625
 
 ### close firewalld and clean iptables
 sudo systemctl status firewalld

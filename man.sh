@@ -160,6 +160,7 @@ alias ls='ls -la' # 如果别名已经指定过，
 alias ls='ls --color=auto' # 输出显示为彩色
 alias la='ls -Fa'          # 列出所有文件
 alias ll='ls -Fls'         # 列出文件详细信息
+alias ll='ls -Fls --color=auto'
 alias rm='rm -i'           # 删除前需确认
 alias cp='cp -i'           # 覆盖前需确认
 alias mv='mv -i'           # 覆盖前需确认
