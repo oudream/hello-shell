@@ -2,6 +2,7 @@
 
 strace -p 1137 -f -e trace=network
 strace -tt -s 10 -o lgwr.txt -p 5912
+strace -e read=27 -e write=27 -e ioctl=27 -p 789
 
 # strace命令性能监测与优化
 # strace命令是一个集诊断、调试、统计与一体的工具，我们可以使用strace对应用的系统调用和信号传递的跟踪结果来对应用

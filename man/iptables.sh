@@ -1,13 +1,52 @@
 #!/usr/bin/env bash
 
-# 查看防火墙设置 (-t nat 查nat表）
-iptables -L
-iptables -L -t nat
+# https://netfilter.org/documentation/HOWTO/netfilter-hacking-HOWTO.html
+# https://linux.die.net/man/8/iptables
+# https://cloud.tencent.com/developer/article/1632776
+# https://zhuanlan.zhihu.com/p/42153839
 
 # 增加 Dest NAT 端口映射
 iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25623 -j DNAT --to-destination 172.17.0.1:15623
 # 删除 Dest NAT 端口映射
-iptables -t nat -D PREROUTING -p tcp -m tcp --dport 25625 -j DNAT --to-destination 127.0.0.1:15625
+iptables -t nat -D PREROUTING -p tcp -m tcp --dport 25625 -j DNAT --to-destination 172.17.0.1:15623
+
+# 查看防火墙设置 (-t nat 查nat表）
+iptables -L
+iptables -vL -t nat
+
+# 源地址发送数据--> {PREROUTING-->路由规则-->POSTROUTING} -->目的地址接收到数据
+# MASQUERADE，地址伪装，在iptables中有着和snat相近的效果
+
+# e.g.
+nc -l -p 6543
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+# or
+echo 1 > /proc/sys/net/ipv4/ip_forward
+sysctl -p
+iptables -t nat -A PREROUTING -p tcp --dport 5000 -j REDIRECT --to-ports 6543
+### 以下会失败，在本地验证是通过不了的。即Server A和Client 都是同一台机器，因为使用lo网卡的时候，是没有PREROUTING这个阶段的
+iptables -t nat -A PREROUTING -p tcp -m tcp --dport 5001 -j DNAT --to-destination 127.0.0.1:6543
+
+# 你用ADSL上网，这样你的网络中只有一个公网IP地址（如：61.129.66.5），但你的局域网中的用户还要上网（局域网IP地址为：192.168.1.0/24），
+# 这时你可以使用PREROUTING(SNAT)来将局域网中用户的IP地址转换成61.129.66.5，使他们也可以上网：
+iptables -t nat -A PREROUTING -s 192.168.1.0/24 -j SNAT 61.129.66.5
+
+# 策略
+iptables -t filter -L FORWARD
+iptables -P FORWARD ACCEPT
+
+# 清除规则
+iptables -t nat -F PREROUTING
+iptables -t nat -F POSTROUTING
+# iptables清除防火墙所有配置规则
+iptables -F # (flush 清除所有的已定规则)
+iptables -X # (delete 删除所有用户“自定义”的链（tables）)
+iptables -Z # （zero 将所有的chain的计数与流量统计都归零）
+
+# log
+iptables -A INPUT  -j LOG --log-prefix "iptables"
+iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25623 -j LOG --log-prefix 'nat-prerouting-log'
+
 
 ### close firewalld and clean iptables
 sudo systemctl status firewalld
@@ -53,6 +92,19 @@ iptables -P FORWARD ACCEPT
 #    PREROUTING
 #    OUTPUT
 
+
+#–append -A
+#–delete -D
+#–insert -I
+#–replace -R
+#–list -L
+#–list-rules -S
+#–flush -F
+#–zero -Z
+#–new -N
+#–delete-chain -X
+#–policy -P
+#–rename-chain -E
 
 # 我们需要做的最后一件事情，就是存储我们的规则，好让它们在下次开机时会自动被重新装入：
 /sbin/service iptables save

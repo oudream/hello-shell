@@ -1,0 +1,12 @@
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('c0ee2ff0-491c-11ec-880e-b3aa1f260bf7', 'guyou-gz-7091', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('cd8f3830-491c-11ec-880e-b3aa1f260bf7', 'guyou-gz-7090', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('dcd26290-491c-11ec-880e-b3aa1f260bf7', 'guyou-gz-7094', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('92566bb0-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7086', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('a1fb6520-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7093', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('ae332440-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7097', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('be31d670-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7088', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('cd9e5ac0-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7089', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('dc6fd790-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7092', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('eefef8a0-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7098', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('fe313310-4919-11ec-880e-b3aa1f260bf7', 'guyou-gz-7096', 'tkzssw_branch_monitor');
+INSERT INTO `IOT_DEVICE_TABLE`(`DEVICE_ID`, `CODE`, `MODEL`) VALUES ('2de20fd0-491a-11ec-880e-b3aa1f260bf7', 'guyou-gz-7095', 'tkzssw_branch_monitor');
