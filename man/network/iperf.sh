@@ -3,7 +3,8 @@
 iperf -c 45.77.131.42 -p 20307 -i 1 -t 10
 iperf -c hkt.thatseed.org -p 30309 -i 1 -t 10
 
-
+# iperf  是一个网络性能测试工具
+# iperf可以测试TCP和UDP带宽质量。iperf可以测量最大TCP带宽，具有多种参数和UDP特性。iperf可以报告带宽，延迟抖动和数据包丢失。
 # install
 brew install iperf      # macos
 sudo apt install iperf  # ubuntu

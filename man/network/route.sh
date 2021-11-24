@@ -1,4 +1,6 @@
 
+route -vCF
+
 # https://blog.csdn.net/u011857683/article/details/83795435
 
 # route命令用于显示和操作IP路由表
