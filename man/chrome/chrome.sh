@@ -32,3 +32,11 @@ chrome --headless --disable-gpu --dump-dom https://www.chromestatus.com/
 # Create a PDF
 # The --print-to-pdf flag creates a PDF of the page:
 chrome --headless --disable-gpu --print-to-pdf https://www.chromestatus.com/
+
+# 允许跨域
+# windows
+# 一、设置跨域，在chrome快捷方式右键‘属性’，‘快捷方式’，‘目标’ 路径最后边按一下空格，再添加以下代码：
+--args --disable-web-security --user-data-dir=D:\HaoroomsChromeUserData
+#
+# mac macbook macos
+open -n /Applications/Google\ Chrome.app/ --args --disable-web-security --user-data-dir=/Users/Eric/MyChromeDevUserData/

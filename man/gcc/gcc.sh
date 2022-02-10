@@ -11,8 +11,8 @@ wget https://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.gz
 tar  xf  gcc-7.5.0.tar.gz && cd gcc-7.5.0
 ./contrib/download_prerequisites
 mkdir gcc-7.5-build && cd gcc-7.5-build
-../gcc-7.5.0/configure -enable-checking=release  -enable-languages=c,c++  -disable-multilib
-make -j 4
+../configure -enable-checking=release  -enable-languages=c,c++  -disable-multilib
+make -j 8
 make install
 
 

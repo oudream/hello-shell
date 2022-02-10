@@ -3,6 +3,25 @@
 
 git update-index --chmod=+x path/to/file
 
+# 简易的命令行入门教程:
+# Git 全局设置:
+git config --global user.name "oudream"
+git config --global user.email "oudream@126.com"
+
+# 创建 git 仓库:
+mkdir i3ds
+cd i3ds
+git init
+touch README.md
+git add README.md
+git commit -m "first commit"
+git remote add origin https://gitee.com/oudream/i3ds.git
+git push -u origin "master"
+
+# 已有仓库?
+cd existing_git_repo
+git remote add origin https://gitee.com/oudream/i3ds.git
+git push -u origin "master"
 
 ## 下述命令其实相当于 git fetch + git merge
 git pull origin master
@@ -283,3 +302,4 @@ git push -f
 
 # filename-too-long-in-git-for-windows: https://stackoverflow.com/questions/22575662/filename-too-long-in-git-for-windows
 git config --system core.longpaths true
+

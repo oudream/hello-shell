@@ -5,6 +5,7 @@ mklink /D "C:\dev\hello-shell\tools\iot" "C:\dev\tk\iot"
 mklink /D "C:\dev\hello-shell\tools\tk5web" "C:\dev\tk\tk5web"
 mklink /D "C:\dev\hello-shell\tools\topo" "C:\dev\tk\topo"
 mklink /D "C:\dev\hello-shell\tools\wedo-kafka" "C:\dev\wedo\wedo-kafka"
+mklink /D "C:\dev\limi\gcl3\3rd\ccxx" "C:\dev\limi\ccxx"
 
 ln -s /ddd/dir1 link-dir1(created) # create link link-dir1
 

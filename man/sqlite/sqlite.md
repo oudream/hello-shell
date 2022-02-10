@@ -39,7 +39,8 @@ PRAGMA  table_info([USER_LOGIN])
 ### sqlite cli
 - https://sqlite.org/cli.html
 ```shell
-sudo apt-get install zlib1g-dev
+sudo apt-get ins
+tall zlib1g-dev
 # or
 sudo apt-get install zlib-dev
 #
@@ -88,3 +89,8 @@ idx	The name of the index that was analyzed.
 stat	Information about the table and indexes analyzed that will be later used by the query optimizer.
 ```
 
+
+### DDL
+```sql
+DELETE FROM students WHERE stuid = uid;
+```

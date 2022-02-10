@@ -3,7 +3,7 @@
 
 explain SELECT * FROM `admin_country`
 
-mysql -P 3306 -h 192.168.1.104 -u root -p'xxx'
+mysql -P 3306 -h 127.0.0.1 -u root -p'Aa.123456'
 
 docker run arey/mysql-client -h "172.17.0.1" -P 3306 -u"root" -p'password' -e "SET PASSWORD FOR root@'%' = PASSWORD('new-password');"
 
@@ -491,3 +491,8 @@ rpm -ivh mysql-community-client-plugins-8.0.27-1.el8.aarch64.rpm --nodeps --forc
 rpm -ivh mysql-community-server-8.0.27-1.el8.aarch64.rpm --nodeps --force
 rpm -ivh mysql-community-devel-8.0.27-1.el8.aarch64.rpm --nodeps --force
 rpm -ivh mysql-community-embedded-compat-8.0.27-1.el8.aarch64.rpm --nodeps --force
+
+
+### api
+- https://dev.mysql.com/doc/c-api/8.0/en/c-api-building-clients.html
+- https://textsegment.com/mysql-c-api/

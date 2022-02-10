@@ -26,3 +26,16 @@ route [-v] [-A family] del [-net|-host] target [gw Gw] [netmask Nm] [metric N] [
 route [-V] [--version] [-h] [--help]
 
 # route {add | del } [-net|-host] [网域或主机] netmask [mask] [gw|dev]
+
+### e.g.
+route
+#  Kernel IP routing table
+#  Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+#  172.16.3.201    192.168.93.1    255.255.255.255 UGH   20     0        0 eth0.1
+#  172.16.3.223    192.168.93.1    255.255.255.255 UGH   20     0        0 eth0.1
+#  172.17.0.0      *               255.255.0.0     U     0      0        0 docker0
+#  192.168.93.0    *               255.255.255.0   U     0      0        0 eth0.1
+
+# 添加一条路由(发往192.168.62这个网段的全部要经过网关192.168.1.1)
+route add -net 172.16.3.202 netmask 255.255.255.255 gw 192.168.93.1 dev eth0.1
+route -p add -net 172.16.3.202 netmask 255.255.255.255 gw 192.168.93.1 dev eth0.1

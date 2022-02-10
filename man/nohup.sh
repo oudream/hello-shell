@@ -3,6 +3,10 @@ nohup /usr/local/ncsearch/search 1> /var/log/ncsearch.log 2>/dev/null &
 
 nohup /usr/local/ncsearch/search 1>> /var/log/ncsearch.log 2>>/dev/null &
 
+/userdata/tk5web/tk5web -d "/userdata/tk5web" 1> /dev/null 2>&1 &
+
+
+
 nohup Command [ Arg ... ] [ & ]
 
 # 2>&1 解释：

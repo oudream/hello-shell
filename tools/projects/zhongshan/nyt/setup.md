@@ -86,6 +86,10 @@ chmod +x /etc/init.d/S99_start_tfroom
 #
 cat > /etc/init.d/S99_start_tk5web <<EOF
 /usr/sbin/runsv -- /userdata/tk5web/tk5web -d "/userdata/tk5web" 1> /var/log/tk5web.log 2>&1 &
+
+nohup /opt/tk5web/tk5web -d "/opt/tk5web" 1> /var/log/tk5web.log 2>&1 &
+nohup /userdata/tk5web/tk5web -d "/userdata/tk5web" 1> /dev/null 2>&1 &
+
 echo "S99_start_tk5web start \$(date)" >> /opt/auto_start.log
 EOF
 chmod +x /etc/init.d/S99_start_tk5web

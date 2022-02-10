@@ -2,6 +2,7 @@
 ### linux qt
 - https://download.qt.io/new_archive/qt/5.5/5.5.1/
 
+### deploy qt linux deploy qt [linuxdeployqt]
 - https://blog.csdn.net/pengrui18/article/details/106903186
 - https://github.com/probonopd/linuxdeployqt
 - https://www.cnblogs.com/linuxAndMcu/p/11016322.html

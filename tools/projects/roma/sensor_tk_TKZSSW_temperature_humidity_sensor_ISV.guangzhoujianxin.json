@@ -1,0 +1,52 @@
+{
+  "dataFormat": "JSON",
+  "deviceType": "sensor",
+  "manufacturerId": "tk",
+  "manufacturerName": "tk",
+  "model": "TKZSSW_temperature_humidity_sensor",
+  "productName": "tk_环境温湿度传感器",
+  "productSerial": "SmEz3oxG6265",
+  "productType": 0,
+  "protocolType": "MQTT",
+  "remark": "",
+  "services": [
+    {
+      "commands": [],
+      "description": "",
+      "properties": [
+        {
+          "dataEnum": "{}",
+          "datatype": "decimal",
+          "description": "温度",
+          "enumlist": "",
+          "max": "65536",
+          "maxlength": 10,
+          "method": "R",
+          "min": "0",
+          "name": "TT",
+          "required": 0,
+          "step": "1",
+          "unit": ""
+        },
+        {
+          "dataEnum": "{}",
+          "datatype": "decimal",
+          "description": "湿度",
+          "enumlist": "",
+          "max": "65536",
+          "maxlength": 10,
+          "method": "R",
+          "min": "0",
+          "name": "HH",
+          "required": 0,
+          "step": "1",
+          "unit": ""
+        }
+      ],
+      "serviceId": "tk_yc_temperature_humidity_sensor",
+      "status": 0
+    }
+  ],
+  "status": 0,
+  "version": ""
+}

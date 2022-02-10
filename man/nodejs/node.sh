@@ -22,7 +22,7 @@ PATH_BAK=$PATH
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/node12/bin
 
 ### Install Node.js 12 LTS on CentOS 7
-curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash -
 sudo yum clean all && sudo yum makecache fast
 sudo yum install -y gcc-c++ make
 sudo yum install -y nodejs

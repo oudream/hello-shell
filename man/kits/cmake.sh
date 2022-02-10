@@ -15,6 +15,19 @@ cmake . -G "Xcode" --build "/ddd/communication/protobuf/protobuf/cmake" -B"/ddd/
 /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.15/Modules
 
 
+### install setup cmake
+# 或者从https://cmake.org/files/v3.15/下载
+wget https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5.tar.gz
+tar -zxf cmake-3.15.5.tar.gz
+cd cmake-3.15.5
+./bootstrap --prefix=/usr --datadir=share/cmake --docdir=doc/cmake && make -j 4
+# 如果只在普通用户下面安装，prefix设置成自己的目录，make install 也不用sudo。安装完之后，cmake的可执行文件在prefix目录下面的bin中
+sudo make install
+# 检查是否安装成功
+cmake --version
+
+
+###
 cmake [{-D <var>=<value>}...] -P <cmake-script-file>
 cmake -S src -B build
 cmake --find-package [<options>]

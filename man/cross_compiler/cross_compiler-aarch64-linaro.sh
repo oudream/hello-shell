@@ -75,3 +75,8 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 # https://blog.csdn.net/wang_jing_kai/article/details/88619606
 ./Configure linux-aarch64 --cross-compile-prefix=aarch64-linux-gnu- --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/ shared
 
+
+### libmodbus
+# https://github.com/stephane/libmodbus/issues/297
+CC=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc CXX=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++ ./autogen.sh
+CC=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc CXX=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++ ./configure ac_cv_func_malloc_0_nonnull=yes --host=arm --enable-static --without-documentation
