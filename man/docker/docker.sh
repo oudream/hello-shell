@@ -439,7 +439,7 @@ mkdir -p /etc/docker
 mkdir -p /usr/local/docker/data
 cat >> /etc/docker/daemon.json <<EOF
 {
-  "data-root": "/usr/local/docker/data"
+  "data-root": "/userdata/docker/data"
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "200m",

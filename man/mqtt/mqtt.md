@@ -4,6 +4,7 @@
 - ubuntu
 ```shell
 sudo apt install mosquitto mosquitto-clients
+sudo yum install mosquitto mosquitto-clients
 # service
 sudo systemctl restart mosquitto
 # QA
@@ -93,3 +94,7 @@ mosquitto_pub -h 192.168.1.200 -p 1883 -u root -P root -t '/5g/data/reply' -m '{
 
 ```
 
+```shell
+mosquitto_pub -h 192.168.91.253 -p 1883 -t 'datacenter/set/response/Tk_mqtt_jiexi/model' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","status":"FAILURE"}'
+
+```

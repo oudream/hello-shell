@@ -7,11 +7,15 @@ mysql -P 3306 -h 127.0.0.1 -u root -p'Aa.123456'
 
 docker run arey/mysql-client -h "172.17.0.1" -P 3306 -u"root" -p'password' -e "SET PASSWORD FOR root@'%' = PASSWORD('new-password');"
 
-docker run -d --name mysql-client -v /opt/mysql1/data:/var/lib/mysql -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" mysql:5.7.28 \
+docker run -d --restart=always --name mysql-client -v /opt/mysql1/data:/var/lib/mysql -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" mysql:5.7.28 \
 mysqld \
   --log-bin=mysql-bin \
   --binlog-format=ROW \
+  --lower_case_table_names=1 \
   --server-id=1
+
+#
+apt-get install mysql-client
 
 docker run --name mysql1 -v /usr/local/mysql/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD="Aa.123456" mysql:5.7
 

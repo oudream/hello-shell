@@ -5,8 +5,8 @@ git config --global http.proxy http://127.0.0.1:9980
 git config --global https.proxy https://127.0.0.1:9980
 git config --global http.proxy http://192.168.1.35:9980
 git config --global https.proxy https://192.168.1.35:9980
-git config --global http.proxy http://192.168.91.223:9980
-git config --global https.proxy https://192.168.91.223:9980
+git config --global http.proxy http://192.168.91.232:1080
+git config --global https.proxy https://192.168.91.232:1080
 
 git config --global --unset http.proxy
 git config --global --unset https.proxy

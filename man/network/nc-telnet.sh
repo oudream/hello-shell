@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# 验证5900端口是否已经开放成功
+traceroute 192.168.91.221 -p 5900
+nc -z -w 1 192.168.91.221 5900
+netstat -apn | grep 5900
+
 # compile and install
 # https://pkgs.org/download/nc
 
