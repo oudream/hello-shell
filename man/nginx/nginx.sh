@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+
+vim /etc/nginx/sites-available/default
+nginx -s reload
+
+
 # docker
 # simple static content
 # https://hub.docker.com/_/nginx

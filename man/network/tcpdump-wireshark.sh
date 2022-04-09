@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 
+tcpdump -i any -n -nn host 172.17.0.1 and port 15623 -w ./$(date +%Y%m%d%H%M%S).pcap
+
+
 # compile and install
 # https://pkgs.org/download/tcpdump
 # http://www.tcpdump.org/index.html

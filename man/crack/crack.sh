@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+### 加壳 脱壳
 
 # The Sysinternals web site was created in 1996 by Mark Russinovich to host his advanced system utilities and technical information. Whether you’re an IT Pro or a developer, you’ll find Sysinternals utilities to help you manage, troubleshoot and diagnose your Windows systems and applications.
 # https://docs.microsoft.com/zh-cn/sysinternals/
 
 
-# 爱盘 - 最新的在线破解工具包
+# 吾爱破解 - 爱盘 - 最新的在线破解工具包
 # https://down.52pojie.cn/Tools/Debuggers/
+# https://github.com/ganlvtech/down_52pojie_cn
 
 
 # Portable Executable Explorer version 2

@@ -100,3 +100,25 @@ go build .
 go env -w GOPROXY=https://goproxy.cn
 # go env -w GOPROXY=https://goproxy.cn,direct
 # go env -w GO111MODULE=on
+
+
+
+### 远程调试
+git clone https://github.com/go-delve/delve.git
+cd delve
+CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -o dlv cmd/dlv/main.go
+# run at remote pc ( 带上 --，再后面就是命令行参数 )
+./dlv --listen=:2345 --headless=true --api-version=2 --accept-multiclient exec ./go-admin -- server -c /userdata/i3web/settings.yml
+# or
+./dlv attach 19476 --headless --listen=:2345 --api-version=2 --accept-multiclient
+#
+#
+#
+# Before running this configuration, start your application and Delve as described bellow.  Allow Delve to compile your application:
+dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient
+# Or compile the application using Go 1.10 or newer:
+go build -gcflags \"all=-N -l\" github.com/app/demo
+# and then run it with Delve using the following command:
+dlv --listen=:2345 --headless=true --api-version=2 --accept-multiclient exec ./demo
+#
+#

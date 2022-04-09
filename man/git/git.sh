@@ -218,12 +218,14 @@ git submodule update
 # error : git submodule add https://github.com/maonx/vimwiki-assets.git --recursive
 # 子模块的递归克隆要先 submodule add, 再用以下的命令
 git submodule update --init --recursive
+git submodule update --remote --recursive
 # 递归克隆整个项目
 # 递归克隆整个项目，子模块已经同时更新了，一步到位。
 git clone https://github.com/maonx/vimwiki-assets.git assets --recursive
 # 在子模块中修改文件后，直接提交到远程项目分支。
+cd 3rd/ccxx
 git add .
-git ci -m "commit"
+git commit -m "update by submodule author 3"
 git push origin HEAD:master
 # 删除子模块
 # 删除子模块比较麻烦，需要手动删除相关的文件，否则在添加子模块时有可能出现错误
@@ -241,7 +243,14 @@ rm -rf "--force"
 #   url = https://github.com/maonx/vimwiki-assets.git
 # 删除.git文件夹中的相关子模块文件
 rm -rf .git/modules/springBoot_atguigu
+#
+# example 3rd/ccxx
+git submodule deinit -f 3rd/ccxx
+rm -rf .git/modules/3rd/ccxx
+git rm -f 3rd/ccxx
+git rm --cached 3rd/ccxx
 
+#
 # 只克隆最新的提交记录
 git clone <remote-address> --depth 1
 
