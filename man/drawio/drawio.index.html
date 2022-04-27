@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Flowchart Maker &amp; Online Diagram Software</title>
+    <meta name="application-name" content="diagrams.net">
+    <meta name="apple-mobile-web-app-title" content="diagrams.net">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="Description"
+          content="diagrams.net is free online diagram software for making flowcharts, process diagrams, org charts, UML, ER and network diagrams">
+    <meta name="Keywords" content="diagram, online, flow chart, flowchart maker, uml, erd">
+    <meta itemprop="name" content="diagrams.net - free flowchart maker and diagrams online">
+    <meta itemprop="description" content="diagrams.net is a free online diagramming application  and flowchart maker . You can use it to create UML, entity relationship,
+		org charts, BPMN and BPM, database schema and networks. Also possible are telecommunication network, workflow, flowcharts, maps overlays and GIS, electronic
+		circuit and social network diagrams.">
+    <meta itemprop="image"
+          content="https://lh4.googleusercontent.com/-cLKEldMbT_E/Tx8qXDuw6eI/AAAAAAAAAAs/Ke0pnlk8Gpg/w500-h344-k/BPMN%2Bdiagram%2Brc2f.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="msapplication-config" content="images/browserconfig.xml">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#d89000">
+    <script type="text/javascript" defer="true"
+            src="https://apis.google.com/js/api.js?onload=DrawGapiClientCallback"></script>
+    <script type="text/javascript">
+        /**
+         * URL Parameters and protocol description are here:
+         *
+         * https://desk.draw.io/support/solutions/articles/16000042546-what-url-parameters-are-supported
+         *
+         * Parameters for developers:
+         *
+         * - dev=1: For developers only
+         * - test=1: For developers only
+         * - export=URL for export: For developers only
+         * - ignoremime=1: For developers only (see DriveClient.js). Use Cmd-S to override mime.
+         * - createindex=1: For developers only (see etc/build/README)
+         * - filesupport=0: For developers only (see Editor.js in core)
+         * - savesidebar=1: For developers only (see Sidebar.js)
+         * - pages=1: For developers only (see Pages.js)
+         * - lic=email: For developers only (see LicenseServlet.java)
+         * --
+         * - networkshapes=1: For testing network shapes (temporary)
+         */
+        var urlParams = (function () {
+            var result = new Object();
+            var params = window.location.search.slice(1).split('&');
+
+            for (var i = 0; i < params.length; i++) {
+                var idx = params[i].indexOf('=');
+
+                if (idx > 0) {
+                    result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+                }
+            }
+
+            return result;
+        })();
+
+        // Forces CDN caches by passing URL parameters via URL hash
+        if (window.location.hash != null && window.location.hash.substring(0, 2) == '#P') {
+            try {
+                urlParams = JSON.parse(decodeURIComponent(window.location.hash.substring(2)));
+
+                if (urlParams.hash != null) {
+                    window.location.hash = urlParams.hash;
+                }
+            } catch (e) {
+                // ignore
+            }
+        }
+
+        // Global variable for desktop
+        var mxIsElectron = window && window.process && window.process.type;
+
+        // Redirects page if required
+        if (urlParams['dev'] != '1') {
+            (function () {
+                var proto = window.location.protocol;
+
+                if (!mxIsElectron) {
+                    var host = window.location.host;
+
+                    // Redirects apex, drive and rt to www
+                    if (host === 'draw.io' || host === 'rt.draw.io' || host === 'drive.draw.io') {
+                        host = 'www.draw.io';
+                    }
+
+                    var href = proto + '//' + host + window.location.href.substring(
+                        window.location.protocol.length +
+                        window.location.host.length + 2);
+
+                    // Redirects if href changes
+                    if (href != window.location.href) {
+                        window.location.href = href;
+                    }
+                }
+            })();
+        }
+
+        (function () {
+            if (typeof Object.id == "undefined") {
+                var id = 0;
+
+                Object.id = function (o) {
+                    if (typeof o.__uniqueid == "undefined") {
+                        Object.defineProperty(o, "__uniqueid", {
+                            value: ++id,
+                            enumerable: false,
+                            // This could go either way, depending on your
+                            // interpretation of what an "id" is
+                            writable: false
+                        });
+                    }
+
+                    return o.__uniqueid;
+                };
+            }
+        })();
+
+        function observeKey(obj, key) {
+            let value = obj[key];
+            Object.defineProperty(obj, key, {
+                get() {
+                    console.log(value);
+                    return value;
+                },
+                set(newValue) {
+                    console.log(newValue);
+                    value = newValue;
+                }
+            });
+        }
+
+        /**
+         * Adds meta tag to the page.
+         */
+        function mxmeta(name, content, httpEquiv) {
+            try {
+                var s = document.createElement('meta');
+
+                if (name != null) {
+                    s.setAttribute('name', name);
+                }
+
+                s.setAttribute('content', content);
+
+                if (httpEquiv != null) {
+                    s.setAttribute('http-equiv', httpEquiv);
+                }
+
+                var t = document.getElementsByTagName('meta')[0];
+                t.parentNode.insertBefore(s, t);
+            } catch (e) {
+                // ignore
+            }
+        };
+
+        /**
+         * Synchronously adds scripts to the page.
+         */
+        function mxscript(src, onLoad, id, dataAppKey, noWrite) {
+            var defer = onLoad == null && !noWrite;
+
+            if ((urlParams['dev'] != '1' && typeof document.createElement('canvas').getContext === "function") ||
+                onLoad != null || noWrite) {
+                var s = document.createElement('script');
+                s.setAttribute('type', 'text/javascript');
+                s.setAttribute('defer', 'true');
+                s.setAttribute('src', src);
+
+                if (id != null) {
+                    s.setAttribute('id', id);
+                }
+
+                if (dataAppKey != null) {
+                    s.setAttribute('data-app-key', dataAppKey);
+                }
+
+                if (onLoad != null) {
+                    var r = false;
+
+                    s.onload = s.onreadystatechange = function () {
+                        if (!r && (!this.readyState || this.readyState == 'complete')) {
+                            r = true;
+                            onLoad();
+                        }
+                    };
+                }
+
+                var t = document.getElementsByTagName('script')[0];
+
+                if (t != null) {
+                    t.parentNode.insertBefore(s, t);
+                }
+            } else {
+                document.write('<script src="' + src + '"' + ((id != null) ? ' id="' + id + '" ' : '') +
+                    ((dataAppKey != null) ? ' data-app-key="' + dataAppKey + '" ' : '') + '></scr' + 'ipt>');
+            }
+        };
+
+        /**
+         * Asynchronously adds scripts to the page.
+         */
+        function mxinclude(src) {
+            var g = document.createElement('script');
+            g.type = 'text/javascript';
+            g.async = true;
+            g.src = src;
+
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(g, s);
+        };
+
+        /**
+         * Adds meta tags with application name (depends on offline URL parameter)
+         */
+        (function () {
+            var name = 'diagrams.net';
+            mxmeta('apple-mobile-web-app-title', name);
+            mxmeta('application-name', name);
+
+            if (mxIsElectron) {
+                mxmeta(null, 'default-src \'self\' \'unsafe-inline\'; connect-src \'self\' https://*.draw.io https://fonts.googleapis.com https://fonts.gstatic.com; img-src * data:; media-src *; font-src *; style-src-elem \'self\' \'unsafe-inline\' https://fonts.googleapis.com', 'Content-Security-Policy');
+            }
+        })();
+
+        // Checks for local storage
+        var isLocalStorage = false;
+
+        try {
+            isLocalStorage = urlParams['local'] != '1' && typeof (localStorage) != 'undefined';
+        } catch (e) {
+            // ignored
+        }
+
+        var mxScriptsLoaded = false, mxWinLoaded = false;
+
+        function checkAllLoaded() {
+            if (mxScriptsLoaded && mxWinLoaded) {
+                App.main();
+            }
+        };
+
+        var t0 = new Date();
+
+        // Changes paths for local development environment
+        if (urlParams['dev'] == '1') {
+            // Used to request grapheditor/mxgraph sources in dev mode
+            var mxDevUrl = document.location.protocol + '//devhost.jgraph.com/drawio/src/main';
+
+            // Used to request draw.io sources in dev mode
+            var drawDevUrl = document.location.protocol + '//devhost.jgraph.com/drawio/src/main/webapp/';
+            var geBasePath = drawDevUrl + '/js/grapheditor';
+            var mxBasePath = mxDevUrl + '/mxgraph';
+
+            if (document.location.protocol == 'file:') {
+                geBasePath = './js/grapheditor';
+                mxBasePath = './mxgraph';
+                drawDevUrl = './';
+
+                // Forces includes for dev environment in node.js
+                mxForceIncludes = true;
+            }
+            if (location.hostname == 'localhost' || location.hostname == '127.0.0.1') {
+                drawDevUrl = `http://${location.host}/`;
+                geBasePath = `http://${location.host}/js/grapheditor`;
+                mxBasePath = `http://${location.host}/mxgraph`;
+                mxForceIncludes = true;
+            }
+
+            mxForceIncludes = false;
+
+            mxscript(drawDevUrl + 'js/PreConfig.js');
+            mxscript(drawDevUrl + 'js/diagramly/Init.js');
+            mxscript(geBasePath + '/Init.js');
+            mxscript(mxBasePath + '/mxClient.min.js');
+
+            // Adds all JS code that depends on mxClient. This indirection via Devel.js is
+            // required in some browsers to make sure mxClient.js (and the files that it
+            // loads asynchronously) are available when the code loaded in Devel.js runs.
+            mxscript(drawDevUrl + 'js/diagramly/Devel.js');
+
+            // Electron
+            if (mxIsElectron) {
+                mxscript('js/diagramly/DesktopLibrary.js');
+                mxscript('js/diagramly/ElectronApp.js');
+            }
+
+            mxscript(drawDevUrl + 'js/PostConfig.js');
+        } else {
+            (function () {
+                var hostName = window.location.hostname;
+
+                // Supported domains are *.draw.io and the packaged version in Quip
+                var supportedDomain = (hostName.substring(hostName.length - 8, hostName.length) === '.draw.io') ||
+                    (hostName.substring(hostName.length - 13, hostName.length) === '.diagrams.net');
+
+                function loadAppJS() {
+                    mxscript('js/app.min.js', function () {
+                        mxScriptsLoaded = true;
+                        checkAllLoaded();
+
+                        // Electron
+                        if (mxIsElectron) {
+                            mxscript('js/diagramly/DesktopLibrary.js', function () {
+                                mxscript('js/diagramly/ElectronApp.js', function () {
+                                    mxscript('js/extensions.min.js', function () {
+                                        mxscript('js/stencils.min.js', function () {
+                                            mxscript('js/shapes-14-6-5.min.js', function () {
+                                                mxscript('js/PostConfig.js');
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        } else if (!supportedDomain) {
+                            mxscript('js/PostConfig.js');
+                        }
+                    });
+                };
+
+                if (!supportedDomain || mxIsElectron) {
+                    mxscript('js/PreConfig.js', loadAppJS);
+                } else {
+                    loadAppJS();
+                }
+            })();
+        }
+
+        // Adds basic error handling
+        window.onerror = function () {
+            var status = document.getElementById('geStatus');
+
+            if (status != null) {
+                status.innerHTML = 'Page could not be loaded. Please try refreshing.';
+            }
+        };
+    </script>
+    <script src="http://localhost:5000/js/PreConfig.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Init.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Init.js"></script>
+    <script src="http://localhost:5000/mxgraph/mxClient.min.js"></script>
+    <link rel="stylesheet" href="mxgraph/css/common.css" charset="UTF-8" type="text/css">
+    <script src="http://localhost:5000/js/diagramly/Devel.js"></script>
+    <script src="http://localhost:5000/js/cryptojs/aes.min.js"></script>
+    <script src="http://localhost:5000/js/spin/spin.min.js"></script>
+    <style type="text/css"></style>
+    <script src="http://localhost:5000/js/deflate/pako.min.js"></script>
+    <script src="http://localhost:5000/js/deflate/base64.js"></script>
+    <script src="http://localhost:5000/js/jscolor/jscolor.js"></script>
+    <script src="http://localhost:5000/js/sanitizer/sanitizer.min.js"></script>
+    <script src="http://localhost:5000/js/rough/rough.min.js"></script>
+    <script src="http://localhost:5000/js/freehand/perfect-freehand.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Editor.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/EditorUi.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Sidebar.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Graph.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Format.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Shapes.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Actions.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Menus.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Toolbar.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Dialogs.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ActiveDirectory.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Advanced.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AlliedTelesis.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Android.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ArchiMate.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ArchiMate3.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Arrows2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Atlassian.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS3.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS3D.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS4.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS4b.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Azure.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Azure2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Basic.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Bootstrap.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-BPMN.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-C4.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cabinet.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cisco.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cisco19.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-CiscoSafe.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Citrix.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cumulus.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-DFD.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-EIP.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Electrical.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ER.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Floorplan.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Flowchart.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-FluidPower.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-GCP.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-GCP2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-GCPIcons.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Gmdl.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-IBM.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Infographic.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Ios.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Ios7.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Kubernetes.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-LeanMapping.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Mockup.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-MSCAE.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Network.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Office.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-PID.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Rack.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Signs.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Sitemap.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Sysml.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ThreatModeling.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-UML25.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Veeam.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Veeam2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-VVD.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-WebIcons.js"></script>
+    <script src="http://localhost:5000/js/diagramly/util/mxJsCanvas.js"></script>
+    <script src="http://localhost:5000/js/diagramly/util/mxAsyncCanvas.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/LocalFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/LocalLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/StorageFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/StorageLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/RemoteFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/RemoteLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/EmbedFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Dialogs.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Editor.js"></script>
+    <script src="http://localhost:5000/js/diagramly/EditorUi.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DiffSync.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Settings.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioFileSync.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioComment.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveComment.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioUser.js"></script>
+    <script src="http://localhost:5000/js/diagramly/UrlLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DropboxFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DropboxLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DropboxClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitHubFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitHubLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitHubClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/OneDriveFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/OneDriveLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/OneDriveClient.js"></script>
+    <script src="http://localhost:5000/js/onedrive/mxODPicker.js"></script>
+    <script src="http://localhost:5000/js/diagramly/TrelloFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/TrelloLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/TrelloClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitLabFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitLabLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitLabClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/App.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Menus.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Pages.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Trees.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Minimal.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DistanceGuides.js"></script>
+    <script src="http://localhost:5000/js/diagramly/mxRuler.js"></script>
+    <script src="http://localhost:5000/js/diagramly/mxFreehand.js"></script>
+    <script src="http://localhost:5000/js/diagramly/P2PCollab.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DevTools.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/VsdxExport.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/mxVsdxCanvas2D.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/bmpDecoder.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/importer.js"></script>
+    <script src="http://localhost:5000/js/jszip/jszip.min.js"></script>
+    <script src="http://localhost:5000/js/diagramly/graphml/mxGraphMlCodec.js"></script>
+    <script src="http://localhost:5000/js/PostConfig.js"></script>
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/plgmlhohecdddhbmmkncjdmlhcmaachm">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#d89000">
+    <link rel="stylesheet" type="text/css" href="styles/grapheditor.css">
+    <link rel="preconnect" href="https://storage.googleapis.com">
+    <link rel="canonical" href="https://app.diagrams.net">
+    <link rel="manifest" href="images/manifest.json">
+    <link rel="shortcut icon" href="favicon.ico">
+    <style type="text/css">
+        body {
+            overflow: hidden;
+        }
+
+        div.picker {
+            z-index: 10007;
+        }
+
+        .geSidebarContainer .geTitle input {
+            font-size: 8pt;
+            color: #606060;
+        }
+
+        .geBlock {
+            z-index: -3;
+            margin: 100px;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            padding: 20px;
+            text-align: center;
+            min-width: 50%;
+        }
+
+        .geBlock h1, .geBlock h2 {
+            margin-top: 0px;
+            padding-top: 0px;
+        }
+
+        .geEditor *:not(.geScrollable)::-webkit-scrollbar {
+            width: 14px;
+            height: 14px;
+        }
+
+        .geEditor ::-webkit-scrollbar-track {
+            background-clip: padding-box;
+            border: solid transparent;
+            border-width: 1px;
+        }
+
+        .geEditor ::-webkit-scrollbar-corner {
+            background-color: transparent;
+        }
+
+        .geEditor ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, .1);
+            background-clip: padding-box;
+            border: solid transparent;
+            border-radius: 10px;
+        }
+
+        .geEditor ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, .4);
+        }
+
+        .geTemplate {
+            border: 1px solid transparent;
+            display: inline-block;
+            _display: inline;
+            vertical-align: top;
+            border-radius: 3px;
+            overflow: hidden;
+            font-size: 14pt;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+    <!-- Workaround for binary XHR in IE 9/10, see App.loadUrl -->
+    <!--[if (IE 9)|(IE 10)]><!-->
+    <script type="text/vbscript">
+			Function mxUtilsBinaryToArray(Binary)
+				Dim i
+				ReDim byteArray(LenB(Binary))
+				For i = 1 To LenB(Binary)
+					byteArray(i-1) = AscB(MidB(Binary, i, 1))
+				Next
+				mxUtilsBinaryToArray = byteArray
+			End Function
+
+
+    </script>
+    <!--<![endif]-->
+    <script type="text/javascript" src="math/MathJax.js?config=TeX-MML-AM_SVG-full,Safe"></script>
+    <style type="text/css">div.MathJax_SVG_Display {
+        position: static;
+    }
+
+    span.MathJax_SVG {
+        position: static !important;
+    }</style>
+</head>
+<body class="geEditor" style="background-color: rgb(255, 255, 255);">
+<div id="geInfo">
+    <div class="geBlock">
+        <h1>Flowchart Maker and Online Diagram Software</h1>
+        <p>
+            diagrams.net (formerly draw.io) is free online diagram software. You can use it as a flowchart maker,
+            network diagram software, to create UML online, as an ER diagram tool,
+            to design database schema, to build BPMN online, as a circuit diagram maker, and more. draw.io can import
+            .vsdx, Gliffy™ and Lucidchart™ files .
+        </p>
+        <h2 id="geStatus">Loading...</h2>
+        <p>
+            Please ensure JavaScript is enabled.
+        </p>
+    </div>
+</div>
+<script type="text/javascript">
+    /**
+     * Main
+     */
+    if (navigator.userAgent != null && navigator.userAgent.toLowerCase().indexOf(' electron/') >= 0 && typeof process !== 'undefined' && process.versions.electron < 5) {
+        // Redirects old Electron app to latest version
+        var div = document.getElementById('geInfo');
+
+        if (div != null) {
+            div.innerHTML = '<center><h2>You are using an out of date version of this app.<br>Please download the latest version ' +
+                '<a href="https://github.com/jgraph/drawio-desktop/releases/latest" target="_blank">here</a>.</h2></center>';
+        }
+    } else {
+        if (urlParams['dev'] != '1' && typeof document.createElement('canvas').getContext === "function") {
+            window.addEventListener('load', function () {
+                mxWinLoaded = true;
+                checkAllLoaded();
+            });
+        } else {
+            App.main();
+        }
+    }
+</script>
+<script src="plugins/svgdata.js"></script>
+</body>
+</html>
+

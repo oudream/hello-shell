@@ -1,0 +1,1532 @@
+<head>
+    <title>a2 - diagrams.net</title>
+    <meta name="application-name" content="diagrams.net">
+    <meta name="apple-mobile-web-app-title" content="diagrams.net">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="Description"
+          content="diagrams.net is free online diagram software for making flowcharts, process diagrams, org charts, UML, ER and network diagrams">
+    <meta name="Keywords" content="diagram, online, flow chart, flowchart maker, uml, erd">
+    <meta itemprop="name" content="diagrams.net - free flowchart maker and diagrams online">
+    <meta itemprop="description" content="diagrams.net is a free online diagramming application  and flowchart maker . You can use it to create UML, entity relationship,
+		org charts, BPMN and BPM, database schema and networks. Also possible are telecommunication network, workflow, flowcharts, maps overlays and GIS, electronic
+		circuit and social network diagrams.">
+    <meta itemprop="image"
+          content="https://lh4.googleusercontent.com/-cLKEldMbT_E/Tx8qXDuw6eI/AAAAAAAAAAs/Ke0pnlk8Gpg/w500-h344-k/BPMN%2Bdiagram%2Brc2f.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="msapplication-config" content="images/browserconfig.xml">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#d89000">
+    <script type="text/javascript" defer="true" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs"
+            data-app-key="jg02tc0onwmhlgm"></script>
+    <script src="https://apis.google.com/_/scs/abc-static/_/js/k=gapi.lb.zh_CN.BHqAjsLrch8.O/m=picker,drive_share/rt=j/sv=1/d=1/ed=1/rs=AHpOoo_cl1AUiXSFuHW8qD3luV25B4BEBA/cb=gapi.loaded_0?le=scs"
+            async=""></script>
+    <script type="text/javascript" defer="true" src="https://app.diagrams.net/js/onedrive/OneDrive.js"></script>
+    <script type="text/javascript" defer="true" src="https://app.diagrams.net/js/dropbox/Dropbox-sdk.min.js"></script>
+    <script type="text/javascript" defer="true" src="https://apis.google.com/js/api.js?onload=DrawGapiClientCallback"
+            gapi_processed="true"></script>
+    <script type="text/javascript">
+        /**
+         * URL Parameters and protocol description are here:
+         *
+         * https://desk.draw.io/support/solutions/articles/16000042546-what-url-parameters-are-supported
+         *
+         * Parameters for developers:
+         *
+         * - dev=1: For developers only
+         * - test=1: For developers only
+         * - export=URL for export: For developers only
+         * - ignoremime=1: For developers only (see DriveClient.js). Use Cmd-S to override mime.
+         * - createindex=1: For developers only (see etc/build/README)
+         * - filesupport=0: For developers only (see Editor.js in core)
+         * - savesidebar=1: For developers only (see Sidebar.js)
+         * - pages=1: For developers only (see Pages.js)
+         * - lic=email: For developers only (see LicenseServlet.java)
+         * --
+         * - networkshapes=1: For testing network shapes (temporary)
+         */
+        var urlParams = (function () {
+            var result = new Object();
+            var params = window.location.search.slice(1).split('&');
+
+            for (var i = 0; i < params.length; i++) {
+                var idx = params[i].indexOf('=');
+
+                if (idx > 0) {
+                    result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+                }
+            }
+
+            return result;
+        })();
+
+        // Forces CDN caches by passing URL parameters via URL hash
+        if (window.location.hash != null && window.location.hash.substring(0, 2) == '#P') {
+            try {
+                urlParams = JSON.parse(decodeURIComponent(window.location.hash.substring(2)));
+
+                if (urlParams.hash != null) {
+                    window.location.hash = urlParams.hash;
+                }
+            } catch (e) {
+                // ignore
+            }
+        }
+
+        // Global variable for desktop
+        var mxIsElectron = window && window.process && window.process.type;
+
+        // Redirects page if required
+        if (urlParams['dev'] != '1') {
+            (function () {
+                var proto = window.location.protocol;
+
+                if (!mxIsElectron) {
+                    var host = window.location.host;
+
+                    // Redirects apex, drive and rt to www
+                    if (host === 'draw.io' || host === 'rt.draw.io' || host === 'drive.draw.io') {
+                        host = 'www.draw.io';
+                    }
+
+                    var href = proto + '//' + host + window.location.href.substring(
+                        window.location.protocol.length +
+                        window.location.host.length + 2);
+
+                    // Redirects if href changes
+                    if (href != window.location.href) {
+                        window.location.href = href;
+                    }
+                }
+            })();
+        }
+
+        /**
+         * Adds meta tag to the page.
+         */
+        function mxmeta(name, content, httpEquiv) {
+            try {
+                var s = document.createElement('meta');
+
+                if (name != null) {
+                    s.setAttribute('name', name);
+                }
+
+                s.setAttribute('content', content);
+
+                if (httpEquiv != null) {
+                    s.setAttribute('http-equiv', httpEquiv);
+                }
+
+                var t = document.getElementsByTagName('meta')[0];
+                t.parentNode.insertBefore(s, t);
+            } catch (e) {
+                // ignore
+            }
+        };
+
+        /**
+         * Synchronously adds scripts to the page.
+         */
+        function mxscript(src, onLoad, id, dataAppKey, noWrite) {
+            var defer = onLoad == null && !noWrite;
+
+            if ((urlParams['dev'] != '1' && typeof document.createElement('canvas').getContext === "function") ||
+                onLoad != null || noWrite) {
+                var s = document.createElement('script');
+                s.setAttribute('type', 'text/javascript');
+                s.setAttribute('defer', 'true');
+                s.setAttribute('src', src);
+
+                if (id != null) {
+                    s.setAttribute('id', id);
+                }
+
+                if (dataAppKey != null) {
+                    s.setAttribute('data-app-key', dataAppKey);
+                }
+
+                if (onLoad != null) {
+                    var r = false;
+
+                    s.onload = s.onreadystatechange = function () {
+                        if (!r && (!this.readyState || this.readyState == 'complete')) {
+                            r = true;
+                            onLoad();
+                        }
+                    };
+                }
+
+                var t = document.getElementsByTagName('script')[0];
+
+                if (t != null) {
+                    t.parentNode.insertBefore(s, t);
+                }
+            } else {
+                document.write('<script src="' + src + '"' + ((id != null) ? ' id="' + id + '" ' : '') +
+                    ((dataAppKey != null) ? ' data-app-key="' + dataAppKey + '" ' : '') + '></scr' + 'ipt>');
+            }
+        };
+
+        /**
+         * Asynchronously adds scripts to the page.
+         */
+        function mxinclude(src) {
+            var g = document.createElement('script');
+            g.type = 'text/javascript';
+            g.async = true;
+            g.src = src;
+
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(g, s);
+        };
+
+        /**
+         * Adds meta tags with application name (depends on offline URL parameter)
+         */
+        (function () {
+            var name = 'diagrams.net';
+            mxmeta('apple-mobile-web-app-title', name);
+            mxmeta('application-name', name);
+
+            if (mxIsElectron) {
+                mxmeta(null, 'default-src \'self\' \'unsafe-inline\'; connect-src \'self\' https://*.draw.io https://fonts.googleapis.com https://fonts.gstatic.com; img-src * data:; media-src *; font-src *; style-src-elem \'self\' \'unsafe-inline\' https://fonts.googleapis.com', 'Content-Security-Policy');
+            }
+        })();
+
+        // Checks for local storage
+        var isLocalStorage = false;
+
+        try {
+            isLocalStorage = urlParams['local'] != '1' && typeof (localStorage) != 'undefined';
+        } catch (e) {
+            // ignored
+        }
+
+        var mxScriptsLoaded = false, mxWinLoaded = false;
+
+        function checkAllLoaded() {
+            if (mxScriptsLoaded && mxWinLoaded) {
+                App.main();
+            }
+        };
+
+        var t0 = new Date();
+
+        // Changes paths for local development environment
+        if (urlParams['dev'] == '1') {
+            // Used to request grapheditor/mxgraph sources in dev mode
+            var mxDevUrl = document.location.protocol + '//devhost.jgraph.com/drawio/src/main';
+
+            // Used to request draw.io sources in dev mode
+            var drawDevUrl = document.location.protocol + '//devhost.jgraph.com/drawio/src/main/webapp/';
+            var geBasePath = drawDevUrl + '/js/grapheditor';
+            var mxBasePath = mxDevUrl + '/mxgraph';
+
+            if (document.location.protocol == 'file:') {
+                geBasePath = './js/grapheditor';
+                mxBasePath = './mxgraph';
+                drawDevUrl = './';
+
+                // Forces includes for dev environment in node.js
+                mxForceIncludes = true;
+            }
+            mxForceIncludes = false;
+
+            if (location.hostname == 'localhost' || location.hostname == '127.0.0.1') {
+                drawDevUrl = `http://${location.host}/`;
+                geBasePath = `http://${location.host}/js/grapheditor`;
+                mxBasePath = `http://${location.host}/mxgraph`;
+                mxForceIncludes = true;
+            }
+
+            mxscript(drawDevUrl + 'js/PreConfig.js');
+            mxscript(drawDevUrl + 'js/diagramly/Init.js');
+            mxscript(geBasePath + '/Init.js');
+            mxscript(mxBasePath + '/mxClient.js');
+
+            // Adds all JS code that depends on mxClient. This indirection via Devel.js is
+            // required in some browsers to make sure mxClient.js (and the files that it
+            // loads asynchronously) are available when the code loaded in Devel.js runs.
+            mxscript(drawDevUrl + 'js/diagramly/Devel.js');
+
+            // Electron
+            if (mxIsElectron) {
+                mxscript('js/diagramly/DesktopLibrary.js');
+                mxscript('js/diagramly/ElectronApp.js');
+            }
+
+            mxscript(drawDevUrl + 'js/PostConfig.js');
+        } else {
+            (function () {
+                var hostName = window.location.hostname;
+
+                // Supported domains are *.draw.io and the packaged version in Quip
+                var supportedDomain = (hostName.substring(hostName.length - 8, hostName.length) === '.draw.io') ||
+                    (hostName.substring(hostName.length - 13, hostName.length) === '.diagrams.net');
+
+                function loadAppJS() {
+                    mxscript('js/app.min.js', function () {
+                        mxScriptsLoaded = true;
+                        checkAllLoaded();
+
+                        // Electron
+                        if (mxIsElectron) {
+                            mxscript('js/diagramly/DesktopLibrary.js', function () {
+                                mxscript('js/diagramly/ElectronApp.js', function () {
+                                    mxscript('js/extensions.min.js', function () {
+                                        mxscript('js/stencils.min.js', function () {
+                                            mxscript('js/shapes-14-6-5.min.js', function () {
+                                                mxscript('js/PostConfig.js');
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        } else if (!supportedDomain) {
+                            mxscript('js/PostConfig.js');
+                        }
+                    });
+                };
+
+                if (!supportedDomain || mxIsElectron) {
+                    mxscript('js/PreConfig.js', loadAppJS);
+                } else {
+                    loadAppJS();
+                }
+            })();
+        }
+
+        // Adds basic error handling
+        window.onerror = function () {
+            var status = document.getElementById('geStatus');
+
+            if (status != null) {
+                status.innerHTML = 'Page could not be loaded. Please try refreshing.';
+            }
+        };
+    </script>
+    <script src="http://localhost:5000/js/PreConfig.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Init.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Init.js"></script>
+    <script src="http://localhost:5000/mxgraph/mxClient.js"></script>
+    <link rel="stylesheet" href="mxgraph/css/common.css" charset="UTF-8" type="text/css">
+    <script src="http://localhost:5000/js/diagramly/Devel.js"></script>
+    <script src="http://localhost:5000/js/cryptojs/aes.min.js"></script>
+    <script src="http://localhost:5000/js/spin/spin.min.js"></script>
+    <style type="text/css"></style>
+    <script src="http://localhost:5000/js/deflate/pako.min.js"></script>
+    <script src="http://localhost:5000/js/deflate/base64.js"></script>
+    <script src="http://localhost:5000/js/jscolor/jscolor.js"></script>
+    <script src="http://localhost:5000/js/sanitizer/sanitizer.min.js"></script>
+    <script src="http://localhost:5000/js/rough/rough.min.js"></script>
+    <script src="http://localhost:5000/js/freehand/perfect-freehand.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Editor.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/EditorUi.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Sidebar.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Graph.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Format.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Shapes.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Actions.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Menus.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Toolbar.js"></script>
+    <script src="http://localhost:5000/js/grapheditor/Dialogs.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ActiveDirectory.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Advanced.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AlliedTelesis.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Android.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ArchiMate.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ArchiMate3.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Arrows2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Atlassian.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS3.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS3D.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS4.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-AWS4b.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Azure.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Azure2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Basic.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Bootstrap.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-BPMN.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-C4.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cabinet.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cisco.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cisco19.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-CiscoSafe.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Citrix.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Cumulus.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-DFD.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-EIP.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Electrical.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ER.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Floorplan.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Flowchart.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-FluidPower.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-GCP.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-GCP2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-GCPIcons.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Gmdl.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-IBM.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Infographic.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Ios.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Ios7.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Kubernetes.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-LeanMapping.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Mockup.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-MSCAE.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Network.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Office.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-PID.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Rack.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Signs.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Sitemap.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Sysml.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-ThreatModeling.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-UML25.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Veeam.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-Veeam2.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-VVD.js"></script>
+    <script src="http://localhost:5000/js/diagramly/sidebar/Sidebar-WebIcons.js"></script>
+    <script src="http://localhost:5000/js/diagramly/util/mxJsCanvas.js"></script>
+    <script src="http://localhost:5000/js/diagramly/util/mxAsyncCanvas.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/LocalFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/LocalLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/StorageFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/StorageLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/RemoteFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/RemoteLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/EmbedFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Dialogs.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Editor.js"></script>
+    <script src="http://localhost:5000/js/diagramly/EditorUi.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DiffSync.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Settings.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioFileSync.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioComment.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveComment.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DrawioUser.js"></script>
+    <script src="http://localhost:5000/js/diagramly/UrlLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DriveClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DropboxFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DropboxLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DropboxClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitHubFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitHubLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitHubClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/OneDriveFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/OneDriveLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/OneDriveClient.js"></script>
+    <script src="http://localhost:5000/js/onedrive/mxODPicker.js"></script>
+    <script src="http://localhost:5000/js/diagramly/TrelloFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/TrelloLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/TrelloClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitLabFile.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitLabLibrary.js"></script>
+    <script src="http://localhost:5000/js/diagramly/GitLabClient.js"></script>
+    <script src="http://localhost:5000/js/diagramly/App.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Menus.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Pages.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Trees.js"></script>
+    <script src="http://localhost:5000/js/diagramly/Minimal.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DistanceGuides.js"></script>
+    <script src="http://localhost:5000/js/diagramly/mxRuler.js"></script>
+    <script src="http://localhost:5000/js/diagramly/mxFreehand.js"></script>
+    <script src="http://localhost:5000/js/diagramly/P2PCollab.js"></script>
+    <script src="http://localhost:5000/js/diagramly/DevTools.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/VsdxExport.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/mxVsdxCanvas2D.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/bmpDecoder.js"></script>
+    <script src="http://localhost:5000/js/diagramly/vsdx/importer.js"></script>
+    <script src="http://localhost:5000/js/jszip/jszip.min.js"></script>
+    <script src="http://localhost:5000/js/diagramly/graphml/mxGraphMlCodec.js"></script>
+    <script src="http://localhost:5000/js/PostConfig.js"></script>
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/plgmlhohecdddhbmmkncjdmlhcmaachm">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#d89000">
+    <link rel="stylesheet" type="text/css" href="styles/grapheditor.css">
+    <link rel="preconnect" href="https://storage.googleapis.com">
+    <link rel="canonical" href="https://app.diagrams.net">
+    <link rel="manifest" href="images/manifest.json">
+    <link rel="shortcut icon" href="favicon.ico">
+    <style type="text/css">
+        body {
+            overflow: hidden;
+        }
+
+        div.picker {
+            z-index: 10007;
+        }
+
+        .geSidebarContainer .geTitle input {
+            font-size: 8pt;
+            color: #606060;
+        }
+
+        .geBlock {
+            z-index: -3;
+            margin: 100px;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            padding: 20px;
+            text-align: center;
+            min-width: 50%;
+        }
+
+        .geBlock h1, .geBlock h2 {
+            margin-top: 0px;
+            padding-top: 0px;
+        }
+
+        .geEditor *:not(.geScrollable)::-webkit-scrollbar {
+            width: 14px;
+            height: 14px;
+        }
+
+        .geEditor ::-webkit-scrollbar-track {
+            background-clip: padding-box;
+            border: solid transparent;
+            border-width: 1px;
+        }
+
+        .geEditor ::-webkit-scrollbar-corner {
+            background-color: transparent;
+        }
+
+        .geEditor ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, .1);
+            background-clip: padding-box;
+            border: solid transparent;
+            border-radius: 10px;
+        }
+
+        .geEditor ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, .4);
+        }
+
+        .geTemplate {
+            border: 1px solid transparent;
+            display: inline-block;
+            _display: inline;
+            vertical-align: top;
+            border-radius: 3px;
+            overflow: hidden;
+            font-size: 14pt;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+    <!-- Workaround for binary XHR in IE 9/10, see App.loadUrl -->
+    <!--[if (IE 9)|(IE 10)]><!-->
+    <script type="text/vbscript">
+			Function mxUtilsBinaryToArray(Binary)
+				Dim i
+				ReDim byteArray(LenB(Binary))
+				For i = 1 To LenB(Binary)
+					byteArray(i-1) = AscB(MidB(Binary, i, 1))
+				Next
+				mxUtilsBinaryToArray = byteArray
+			End Function
+
+    </script>
+    <!--<![endif]-->
+    <script type="text/javascript" src="math/MathJax.js?config=TeX-MML-AM_SVG-full,Safe"></script>
+    <style type="text/css">div.MathJax_SVG_Display {
+        position: static;
+    }
+
+    span.MathJax_SVG {
+        position: static !important;
+    }</style>
+    <style>.picker-dialog-frame {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        overflow: hidden
+    }
+
+    .picker-dialog-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        z-index: 1000
+    }
+
+    .picker-dialog {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        border: 1px solid #acacac;
+        width: auto;
+        padding: 0;
+        z-index: 1001;
+        overflow: auto;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, .2)
+    }
+
+    .picker-dialog-content {
+        font-size: 0;
+        padding: 0
+    }
+
+    .picker-dialog-buttons, .picker-dialog-title {
+        display: none
+    }</style>
+    <style type="text/css">.MathJax_Hover_Frame {
+        border-radius: .25em;
+        -webkit-border-radius: .25em;
+        -moz-border-radius: .25em;
+        -khtml-border-radius: .25em;
+        box-shadow: 0px 0px 15px #83A;
+        -webkit-box-shadow: 0px 0px 15px #83A;
+        -moz-box-shadow: 0px 0px 15px #83A;
+        -khtml-box-shadow: 0px 0px 15px #83A;
+        border: 1px solid #A6D ! important;
+        display: inline-block;
+        position: absolute
+    }
+
+    .MathJax_Menu_Button .MathJax_Hover_Arrow {
+        position: absolute;
+        cursor: pointer;
+        display: inline-block;
+        border: 2px solid #AAA;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -khtml-border-radius: 4px;
+        font-family: 'Courier New', Courier;
+        font-size: 9px;
+        color: #F0F0F0
+    }
+
+    .MathJax_Menu_Button .MathJax_Hover_Arrow span {
+        display: block;
+        background-color: #AAA;
+        border: 1px solid;
+        border-radius: 3px;
+        line-height: 0;
+        padding: 4px
+    }
+
+    .MathJax_Hover_Arrow:hover {
+        color: white !important;
+        border: 2px solid #CCC !important
+    }
+
+    .MathJax_Hover_Arrow:hover span {
+        background-color: #CCC !important
+    }
+    </style>
+    <style type="text/css">#MathJax_About {
+        position: fixed;
+        left: 50%;
+        width: auto;
+        text-align: center;
+        border: 3px outset;
+        padding: 1em 2em;
+        background-color: #DDDDDD;
+        color: black;
+        cursor: default;
+        font-family: message-box;
+        font-size: 120%;
+        font-style: normal;
+        text-indent: 0;
+        text-transform: none;
+        line-height: normal;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        z-index: 201;
+        border-radius: 15px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        -khtml-border-radius: 15px;
+        box-shadow: 0px 10px 20px #808080;
+        -webkit-box-shadow: 0px 10px 20px #808080;
+        -moz-box-shadow: 0px 10px 20px #808080;
+        -khtml-box-shadow: 0px 10px 20px #808080;
+        filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')
+    }
+
+    #MathJax_About.MathJax_MousePost {
+        outline: none
+    }
+
+    .MathJax_Menu {
+        position: absolute;
+        background-color: white;
+        color: black;
+        width: auto;
+        padding: 5px 0px;
+        border: 1px solid #CCCCCC;
+        margin: 0;
+        cursor: default;
+        font: menu;
+        text-align: left;
+        text-indent: 0;
+        text-transform: none;
+        line-height: normal;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        z-index: 201;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -khtml-border-radius: 5px;
+        box-shadow: 0px 10px 20px #808080;
+        -webkit-box-shadow: 0px 10px 20px #808080;
+        -moz-box-shadow: 0px 10px 20px #808080;
+        -khtml-box-shadow: 0px 10px 20px #808080;
+        filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')
+    }
+
+    .MathJax_MenuItem {
+        padding: 1px 2em;
+        background: transparent
+    }
+
+    .MathJax_MenuArrow {
+        position: absolute;
+        right: .5em;
+        padding-top: .25em;
+        color: #666666;
+        font-size: .75em
+    }
+
+    .MathJax_MenuActive .MathJax_MenuArrow {
+        color: white
+    }
+
+    .MathJax_MenuArrow.RTL {
+        left: .5em;
+        right: auto
+    }
+
+    .MathJax_MenuCheck {
+        position: absolute;
+        left: .7em
+    }
+
+    .MathJax_MenuCheck.RTL {
+        right: .7em;
+        left: auto
+    }
+
+    .MathJax_MenuRadioCheck {
+        position: absolute;
+        left: .7em
+    }
+
+    .MathJax_MenuRadioCheck.RTL {
+        right: .7em;
+        left: auto
+    }
+
+    .MathJax_MenuLabel {
+        padding: 1px 2em 3px 1.33em;
+        font-style: italic
+    }
+
+    .MathJax_MenuRule {
+        border-top: 1px solid #DDDDDD;
+        margin: 4px 3px
+    }
+
+    .MathJax_MenuDisabled {
+        color: GrayText
+    }
+
+    .MathJax_MenuActive {
+        background-color: #606872;
+        color: white
+    }
+
+    .MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {
+        background-color: #E8E8E8
+    }
+
+    .MathJax_ContextMenu:focus {
+        outline: none
+    }
+
+    .MathJax_ContextMenu .MathJax_MenuItem:focus {
+        outline: none
+    }
+
+    #MathJax_AboutClose {
+        top: .2em;
+        right: .2em
+    }
+
+    .MathJax_Menu .MathJax_MenuClose {
+        top: -10px;
+        left: -10px
+    }
+
+    .MathJax_MenuClose {
+        position: absolute;
+        cursor: pointer;
+        display: inline-block;
+        border: 2px solid #AAA;
+        border-radius: 18px;
+        -webkit-border-radius: 18px;
+        -moz-border-radius: 18px;
+        -khtml-border-radius: 18px;
+        font-family: 'Courier New', Courier;
+        font-size: 24px;
+        color: #F0F0F0
+    }
+
+    .MathJax_MenuClose span {
+        display: block;
+        background-color: #AAA;
+        border: 1.5px solid;
+        border-radius: 18px;
+        -webkit-border-radius: 18px;
+        -moz-border-radius: 18px;
+        -khtml-border-radius: 18px;
+        line-height: 0;
+        padding: 8px 0 6px
+    }
+
+    .MathJax_MenuClose:hover {
+        color: white !important;
+        border: 2px solid #CCC !important
+    }
+
+    .MathJax_MenuClose:hover span {
+        background-color: #CCC !important
+    }
+
+    .MathJax_MenuClose:hover:focus {
+        outline: none
+    }
+    </style>
+    <style type="text/css">.MathJax_Preview .MJXf-math {
+        color: inherit !important
+    }
+    </style>
+    <style type="text/css">.MJX_Assistive_MathML {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 1px 0 0 0 !important;
+        border: 0 !important;
+        height: 1px !important;
+        width: 1px !important;
+        overflow: hidden !important;
+        display: block !important;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none
+    }
+
+    .MJX_Assistive_MathML.MJX_Assistive_MathML_Block {
+        width: 100% !important
+    }
+    </style>
+    <style type="text/css">#MathJax_Zoom {
+        position: absolute;
+        background-color: #F0F0F0;
+        overflow: auto;
+        display: block;
+        z-index: 301;
+        padding: .5em;
+        border: 1px solid black;
+        margin: 0;
+        font-weight: normal;
+        font-style: normal;
+        text-align: left;
+        text-indent: 0;
+        text-transform: none;
+        line-height: normal;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        box-shadow: 5px 5px 15px #AAAAAA;
+        -webkit-box-shadow: 5px 5px 15px #AAAAAA;
+        -moz-box-shadow: 5px 5px 15px #AAAAAA;
+        -khtml-box-shadow: 5px 5px 15px #AAAAAA;
+        filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')
+    }
+
+    #MathJax_ZoomOverlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 300;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+
+    #MathJax_ZoomFrame {
+        position: relative;
+        display: inline-block;
+        height: 0;
+        width: 0
+    }
+
+    #MathJax_ZoomEventTrap {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 302;
+        display: inline-block;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        opacity: 0;
+        filter: alpha(opacity=0)
+    }
+    </style>
+    <style type="text/css">.MathJax_Preview {
+        color: #888;
+        display: contents
+    }
+
+    #MathJax_Message {
+        position: fixed;
+        left: 1em;
+        bottom: 1.5em;
+        background-color: #E6E6E6;
+        border: 1px solid #959595;
+        margin: 0px;
+        padding: 2px 8px;
+        z-index: 102;
+        color: black;
+        font-size: 80%;
+        width: auto;
+        white-space: nowrap
+    }
+
+    #MathJax_MSIE_Frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0px;
+        z-index: 101;
+        border: 0px;
+        margin: 0px;
+        padding: 0px
+    }
+
+    .MathJax_Error {
+        color: #CC0000;
+        font-style: italic
+    }
+    </style>
+    <style type="text/css">.MJXp-script {
+        font-size: .8em
+    }
+
+    .MJXp-right {
+        -webkit-transform-origin: right;
+        -moz-transform-origin: right;
+        -ms-transform-origin: right;
+        -o-transform-origin: right;
+        transform-origin: right
+    }
+
+    .MJXp-bold {
+        font-weight: bold
+    }
+
+    .MJXp-italic {
+        font-style: italic
+    }
+
+    .MJXp-scr {
+        font-family: MathJax_Script, 'Times New Roman', Times, STIXGeneral, serif
+    }
+
+    .MJXp-frak {
+        font-family: MathJax_Fraktur, 'Times New Roman', Times, STIXGeneral, serif
+    }
+
+    .MJXp-sf {
+        font-family: MathJax_SansSerif, 'Times New Roman', Times, STIXGeneral, serif
+    }
+
+    .MJXp-cal {
+        font-family: MathJax_Caligraphic, 'Times New Roman', Times, STIXGeneral, serif
+    }
+
+    .MJXp-mono {
+        font-family: MathJax_Typewriter, 'Times New Roman', Times, STIXGeneral, serif
+    }
+
+    .MJXp-largeop {
+        font-size: 150%
+    }
+
+    .MJXp-largeop.MJXp-int {
+        vertical-align: -.2em
+    }
+
+    .MJXp-math {
+        display: inline-block;
+        line-height: 1.2;
+        text-indent: 0;
+        font-family: 'Times New Roman', Times, STIXGeneral, serif;
+        white-space: nowrap;
+        border-collapse: collapse
+    }
+
+    .MJXp-display {
+        display: block;
+        text-align: center;
+        margin: 1em 0
+    }
+
+    .MJXp-math span {
+        display: inline-block
+    }
+
+    .MJXp-box {
+        display: block !important;
+        text-align: center
+    }
+
+    .MJXp-box:after {
+        content: " "
+    }
+
+    .MJXp-rule {
+        display: block !important;
+        margin-top: .1em
+    }
+
+    .MJXp-char {
+        display: block !important
+    }
+
+    .MJXp-mo {
+        margin: 0 .15em
+    }
+
+    .MJXp-mfrac {
+        margin: 0 .125em;
+        vertical-align: .25em
+    }
+
+    .MJXp-denom {
+        display: inline-table !important;
+        width: 100%
+    }
+
+    .MJXp-denom > * {
+        display: table-row !important
+    }
+
+    .MJXp-surd {
+        vertical-align: top
+    }
+
+    .MJXp-surd > * {
+        display: block !important
+    }
+
+    .MJXp-script-box > * {
+        display: table !important;
+        height: 50%
+    }
+
+    .MJXp-script-box > * > * {
+        display: table-cell !important;
+        vertical-align: top
+    }
+
+    .MJXp-script-box > *:last-child > * {
+        vertical-align: bottom
+    }
+
+    .MJXp-script-box > * > * > * {
+        display: block !important
+    }
+
+    .MJXp-mphantom {
+        visibility: hidden
+    }
+
+    .MJXp-munderover, .MJXp-munder {
+        display: inline-table !important
+    }
+
+    .MJXp-over {
+        display: inline-block !important;
+        text-align: center
+    }
+
+    .MJXp-over > * {
+        display: block !important
+    }
+
+    .MJXp-munderover > *, .MJXp-munder > * {
+        display: table-row !important
+    }
+
+    .MJXp-mtable {
+        vertical-align: .25em;
+        margin: 0 .125em
+    }
+
+    .MJXp-mtable > * {
+        display: inline-table !important;
+        vertical-align: middle
+    }
+
+    .MJXp-mtr {
+        display: table-row !important
+    }
+
+    .MJXp-mtd {
+        display: table-cell !important;
+        text-align: center;
+        padding: .5em 0 0 .5em
+    }
+
+    .MJXp-mtr > .MJXp-mtd:first-child {
+        padding-left: 0
+    }
+
+    .MJXp-mtr:first-child > .MJXp-mtd {
+        padding-top: 0
+    }
+
+    .MJXp-mlabeledtr {
+        display: table-row !important
+    }
+
+    .MJXp-mlabeledtr > .MJXp-mtd:first-child {
+        padding-left: 0
+    }
+
+    .MJXp-mlabeledtr:first-child > .MJXp-mtd {
+        padding-top: 0
+    }
+
+    .MJXp-merror {
+        background-color: #FFFF88;
+        color: #CC0000;
+        border: 1px solid #CC0000;
+        padding: 1px 3px;
+        font-style: normal;
+        font-size: 90%
+    }
+
+    .MJXp-scale0 {
+        -webkit-transform: scaleX(.0);
+        -moz-transform: scaleX(.0);
+        -ms-transform: scaleX(.0);
+        -o-transform: scaleX(.0);
+        transform: scaleX(.0)
+    }
+
+    .MJXp-scale1 {
+        -webkit-transform: scaleX(.1);
+        -moz-transform: scaleX(.1);
+        -ms-transform: scaleX(.1);
+        -o-transform: scaleX(.1);
+        transform: scaleX(.1)
+    }
+
+    .MJXp-scale2 {
+        -webkit-transform: scaleX(.2);
+        -moz-transform: scaleX(.2);
+        -ms-transform: scaleX(.2);
+        -o-transform: scaleX(.2);
+        transform: scaleX(.2)
+    }
+
+    .MJXp-scale3 {
+        -webkit-transform: scaleX(.3);
+        -moz-transform: scaleX(.3);
+        -ms-transform: scaleX(.3);
+        -o-transform: scaleX(.3);
+        transform: scaleX(.3)
+    }
+
+    .MJXp-scale4 {
+        -webkit-transform: scaleX(.4);
+        -moz-transform: scaleX(.4);
+        -ms-transform: scaleX(.4);
+        -o-transform: scaleX(.4);
+        transform: scaleX(.4)
+    }
+
+    .MJXp-scale5 {
+        -webkit-transform: scaleX(.5);
+        -moz-transform: scaleX(.5);
+        -ms-transform: scaleX(.5);
+        -o-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+
+    .MJXp-scale6 {
+        -webkit-transform: scaleX(.6);
+        -moz-transform: scaleX(.6);
+        -ms-transform: scaleX(.6);
+        -o-transform: scaleX(.6);
+        transform: scaleX(.6)
+    }
+
+    .MJXp-scale7 {
+        -webkit-transform: scaleX(.7);
+        -moz-transform: scaleX(.7);
+        -ms-transform: scaleX(.7);
+        -o-transform: scaleX(.7);
+        transform: scaleX(.7)
+    }
+
+    .MJXp-scale8 {
+        -webkit-transform: scaleX(.8);
+        -moz-transform: scaleX(.8);
+        -ms-transform: scaleX(.8);
+        -o-transform: scaleX(.8);
+        transform: scaleX(.8)
+    }
+
+    .MJXp-scale9 {
+        -webkit-transform: scaleX(.9);
+        -moz-transform: scaleX(.9);
+        -ms-transform: scaleX(.9);
+        -o-transform: scaleX(.9);
+        transform: scaleX(.9)
+    }
+
+    .MathJax_PHTML .noError {
+        vertical-align: ;
+        font-size: 90%;
+        text-align: left;
+        color: black;
+        padding: 1px 3px;
+        border: 1px solid
+    }
+    </style>
+    <style type="text/css">.MathJax_SVG_Display {
+        text-align: center;
+        margin: 1em 0em;
+        position: relative;
+        display: block !important;
+        text-indent: 0;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
+        min-height: 0;
+        width: 100%
+    }
+
+    .MathJax_SVG .MJX-monospace {
+        font-family: monospace
+    }
+
+    .MathJax_SVG .MJX-sans-serif {
+        font-family: sans-serif
+    }
+
+    #MathJax_SVG_Tooltip {
+        background-color: InfoBackground;
+        color: InfoText;
+        border: 1px solid black;
+        box-shadow: 2px 2px 5px #AAAAAA;
+        -webkit-box-shadow: 2px 2px 5px #AAAAAA;
+        -moz-box-shadow: 2px 2px 5px #AAAAAA;
+        -khtml-box-shadow: 2px 2px 5px #AAAAAA;
+        padding: 3px 4px;
+        z-index: 401;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: auto;
+        height: auto;
+        display: none
+    }
+
+    .MathJax_SVG {
+        display: inline;
+        font-style: normal;
+        font-weight: normal;
+        line-height: normal;
+        font-size: 100%;
+        font-size-adjust: none;
+        text-indent: 0;
+        text-align: left;
+        text-transform: none;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        direction: ltr;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
+        min-height: 0;
+        border: 0;
+        padding: 0;
+        margin: 0
+    }
+
+    .MathJax_SVG * {
+        transition: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none
+    }
+
+    .MathJax_SVG > div {
+        display: inline-block
+    }
+
+    .mjx-svg-href {
+        fill: blue;
+        stroke: blue
+    }
+
+    .MathJax_SVG_Processing {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        display: block !important
+    }
+
+    .MathJax_SVG_Processed {
+        display: none !important
+    }
+
+    .MathJax_SVG_test {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 100%;
+        font-size-adjust: none;
+        text-indent: 0;
+        text-transform: none;
+        letter-spacing: normal;
+        word-spacing: normal;
+        overflow: hidden;
+        height: 1px
+    }
+
+    .MathJax_SVG_test.mjx-test-display {
+        display: table !important
+    }
+
+    .MathJax_SVG_test.mjx-test-inline {
+        display: inline !important;
+        margin-right: -1px
+    }
+
+    .MathJax_SVG_test.mjx-test-default {
+        display: block !important;
+        clear: both
+    }
+
+    .MathJax_SVG_ex_box {
+        display: inline-block !important;
+        position: absolute;
+        overflow: hidden;
+        min-height: 0;
+        max-height: none;
+        padding: 0;
+        border: 0;
+        margin: 0;
+        width: 1px;
+        height: 60ex
+    }
+
+    .mjx-test-inline .MathJax_SVG_left_box {
+        display: inline-block;
+        width: 0;
+        float: left
+    }
+
+    .mjx-test-inline .MathJax_SVG_right_box {
+        display: inline-block;
+        width: 0;
+        float: right
+    }
+
+    .mjx-test-display .MathJax_SVG_right_box {
+        display: table-cell !important;
+        width: 10000em !important;
+        min-width: 0;
+        max-width: none;
+        padding: 0;
+        border: 0;
+        margin: 0
+    }
+
+    .MathJax_SVG .noError {
+        vertical-align: ;
+        font-size: 90%;
+        text-align: left;
+        color: black;
+        padding: 1px 3px;
+        border: 1px solid
+    }
+    </style>
+    <style type="text/css">  @-webkit-keyframes rotate {
+                                 from {
+                                     -webkit-transform: rotate(0deg);
+                                 }
+                                 to {
+                                     -webkit-transform: rotate(360deg);
+                                 }
+                             }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .dropbox-dropin-btn, .dropbox-dropin-btn:link, .dropbox-dropin-btn:hover {
+        display: inline-block;
+        height: 14px;
+        font-family: "Lucida Grande", "Segoe UI", "Tahoma", "Helvetica Neue", "Helvetica", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        color: #636363;
+        text-decoration: none;
+        padding: 1px 7px 5px 3px;
+        border: 1px solid #ebebeb;
+        border-radius: 2px;
+        border-bottom-color: #d4d4d4;
+        background: #fcfcfc;
+        background: -moz-linear-gradient(top, #fcfcfc 0%, #f5f5f5 100%);
+        background: -webkit-linear-gradient(top, #fcfcfc 0%, #f5f5f5 100%);
+        background: linear-gradient(to bottom, #fcfcfc 0%, #f5f5f5 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#f5f5f5', GradientType=0);
+    }
+
+    .dropbox-dropin-default:hover, .dropbox-dropin-error:hover {
+        border-color: #dedede;
+        border-bottom-color: #cacaca;
+        background: #fdfdfd;
+        background: -moz-linear-gradient(top, #fdfdfd 0%, #f5f5f5 100%);
+        background: -webkit-linear-gradient(top, #fdfdfd 0%, #f5f5f5 100%);
+        background: linear-gradient(to bottom, #fdfdfd 0%, #f5f5f5 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdfdfd', endColorstr='#f5f5f5', GradientType=0);
+    }
+
+    .dropbox-dropin-default:active, .dropbox-dropin-error:active {
+        border-color: #d1d1d1;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropbox-dropin-btn .dropin-btn-status {
+        display: inline-block;
+        width: 15px;
+        height: 14px;
+        vertical-align: bottom;
+        margin: 0 5px 0 2px;
+        background: transparent url('https://www.dropbox.com/static/images/widgets/dbx-saver-status.png') no-repeat;
+        position: relative;
+        top: 2px;
+    }
+
+    .dropbox-dropin-default .dropin-btn-status {
+        background-position: 0px 0px;
+    }
+
+    .dropbox-dropin-progress .dropin-btn-status {
+        width: 18px;
+        margin: 0 4px 0 0;
+        background: url('https://www.dropbox.com/static/images/widgets/dbx-progress.png') no-repeat center center;
+        -webkit-animation-name: rotate;
+        -webkit-animation-duration: 1.7s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        animation-name: rotate;
+        animation-duration: 1.7s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    .dropbox-dropin-success .dropin-btn-status {
+        background-position: -15px 0px;
+    }
+
+    .dropbox-dropin-disabled {
+        background: #e0e0e0;
+        border: 1px #dadada solid;
+        border-bottom: 1px solid #ccc;
+        box-shadow: none;
+    }
+
+    .dropbox-dropin-disabled .dropin-btn-status {
+        background-position: -30px 0px;
+    }
+
+    .dropbox-dropin-error .dropin-btn-status {
+        background-position: -45px 0px;
+    }
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.4) {
+        .dropbox-dropin-btn .dropin-btn-status {
+            background-image: url('https://www.dropbox.com/static/images/widgets/dbx-saver-status-2x.png');
+            background-size: 60px 14px;
+            -webkit-background-size: 60px 14px;
+        }
+
+        .dropbox-dropin-progress .dropin-btn-status {
+            background: url('https://www.dropbox.com/static/images/widgets/dbx-progress-2x.png') no-repeat center center;
+            background-size: 20px 20px;
+            -webkit-background-size: 20px 20px;
+        }
+    }
+
+    .dropbox-saver:hover, .dropbox-chooser:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .dropbox-chooser, .dropbox-dropin-btn {
+        line-height: 11px !important;
+        text-decoration: none !important;
+        box-sizing: content-box !important;
+        -webkit-box-sizing: content-box !important;
+        -moz-box-sizing: content-box !important;
+    }
+    </style>
+</head>

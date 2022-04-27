@@ -1,9 +1,36 @@
+### build
+```shell
+git clone https://github.com/eclipse/mosquitto.git
+git clone https://github.com/troydhanson/uthash.git
+cp uthash/src/* mosquitto/include
+cd mosquitto
+# v2.0.14: 17 Nov 2021 
+git checkout fd0e398
+# build 
+mkdir cmake-build-local && cd cmake-build-local
+cmake -DWITH_CJSON=no -DWITH_TLS=no -DWITH_BUNDLED_DEPS=no -DWITH_DOCS=no -DDOCUMENTATION=OFF ..
+# build arm64
+mkdir cmake-build-linaro &&cd cmake-build-linaro
+cmake -DWITH_CJSON=no -DWITH_TLS=no -DWITH_BUNDLED_DEPS=no -DWITH_DOCS=no -DDOCUMENTATION=OFF -D CMAKE_TOOLCHAIN_FILE="/opt/tk/hello_iec104/build/aarch64/linaro/toolchainfile.cmake" ..
+#
+make -j 8
+#
+scp src/mosquitto root@tk177:/userdata/mosquitto/
+scp client/mosquitto_pub root@tk177:/userdata/mosquitto/
+scp client/mosquitto_rr root@tk177:/userdata/mosquitto/
+scp client/mosquitto_sub root@tk177:/userdata/mosquitto/
+scp lib/libmosquitto.so.1 root@tk177:/userdata/mosquitto/
+```
+
+
 ### download
 - https://mosquitto.org/download/
 - https://mosquitto.org/files/binary/win64/mosquitto-2.0.11-install-windows-x64.exe
 - ubuntu
 ```shell
 sudo apt install mosquitto mosquitto-clients
+# centos 
+sudo yum -y install epel-release
 sudo yum install mosquitto mosquitto-clients
 # service
 sudo systemctl restart mosquitto

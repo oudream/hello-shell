@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+find / -name \*licence\*
+
 # -or
 find . -name auth.txt
 find . -name \*.cpp -or -name \*.js

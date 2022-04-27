@@ -109,6 +109,28 @@ dpkg -L python3-dev
 
 
 
+### dpkg-deb
+# 1.对deb文件解开：
+mkdir extract
+dpkg-deb -X SunloginClient-10.0.2.24779_amd64.deb extract
+#
+# 2.解开依赖meta文件：
+mkdir extract/DEBIAN
+dpkg-deb -e SunloginClient-10.0.2.24779_amd64.deb extract/DEBIAN
+#
+# 3.修改control文件：
+vim extract/DEBIAN/control
+# 将libwebkitgtk 3.0-0修改为libwebkit2gtk-4.0-37
+#
+# 4.重新打包：
+mkdir build
+dpkg-deb -b extract build
+#
+# 5.安装build/下打包好的.deb包。
+sudo dpkg -i sunloginclient_10.1.1.38139_amd64.deb
+
+
+
 ## apt, apt-get
 # apt, apt-get是一条linux命令，适用于deb包管理式的操作系统，主要用于自动从互联网的软件仓库中搜索、安装、升级、卸载软件或操作系统。
 apt update # 升级安装包相关的命令,刷新可安装的软件列表(但是不做任何实际的安装动作)
@@ -173,8 +195,3 @@ sudo snap remove xxxx
 # Uappexplorer
 # https://uappexplorer.com/snaps
 
-
-openjdk-11-jre-headless/now 11.0.4+11-1ubuntu2~18.04.3 amd64 [installed,upgradable to: 11.0.5+10-0ubuntu1.1~18.04]
-openjdk-8-jdk-headless/now 8u222-b10-1ubuntu1~18.04.1 amd64 [installed,upgradable to: 8u232-b09-0ubuntu1~18.04.1]
-openjdk-8-jre/now 8u222-b10-1ubuntu1~18.04.1 amd64 [installed,upgradable to: 8u232-b09-0ubuntu1~18.04.1]
-openjdk-8-jre-headless/

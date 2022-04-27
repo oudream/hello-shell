@@ -62,7 +62,6 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 ./mipsel-linux-gcc -v Configured with: ../gcc-4.2.0-20070124/configure --prefix=/opt/toolchains/crosstools_hf-linux-2.6.18.0_gcc-4.2-11ts_uclibc-nptl-0.9.29-20070423_20090508/ --build=mipsel-linux --host=mipsel-linux --target=mipsel-linux-uclibc --with-build-sysroot=/usr/src/redhat/BUILD/build_uClibc --enable-languages=c,c++ --disable-__cxa_atexit --enable-target-optspace --with-gnu-ld --with-float=hard --enable-threads --infodir=/opt/toolchains/crosstools_hf-linux-2.6.18.0_gcc-4.2-11ts_uclibc-nptl-0.9.29-20070423_20090508/info --with-arch=mips32
 
 
-
 ### apr
 # https://www.javaroad.cn/questions/87215
 # https://blog.csdn.net/m0_37263637/article/details/78590853
