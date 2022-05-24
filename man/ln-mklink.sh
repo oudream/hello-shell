@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
-mklink /D "C:\dev\hello-shell\tools\rknn" "C:\dev\tk\rknn"
-mklink /D "C:\dev\hello-shell\tools\iot" "C:\dev\tk\iot"
-mklink /D "C:\dev\hello-shell\tools\tk5web" "C:\dev\tk\tk5web"
-mklink /D "C:\dev\hello-shell\tools\topo" "C:\dev\tk\topo"
-mklink /D "C:\dev\hello-shell\tools\wedo-kafka" "C:\dev\wedo\wedo-kafka"
-mklink /D "C:\dev\limi\gcl3\3rd\ccxx" "C:\dev\limi\ccxx"
-mklink /D "C:\Software\JetBrains\GoLand2022.1\jbr" "C:\Software\JetBrains\PyCharm2022.1\jbr"
+mklink /D "C:\dev\hello-shell\projects\tk\ZhongShan" "C:\dev\tk\中山"
+
+mklink /D link-dir1(created) "C:\dev\tk\rknn"
 
 ln -s /ddd/dir1 link-dir1(created) # create real-dir link-dir1
 

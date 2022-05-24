@@ -3,6 +3,10 @@
 
 git update-index --chmod=+x path/to/file
 
+# 只添加非空白更改
+alias.addnw=!sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero -'
+git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
+
 # 简易的命令行入门教程:
 # Git 全局设置:
 git config --global user.name "oudream"
@@ -195,6 +199,8 @@ git remote show origin
 
 ### git sumodule
 git submodule add https://github.com/maonx/vimwiki-assets.git assets
+git submodule add -b i3svg-dev https://gitee.com/oudream/drawio.git
+git config -f .gitmodules submodule.drawio.branch i3svg-dev
 # git status, 可以看到目录有增加1个文件.gitmodules
 git status
 # 查看子模块
@@ -231,8 +237,8 @@ git push origin HEAD:master
 # 删除子模块比较麻烦，需要手动删除相关的文件，否则在添加子模块时有可能出现错误
 # 同样以删除assets文件夹为例
 # 删除子模块文件夹
-git rm --cached "referto/bash-it"
-git rm -r --cached "bash-it"
+git rm --cached "drawio"
+git rm -r --cached "drawio"
 rm -rf "--force"
 # 删除.gitmodules文件中相关子模块信息
 #[submodule "assets"]

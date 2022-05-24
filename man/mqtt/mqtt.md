@@ -33,6 +33,7 @@ sudo apt install mosquitto mosquitto-clients
 sudo yum -y install epel-release
 sudo yum install mosquitto mosquitto-clients
 # service
+sudo systemctl enable mosquitto
 sudo systemctl restart mosquitto
 # QA
 # - https://blog.clang.cn/809.html

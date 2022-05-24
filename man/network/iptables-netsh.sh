@@ -5,8 +5,19 @@
 # https://cloud.tencent.com/developer/article/1632776
 # https://zhuanlan.zhihu.com/p/42153839
 
+
 # 增加 Dest NAT 端口映射
 iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25623 -j DNAT --to-destination 172.17.0.1:15623
+
+
+yum install iptables-services
+iptables -F
+iptables -t nat -A PREROUTING -p tcp -d 192.168.91.227 --dport 2322 -j DNAT --to 192.168.91.177:22
+iptables -t nat -A POSTROUTING -p tcp -d 192.168.91.177 --dport 22 -j SNAT --to 192.168.91.227
+firewall-cmd --zone=public --add-port=2322/tcp --permanent
+firewall-cmd --reload
+
+
 # 删除 Dest NAT 端口映射
 iptables -t nat -D PREROUTING -p tcp -m tcp --dport 25625 -j DNAT --to-destination 172.17.0.1:15623
 

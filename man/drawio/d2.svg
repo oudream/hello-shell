@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="451px"
      height="481px" viewBox="-0.5 -0.5 451 481"
-     content="&lt;mxfile host=&quot;Electron&quot; modified=&quot;2022-04-27T16:30:22.646Z&quot; agent=&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/15.8.7 Chrome/91.0.4472.164 Electron/13.6.2 Safari/537.36&quot; etag=&quot;BLA06GSoWpBRAe8t0F1s&quot; version=&quot;15.8.7&quot; type=&quot;device&quot;&gt;&lt;diagram id=&quot;euqVNamBTRTGS5IqMfXN&quot; name=&quot;Page-1&quot;&gt;xVbbbqMwEP0aHhsBDoQ+NrTZPnS1l0i70r454IBVwyDjBLJfv2MwBCep0kqpNkKKfeZiz5nDJA6Ji/aLpFX+FVImHN9NW4c8Or7vuVGEXxo59EhEDJBJnhqnI7Dmf9kQadAdT1ltOSoAoXhlgwmUJUuUhVEpobHdtiDsUyuasTNgnVBxjv7mqcoN6oX3R8Mz41lujo78RW8o6OBsKqlzmkIzgciTQ2IJoPpV0cZMaPIGXvq41RvW8WKSleo9AXG2+sPyuweerODX/ke4fG3qu6DPsqdiZwo2l1WHgYE9k4ojIS90w8R3qLniUKJpA0pB4ZDl4PAgeKYNCipEc1UI3Hi4xMornaxoMy2S2YbWPJlVVCkmyxUX4mfXueUWl2tzcMpppkMVw2SPwWiV8Do2wp35Fh6DANldmqTdx1gn+DZKWJJ0iU8iNlEwD1y0GEawKNa+SbU3NhCVz6BgSh7QxQT496bnRvTesG+OEtKHdVg+Uc88MiA1ss3G3MfO4sI09wON9q83WsKuTJlOomlocq7YuqKJtjbYN7unN2BpHgYWS35wzpLnX2Ap/CySyHWSMAuOHnadIFpX/Tza8pYNSvyG7lzpegm5EYmRTSIJ/TMSowscfprQ5v9xooA4ZDrTUq9iAJl21QVLfHBYIFOx6wR4hbgDFjbg6Z32soFFcBriTQD/BDgLmSTFp7+a4CUzlUznUwkaPhFKeKOZNF/YQgm8C2+be0EpI/gBqeD2+MPW2SZ/D8jTPw==&lt;/diagram&gt;&lt;/mxfile&gt;">
+     content="&lt;mxfile host=&quot;Electron&quot; modified=&quot;2022-04-27T16:34:02.179Z&quot; agent=&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/15.8.7 Chrome/91.0.4472.164 Electron/13.6.2 Safari/537.36&quot; etag=&quot;uyElDidSO-MxHZgqs2dt&quot; version=&quot;15.8.7&quot; type=&quot;device&quot;&gt;&lt;diagram id=&quot;euqVNamBTRTGS5IqMfXN&quot; name=&quot;Page-1&quot;&gt;xVbbbqMwEP0aHhuBCYQ+NrTZPnS1l0i70r454IBVwyDjBLJfv2MwBCep0kqpNkKKfeZiz5nDJI4fF+0XSav8K6RMOMRNW8d/dAjx3CjCL40ceiTyDZBJnhqnI7Dmf9kQadAdT1ltOSoAoXhlgwmUJUuUhVEpobHdtiDsUyuasTNgnVBxjv7mqcoN6oX3R8Mz41lujo7IojcUdHA2ldQ5TaGZQP6T48cSQPWroo2Z0OQNvPRxqzes48UkK9V7AuJs9Yfldw88WcGv/Y9w+drUd0GfZU/FzhRsLqsOAwN7JhVHQl7ohonvUHPFoUTTBpSCwvGXg8OD4Jk2KKgQzVUhcOPhEiuvdLKizbRIZhta82RWUaWYLFdciJ9d55ZbXK7NwSmnmQ5VDJM9BqNVwuvYCHdGLDwGAbK7tJ92H2Od4NsoYUnSJT6J2ETBPHDRYhjBolj7JtXe2EBUPoOCKXlAFxNA7k3Pjei9Yd8cJaQP67B8op55ZEBqZJuNuY+dxYVp7gcaTa43WsKuTJlOomlocq7YuqKJtjbYN7unN2BpHgYWSyQ4Z8kjF1gKP4sk/zpJmAVHD7tOEK2rfh5tecsGJX5Dd650vd7iRiRGNol+SM5IjC5w+GlCm//HiQLikOlMS72KAWTaVRcs8cFhgUzFrhPgFeIOWNiAp3faywYWwWmINwHICXAWMkmKT381wUtmKpnOpxI0fCKU8EYzab6whRJ4F94294JSRvADUsHt8Yets03+HvhP/wA=&lt;/diagram&gt;&lt;/mxfile&gt;">
     <defs/>
     <g>
         <rect x="0" y="0" width="450" height="480" fill="#f8cecc" stroke="none" pointer-events="all"/>
@@ -13,7 +13,7 @@
               pointer-events="all"/>
         <rect x="175" y="60" width="120" height="60" fill="rgb(255, 255, 255)" stroke="rgb(0, 0, 0)"
               pointer-events="all"/>
-        <ellipse cx="235" cy="212" rx="40" ry="40" fill-opacity="0.33" fill="rgb(255, 255, 255)" stroke="rgb(0, 0, 0)"
+        <ellipse cx="235" cy="212" rx="40" ry="40" fill-opacity="0.17" fill="rgb(255, 255, 255)" stroke="rgb(0, 0, 0)"
                  pointer-events="all"/>
         <path d="M 210 320 L 260 320 L 285 345 L 285 395 L 260 420 L 210 420 L 185 395 L 185 345" fill="none"
               stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="all"/>

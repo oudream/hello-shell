@@ -1,5 +1,11 @@
 
+# https://wangchujiang.com/linux-command/c/firewall-cmd.html
+
 firewall-cmd --state
+firewall-cmd --get-active-zones # 查看当前区域
+firewall-cmd --set-default-zone=home # 设置为家庭区域
+firewall-cmd --get-zone-of-interface=eth0 # 设备置当前区域的接口
+firewall-cmd --permanent --zone=internal --change-interface=enp03s # 永久修改网络接口enp03s为内部区域（internal）
 firewall-cmd --list-all
 firewall-cmd --permanent --add-port=9000/tcp
 firewall-cmd --reload

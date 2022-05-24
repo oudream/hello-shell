@@ -25,6 +25,15 @@ sysctl -p
 ulimit -a
 # 查看具体服务所能打开的最大文件句柄（Max open files）：
 cat /proc/$pid/limits
+# 1）Linux系统下，所有进程允许打开的最大fd数量。查询语句：
+cat /proc/sys/fs/file-max
+# 2）Linux系统下，所有进程已经打开的fd数量及允许的最大数量。查询语句：
+cat /proc/sys/fs/file-nr
+# 3）单个进程允许打开的最大fd数量.查询语句：
+ulimit -n
+# 4)单个进程（例如进程id为5454）已经打开的fd.查询语句：
+ls -l /proc/5454/fd/
+
 
 # How to discover number of *logical* cores on Mac OS X?
 # https://developer.apple.com/documentation/foundation/processinfo/1415622-processorcount

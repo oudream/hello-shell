@@ -24,3 +24,30 @@ cd drawio-desktop
 npm i
 npm run release-win32
 ```
+
+### start drawio@gitee
+- https://gitee.com/oudream/drawio-desktop
+- https://gitee.com/oudream/drawio
+```shell
+git clone https://gitee.com/oudream/drawio-desktop.git
+git checkout i3svg-dev
+git submodule update --init --recursive
+
+npm config set registry http://registry.npm.taobao.org
+npm i -g yarn
+cd drawio-desktop
+npm i
+npm run release-win
+```
+
+### windows electron cache
+- https://github.com/electron/electron/releases/download/v18.2.0/electron-v18.2.0-win32-x64.zip
+```shell
+C:\Users\Administrator\AppData\Local\electron\Cache\electron-v18.2.0-win32-x64.zip
+```
+
+### linux electron cache
+-
+```shell
+/opt/odan/drawio-desktop/node_modules/electron/dist
+```

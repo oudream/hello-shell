@@ -1,0 +1,3 @@
+UPDATE `DEVICE_TABLE` SET `DATABASE_NAME` = 'appMBMid' WHERE `ID` = 42 or `ID` = 43 or `ID` = 44;
+
+

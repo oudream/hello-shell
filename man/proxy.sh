@@ -67,8 +67,8 @@ npm config set proxy ${http_proxy}
 npm config set https-proxy ${https_proxy}
 npm config delete proxy
 npm config delete https-proxy
-npm config set proxy "http://127.0.0.1:7890"
-npm config set https-proxy "https://127.0.0.1:7890"
+npm config set proxy "http://192.168.91.221:7890"
+npm config set https-proxy "https://192.168.91.221:7890"
 
 ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1
 ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
