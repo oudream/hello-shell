@@ -1,3 +1,6 @@
+# https://archlinux.pkgs.org/rolling/archlinux-community-aarch64/
+# https://releases.linaro.org/components/toolchain/binaries
+
 ### 使用导出与PATH设置的方法来交叉编译
 
 ### cmake
@@ -37,9 +40,11 @@ aarch64-linux-gnu-dwp           aarch64-linux-gnu-gcc-ranlib-7  aarch64-linux-gn
 aarch64-linux-gnu-elfedit       aarch64-linux-gnu-gcov          aarch64-linux-gnu-ld.gold
 aarch64-linux-gnu-gcc           aarch64-linux-gnu-gcov-7        aarch64-linux-gnu-nm
 
-### zlib
-wget http://www.zlib.net/zlib-1.2.11.tar.gz
+### zlib | libz
+wget https://zlib.net/zlib-1.2.12.tar.gz
 ./configure --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/ --shared
+./configure --prefix=/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.03/arm-linux-gnueabihf/ --shared
+./configure --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/ --shared
 make && make install
 
 ### sqlite
@@ -70,9 +75,16 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 
 
 ### openssl
+# https://stackoverflow.com/questions/60821697/how-to-build-openssl-for-arm-linux
 # cmake https://blog.csdn.net/weixin_43117602/article/details/115339416
 # https://blog.csdn.net/wang_jing_kai/article/details/88619606
 ./Configure linux-aarch64 --cross-compile-prefix=aarch64-linux-gnu- --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/ shared
+./Configure linux-aarch64 --cross-compile-prefix=aarch64-linux-gnu- --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/ shared
+# wget  "https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz?revision=fed31ee5-2ed7-40c8-9e0e-474299a3c4ac&la=en&hash=76DAF56606E7CB66CC5B5B33D8FB90D9F24C9D20" -O gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz
+# tar Jxf gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz -C /opt/arm/9
+# ./Configure linux-generic32 --cross-compile-prefix=/opt/arm/9/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf- --prefix=/opt/openssl-1.1.1e --openssldir=/opt/openssl-1.1.1e -static
+export PATH=$PATH:/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin
+./Configure linux-generic32 --cross-compile-prefix=arm-linux-gnueabihf- --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/ shared
 
 
 ### libmodbus

@@ -3,6 +3,10 @@
 
 tcpdump -i any -n -nn host 172.17.0.1 and port 15623 -w ./$(date +%Y%m%d%H%M%S).pcap
 
+tcpdump port 2404 -w ./$(date +%Y%m%d%H%M%S).pcap
+
+tcpdump port 2402 -w ./$(date +%Y%m%d%H%M%S).pcap
+
 
 # compile and install
 # https://pkgs.org/download/tcpdump

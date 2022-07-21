@@ -1,4 +1,6 @@
 
+### 快速打包程序依赖库
+ldd iprobe | awk '{print $3}' | xargs -i cp -L {} /home/iprobe_lib/
 
 ldd app
 

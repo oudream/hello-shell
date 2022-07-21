@@ -317,4 +317,9 @@ git push -f
 
 # filename-too-long-in-git-for-windows: https://stackoverflow.com/questions/22575662/filename-too-long-in-git-for-windows
 git config --system core.longpaths true
+# 忽略换行符：
+git config --global core.autocrlf false
+git config --global core.safecrlf true
+# 忽略权限变化：
+git config --global core.filemode false
 

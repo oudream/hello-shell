@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+docker run -d --name psql1 --restart always \
+  -e POSTGRES_USER='postgres' \
+  -e POSTGRES_PASSWORD='Aa.123456' \
+  -e ALLOW_IP_RANGE=0.0.0.0/0 \
+	-v /opt/psql1/data:/var/lib/postgresql \
+  -p 5432:5432 \
+	postgres:14.3
+
+# ALLOW_IP_RANGE=0.0.0.0/0
+# or
+# 找到如下图所示 IPv4 local connection 下面的参数，根据自己需求修改允许的IP，局域网内则设置为192.168.1.0/24，全部允许则设置为 0.0.0.0/0
+vim /var/lib/postgresql/data/pg_hba.conf
+# 修改 listen_address = '*'
+vim /var/lib/postgresql/data/postgresql.conf
+
 
 # login by db's postgres user
 psql --host=localhost --dbname=postgres --username=postgres

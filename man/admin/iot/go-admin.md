@@ -21,5 +21,3 @@ CGO_ENABLED=0 go build -o go-admin main.go
 nohup ./go-admin server -c /opt/wedo/go-admin/config/settings.yml 1> /opt/log/go-admin.log 2>&1 &  
 nohup npm run dev 1> /opt/log/go-admin-ui.log 2>&1 &  
 ```
-
-

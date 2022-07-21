@@ -198,6 +198,10 @@ gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test
 -share
 # 此选项将尽量使用动态库，所以生成文件比较小，但是需要系统由动态库
 
+-Wl -Bsymbolic
+# 第三方合作时有这样的问题；第三方库版本冲突
+# https://blog.csdn.net/cjf_iceking/article/details/25825569
+# 加了-Wl,-Bsymbolic选项就不会用别人库的同名函数
 
 ### install
 # yum安装gcc等依赖

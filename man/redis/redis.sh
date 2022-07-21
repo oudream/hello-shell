@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 #
+docker run -d --name redis1 -p 6379:6379 redis:6.2.7
+#
 docker run -it --name redis1 -v D:/twant/redis/data/dump.rdb:/data/dump.rdb -p 6379:6379 redis:3.2.12
 # https://hub.docker.com/_/redis
 docker run --name redis1 -d -p 6379:6379 redis

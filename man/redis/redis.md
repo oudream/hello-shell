@@ -1,5 +1,8 @@
 
 
+### Redis核心技术实战
+- https://github.com/oudream/YAY-guide/blob/master/%E8%AF%BE%E7%A8%8B/Redis%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/01_%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85%E5%90%AB%E4%BB%80%E4%B9%88%EF%BC%9F.md
+
 ### redis client
 ```shell
 wget https://github.com/qishibo/AnotherRedisDesktopManager/releases/download/v1.4.8/Another-Redis-Desktop-Manager.1.4.8.AppImage -o /opt/Another-Redis-Desktop-Manager.1.4.8.AppImage

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "5000:5000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+  redis:
+    image: "redis:latest"
+
+#上面的代码指定日志驱动为 json-file，存储日志的最大文件 size 为 200k，最多存储 10 这样大的文件。

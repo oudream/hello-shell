@@ -40,7 +40,9 @@ git clone https://github.com/oudream/nginx-v1.9.7
 sudo yum -y install epel-release
 sudo yum -y install nginx
 sudo systemctl enable nginx
+sudo systemctl disable nginx
 sudo systemctl start nginx
+sudo systemctl stop nginx
 sudo systemctl status nginx
 # 如果你的服务器开启了防火墙，则需要同时打开 80（HTTP）和 443（HTTPS）端口
 # 通过下面的命令来打开这两个端口：

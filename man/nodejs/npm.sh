@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
+# npmmirror 中国镜像站
+# https://npmmirror.com/
+npm install -g cnpm --registry=https://registry.npmmirror.com
+alias cnpm="npm --registry=https://registry.npmmirror.com --cache=$HOME/.npm/.cache/cnpm --disturl=https://npmmirror.com/mirrors/node --userconfig=$HOME/.cnpmrc"
 
-https://docs.npmjs.com/cli-documentation/cli
-https://docs.npmjs.com/cli/install
+
+# https://docs.npmjs.com/cli-documentation/cli
+# https://docs.npmjs.com/cli/install
 
 
 npm install -f packages-win32.json

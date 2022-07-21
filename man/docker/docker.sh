@@ -32,6 +32,11 @@ docker image prune -a --force # clean cache
 
 docker pull --platform=linux/arm64/v8 redis:6.2.5
 
+# backup volume
+docker run --rm -d --name test -v test-vol:/data test-img tail -f /dev/null f4ff81f4c31025ff476fbebc2c779a915b43ba5940b5bcc42e3ef9b1379eaeab
+docker run --rm -v test-vol:/volume -v $PWD:/backup alpine tar cvf /backup/backup.tar /volume
+
+
 # The host has a changing IP address (or none if you have no network access). From 18.03 onwards our recommendation is to connect to the special DNS name host.docker.internal, which resolves to the internal IP address used by the host. This is for development purpose and will not work in a production environment outside of Docker Desktop for Mac.
 curl host.docker.internal:3306 # macos , windows 用 host.docker.internal 来访问宿主机.
 nc -l 0.0.0.0 801

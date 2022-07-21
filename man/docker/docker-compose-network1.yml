@@ -1,0 +1,22 @@
+version: '3'
+services:
+  proxy:
+    image: nginx
+    ports:
+      - "80:80"
+    networks:
+      - frantnet
+  webapp:
+    build: .
+    networks:
+      - frantnet
+      - endnet
+  redis:
+    image: redis
+    networks:
+      - endnet
+networks:
+  frantnet:
+  endnet:
+
+#其中的 proxy 和 webapp 连接到网络 frantnet 上，webapp 和 redis 连接在了 endnet 上

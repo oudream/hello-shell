@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-mklink /D "C:\dev\hello-shell\projects\tk\ZhongShan" "C:\dev\tk\中山"
+mklink /D "C:\dev\hello-shell\projects\tk\encrypt-agent" "C:\dev\tk\入侵检测"
+mklink /D "C:\dev\hello-shell\projects\hy" "C:\dev\hy"
 
 mklink /D link-dir1(created) "C:\dev\tk\rknn"
 

@@ -2,6 +2,10 @@
 
 pipenv run pip freeze > requirements.txt
 
+# install pipenv
+pip3 install pipenv
+# pip install --user pipenv
+
 # install , uninstall , update
 pipenv install urllib3
 pipenv install urllib3==1.22
@@ -19,9 +23,6 @@ pipenv install --pypi-mirror https://mirrors.aliyun.com/pypi/simple
 
 # show all env
 pipenv --venv
-
-# install pipenv
-pip install --user pipenv
 
 # Create a new project using Python 3.7, specifically:
 pipenv --python 3.7

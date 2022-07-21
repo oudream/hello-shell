@@ -3,6 +3,88 @@
 # https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html
 
 gdb $PID
+gdb attach $PID
+
+#---------------------------------------------------------------------
+# 命令       简写         功能
+# ---------------------------------------------------------------------
+file                   # 装入想要调试的可执行文件.
+kill         k         # 终止正在调试的程序.
+list         l         # 列出产生执行文件的源代码的一部分.
+next         n         # 执行一行源代码但不进入函数内部.
+step         s         # 执行一行源代码而且进入函数内部.
+continue     c         # 继续执行程序，直至下一中断或者程序结束。 kill -2 procid
+run          r         # 执行当前被调试的程序.
+quit         q         # 终止 gdb.
+watch                  # 使你能监视一个变量的值而不管它何时被改变.
+catch                  # 设置捕捉点.
+thread       t         # 查看当前运行程序的线程信息.
+break        b         # 在代码里设置断点, 这将使程序执行到这里时被挂起.
+make                   # 使你能不退出 gdb 就可以重新产生可执行文件.
+shell                  # 使你能不离开 gdb 就执行 UNIX shell 命令.
+print        p         # 打印数据内容。
+examine      x         # 打印内存内容。
+backtrace    bt        # 查看函数调用栈的所有信息。
+
+# (gdb)
+info thread
+info signals
+thread 1
+bt
+
+# How do I halt the continuing in GDB
+kill -2 procid
+
+# 输入quit或者按下Ctrl-d退出
+
+
+info address #-- Describe where symbol SYM is stored
+info all-registers #-- List of all registers and their contents
+info args #-- Argument variables of current stack frame
+info auxv #-- Display the inferior's auxiliary vector
+info breakpoints #-- Status of user-settable breakpoints
+info catch #-- Exceptions that can be caught in the current stack frame
+info checkpoints #-- IDs of currently known forks/checkpoints
+info classes #-- All Objective-C classes
+info common #-- Print out the values contained in a Fortran COMMON block
+info copying #-- Conditions for redistributing copies of GDB
+info dcache #-- Print information on the dcache performance
+info display #-- Expressions to display when program stops
+info extensions #-- All filename extensions associated with a source language
+info files #-- Names of targets and files being debugged
+info float #-- Print the status of the floating point unit
+info forks #-- IDs of currently known forks/checkpoints
+info frame #-- All about selected stack frame
+info functions #-- All function names
+info handle #-- What debugger does when program gets various signals
+info line #-- Core addresses of the code for a source line
+info linkmap #-- Display the inferior's linkmap
+info locals #-- Local variables of current stack frame
+info macro #-- Show the definition of MACRO
+info mem #-- Memory region attributes
+info proc #-- Show /proc process information about any running process
+info program #-- Execution status of the program
+info registers #-- List of integer registers and their contents
+info scope #-- List the variables local to a scope
+info selectors #-- All Objective-C selectors
+info set #-- Show all GDB settings
+info sharedlibrary #-- Status of loaded shared object libraries
+info signals #-- What debugger does when program gets various signals
+info source #-- Information about the current source file
+info sources #-- Source files in the program
+info stack #-- Backtrace of the stack
+info symbol #-- Describe what symbol is at location ADDR
+info target #-- Names of targets and files being debugged
+info terminal #-- Print inferior's saved terminal status
+info threads #-- IDs of currently known threads
+info tracepoints #-- Status of tracepoints
+info types #-- All type names
+info variables #-- All global and static variable names
+info vector #-- Print the status of the vector unit
+info warranty #-- Various kinds of warranty you do not have
+info watchpoints #-- Synonym for ``info breakpoints''
+info win #-- List of all displayed windows
+
 
 ### setup install
 # ftp://sourceware.org/pub/gdb/releases/

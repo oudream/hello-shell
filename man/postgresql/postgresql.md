@@ -1,4 +1,8 @@
 
+### PostgreSQL timescaledb
+- https://hub.docker.com/r/timescale/timescaledb/tags
+- https://hub.docker.com/_/postgres?tab=tags
+
 
 ### PostgreSQL12-主从复制
 - https://blog.csdn.net/Linuxprobe18/article/details/102454221
@@ -13,7 +17,7 @@ psql是PostgreSQL 的交互式客户端工具。
   psql [选项]... [数据库名称 [用户名称]]
 通用选项:
   -c,--command=命令        执行单一命令(SQL或内部指令)然后结束
- -d, --dbname=数据库名称   指定要连接的数据库 (缺省："postgres")
+  -d, --dbname=数据库名称   指定要连接的数据库 (缺省："postgres")
   -f, --file=文件名      从文件中执行命令然后退出
   -l, --list             列出所有可用的数据库,然后退出
   -v, --set=, --variable=名称=值
@@ -27,7 +31,7 @@ psql是PostgreSQL 的交互式客户端工具。
 输入和输出选项：
   -a, --echo-all          显示所有来自于脚本的输入
   -e, --echo-queries      显示发送给服务器的命令
- -E, --echo-hidden        显示内部命令产生的查询
+  -E, --echo-hidden        显示内部命令产生的查询
   -L, --log-file=文件名  将会话日志写入文件
   -n, --no-readline       禁用增强命令行编辑功能(readline)
   -o, --output=FILENAME 将查询结果写入文件(或 |管道)
@@ -36,7 +40,7 @@ psql是PostgreSQL 的交互式客户端工具。
   -S, --single-line        单行模式 (一行就是一条 SQL 命令)
 
 输出格式选项 :
- -A, --no-align           使用非对齐表格输出模式
+  -A, --no-align           使用非对齐表格输出模式
   -F, --field-separator=字符串
                       设字段分隔符(缺省："|")
   -H, --html             HTML 表格输出模式

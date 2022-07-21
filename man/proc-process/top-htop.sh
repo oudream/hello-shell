@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 top -Hp <pid>
+# or
+htop # 然后按<F2>来进入htop的设置菜单<Display Options>
 
 open https://diabloneo.github.io/2019/08/29/How-to-use-top-command/
 

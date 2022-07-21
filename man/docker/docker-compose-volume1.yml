@@ -1,0 +1,23 @@
+version: "3.2"
+services:
+  web:
+    image: nginx:alpine
+    volumes:
+      - type: volume
+        source: mydata
+        target: /data
+      - type: bind
+        source: ./nginx/logs
+        target: /var/log/nginx
+  jenkins:
+    image: jenkins/jenkins:lts
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - mydata:/data
+volumes:
+  mydata:
+  jenkins_home:
+
+#其中的 jenkins_home 数据卷是给 jenkins 保存数据的。
+#如果要在多个容器之间共享数据卷，就必须在顶级的 volumes 节点中定义这个数据卷，比如 mydata 数据卷，它被 web 和 jenkins service 共享了。
+#  比如我们在 web service 中的 mydata 数据卷中创建一个名为 hello 的文件，该文件会同时出现在 jenkins service 中

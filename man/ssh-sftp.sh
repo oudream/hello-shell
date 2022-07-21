@@ -93,6 +93,9 @@ ssh-copy-id root@twant110
 ssh-copy-id root@twant111
 # cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
+# Will modify the file ~/.ssh/known_hosts:6 , removing the 6th line.
+# ssh-keygen -R "hostname"
+sed -i '6d' ~/.ssh/known_hosts
 
 ### 远程执行，获取返回值
 result=`ssh root@twant108 "ps -ef | grep nginx | grep -v grep"`

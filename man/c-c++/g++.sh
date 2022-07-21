@@ -13,11 +13,13 @@ make install
 
 #
 strings /usr/lib64/libstdc++.so.6 | grep GLIBC
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
 find / -name "libstdc++.so*"
 cd /usr/lib64/
 cp /root/gcc-7.5.0/gcc-build-7.5.0/stage1-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24  ./
 mv libstdc++.so.6   libstdc++.so.6.bak
 ln -s libstdc++.so.6.0.24   libstdc++.so.6
+ln -s libstdc++.so.6.0.25   libstdc++.so.6
 
 # cmake
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")

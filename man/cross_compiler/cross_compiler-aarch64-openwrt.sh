@@ -1,3 +1,4 @@
+# https://archlinux.pkgs.org/rolling/archlinux-community-aarch64/
 
 ### 使用导出与PATH设置的方法来交叉编译
 
