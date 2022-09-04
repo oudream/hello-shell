@@ -1,159 +1,38 @@
-[
-  {
-“deviceid” : “3321001ABCD”,  //设备ID,由平台产生，网关配置
-“date”:”2021-08”,		// 时间
-“action”:”current_power”, // 查询类型
-“data”:{
-“totalPower”:100.0,	// 总用电量
-“peakPower”:20.0,		// 峰时用电
-“valleyPower”:20.0,	// 谷时用电
-“plainPower”:60.0		// 平时用电
-“totalCost”:100.0,		// 总用电费用
-“peakCost”:20.0,		// 峰时用电费用
-“valleyCost”:20.0,		// 谷时用电费用
-“plainCost”:60.0		// 平时用电费用
-
+{
+  "timestamp": "2022-08-02 22:03: 59",
+  "status": 5d,
+  "total": 1,
+  "current": 1,
+  "uuid": 3,
+  "body": {
+    "mac": "eeeeabababab",
+    "ret": 0,
+    "info": [
+      {
+        "bizNum": 0,
+        "appName": "appMsgRecv",
+        "lvl": 0
+      },
+      {
+        "bizNum": 0,
+        "appName": "appMsgSendUp",
+        "lvl": 0
+      },
+      {
+        "bizNum": 0,
+        "appName": "propReport",
+        "lvl": 0
+      },
+      {
+        "bizNum": 0,
+        "appName": "northLinkGuard",
+        "lvl": 0
+      },
+      {
+        "bizNum": 8,
+        "appName": "mqttXinTong",
+        "lvl": 0
+      }
+    ]
+  }
 }
-},
-
-
-  {
-“date”:”2021”,		// 时间
-“action”:”year_power”, // 查询类型
-“result”:[
-{
-“time”:”2021-01”,		// 时间
-“totalPower”:100.0,	// 总用电量
-“peakPower”:20.0,		// 峰时用电
-“valleyPower”:20.0,	// 谷时用电
-“plainPower”:60.0		// 平时用电
-“totalCost”:100.0,		// 总用电费用
-“peakCost”:20.0,		// 峰时用电费用
-“valleyCost”:20.0,		// 谷时用电费用
-“plainCost”:60.0		// 平时用电费用
-},
-{
-	“time”:”2021-02”,
-“totalPower”:100.0,	// 总用电量
-“peakPower”:20.0,		// 峰时用电
-“valleyPower”:20.0,	// 谷时用电
-“plainPower”:60.0		// 平时用电
-“totalCost”:100.0,		// 总用电费用
-“peakCost”:20.0,		// 峰时用电费用
-“valleyCost”:20.0,		// 谷时用电费用
-“plainCost”:60.0		// 平时用电费用
-
-},
-{
-	“time”:”2021-03”,
-“totalPower”:100.0,	// 总用电量
-“peakPower”:20.0,		// 峰时用电
-“valleyPower”:20.0,	// 谷时用电
-“plainPower”:60.0		// 平时用电
-“totalCost”:100.0,		// 总用电费用
-“peakCost”:20.0,		// 峰时用电费用
-“valleyCost”:20.0,		// 谷时用电费用
-“plainCost”:60.0		// 平时用电费用
-
-}
-…
-]
-},
-
-
-
- {
-“date”:”2021-08”,		// 时间
-“deviceid”:”3321001ABCD”, //设备ID,由平台产生，网关配置
-“action”:”month_power”, // 查询类型
-“result”:[
-{
-“time”:”2021-08-01”,		// 时间
-“totalPower”:100.0,	// 总用电量
-“peakPower”:20.0,		// 峰时用电
-“valleyPower”:20.0,	// 谷时用电
-“plainPower”:60.0		// 平时用电
-“totalCost”:100.0,		// 总用电费用
-“peakCost”:20.0,		// 峰时用电费用
-“valleyCost”:20.0,		// 谷时用电费用
-“plainCost”:60.0		// 平时用电费用
-},
-{
-“time”:”2021-08-02”,		// 时间
-“totalPower”:100.0,	// 总用电量
-“peakPower”:20.0,		// 峰时用电
-“valleyPower”:20.0,	// 谷时用电
-“plainPower”:60.0		// 平时用电
-“totalCost”:100.0,		// 总用电费用
-“peakCost”:20.0,		// 峰时用电费用
-“valleyCost”:20.0,		// 谷时用电费用
-“plainCost”:60.0		// 平时用电费用
-},
-{
-“time”:”2021-08-03”,		// 时间
-“totalPower”:100.0,	// 总用电量
-“peakPower”:20.0,		// 峰时用电
-“valleyPower”:20.0,	// 谷时用电
-“plainPower”:60.0		// 平时用电
-“totalCost”:100.0,		// 总用电费用
-“peakCost”:20.0,		// 峰时用电费用
-“valleyCost”:20.0,		// 谷时用电费用
-“plainCost”:60.0		// 平时用电费用
-},
-…
-]
-},
-
-
-
-
-  {
-“date”:”2021-08-25 18:20:30”,		// 时间,精确的秒
-“deviceid”:”3321001ABCD”, //设备ID,由平台产生，网关配置
-“action”:”today_load”, // 查询类型
-“result”:[
-{
-“time”:”2021-08-26 12:00:00”,		//时间,精确的秒
-。。。
-},
-{“time”:”2021-08-26 12:15:00”,		//时间,精确的秒
-。。。
-},
-{“time”:”2021-08-26 12:30:00”,		//时间,精确的秒
-。。。
-},
-
-]
-},
-
-
-
-  {
-“date”:”2021-08-25 12:00:00”,		// 时间
-“action”:”real_time_data_report”,	 // 实时数据上报
-“deviceid”:”3321001ABCD”, //设备ID,由平台产生，网关配置
-“data”:{
-“time”:”2021-08-26 12:00:00”,		//时间,精确的秒
-“activeenergy”:300,   //组合有功总电能
-“activeenergy1”:0,   //组合有功费率1电能
-“activeenergy2”:100,   //组合有功费率2电能
-“activeenergy3”:100,   //组合有功费率3电能
-“activeenergy4”:100,   //组合有功费率4电能
-“activepower”:300,   //瞬时总有功功率
-“activepowerA”:100,   //瞬时A相有功功率
-“activepowerB”:100,   //瞬时B相有功功率
-“activepowerC”:100,   //瞬时C相有功功率
-“voltageA”:220,   //A相电压
-“voltageB”:221,   //B相电压
-“voltageC”:225,   //C相电压
-“currentA”:11,   //A相电流
-“currentB”:12,   //B相电流
-“currentC”:10,   //C相电流
-“powerfactor”:0.88,   //总功率因数
-“powerfactorA”:0.9,   //A相功率因数
-“powerfactorB”:0.9,   //B相功率因数
-“powerfactorC”:0.85,   //C相功率因数
-}
-}
-
-]

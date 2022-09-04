@@ -12,6 +12,7 @@ cmake -DWITH_CJSON=no -DWITH_TLS=no -DWITH_BUNDLED_DEPS=no -DWITH_DOCS=no -DDOCU
 # build arm64
 mkdir cmake-build-linaro &&cd cmake-build-linaro
 cmake -DWITH_CJSON=no -DWITH_TLS=no -DWITH_BUNDLED_DEPS=no -DWITH_DOCS=no -DDOCUMENTATION=OFF -D CMAKE_TOOLCHAIN_FILE="/opt/tk/hello_iec104/build/aarch64/linaro/toolchainfile.cmake" ..
+cmake -DWITH_CJSON=no -DWITH_TLS=no -DWITH_BUNDLED_DEPS=no -DWITH_DOCS=no -DDOCUMENTATION=OFF -D CMAKE_TOOLCHAIN_FILE="/opt/tk/hello_iec104/build/armv7/linaro/toolchainfile.cmake" ..
 #
 make -j 8
 #
@@ -94,6 +95,8 @@ mosquitto_sub -t 'Tk_mqtt_jiexi/notify/event/datacenter/Meter_single/Meter_singl
 ```shell
 mosquitto_pub -u dissun -P 111111 -t 'dissun/topic' -m '腰疼不加班'
 mosquitto_pub -t '/5g/data/reply' -m '腰疼不加班'
+mosquitto_pub -t 'cns/get/request/bizInfo' -m '{"timestamp":"2022-08-02 23:15:05"}'
+mosquitto_pub -t 'cns/get/request/bizUpdate' -m '{"timestamp":"2022-08-02 22:03:59","status":1,"total":1,"current":1,"uuid":3,"body":{"mac":"eeeeabababab","operation":1,"info":[{"bizNum":0,"appName":"appMsgRecv","lvl":5},{"bizNum":0,"appName":"appMsgSendUp","lvl":6},{"bizNum":0,"appName":"propReport","lvl":7},{"bizNum":0,"appName":"northLinkGuard","lvl":8},{"bizNum":8,"appName":"mqttXinTong","lvl":9}]}}'
 
 # model get
 mosquitto_pub -t 'datacenter/get/response/Tk_mqtt_jiexi/model' -m '{"token":"7008000194448982020","timestamp":"2019-03-01T09:30:09.230+0800","body":[{"model":"Meter_single","body":[{"name":"tgP","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"总有功功率"},{"name":"tgPa","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相有功功率 "},{"name":"tgPb","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相有功功率 "},{"name":"tgPc","type":"float","unit":"kW","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相有功功率 "},{"name":"tgUa","type":"float","unit":"V","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相电压"},{"name":"tgUb","type":"float","unit":"V","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相电压"},{"name":"tgUc","type":"float","unit":"V","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相电压"},{"name":"tgIa","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相电流"},{"name":"tgIb","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相电流"},{"name":"tgIc","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相电流"},{"name":"tgI0","type":"float","unit":"A","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"零线电流"},{"name":"tgSupWh","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"正向有功总电能"},{"name":"tgSupWhA","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"A相正向有功电能"},{"name":"tgSupWhB","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"B相正向有功电能"},{"name":"tgSupWhC","type":"float","unit":"kWh","deadzone":"0.01","ratio":"1","isReport":"1","userdefine":"C相正向有功电能"}]}]}' 

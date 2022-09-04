@@ -1,4 +1,8 @@
 
+
+nohup /opt/3rd/daemon-tv.sh 1>/dev/null 2>&1 &
+
+
 # https://stackoverflow.com/questions/3430330/best-way-to-make-a-shell-script-daemon
 # http://manpages.ubuntu.com/manpages/bionic/en/man8/start-stop-daemon.8.html
 

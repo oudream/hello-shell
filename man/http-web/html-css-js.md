@@ -63,3 +63,6 @@ JS可以操作HTML和CSS。
 
 ### HTML表单之input元素（各种type类型）
 - https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input
+
+### rest
+- https://docs.github.com/cn/rest

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 
+date --set="2015-09-30 10:05:59.990"
 
 watch date && echo $1
-
 
 
 datename=$(date +%Y%m%d-%H%M%S)

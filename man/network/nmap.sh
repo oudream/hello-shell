@@ -1,4 +1,7 @@
 
+nmap -sn 192.168.2.0/24
+nmap -p 1-65535 -v 192.168.2.45
+
 yum install nmap
 
 ## # 扫描1-200号端口
@@ -9,7 +12,7 @@ nmap -p1-200 10.128.71.1
 nmap -vv 10.132.71.1
 
 # 使用ping方式扫描（不扫描端口）
-nmap -sP   ip_address 
+nmap -sP ip_address
 
 # 路由跟踪
 nmap --traceroute  ip_address  
@@ -21,7 +24,7 @@ nmap -sP xx.xx.xx.xx/24
 nmap -sP 10.1.1.1-255  
 
 # TCP contect()端口扫描
-nmap -sT  ip_address  
+nmap -sT ip_address
 
 # UDP端口扫描
 nmap -sU ip_address  

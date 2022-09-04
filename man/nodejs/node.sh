@@ -2,6 +2,8 @@
 
 
 ### install special version node use apt
+# Then for the Latest release (version 1), add this PPA..
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 # Then for the Latest release (version 12), add this PPA..
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 # For (version 11), run the commands below:

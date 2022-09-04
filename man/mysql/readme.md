@@ -1,3 +1,10 @@
+### 官方手册：
+### Command-Line Client:
+- https://dev.mysql.com/doc/refman/8.0/en/mysql.html
+
+### admin:
+- https://dev.mysql.com/doc/refman/5.7/en/show.html
+
 # MySql常用命令总结
 PS：感谢Dean Xu的第一个Star，值得纪念哈。
 - 1、使用SHOW语句找出在服务器上当前存在什么数据库：<br>

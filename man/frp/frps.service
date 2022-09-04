@@ -1,0 +1,14 @@
+[Unit]
+Description=Frp Server Service
+After=systemd-networkd.service network.target
+
+[Service]
+Type=simple
+User=nobody
+Restart=on-failure
+RestartSec=5s
+ExecStart=/opt/frp/frps -c /opt/frp/frps.ini
+WorkingDirectory=/opt/frp
+
+[Install]
+WantedBy=multi-user.target

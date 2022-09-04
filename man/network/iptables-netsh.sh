@@ -5,9 +5,13 @@
 # https://cloud.tencent.com/developer/article/1632776
 # https://zhuanlan.zhihu.com/p/42153839
 
+/etc/init.d/iptables restart
+
 
 # 增加 Dest NAT 端口映射
 iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25623 -j DNAT --to-destination 172.17.0.1:15623
+iptables -t nat -A PREROUTING -p tcp -m tcp --dport 7000 -j DNAT --to-destination 127.0.0.1:7000
+iptables -t nat -D PREROUTING -p tcp -m tcp --dport 7000 -j DNAT --to-destination 127.0.0.1:7000
 
 
 yum install iptables-services

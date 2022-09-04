@@ -199,6 +199,8 @@ git remote show origin
 
 ### git sumodule
 git submodule add https://github.com/maonx/vimwiki-assets.git assets
+git submodule add https://github.com/fralx/LimeReport.git LimeReport
+git checkout da9c422
 git submodule add -b i3svg-dev https://gitee.com/oudream/drawio.git
 git config -f .gitmodules submodule.drawio.branch i3svg-dev
 # git status, 可以看到目录有增加1个文件.gitmodules

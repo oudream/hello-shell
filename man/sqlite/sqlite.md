@@ -1,5 +1,4 @@
 
-
 ### exit sqlite3
 - Ctrl + D
 ```shell
@@ -62,6 +61,16 @@ UPDATE `camera` SET `camera_check_url`='';
 DELETE FROM students WHERE stuid = uid;
 ```
 
+
+### LEFT JION
+```sql
+SELECT `variabletransformertype`.`id`, `variabletransformertype`.`name` as `tname`, `transformerprotocoltype`.`name` as `pname`
+FROM `variabletransformertype`
+LEFT JOIN `transformerprotocoltype`
+ON `variabletransformertype`.`protocoltypeid`=`transformerprotocoltype`.`id`;
+
+SELECT * FROM `variabletransformer` WHERE `protocoltype`='c3f9f897-954b-4c79-87df-b6e57bb52a6b';
+```
 
 ###
 ```text
@@ -169,4 +178,3 @@ sqlite> .help
 .vfsname ?AUX?           Print the name of the VFS stack
 .width NUM1 NUM2 ...     Set minimum column widths for columnar output
 ```
-
