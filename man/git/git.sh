@@ -25,6 +25,7 @@ git push -u origin "master"
 # 已有仓库?
 cd existing_git_repo
 git remote add origin https://gitee.com/oudream/i3ds.git
+git remote add origin https://github.com/oudream/iptables.git
 git push -u origin "master"
 
 ## 下述命令其实相当于 git fetch + git merge

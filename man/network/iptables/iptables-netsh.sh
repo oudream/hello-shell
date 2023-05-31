@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-./portmap6.sh 10.50.53.182 94 14.21.56.4 5094 A TCP
-./portmap6.sh 10.50.53.182 94 14.21.56.4 5094 A
-./portmap6.sh 10.50.53.182 22 14.21.56.4 5022
-./portmap6.sh 10.11.12.182 2 14.21.56.4 5022 D
-
 # https://netfilter.org/documentation/HOWTO/netfilter-hacking-HOWTO.html
 # https://linux.die.net/man/8/iptables
 # https://cloud.tencent.com/developer/article/1632776
@@ -122,19 +117,6 @@ iptables -P FORWARD ACCEPT
 #    PREROUTING
 #    OUTPUT
 
-
-#–append -A
-#–delete -D
-#–insert -I
-#–replace -R
-#–list -L
-#–list-rules -S
-#–flush -F
-#–zero -Z
-#–new -N
-#–delete-chain -X
-#–policy -P
-#–rename-chain -E
 
 # 我们需要做的最后一件事情，就是存储我们的规则，好让它们在下次开机时会自动被重新装入：
 /sbin/service iptables save
