@@ -51,3 +51,12 @@ C:\Users\Administrator\AppData\Local\electron\Cache\electron-v18.2.0-win32-x64.z
 ```shell
 /opt/odan/drawio-desktop/node_modules/electron/dist
 ```
+
+### 招聘 工程师
+```text
+1、能够熟练运用 HTML5、CSS3、ES6 构建高性能的Web应用程序；
+2、能够熟练运用 Electron 构建桌面应用程序经验，有CEF、Carlo、Hex 等 GUI 经验者优先
+3、精通 Node.js，熟悉 HTTP、TCP 等通信协议及模型，多进程模型，文件、流等模块的基本原理，以及有对应使用经验和优化方案实践
+4、熟练掌握 Webpack、saas、bootstrap 等常用前端工具；
+5、有 QT 等 C++ 客户端研发经验者优先
+```

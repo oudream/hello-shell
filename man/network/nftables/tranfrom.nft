@@ -1,0 +1,16 @@
+#!/usr/sbin/nft -f
+
+add table ip nat
+delete table ip nat
+add table ip nat
+add chain nat PREROUTING { type nat hook prerouting priority -100 ; }
+add chain nat POSTROUTING { type nat hook postrouting priority 100 ; }
+
+add rule ip nat PREROUTING tcp dport 5092 counter dnat to 10.11.12.182:92
+add rule ip nat POSTROUTING ip daddr 10.11.12.182 tcp dport 92 counter snat to 14.21.56.4
+add rule ip nat PREROUTING udp dport 5092 counter dnat to 10.11.12.182:92
+add rule ip nat POSTROUTING ip daddr 10.11.12.182 udp dport 92 counter snat to 14.21.56.4
+
+
+add rule ip nat POSTROUTING oifname "eno2" masquerade
+add rule ip nat POSTROUTING oifname "ens3" snat to 14.21.56.4

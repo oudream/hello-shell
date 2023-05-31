@@ -5,16 +5,18 @@
 
 ### install download
 - https://www.taosdata.com/all-downloads/
-- https://www.taosdata.com/assets-download/TDengine-server-2.6.0.6-Linux-x64.tar.gz
-- https://www.taosdata.com/assets-download/TDengine-server-2.6.0.6-Linux-aarch32.tar.gz
-- https://www.taosdata.com/assets-download/TDengine-server-2.6.0.6-Linux-aarch64.tar.gz
-- https://www.taosdata.com/assets-download/TDengine-client-2.6.0.6-Windows-x64.exe
-- https://www.taosdata.com/assets-download/TDengine-client-2.6.0.6-Windows-x86.exe
 ```shell
-wget https://www.taosdata.com/assets-download/TDengine-server-2.6.0.6-Linux-aarch64.tar.gz
-wget https://www.taosdata.com/assets-download/TDengine-server-2.6.0.6-Linux-x64.tar.gz
-tar gxvf TDengine-server-2.6.0.6-Linux-x64.tar.gz
-mv TDengine-server-2.6.0.6-Linux-x64 tdengine
+wget https://www.taosdata.com/assets-download/TDengine-server-2.6.0.30-Linux-x64.tar.gz
+wget https://www.taosdata.com/assets-download/TDengine-server-2.6.0.30-Linux-aarch32.tar.gz
+wget https://www.taosdata.com/assets-download/TDengine-server-2.6.0.30-Linux-aarch64.tar.gz
+wget https://www.taosdata.com/assets-download/TDengine-client-2.6.0.30-Windows-x64.exe
+wget https://www.taosdata.com/assets-download/TDengine-client-2.6.0.30-Windows-x86.exe
+```
+```shell
+wget https://www.taosdata.com/assets-download/3.0/TDengine-server-3.0.1.8-Linux-arm64.tar.gz
+wget https://www.taosdata.com/assets-download/3.0/TDengine-server-3.0.1.8-Linux-x64.tar.gz
+tar zxvf TDengine-server-3.0.1.8-Linux-x64.tar.gz
+mv TDengine-server-3.0.1.8 tdengine
 cd tdengine
 ./install.sh
 
@@ -29,7 +31,20 @@ systemctl status taosd
 
 ### docker 
 ```shell
-docker run -d --name tdengine-tk227 --hostname="tk227" -p 6030-6049:6030-6049 -p 6030-6049:6030-6049/udp tdengine/tdengine:2.6.0.6
+docker run -d --name tdengine-tk227 --hostname="tk227" -p 6030-6049:6030-6049 -p 6030-6049:6030-6049/udp tdengine/tdengine:3.0.1.8
+```
+```shell
+sudo mkdir -p /userdata/tdengine1/data/log
+sudo mkdir -p /userdata/tdengine1/data/data
+sudo docker run -d --name tdengine1 -h tdengine -p 6041:6041 -p 6030-6035:6030-6035 -p 6030-6035:6030-6035/udp -v /userdata/tdengine1/data/log:/var/log/taos -v /userdata/tdengine1/data/data:/var/lib/taos tdengine/tdengine:latest
+
+#--name tdengine ##指定容器名称便于访问
+#-h tdengine  ##指定容器主机名，用作TDengine的FQDN
+#-p 6041:6041 ##映射RESTful端口
+#-p 6030-6035:6030-6035
+#-p 6030-6035:6030-6035/udp ##映射taos客户端使用端口，必须包含TCP和UDP
+#-v /userdata/tdengine1/data/log:/var/log/taos  ##映射日志目录
+#-v /userdata/tdengine1/data/data:/var/lib/taos    ##映射数据目录
 ```
 
 ### bin
@@ -74,4 +89,18 @@ taosd-dump-cfg.gdb # 用于方便调试 taosd 的 gdb 执行脚本。
 /etc/taos/taos.cfg	# TDengine 默认[配置文件]
 /var/lib/taos # TDengine 默认数据文件目录。可通过[配置文件]修改位置。
 /var/log/taos # TDengine 默认日志文件目录。可通过[配置文件]修改位置。
+```
+
+
+### gui
+- https://github.com/arielyang/TDengineGUI
+```text
+10.50.52.218
+6041
+root
+taosdata
+```
+
+```sql
+CREATE STABLE IF NOT EXISTS tdb.d1 (t TIMESTAMP, v DOUBLE) TAGS;
 ```

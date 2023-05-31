@@ -15,7 +15,6 @@
     - 写
     - 执行
 
-
 # 階段性小測試
     配置yum源  
     查詢所有具有mysql關鍵字的安裝包  
@@ -24,28 +23,3 @@
     下載好之后，將『mysql_packages』目錄進行歸檔，歸檔後的文件名為『mysql_package.tar』  
     安裝httpd服務  
     將mysql_package.tar粘帖到/var/www/html目錄中去   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	

@@ -1,0 +1,2 @@
+nohup /opt/teamviewer/daemon-tv.sh 1>/dev/null 2>&1 &
+echo "S99_start_teamviewer start $(date)" >> /opt/auto_start.log

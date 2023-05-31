@@ -48,4 +48,3 @@ sudo yum install lvm2
   lvreduce   # 减小LV的容量
   lvrenove   # 删除一个LV
   lvresize   # 对LV进行容量大小的调整
-

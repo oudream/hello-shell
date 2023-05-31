@@ -1,10 +1,13 @@
 
+# 扫描IP
+nmap -sn 10.50.53.1-255
 nmap -sn 192.168.2.0/24
+
 nmap -p 1-65535 -v 192.168.2.45
 
 yum install nmap
 
-## # 扫描1-200号端口
+# 扫描1-200号端口
 # shellcheck disable=SC2218
 nmap -p1-200 10.128.71.1
 

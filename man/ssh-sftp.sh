@@ -76,21 +76,25 @@ startsrc -s sshd
 /sbin/init.d/secsh start
 
 
+### 你自己的工作机上运行以下命令
 ### 免密码登录
 cat >> /etc/hosts <<EOF
-192.168.5.32 twant32
-192.168.5.108 twant108
-192.168.5.109 twant109
-192.168.5.110 twant110
-192.168.5.111 twant111
+10.50.52.196 hy196
+10.50.53.148 hy148
 EOF
-### ssh login with no password
+
+### ssh 本地证书生成，直接 enter 下一步 …… 下一步就OK了
 ssh-keygen -t rsa
-ssh-copy-id root@twant32
-ssh-copy-id root@twant108
-ssh-copy-id root@twant109
-ssh-copy-id root@twant110
-ssh-copy-id root@twant111
+
+### ssh 本地证书复制到远程，提示输入远程机密码的
+ssh-copy-id root@hy196
+ssh-copy-id root@hy148
+ssh-copy-id root@hy235
+ssh-copy-id root@zr193
+
+### 以后就可以 scp 免密码登录复制
+
+
 # cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
 # Will modify the file ~/.ssh/known_hosts:6 , removing the 6th line.

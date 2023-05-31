@@ -12,3 +12,17 @@ dconf write /org/gnome/desktop/remote-access/require-encryption false
 
 
 #
+
+
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens18:
+      addresses:
+        - 10.50.52.114/24
+      gateway4: 10.50.52.1
+      nameservers:
+        addresses: [114.114.114.114, 10.1.1.1, 202.96.128.166]
+        search: [mydomain, otherdomain]
+  version: 2
+  renderer: networkd

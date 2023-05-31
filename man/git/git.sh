@@ -78,6 +78,12 @@ git pull origin next:master
 ### Git 培训实战
 # https://heis.gitee.io/git-training/#5credentialhelperselector-
 
+### 项目源代码迁移到另一个gitlab的方法(保留原来的提交记录)
+cd existing_repo
+git remote rename origin old-origin
+git remote add origin http://10.50.52.235:50080/iot/device_middle_end.git
+git push -u origin --all
+git push -u origin --tags
 
 ###
 echo "# wwwroot" >> README.md

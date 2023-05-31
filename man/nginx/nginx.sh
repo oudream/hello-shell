@@ -183,3 +183,6 @@ open https://github.com/openresty/lua-nginx-module
 # http://nginx.org/en/docs/
 # https://docs.nginx.com/
 # https://juejin.im/post/5d81906c518825300a3ec7ca
+
+
+### nginx.conf

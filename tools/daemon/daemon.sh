@@ -1,6 +1,7 @@
 
 
 nohup /opt/3rd/daemon-tv.sh 1>/dev/null 2>&1 &
+nohup /opt/teamviewer/daemon-tv.sh 1>/dev/null 2>&1 &
 
 
 # https://stackoverflow.com/questions/3430330/best-way-to-make-a-shell-script-daemon

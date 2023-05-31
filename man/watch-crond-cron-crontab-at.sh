@@ -130,7 +130,22 @@ systemctl enable crond
 service crond status
 # 手动启动crontab服务：
 service crond start
+service crond restart
 # 查看crontab服务是否已设置为开机启动，执行命令：
 ntsysv
 # 加入开机自动启动:
 chkconfig --level 35 crond on
+
+
+### 备份例子
+#!/bin/bash
+# 这行是copy文件，当然也可以对复制的文件进行重命名操作，多个文件进行备份可以写多行。
+cp /showdoc_data/html/Sqlite/showdoc.db.php  /home/showDocFile/tmp/showdoc.db.php
+# 这行是copy文件夹文件。
+cp -r /showdoc_data/html/Public/Uploads/* /home/showDocFile/tmp/
+# 压缩文件夹下的所有文件并添加日期后缀。
+tar -zcPvf /home/showDocFile/BackUpFile-$(date +%Y%m%d).tar.gz /home/showDocFile/tmp/*
+# 压缩后删除临时文件。
+rm -rf /home/showDocFile/tmp/*
+# 查找30天前的文件，并删除。
+find /home/showDocFile -mtime +30 -name "BackUpFile*.tar.gz" -exec rm -rf {} \;

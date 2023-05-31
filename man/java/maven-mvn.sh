@@ -73,6 +73,17 @@ mvn archetype:generate -DarchetypeGroupId=co.ntier -DarchetypeArtifactId=spring-
 # https://mvnrepository.com/artifact/org.fluttercode.knappsack/spring-mvc-jpa-archetype/1.1
 mvn archetype:generate -DarchetypeGroupId=org.fluttercode.knappsack -DarchetypeArtifactId=spring-mvc-jpa-archetype -DarchetypeVersion=1.1
 
+
+### install
+wget https://dlcdn.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz
+tar xzf apache-maven-3.9.2-bin.tar.gz -C /opt/
+cd /opt/
+ln -s apache-maven-3.9.2 maven
+echo -e "export M2_HOME=/opt/maven\nexport PATH=\${M2_HOME}/bin:\${PATH}" | sudo tee /etc/profile.d/maven.sh
+source /etc/profile.d/maven.sh
+mvn -version
+
+
 ## hello world
 # https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
 mvn --version

@@ -1,0 +1,43 @@
+[
+  {
+    "ClassName": "channel",
+    "Title": "通道检测",
+    "Results": [
+      {
+        "ObjectId": 11,
+        "ObjectName": "new_channel_code_bug",
+        "Result": ""
+      }
+    ]
+  },
+  {
+    "ClassName": "channel_device_template_protocol_info_645",
+    "Title": "通道模板645检测",
+    "Results": [
+      {
+        "ObjectId": 77,
+        "ObjectName": "1669952116238",
+        "Result": ""
+      }
+    ]
+  },
+  {
+    "ClassName": "channel_device_template_item_645",
+    "Title": "通道模板项645检测",
+    "Results": [
+      {
+        "ObjectId": 91,
+        "ObjectName": "1669952116238",
+        "Result": ""
+      },{
+        "ObjectId": 92,
+        "ObjectName": "1669952116239",
+        "Result": ""
+      },{
+        "ObjectId": 93,
+        "ObjectName": "1669952116210",
+        "Result": ""
+      }
+    ]
+  }
+]

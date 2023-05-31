@@ -1,7 +1,21 @@
 
+### web
+- http://127.0.0.1:8086/
+
+
 ### docker
 ```shell
 docker run -d --name influxdb-tk227 -p 8086:8086 influxdb:2.3.0
+```
+```shell
+mkdir -p /userdata/influxdb2/data
+
+docker run -d -p 7809:8086 \
+      --name influxdb2 \
+      -v /userdata/influxdb2/data/data:/var/lib/influxdb2 \
+      -v /userdata/influxdb2/data/config:/etc/influxdb2 \
+      -v /userdata/influxdb2/data/backup:/backup \
+      influxdb:2.5.1
 ```
 ```shell
 docker run -p 8086:8086 \

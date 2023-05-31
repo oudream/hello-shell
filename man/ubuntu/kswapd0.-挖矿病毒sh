@@ -1,0 +1,18 @@
+
+## 使用netstat -antlp查看系统外部链接，可以发现两个荷兰的ip
+netstat -antlp
+
+## 杀掉病毒进程，直接kill掉即可
+ps -ef | grep kswapd0 | grep -v grep | cut -c 9-16 | xargs kill -9
+
+## 删除可疑文件，这次分析中病毒将自己隐藏在用户文件夹中的.configrc中，直接删除即可
+rm -rf /root/.configrc2
+
+## 另外一些博主发现在/tmp目录中有可能也会存在一些异常的程序，比如名叫test的程序
+rm -rf /tmp/.X25-unix
+
+## 删除病毒创建的计划任务 可以使用crontab -l -u user_name查看某个用户的计划任务，如果发现可以任务可以通过crontab -e -u user_name删除。
+crontab -e
+
+##
+cat /dev/null > /root/.ssh/authorized_keys

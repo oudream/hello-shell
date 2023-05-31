@@ -1,38 +1,50 @@
-{
-  "timestamp": "2022-08-02 22:03: 59",
-  "status": 5d,
-  "total": 1,
-  "current": 1,
-  "uuid": 3,
-  "body": {
-    "mac": "eeeeabababab",
-    "ret": 0,
-    "info": [
-      {
-        "bizNum": 0,
-        "appName": "appMsgRecv",
-        "lvl": 0
-      },
-      {
-        "bizNum": 0,
-        "appName": "appMsgSendUp",
-        "lvl": 0
-      },
-      {
-        "bizNum": 0,
-        "appName": "propReport",
-        "lvl": 0
-      },
-      {
-        "bizNum": 0,
-        "appName": "northLinkGuard",
-        "lvl": 0
-      },
-      {
-        "bizNum": 8,
-        "appName": "mqttXinTong",
-        "lvl": 0
-      }
-    ]
+[
+  {
+    "Key": "MySqlIp",
+    "Value": "10.50.52.235"
+  },
+  {
+    "Key": "MySqlPort",
+    "Value": 3306
+  },
+  {
+    "Key": "MySqlDbName",
+    "Value": "device_middle_end_new"
+  },
+  {
+    "Key": "MySqlUserName",
+    "Value": "root"
+  },
+  {
+    "Key": "MySqlPassword",
+    "Value": "Aa.123456"
+  },
+  {
+    "Key": "MySqlStatus",
+    "Value": "1"
+  },
+  {
+    "Key": "MqttIp",
+    "Value": "127.0.0.1"
+  },
+  {
+    "Key": "MqttPort",
+    "Value": 7805
+  },
+  {
+    "Key": "MqttStatus",
+    "Value": "1"
+  },
+  {
+    "Key": "RedisIp",
+    "Value": "127.0.0.1"
+  },
+  {
+    "Key": "RedisPort",
+    "Value": 7807
+  },
+  {
+    "Key": "RedisStatus",
+    "Value": "1"
   }
-}
+]

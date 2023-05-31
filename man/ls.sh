@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+alias ll='ls -Fls --color=auto'
+
+ls -l --time-style=+"%Y-%m-%d %H:%M:%S"
+
 ls -lR | grep "^d"
 
 ### ls

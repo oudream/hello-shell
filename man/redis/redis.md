@@ -1,4 +1,76 @@
 
+### build
+```shell
+git clone https://github.com/redis/redis.git
+# 6.2.7 oranagra released this 27 Apr 2022
+git checkout e6f6709
+
+### build amd64
+make
+make 32bit
+#
+mkdir -p /opt/deploy/amd64/redis/
+cp src/redis-server /opt/deploy/amd64/redis/
+cp src/redis-cli /opt/deploy/amd64/redis/
+cp src/redis-check-aof /opt/deploy/amd64/redis/
+cp src/redis-check-rdb /opt/deploy/amd64/redis/
+cp src/redis-sentinel /opt/deploy/amd64/redis/
+cp src/redis-benchmark /opt/deploy/amd64/redis/
+
+### build amd64 alpine
+make
+make 32bit
+#
+mkdir -p /opt/deploy/amd64-alpine/redis/
+cp src/redis-server /opt/deploy/amd64-alpine/redis/
+cp src/redis-cli /opt/deploy/amd64-alpine/redis/
+cp src/redis-check-aof /opt/deploy/amd64-alpine/redis/
+cp src/redis-check-rdb /opt/deploy/amd64-alpine/redis/
+cp src/redis-sentinel /opt/deploy/amd64-alpine/redis/
+cp src/redis-benchmark /opt/deploy/amd64-alpine/redis/
+
+# run
+cd src
+./redis-server
+./redis-server /path/to/redis.conf
+
+### build arm64
+export PATH=$PATH:/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/
+export CC=aarch64-linux-gnu-gcc
+export CXX=aarch64-linux-gnu-g++
+export LD=aarch64-linux-gnu-ld
+export RAINLIB=aarch64-linux-gnu-rainlib
+export AR=aarch64-linux-gnu-ar
+export LINK=aarch64-linux-gnu-g++
+make MALLOC=libc
+#
+mkdir -p /opt/deploy/arm64/redis/
+cp src/redis-server /opt/deploy/arm64/redis/
+cp src/redis-cli /opt/deploy/arm64/redis/
+cp src/redis-check-aof /opt/deploy/arm64/redis/
+cp src/redis-check-rdb /opt/deploy/arm64/redis/
+cp src/redis-sentinel /opt/deploy/arm64/redis/
+cp src/redis-benchmark /opt/deploy/arm64/redis/
+
+### build arm32
+export PATH=$PATH:/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/
+export CC=arm-linux-gnueabihf-gcc
+export CXX=arm-linux-gnueabihf-g++
+export LD=arm-linux-gnueabihf-ld
+export RAINLIB=arm-linux-gnueabihf-rainlib
+export AR=arm-linux-gnueabihf-ar
+export LINK=arm-linux-gnueabihf-g++
+make MALLOC=libc
+#
+mkdir -p /opt/deploy/arm32/redis/
+cp src/redis-server /opt/deploy/arm32/redis/
+cp src/redis-cli /opt/deploy/arm32/redis/
+cp src/redis-check-aof /opt/deploy/arm32/redis/
+cp src/redis-check-rdb /opt/deploy/arm32/redis/
+cp src/redis-sentinel /opt/deploy/arm32/redis/
+cp src/redis-benchmark /opt/deploy/arm32/redis/
+
+```
 
 ### Redis核心技术实战
 - https://github.com/oudream/YAY-guide/blob/master/%E8%AF%BE%E7%A8%8B/Redis%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/01_%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85%E5%90%AB%E4%BB%80%E4%B9%88%EF%BC%9F.md

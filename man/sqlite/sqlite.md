@@ -1,4 +1,9 @@
 
+### open sqlite3 db
+```shell
+./sqlite3 xxx.db
+```
+
 ### exit sqlite3
 - Ctrl + D
 ```shell

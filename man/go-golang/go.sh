@@ -4,6 +4,8 @@ go env
 
 go build -v -work -o hello.exe
 
+go build -tags="foo bar"
+go build -tags=a,b
 
 ### build
 -a	  # 强行对所有涉及到的代码包（包含标准库中的代码包）进行重新构建，即使它们已经是最新的了。
@@ -16,16 +18,19 @@ go build -v -work -o hello.exe
 
 
 ### install
-wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
-wget https://golang.org/dl/go1.17.2.linux-amd64.tar.gz
-wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
-sudo tar -xvf go1.17.6.linux-amd64.tar.gz
+rm -rf /usr/local/go
+#wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
+#wget https://golang.org/dl/go1.17.2.linux-amd64.tar.gz
+#wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
+wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
+#wget https://go.dev/dl/go1.19.linux-amd64.tar.gz
+sudo tar -xvf go1.19.linux-amd64.tar.gz
 sudo mv go /usr/local
 
-cat >> ~/.bash_profile << EOF
+cat >> /etc/profile << EOF
 export GOROOT=/usr/local/go
-export GOPATH=/home/gopath
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export GOPATH=/root/gopath
+export PATH=\$GOPATH/bin:\$GOROOT/bin:\$PATH
 EOF
 /usr/local/go/bin
 export GOPATH=/fff/gopath
@@ -49,10 +54,11 @@ GOPATH="/home/ferghs/gowork:/home/ferghs/gowork/src/project1"
 # 简单来说，设置GO111MODULE=on之后就可以使用go module了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。
 ## 使用 go module 管理依赖后会在项目根目录下生成两个文件go.mod和go.sum。
 
-## GOPROXY
-export GOPROXY=https://goproxy.cn
 # Go1.13之后GOPROXY默认值为https://proxy.golang.org，在国内是无法访问的，所以十分建议大家设置GOPROXY，这里我推荐使用goproxy.cn。
-go env -w GOPROXY=https://goproxy.cn,direct
+# 官方
+go env -w  GOPROXY=https://goproxy.io
+# 七牛
+go env -w  GOPROXY=https://goproxy.cn
 
 ## go mod命令
 go mod download    # 下载依赖的module到本地cache（默认为$GOPATH/pkg/mod目录）
@@ -65,16 +71,21 @@ go mod verify      # 校验依赖
 go mod why         # 解释为什么需要依赖
 
 
+### rm delete cache
+rm -rf /opt/gopath/pkg/mod/github.com/oudream/
+rm -rf /opt/gopath/pkg/mod/cache/download/github.com/oudream
+rm -rf /opt/dev/hello_iec104/go/vendor/github.com/oudream
+rm -rf /opt/gopath/pkg/mod/cache/download/sumdb/sum.golang.org/lookup/github.com/oudream/
+
+
 ### ubuntu install
 wget https://golang.org/dl/go1.16.3.linux-amd64.tar.gz
-rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.3.linux-amd64.tar.gz
+wget https://go.dev/dl/go1.19.1.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.1.linux-amd64.tar.gz
 vim /etc/profile
 export GOROOT=/usr/local/go
-export GOPATH=/home/gopath
+export GOPATH=/opt/gopath
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-#
-export GOPROXY=https://goproxy.io
-export GO111MODULE=off
 
 ### 交叉编译 aarch64
 sudo apt-get install gcc-aarch64-linux-gnu
@@ -87,7 +98,7 @@ CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build .
 wget https://downloads.openwrt.org/snapshots/targets/rockchip/armv8/openwrt-sdk-rockchip-armv8_gcc-11.2.0_musl.Linux-x86_64.tar.xz
 export PATH=/opt/openwrt-gcc-8.3.0/bin:$PATH
 export STAGING_DIR=/opt/openwrt-gcc-8.3.0
-cd /opt/tk/hello_iec104/projects/tkiec104_web/cmd
+cd /opt/dev/hello_iec104/projects/tkiec104_web/cmd
 CGO_ENABLED=1 GOARCH=arm64 CC=aarch64-openwrt-linux-musl-gcc CXX=aarch64-openwrt-linux-musl-g++ go build -o ./../deploy/tk5web .
 
 ### windows
@@ -95,12 +106,6 @@ set CGO_ENABLED=1
 set GOOS=linux
 set GOARCH=arm64
 go build .
-
-### golang代理超时报错"https://proxy.golang.org/github.com/********** timeout make: *** [build_yaml] Error 1解决
-go env -w GOPROXY=https://goproxy.cn
-# go env -w GOPROXY=https://goproxy.cn,direct
-# go env -w GO111MODULE=on
-
 
 
 ### 远程调试

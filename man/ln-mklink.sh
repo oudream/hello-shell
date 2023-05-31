@@ -2,10 +2,13 @@
 
 mklink /D "C:\dev\hello-shell\projects\tk\encrypt-agent" "C:\dev\tk\入侵检测"
 mklink /D "C:\dev\hello-shell\projects\hy" "C:\dev\hy"
+mklink "C:\dev\hello-shell\projects\readme.md" "C:\Users\Administrator\Desktop\readme.md"
 
 mklink /D link-dir1(created) "C:\dev\tk\rknn"
 
 ln -s /ddd/dir1 link-dir1(created) # create real-dir link-dir1
+ln -s /opt/dev/device_communicator/assets /opt/dev/device_communicator/deploy/amd64/assets
+ln -s /opt/backup /backup
 
 # ln
 ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)

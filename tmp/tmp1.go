@@ -1,0 +1,21 @@
+CREATE TABLE `iot_product_attr` (
+  `id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL COMMENT '产品id',
+  `general_attr_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '通用属性Id',
+  `code` varchar(64) NOT NULL COMMENT '通用属性编码',
+  `number` varchar(64) NOT NULL COMMENT '编号（产品内的属性必须唯一，用于excel导入导出点表）',
+  `name` varchar(64) NOT NULL COMMENT '名称',
+  `data_type` int(11) NOT NULL COMMENT '数据类型',
+  `min_value` double(20,0) DEFAULT NULL COMMENT '取值范围(最小值)',
+  `max_value` double(20,0) DEFAULT NULL COMMENT '取值范围(最大值)',
+  `max_length` bigint(20) DEFAULT NULL COMMENT '最大数据长度（备用）',
+  `unit_name` varchar(64) DEFAULT NULL COMMENT '单位名称',
+  `fraction` int(11) DEFAULT NULL COMMENT '小数点位数',
+  `conversion_factor` double NOT NULL DEFAULT '1' COMMENT '转换系数',
+  `collection_factor` double NOT NULL DEFAULT '1' COMMENT '采集系数',
+  `zero_bad_zone` double NOT NULL DEFAULT '0' COMMENT '零死区',
+  `shift_value` double NOT NULL DEFAULT '0' COMMENT '偏移量',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `serial_no` int(11) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品属性';

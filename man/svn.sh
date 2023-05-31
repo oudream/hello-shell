@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+svn checkout svn://39.100.155.228/svn/product/通信协议/Trunk/管理机程序/协议 txj
 
 
 ### svn

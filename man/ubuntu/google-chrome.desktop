@@ -1,0 +1,25 @@
+[Desktop Entry]
+Version=1.0
+Name=Google Chrome
+GenericName=Web Browser
+GenericName[zh_CN]=网页浏览器
+Comment=Access the Internet
+Comment[zh_CN]=访问互联网
+Exec=/usr/bin/google-chrome-stable --no-sandbox
+StartupNotify=true
+Terminal=false
+Icon=google-chrome
+Type=Application
+Categories=Network;WebBrowser;
+MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/ftp;x-scheme-handler/http;x-scheme-handler/https;
+Actions=new-window;new-private-window;
+
+[Desktop Action new-window]
+Name=New Window
+Name[zh_CN]=新建窗口
+Exec=/usr/bin/google-chrome-stable
+
+[Desktop Action new-private-window]
+Name=New Incognito Window
+Name[zh_CN]=新建隐身窗口
+Exec=/usr/bin/google-chrome-stable --incognito

@@ -9,7 +9,7 @@ sudo yum groupinstall "C Development Tools and Libraries"
 sudo yum install mesa-libGL-devel
 
 #### qt5.14.2
-wget https://download.qt.io/official_releases/qt/5.14/5.14.2/qt-opensource-linux-x64-5.14.2.run
+wget https://download.qt.io/archive/qt/5.14/5.14.2/qt-opensource-linux-x64-5.14.2.run
 chmod +x qt-opensource-linux-x64-5.14.2.run
 ./qt-opensource-linux-x64-5.14.2.run
 

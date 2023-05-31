@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-# npmmirror 中国镜像站
-# https://npmmirror.com/
-npm install -g cnpm --registry=https://registry.npmmirror.com
-alias cnpm="npm --registry=https://registry.npmmirror.com --cache=$HOME/.npm/.cache/cnpm --disturl=https://npmmirror.com/mirrors/node --userconfig=$HOME/.cnpmrc"
+npm i --registry=http://mirrors.cloud.tencent.com/npm/
+
+#npm config set registry http://mirrors.cloud.tencent.com/npm/
+#npm config set registry https://registry.npmmirror.com
+#npm config set registry https://registry.npm.taobao.org
+npm config set registry https://registry.npmjs.org/
+npm config get registry
+# 如果返回 http://mirrors.cloud.tencent.com/npm/，说明镜像配置成功。 腾讯云镜像源
 
 
 # https://docs.npmjs.com/cli-documentation/cli

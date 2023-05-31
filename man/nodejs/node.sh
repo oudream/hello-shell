@@ -2,17 +2,21 @@
 
 
 ### install special version node use apt
+# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# https://github.com/nodesource/distributions/blob/master/README.md#rpminstall
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 # Then for the Latest release (version 1), add this PPA..
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 # Then for the Latest release (version 12), add this PPA..
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 # For (version 11), run the commands below:
-curl -sL https://deb.nodesource.com/setup_11.x | bash -
+curl -fsSL https://deb.nodesource.com/setup_11.x | bash -
 # To install the LTS release (version 10), use this PPA
-curl -sL https://deb.nodesource.com/setup_10.x | bash -
-sudo apt install nodejs
+curl -fsSL https://deb.nodesource.com/setup_10.x | bash -
+sudo apt install -y nodejs
 node -v
 npm -v
+
 
 ### Node.js 12 綠色運行
 wget https://nodejs.org/dist/latest-v12.x/node-v12.20.0-linux-x64.tar.gz
@@ -23,12 +27,14 @@ mv node-v12.20.0-linux-x64 /usr/local/node12
 PATH_BAK=$PATH
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/node12/bin
 
+
 ### Install Node.js 12 LTS on CentOS 7
 curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash -
 sudo yum clean all && sudo yum makecache fast
 sudo yum install -y gcc-c++ make
 sudo yum install -y nodejs
 node -v
+
 
 ### centos install node10
 sudo yum uninstall -y nodejs

@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-# https://docs.docker.com/engine/reference/commandline/ps/#formatting
+### https://docs.docker.com/engine/reference/commandline/ps/#formatting
 docker ps --format "{{.ID}}: {{.Names}}: {{.Command}}: {{.Image}}: {{.CreatedAt}}: {{.Ports}}: {{.Status}}: {{.Size}}: {{.Mounts}}: {{.Networks}}"
 docker ps --format "{{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Networks}}"
+### 占用磁盘空间特别大，这个时候就需要通过docker overlay2 目录名查找对应容器名
+docker ps -q | xargs docker inspect --format '{{.State.Pid}}, {{.Id}}, {{.Name}}, {{.GraphDriver.Data.WorkDir}}' | grep c775cb83e28e840ef5755721510498f8d6314fd1e69ca5d4b164c189e732ab82
 
 docker exec -it --user root  3c15 bash
 
@@ -407,27 +409,34 @@ docker run -d --rm alpine /bin/sh -c "while sleep 2;do printf aaabbbccc134\\n; d
 docker run -i -t crystal/mono-base bash -c "/usr/local/bin/mono /home/crystal/Downloads/BackgroundProcesser.exe & /bin/bash"
 
 
-### install aarch64
-- https://www.jianshu.com/p/9ddcee50258e
-- https://download.docker.com/linux/static/stable/
+### install aarch64 arm64
+# https://docs.docker.com/engine/install/binaries/
+# https://download.docker.com/linux/static/stable/
+# https://www.jianshu.com/p/9ddcee50258e
+wget https://download.docker.com/linux/static/stable/aarch64/docker-20.10.9.tgz
+tar xzvf docker-20.10.9.tgz
+sudo cp docker/* /usr/bin/
+vim /etc/docker/daemon.json
+sudo dockerd &
+sudo docker run hello-world
 
 ### install - ubuntu
-sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get update
 sudo apt-get install \
-    apt-transport-https \
     ca-certificates \
     curl \
-    gnupg-agent \
-    software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+    gnupg \
+    lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo systemctl status docker
 sudo docker run hello-world
 
 ### install - centos
