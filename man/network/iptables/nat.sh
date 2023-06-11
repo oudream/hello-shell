@@ -25,5 +25,7 @@ tcpdump -i eno2 port 5092 -w 001.pcap
 tcpdump -i vmbr0 host 192.168.11.109 -w 002.pcap
 tcpdump -i eth0 port 92 -w 001.pcap
 
+cd /opt/tmp && tcpdump -i vmbr1 host 192.168.11.110 and port 4001 -v -w 110.pcap
+
 iptables -t nat -A PREROUTING -m tcp -p tcp --dport 5093 -j DNAT --to-destination 192.168.11.109:93
 iptables -t nat -A POSTROUTING -m tcp -p tcp --dport 93 -d 192.168.11.109 -j SNAT -o vmbr0 --to-source 14.21.56.4

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+tcpdump -i vmbr1 host 192.168.11.110 and port 4001 -v -w 110.pcap
 tcpdump -i any -n -nn host 172.17.0.1 and port 15623 -w ./$(date +%Y%m%d%H%M%S).pcap
 
 tcpdump port 2404 -w ./$(date +%Y%m%d%H%M%S).pcap
@@ -40,17 +40,17 @@ tcpdump [ -AbdDefhHIJKlLnNOpqStuUvxX# ] [ -B buffer_size ]
 # -v, -vv, -vvv：显示更多的详细信息
 # -c number: 截取 number 个报文，然后结束
 # -A： 只使用 ascii 打印报文的全部数据，不要和 -X 一起使用。截取 http 请求的时候可以用
-sudo tcpdump -nSA port 80！
+sudo tcpdump -nSA port 80
 
 
-1. tcpdump -nS
-监听所有端口，直接显示 ip 地址。
+# 监听所有端口，直接显示 ip 地址。
+tcpdump -nS
 
-2. tcpdump -nnvvS
-显示更详细的数据报文，包括 tos, ttl, checksum 等。
+# 显示更详细的数据报文，包括 tos, ttl, checksum 等。
+tcpdump -nnvvS
 
-3. tcpdump -nnvvXS
-显示数据报的全部数据信息，用 hex 和 ascii 两列对比输出。
+# 显示数据报的全部数据信息，用 hex 和 ascii 两列对比输出。
+tcpdump -nnvvXS
 
 # 过滤器也可以简单地分为三类：type, dir 和 proto。
 # Type 让你区分报文的类型，主要由 host（主机）, net（网络） 和 port（端口） 组成。src 和 dst 也可以用来过滤报文的源地址和目的地址。

@@ -1,4 +1,9 @@
 
+traceroute hostname
+
+# Windows
+tracert hostname
+
 # https://einverne.github.io/post/2017/06/traceroute.html
 
 # traceroute（跟踪路由）是路由跟踪实用程序，用于确定 IP 数据报访问目标所经过的路径。
@@ -10,11 +15,6 @@
 # 在 MS Windows 中为 tracert。
 # traceroute 通过发送小数据包到目的主机直到其返回，来测量其耗时。
 # 一条路径上的每个设备 traceroute 要测 3 次。输出结果中包括每次测试的时间 (ms) 和设备的名称及其 IP 地址。
-
-traceroute hostname
-
-tracert hostname
-
 
 # 工作原理
 # traceroute 命令利用 ICMP 及 IP header 的 TTL(Time To Live) 字段 (field)。
