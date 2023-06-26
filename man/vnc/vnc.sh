@@ -3,6 +3,8 @@
 
 # step 1
 # 设置屏幕共享
+# ubuntu20.04 如果没有共享桌面的设置选项,需要安装vino用于设置共享桌面
+apt-get install vino -y
 
 # step 2
 yum install -y dconf-editor

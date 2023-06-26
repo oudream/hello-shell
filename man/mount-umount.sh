@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+umount /dev/
+
 
 # 可以将VPS文件系统挂载到本地计算机上，这样您就可以动态地进行更改并将您的服务器的文件
 sudo apt-get install sshfs

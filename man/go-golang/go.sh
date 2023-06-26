@@ -17,6 +17,20 @@ go build -tags=a,b
 -x	  # 打印编译期间所用到的其它命令。注意它与-n标记的区别。
 
 
+### 在amd64架构上 build arm64
+docker build . -t arm64v8/ou-golang:1.19.10-alpine3.18
+### 在本土CPU架构上 build self
+docker build . -t ou-golang:1.19.10-alpine3.18
+#
+docker run -it -d -v /opt/dev:/opt/dev arm64v8/ou-golang:1.19.10-alpine3.18
+docker run -it -d -v /opt/dev:/opt/dev ou-golang:1.19.10-alpine3.18
+### 安装 QEMU all 等环境
+docker run --privileged --rm tonistiigi/binfmt --install all
+### 安装 QEMU arm64 等环境
+docker run --privileged --rm tonistiigi/binfmt --install arm64,riscv64,arm
+docker buildx ls
+
+
 ### install
 rm -rf /usr/local/go
 #wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
@@ -24,7 +38,7 @@ rm -rf /usr/local/go
 #wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
 wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
 #wget https://go.dev/dl/go1.19.linux-amd64.tar.gz
-sudo tar -xvf go1.19.linux-amd64.tar.gz
+sudo tar -xvf go1.19.2.linux-amd64.tar.gz
 sudo mv go /usr/local
 
 cat >> /etc/profile << EOF

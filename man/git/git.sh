@@ -20,7 +20,7 @@ touch README.md
 git add README.md
 git commit -m "first commit"
 git remote add origin https://gitee.com/oudream/i3ds.git
-git push -u origin "master"
+git push -u origin "main"
 
 # 已有仓库?
 cd existing_git_repo
@@ -74,6 +74,24 @@ git checkout -b dev-1.4 canal-1.1.4
 # git pull <远程主机名> <远程分支名>:<本地分支名>
 # 要取回origin主机的next分支，与本地的master分支合并，需要写成下面这样 -
 git pull origin next:master
+
+
+### 安装
+# https://docs.gitlab.com/ee/install/docker.html
+docker run --detach \
+  --hostname 10.50.52.218 \
+  -p 50443:443 \
+  -p 50080:80 \
+  -p 50022:22 \
+  --name gitlab \
+  --restart always \
+  -v /userdata/gitlab/config:/etc/gitlab \
+  -v /userdata/gitlab/logs:/var/log/gitlab \
+  -v /userdata/gitlab/data:/var/opt/gitlab \
+  -v /etc/localtime:/etc/localtime \
+  gitlab/gitlab-ce:15.11.9-ce.0
+
+docker pull gitlab/gitlab-ce:15.11.9-ce.0
 
 
 ### Git 培训实战

@@ -20,6 +20,7 @@ systemctl start firewalld.service
 systemctl stop firewalld.service
 
 # 开机自动启动
+
 systemctl enable firewalld.service
 
 # 关闭开机制动启动

@@ -1,14 +1,16 @@
 
+### 常用
 # https://www.npbeta.com/2021/06/iptables_pve_nat/
-
 ./portmap6.sh 192.168.11.109 94 14.21.56.4 5094 A TCP
 ./portmap6.sh 192.168.11.109 94 14.21.56.4 5094 A
 ./portmap6.sh 192.168.11.109 22 14.21.56.4 5022
 ./portmap6.sh 192.168.11.109 22 14.21.56.4 5022 D
 
+### 支持端口映射
 cat /proc/sys/net/ipv4/ip_forward
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
+### 查询端口映射
 iptables -vL -t nat
 
 iptables -F && iptables -X && iptables -F -t nat && iptables -X -t nat

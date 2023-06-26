@@ -1,5 +1,5 @@
 ### change root password
-sudo passwd root
+passwd root
 
 
 ### ssh root
@@ -24,17 +24,18 @@ EOF
 
 
 ### vnc
+apt install vino -y
 apt install dconf-editor -y
 dconf write /org/gnome/desktop/remote-access/require-encryption false
 # 在界面中配置共享界面
 
 
 ### terminator
-sudo apt-get install terminator
+apt-get install terminator
 
 
 ### install libs
-sudo apt-get update -y ; apt-get upgrade -y && apt install -y gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libgl1-mesa-dev net-tools
+apt-get update -y ; apt-get upgrade -y && apt install -y gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libgl1-mesa-dev net-tools
 
 
 ### install linaro arm32
@@ -55,17 +56,17 @@ chmod +x qt-opensource-linux-x64-5.14.2.run
 ./qt-opensource-linux-x64-5.14.2.run
 
 ### install docker
-sudo apt update -y && sudo apt-get upgrade -y && sudo apt install -y ca-certificates curl gnupg lsb-release
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+apt update -y && apt-get upgrade -y && apt install -y ca-certificates curl gnupg lsb-release
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update -y
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-sudo systemctl enable docker
-sudo systemctl start docker
-sudo systemctl status docker
-sudo docker run hello-world
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update -y
+apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+systemctl enable docker
+systemctl start docker
+systemctl status docker
+docker run hello-world
 
 ### install go
 rm -rf /usr/local/go
@@ -108,8 +109,8 @@ cmake -D U_DEPLOY_PATH="/opt/dev/hello_iec104/build/deploy-linaro" -D CMAKE_TOOL
 make -j 8
 
 ### install node.js
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt install -y nodejs
+curl -fsSL https://deb.nodesource.com/setup_lts.x | -E bash -
+apt install -y nodejs
 node -v
 npm -v
 

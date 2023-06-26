@@ -6,6 +6,10 @@ docker ps --format "{{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Networks}}"
 ### 占用磁盘空间特别大，这个时候就需要通过docker overlay2 目录名查找对应容器名
 docker ps -q | xargs docker inspect --format '{{.State.Pid}}, {{.Id}}, {{.Name}}, {{.GraphDriver.Data.WorkDir}}' | grep c775cb83e28e840ef5755721510498f8d6314fd1e69ca5d4b164c189e732ab82
 
+### proxy mirror
+### https://docs.docker.com/config/daemon/systemd/#httphttps-proxy
+### https://docs.docker.com/registry/recipes/mirror/
+
 docker exec -it --user root  3c15 bash
 
 docker run -d -p 22:22 --name=CentOS7S1 centos:centos7 /bin/sh -c "while true; do echo hello world; sleep 1; done"
@@ -489,3 +493,39 @@ cat << EOF > ~/.docker/config.json
 EOF
 docker buildx ls
 
+
+### Docker Hub 镜像加速器
+# 镜像站。
+  #
+  #https://<your_code>.mirror.aliyuncs.com    #阿里云
+  #https://hub-mirror.c.163.com               #网易云
+  #https://dockerproxy.com                    #代理站
+  #https://mirror.baidubce.com                #百度云
+  #https://docker.nju.edu.cn                  #南京大学
+  #这里我以阿里云（阿里云是官方镜像加速，实测是这些中最好的）为例。
+  #
+  #如果没有阿里云账号先去https://www.aliyun.com/注册一个。
+  #
+  #登录阿里云，选择容器镜像服务https://cr.console.aliyun.com/，点击镜像工具-镜像工具-镜像加速器，复制加速器地址。
+tee /etc/docker/daemon.json <<-'EOF'
+{
+    "registry-mirrors": [
+        "https://x6d4r9s3.mirror.aliyuncs.com",
+        "https://hub-mirror.c.163.com",
+        "https://dockerproxy.com",
+        "https://mirror.baidubce.com",
+        "https://docker.nju.edu.cn"
+    ]
+}
+EOF
+tee /etc/docker/daemon.json <<-'EOF'
+{
+  "proxies": {
+    "http-proxy": "http://172.17.0.1:7890",
+    "https-proxy": "https://172.17.0.1:7890"
+  }
+}
+EOF
+systemctl daemon-reload
+systemctl restart docker
+docker info
