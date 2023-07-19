@@ -1,5 +1,6 @@
-# https://archlinux.pkgs.org/rolling/archlinux-community-aarch64/
-# https://releases.linaro.org/components/toolchain/binaries
+curl https://archlinux.pkgs.org/rolling/archlinux-community-aarch64/
+curl https://releases.linaro.org/components/toolchain/binaries
+curl https://rpmfind.net/
 
 ### 使用导出与PATH设置的方法来交叉编译
 
@@ -7,7 +8,7 @@
 # https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html#cross-compiling-for-linux
 
 ### openwrt
-- https://openwrt.org/zh/docs/guide-developer/crosscompile
+curl https://openwrt.org/zh/docs/guide-developer/crosscompile
 
 ### linaro
 # https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/
@@ -40,8 +41,42 @@ aarch64-linux-gnu-dwp           aarch64-linux-gnu-gcc-ranlib-7  aarch64-linux-gn
 aarch64-linux-gnu-elfedit       aarch64-linux-gnu-gcov          aarch64-linux-gnu-ld.gold
 aarch64-linux-gnu-gcc           aarch64-linux-gnu-gcov-7        aarch64-linux-gnu-nm
 
+
+### openssh
+# https://git.centos.org/rpms/openssh/blob/c7/f/SPECS/openssh.spec
+wget https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.4p1.tar.gz
+tar zxvf openssh-7.4p1.tar.gz
+cd openssh-7.4p1
+#
+CC=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc CXX=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++ \
+./configure --host=aarch64-linux-gnu --with-zlib=/opt/dev/3rd/zlib_install --with-ssl-dir=/opt/dev/3rd/openssl_install --disable-etc-default-login LDFLAGS="-static -pthread"
+
+# ssh-copy-id
+tar cvf ssh.new.bin.tar scp sftp ssh ssh-add ssh-agent ssh-keygen ssh-keyscan
+tar cvf ssh.new.sbin.tar sshd
+tar cvf ssh.new.libexec.tar ssh-keysign ssh-pkcs11-helper sftp-server
+
+### telnet
+wget https://ftp.gnu.org/gnu/inetutils/inetutils-1.9.4.tar.gz
+tar -xzvf inetutils-1.9.4.tar.gz
+cd inetutils-1.9.4
+# -mfloat-abi=hard
+CC=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc CXX=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++ \
+./configure --host=aarch64-linux-gnu --disable-clients --disable-ipv6 --disable-ncurses --prefix=/
+make
+# make check
+sudo make install
+# 上步完成后在 ./telnetd 目录下生成了telnetd ,在./src 目录下生成了inetd文件，上传到 /usr/sbin/
+cat > /etc/inetd.conf <<EOF
+telnet stream tcp nowait root /usr/bin/telnetd telnetd
+EOF
+
 ### zlib | libz
-wget https://zlib.net/zlib-1.2.12.tar.gz
+wget https://zlib.net/fossils/zlib-1.2.13.tar.gz
+tar zxvf zlib-1.2.13.tar.gz
+cd zlib-1.2.13
+CC=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc CXX=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++ \
+./configure --prefix=/opt/dev/3rd/zlib_install
 ./configure --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/ --shared
 ./configure --prefix=/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.03/arm-linux-gnueabihf/ --shared
 ./configure --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/ --shared
@@ -78,11 +113,16 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 # https://stackoverflow.com/questions/60821697/how-to-build-openssl-for-arm-linux
 # cmake https://blog.csdn.net/weixin_43117602/article/details/115339416
 # https://blog.csdn.net/wang_jing_kai/article/details/88619606
-./Configure linux-aarch64 --cross-compile-prefix=aarch64-linux-gnu- --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/ shared
+wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2k.tar.gz
+tar zxvf openssl-1.0.2k.tar.gz
+cd openssl-1.0.2k
+CC=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc CXX=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++ \
+./Configure linux-aarch64 --prefix=/opt/dev/3rd/openssl_install
 ./Configure linux-aarch64 --cross-compile-prefix=aarch64-linux-gnu- --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/ shared
 # wget  "https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz?revision=fed31ee5-2ed7-40c8-9e0e-474299a3c4ac&la=en&hash=76DAF56606E7CB66CC5B5B33D8FB90D9F24C9D20" -O gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz
 # tar Jxf gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz -C /opt/arm/9
 # ./Configure linux-generic32 --cross-compile-prefix=/opt/arm/9/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf- --prefix=/opt/openssl-1.1.1e --openssldir=/opt/openssl-1.1.1e -static
+export PATH=$PATH:/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin
 export PATH=$PATH:/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin
 ./Configure linux-generic32 --cross-compile-prefix=arm-linux-gnueabihf- --prefix=/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/ shared
 

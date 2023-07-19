@@ -1,5 +1,6 @@
-# rsync 默认使用 SSH 进行远程登录和数据传输。
+rsync -av --delete --exclude='deploy/amd64/hy3-*' -e 'ssh -p 5022' /opt/dev/device_communicator/ root@yun4:/opt/dev/device_communicator
 
+# rsync 默认使用 SSH 进行远程登录和数据传输。
 
 # 本机使用 rsync 命令时，可以作为cp和mv命令的替代方法，将源目录同步到目标目录。
 rsync -r source destination

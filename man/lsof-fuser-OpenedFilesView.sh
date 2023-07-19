@@ -2,6 +2,10 @@
 
 lsof -i :80
 
+# 已使用的句柄数
+lsof | wc -l
+cat /proc/sys/fs/file-nr
+
 ## mac macos osx
 lsof -a -P -i tcp -p 1355
 lsof -n -P -i TCP -s TCP:LISTEN

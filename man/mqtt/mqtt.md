@@ -126,6 +126,11 @@ mosquitto_pub -h 192.168.1.8 -p 1883 -u root -P root -t '/5g/data/request' -m '{
 mosquitto_sub -h 192.168.1.200 -p 1883 -u root -P root -t '/5g/data/reply'
 mosquitto_pub -h 192.168.1.200 -p 1883 -u root -P root -t '/5g/data/reply' -m '{"deviceid": "3321001ABCD","action":"current_power"}'
 
+mosquitto_sub -h 192.168.1.200 -p 1883 -u root -P root -t '/5g/data/reply'
+./mosquitto_pub -h 14.21.56.4 -p 7806 -t '$oc/dev/s00234345235/set/request/rt' -m '{"deviceid": "3321001ABCD","action":"current_power"}'
+./mosquitto_pub -h 14.21.56.4 -p 7806 -t '$oc/dev/SS_-adf0034f/set/request/alarm' -m '{"deviceid": "3321001ABCD","action":"current_power"}'
+./mosquitto_pub -h 14.21.56.4 -p 7806 -t '$oc/dev/001232342410/get/response/rt' -m '{"deviceid": "3321001ABCD","action":"current_power"}'
+
 ```
 
 ```shell

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# https://git.centos.org/browse/projects/
 
 yum -y install epel-release
 yum -y install htop
