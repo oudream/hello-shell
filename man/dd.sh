@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 
+### DD（命令为 dd）是 Linux 系统上一个非常流行的文件复制工具，在复制文件的同时可以根据其具体选项进行转换和格式化等操作。
+### 通过 DD 工具复制同一个文件（相同数据量）所需要的时间长短即可粗略评估磁盘 I/O 的性能。
+### 一般的 Linux 系统中都自带这个工具，用 man dd 命令即可查看 DD 工具的使用手册。
 
 open http://man7.org/linux/man-pages/man1/dd.1.html
 open "https://zh.wikipedia.org/wiki/Dd_(Unix)"
 open https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
+
+### 写入文件的测试（速度测试）
+dd if=/dev/zero of=dd1.dat conv=fsync oflag=direct bs=1K count=100K
+dd if=/dev/zero of=dd1.dat conv=fsync oflag=direct bs=8K count=100K
+dd if=/dev/zero of=dd1.dat conv=fsync oflag=direct bs=1M count=10K
+dd if=/dev/zero of=dd1.dat conv=fsync oflag=direct bs=8M count=2K
 
 # 备份MBR
 dd if=/dev/sda of=/app/MBR bs=1 count=512

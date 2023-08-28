@@ -1,0 +1,31 @@
+{
+  "total": 10,
+  "page": 1,
+  "pageSize": 30,
+  "list": [
+    {
+      "name": "yt_ih_threshold1",
+      "title": "设置电流阀值1",
+      "params": [
+        {
+          "type": "single",
+          "name": "ih_threshold1",
+          "title": "电流阀值1",
+          "required": 1,
+          "model": "rw"
+        },
+        {
+          "type": "double",
+          "name": "yt_value",
+          "title": "遥调值",
+          "required": 1,
+          "default": "1",
+          "length": 60,
+          "max": 601.12,
+          "min": 0.12,
+          "enums": "1:设备电流阀值1,2:设备电流阀值2,3:接线端子温度阀值1,4:接线端子温度阀值2"
+        }
+      ]
+    }
+  ]
+}

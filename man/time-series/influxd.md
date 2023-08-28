@@ -6,8 +6,8 @@ mkdir -p /data/influxdb2b
 
 docker run -d --restart=always -p 7809:8086 \
       --name influxdb2 \
-      -v /userdata/influxdb2/data:/var/lib/influxdb2 \
-      -v /userdata/influxdb2/config:/etc/influxdb2 \
+      -v /home/influxdb2/data:/var/lib/influxdb2 \
+      -v /home/influxdb2/config:/etc/influxdb2 \
       influxdb:2.5.1
 ```
 

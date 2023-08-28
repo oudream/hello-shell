@@ -44,6 +44,15 @@ firewall-cmd --reload
 firewall-cmd --zone=public --add-service=https
 # 永久
 firewall-cmd --permanent --zone=public --add-service=https
+firewall-cmd --permanent --zone=public --add-service=http
+firewall-cmd --permanent --zone=public --add-service=https
+
+firewall-cmd --permanent --zone=public --add-port=443/tcp
+firewall-cmd --permanent --zone=public --add-service=https
+firewall-cmd --permanent --zone=public --remove-port=443/tcp
+firewall-cmd --permanent --zone=public --remove-service=https
+
+firewall-cmd --permanent --zone=public --add-port=801/tcp
 
 # 开启某个端口
 # 永久

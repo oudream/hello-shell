@@ -17,10 +17,12 @@ docker run -d -p 2201:22 centos7s1 /usr/sbin/sshd -D
 
 docker rm -v $(docker ps -a -q -f status=exited)
 
-docker kill -s KILL $(docker ps -a -q)
-docker kill --signal=SIGINT $(docker ps -a -q)
+### 停止、删除 所有的容器或镜像
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
+docker kill -s KILL $(docker ps -a -q)
+docker kill --signal=SIGINT $(docker ps -a -q)
+docker rmi $(docker images -q)
 
 docker rmi $(docker images alpine-ssh* -q)
 docker rmi $(docker images -q)
@@ -144,7 +146,7 @@ docker ps -f before=9c3527ed70ce
 docker ps -f since=6e63f6ff38b0
 
 
-## docker events : 从服务器获取实时事件
+### docker events : 从服务器获取实时事件
 # docker events [OPTIONS]
 # -f ：根据条件过滤事件；
 # --since ：从指定的时间戳后显示所有事件;
@@ -155,7 +157,7 @@ docker events  --since="1467302400"
 docker events -f "image"="mysql:5.6" --since="1467302400"
 
 
-## docker logs : 获取容器的日志
+### docker logs : 获取容器的日志
 # docker logs [OPTIONS] CONTAINER
 # -f : 跟踪日志输出
 # --since :显示某个开始时间的所有日志
@@ -165,7 +167,15 @@ docker events -f "image"="mysql:5.6" --since="1467302400"
 docker logs -f mynginx
 # 查看容器mynginx从2016年7月1日后的最新10条日志。
 docker logs --since="2016-07-01" --tail=10 mynginx
-
+logs=$(find /var/lib/docker/containers/ -name *-json.log)
+## 消除日志
+## 如果docker容器正在运行，那么使用rm -rf方式删除日志后，通过df -h会发现磁盘空间并没有释放。原因是在Linux或者Unix系统中，
+# 通过rm -rf或者文件管理器删除文件，将会从文件系统的目录结构上解除链接（unlink）。如果文件是被打开的（有一个进程正在使用），
+# 那么进程将仍然可以读取该文件，磁盘空间也一直被占用。正确姿势是cat /dev/null > *-json.log
+for log in $logs ; do
+  echo "clean logs : $log"
+  cat /dev/null > $log
+done
 
 ## docker run
 # 使用docker镜像nginx:latest以后台模式启动一个容器,并将容器命名为mynginx。
@@ -321,8 +331,9 @@ docker export -o mysql-`date +%Y%m%d`.tar a404c6c174a2
 ## docker save : 将指定镜像保存成 tar 归档文件。
 # docker save [OPTIONS] IMAGE [IMAGE...]
 # -o :输出到的文件。
-# 将镜像 runoob/ubuntu:v3 生成 my_ubuntu_v3.tar 文档
-docker save -o my_ubuntu_v3.tar runoob/ubuntu:v3
+# 将镜像 ubuntu:v3 生成 ubuntu_v3.tar 文档
+docker save -o ubuntu_v3.tar ubuntu:v3
+docker load -i ubuntu_v3.tar
 
 ###
 # error

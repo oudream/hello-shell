@@ -1,0 +1,16 @@
+{
+  "name": "func_1",
+  "title": "设备电流阀",
+  "params": [
+    {
+      "type": "string",
+      "name": "as",
+      "value": "aa"
+    },
+    {
+      "type": "int",
+      "name": "av",
+      "value": "11"
+    }
+  ]
+}

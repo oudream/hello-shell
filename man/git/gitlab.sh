@@ -5,18 +5,30 @@
 
 mkdir -pv /userdata/gitlab
 
+docker run \
+ -itd  \
+ -p 9980:9980 \
+ -p 9922:9922 \
+ --hostname 10.50.52.210 \
+ -v /home/gitlab/etc:/etc/gitlab  \
+ -v /home/gitlab/log:/var/log/gitlab \
+ -v /home/gitlab/opt:/var/opt/gitlab \
+ --restart always \
+ --name gitlab \
+ gitlab/gitlab-ce:15.6.7-ce.0
+
 docker run --detach \
-  --hostname 10.50.52.235 \
-  -p 50443:443 \
-  -p 50080:80 \
-  -p 50022:22 \
+  --hostname 10.8.8.6 \
+  -p 9443:443 \
+  -p 9980:80 \
+  -p 9922:22 \
   --name gitlab \
   --restart always \
-  -v /userdata/gitlab/config:/etc/gitlab \
-  -v /userdata/gitlab/logs:/var/log/gitlab \
-  -v /userdata/gitlab/data:/var/opt/gitlab \
+  -v /data/gitlab/config:/etc/gitlab \
+  -v /data/gitlab/logs:/var/log/gitlab \
+  -v /data/gitlab/data:/var/opt/gitlab \
   -v /etc/localtime:/etc/localtime \
-  gitlab/gitlab-ce:15.6.7-ce.0
+  gitlab/gitlab-ce:latest
 
 
 docker run --detach \

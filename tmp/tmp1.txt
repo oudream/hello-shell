@@ -1,1 +1,47 @@
-,A���ѹ, B���ѹ, C���ѹ, A�����, B�����, C�����, A���й�����, B���й�����, C���й�����, ���й�����, A���޹�����, B���޹�����, C���޹�����, ���޹�����, A�๦������, B�๦������, C�๦������, �ܹ�������, A�����, B�����, C�����, �ܵ���, �����������ƽ���, �����������ƽ���, �����������ƽ���, �յ�ѹԽ������, �µ�ѹԽ������, ���ѹԽ������, �յ�ѹԽ������, �µ�ѹԽ������, ���ѹԽ������, �յ�ѹ�ϸ���, �µ�ѹ�ϸ���, ���ѹ�ϸ���, �ո�����, �¸�����, �긺����, ������, ������.
+整数（Integer）：表示整数值，如-5、0、10等。
+浮点数（Float）：表示带有小数部分的数值，如3.14、-0.5等。
+字符串（String）：表示一串字符，如"Hello, World!"。
+布尔值（Boolean）：表示逻辑值，只能为True或False。
+列表（List）：表示一组有序的元素，可以包含不同类型的数据。
+枚举（Enum）：表示键值对的有序集合，每个键关联一个值。
+
+整数（Integer）：可以使用 <el-input-number> 或 <el-input> 控件。
+浮点数（Float）：可以使用 <el-input-number> 或 <el-input> 控件。
+字符串（String）：可以使用 <el-input> 或 <el-input-textarea> 控件。
+布尔值（Boolean）：可以使用 <el-switch> 或 <el-checkbox> 控件。
+列表（List）：可以使用 <el-select> 或 <el-checkbox-group> 控件。
+枚举（Enum）：可以使用 <el-select> 控件。
+
+（数据项的标签）label: '名称',
+（数据项的字段名）field: 'name',
+（输入框的占位文本）placeholder: '名称：字母、数字和下划线（_）开头，不以数字开头，无空格和特殊字符',
+（数据类型）type: 'Integer',
+（默认值）default: 0,
+（是否只读）readOnly: false,
+（是否为空，是否为必填项）isRequired: true,
+（正规表达式，数据合法性检查，界面检测）regexp: '^\\d{1,15}$',
+（值的最大长度）maxLength: 15,
+（值的最少长度）minLength: 1,
+（值的最大范围）maxvalue: 0xFFFFFFFFFFFFF,
+（值的最小范围）minvalue: 0 - 0xFFFFFFFFFFFFF,
+（值的枚举，可选）enums: {key1: value1, key2, value2}
+（数据项的描述文本）description：'名称，作为标识的主要显示'
+
+{
+  label: '名称',
+  field: 'name',
+  placeholder: '名称：字母、数字和下划线（_）开头，不以数字开头，无空格和特殊字符',
+  type: 'Integer',
+  default: 0,
+  readOnly: false,
+  isRequired: true,
+  regexp: '^\\d{1,15}$',
+  maxLength: 15,
+  minLength: 1,
+  maxValue: 0xFFFFFFFFFFFFF,
+  minValue: 0 - 0xFFFFFFFFFFFFF,
+  enums: { key1: value1, key2: value2 },
+  description: '名称，作为标识的主要显示',
+  validationErrorMessage: '请输入有效的名称',
+  additionalAttributes: { attribute1: value1, attribute2: value2 }
+}

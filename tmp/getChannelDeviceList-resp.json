@@ -1,0 +1,12 @@
+{
+  "code": 20000,
+  "msg": "OK",
+  "data": [
+    {
+      "channelIdentifier": "000000000000",
+      "deviceName": "加美特测试1",
+      "toDeviceType": "",
+      "toDeviceName": "d05"
+    }
+  ]
+}

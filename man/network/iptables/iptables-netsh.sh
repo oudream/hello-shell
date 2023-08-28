@@ -8,6 +8,7 @@
 /etc/init.d/iptables restart
 
 iptables -A INPUT -p tcp --dport 6379 -j ACCEPT
+iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 6379 -j ACCEPT
 
 
@@ -164,6 +165,7 @@ iptables -A INPUT -p tcp -s 192.168.0.0/24 --dport 22 -j ACCEPT
 # netsh interface portproxy add v4tov4 listenaddress=大网IP listenport=端口 connectaddress=要映射的小网IP  connectport=端口
 # 例：访问本地127.0.0.1:80 跳转 183.192.162.133:10008
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=1883 connectaddress=172.16.78.233 connectport=1883
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=3404 connectaddress=127.0.0.1 connectport=2404
 
 # 2.查看存在的转发
 netsh interface portproxy show v4tov4

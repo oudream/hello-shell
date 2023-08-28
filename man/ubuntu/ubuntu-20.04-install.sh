@@ -24,18 +24,17 @@ EOF
 
 
 ### vnc
-apt install vino -y
-apt install dconf-editor -y
+apt install vino dconf-editor -y
 dconf write /org/gnome/desktop/remote-access/require-encryption false
 # 在界面中配置共享界面
 
 
 ### terminator
-apt-get install terminator
+apt-get install -y terminator
 
 
 ### install libs
-apt-get update -y ; apt-get upgrade -y && apt install -y gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libgl1-mesa-dev net-tools
+apt-get update -y ; apt-get upgrade -y && apt install -y terminator gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libgl1-mesa-dev net-tools
 
 
 ### install linaro arm32

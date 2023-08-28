@@ -1,0 +1,20 @@
+{
+  "code": 10,
+  "msg": "OK",
+  "channelIdentifier": "000000000000",
+  "deviceName": "加美特测试1",
+  "toDeviceType": "",
+  "toDeviceName": "d05",
+  "data": [
+    {
+      "ToAttrName": "ih_threshold1",
+      "value": 60,
+      "model": "rw"
+    },
+    {
+      "ToAttrName": "ih_threshold2",
+      "value": 70,
+      "model": "rw"
+    }
+  ]
+}

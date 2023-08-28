@@ -49,6 +49,7 @@ telnet 192.168.1.1 25
 
 ### 监听本地端口
 nc -l -p 80   # 开启本机 80 端口 TCP 监听
+nc -l -p 80 -s 0.0.0.0  # 开启本机 80 端口 TCP 监听
 nc -k -lp 7913   # 开启本机 80 端口 TCP 监听，Accept multiple connections in listen mode
 nc -l 5555    # macos
 nc -lk 5555    # -k 我们可以强制服务器保持连接并继续监听端口

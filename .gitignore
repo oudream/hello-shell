@@ -1,3 +1,9 @@
+# Precompiled Headers
+*.gch
+*.pch
+*.log
+*.log.old
+
 /.idea
 /.svn
 /tools/ftofs/
