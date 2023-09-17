@@ -1,4 +1,5 @@
 ###
+- https://github.com/influxdata/influxdb/releases
 ```shell
 # amd64
 wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-2.6.0-linux-amd64.tar.gz

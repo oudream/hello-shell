@@ -89,7 +89,7 @@ chmod +x google-chrome.desktop
 
 ### mysql docker
 mkdir -p /opt/mysql1/data
-docker run -d --restart=always --name mysql-client -v /opt/mysql1/data:/var/lib/mysql -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="Aa.123456" -e MYSQL_ROOT_HOST="%" mysql:5.7.28 mysqld   --log-bin=mysql-bin   --binlog-format=ROW   --lower_case_table_names=1   --server-id=1
+docker run -d --restart=always --name mysql-client -v /opt/mysql1/data:/var/lib/mysql -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD="XXXXXX" -e MYSQL_ROOT_HOST="%" mysql:5.7.28 mysqld   --log-bin=mysql-bin   --binlog-format=ROW   --lower_case_table_names=1   --server-id=1
 docker ps
 
 ### dev

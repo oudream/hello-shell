@@ -359,7 +359,7 @@ docker rm redis1
 docker pull arm64v8/mariadb:10.2
 docker save -o mysql.docker.tar arm64v8/mariadb:10.2
 cat mysql.docker.tar | docker import - arm64v8/mariadb:10.2
-docker run -p 127.0.0.1:3306:3306  --name some-mariadb -e MARIADB_ROOT_PASSWORD="Aa.123456" -d arm64v8/mariadb:10.2
+docker run -p 127.0.0.1:3306:3306  --name some-mariadb -e MARIADB_ROOT_PASSWORD="XXXXXX" -d arm64v8/mariadb:10.2
 
 ## docker load : 导入使用 docker save 命令导出的镜像。
 # docker load [OPTIONS]
@@ -474,7 +474,21 @@ cat >> /etc/docker/daemon.json <<EOF
     "max-size": "200m",
     "max-file": "7"
   },
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "500m",
+    "max-file": "3"
+  },
   "live-restore": true
+}
+EOF
+cat >> /etc/docker/daemon.json <<EOF
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "500m",
+    "max-file": "3"
+  }
 }
 EOF
 # 啟動

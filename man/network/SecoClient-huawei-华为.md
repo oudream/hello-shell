@@ -7,6 +7,7 @@ cd /usr/local/SecoClient
 
 ### 下载
 - https://forum.huawei.com/enterprise/zh/thread-864167.html
+- https://blog.csdn.net/lxyoucan/article/details/111590024
 
 ### UniVPN
 - https://support.huawei.com/enterprise/zh/bulletins-website/ENEWS2000014193

@@ -32,7 +32,7 @@ docker run -d -p 9211:9000 -p 9210:8000 --name portainer --restart always -v /va
 open http://localhost:2211/
 
 username: admin
-pwd: 13524666
+pwd: XXXXX
 
 # Manage the Docker environment where Portainer is running.
 # Ensure that you have started the Portainer container with the following Docker flag:

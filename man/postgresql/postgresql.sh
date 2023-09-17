@@ -2,7 +2,7 @@
 
 docker run -d --name psql1 --restart always \
   -e POSTGRES_USER='postgres' \
-  -e POSTGRES_PASSWORD='Aa.123456' \
+  -e POSTGRES_PASSWORD='XXXXXX' \
   -e ALLOW_IP_RANGE=0.0.0.0/0 \
 	-v /opt/psql1/data:/var/lib/postgresql \
   -p 5432:5432 \

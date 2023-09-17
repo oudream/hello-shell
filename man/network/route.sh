@@ -5,6 +5,10 @@ route add -net 192.168.0.0 netmask 255.255.255.0 gw 192.168.0.245 dev eth0.1
 
 route add -net 192.168.0.0 netmask 255.255.255.0 gw 192.168.0.245 dev eth0.1
 
+route del -net 10.50.53.167 netmask 255.255.255.0 gw 10.50.52.1 dev eth0
+
+route del default gw 10.50.52.1 dev eth0
+
 route -vCF
 
 # https://blog.csdn.net/u011857683/article/details/83795435

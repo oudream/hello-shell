@@ -1,7 +1,23 @@
 
 ### web
+- https://github.com/influxdata/influxdb
+- https://portal.influxdata.com/downloads/
 - http://127.0.0.1:8086/
 
+
+### download
+- arm32 armv7
+```shell
+https://github.com/influxdata/influxdb/releases?page=2
+https://bitbucket.org/choekstra/influxdb2-linux-arm/src/master/
+https://hub.docker.com/r/arm32v7/influxdb/tags
+```
+
+
+### start
+```shell
+nohup /userdata/influxdb2/influxd --http-bind-address=0.0.0.0:7809 --engine-path=/userdata/influxdb2/data --bolt-path=/userdata/influxdb2/influxd.bolt 1>/userdata/influxdb2/influxdb.log 2>&1 &
+```
 
 ### docker
 ```shell
@@ -29,6 +45,85 @@ docker run -p 8086:8086 \
       influxdb:2.0
 ```
 
+
+### docker
+```shell
+mkdir -p /data/influxdb2b
+
+docker run -d --restart=always -p 7809:8086 \
+      --name influxdb2 \
+      -v /home/influxdb2/data:/var/lib/influxdb2 \
+      -v /home/influxdb2/config:/etc/influxdb2 \
+      influxdb:2.5.1
+```
+
+
+### setup 2.6.0
+- https://portal.influxdata.com/downloads/
+```shell
+#  amd64
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.6.0-linux-amd64.tar.gz
+tar xvfz influxdb2-2.6.0-linux-amd64.tar.gz
+
+# arm64
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.6.0-linux-arm64.tar.gz
+tar xvfz influxdb2-2.6.0-linux-arm64.tar.gz
+```
+
+
+### setup 2.5.1
+- https://portal.influxdata.com/downloads/
+- https://docs.influxdata.com/influxdb/v2.5/install/?t=Linux#download-and-install-influxdb-vspan-classcurrent-version25span
+```shell
+# amd64
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.5.1-linux-amd64.tar.gz
+
+# arm
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.5.1-linux-arm64.tar.gz
+
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.7.1-linux-arm64.tar.gz
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-2.7.3-linux-arm64.tar.gz
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-2.7.3-amd64.tar.gz
+
+# amd64
+tar xvzf path/to/influxdb2-2.5.1-linux-amd64.tar.gz
+
+# arm
+tar xvzf path/to/influxdb2-2.5.1-linux-arm64.tar.gz
+
+# amd64
+sudo cp influxdb2-2.5.1-linux-amd64/influxd /usr/local/bin/
+
+# arm
+sudo cp influxdb2-2.5.1-linux-arm64/influxd /usr/local/bin/
+
+# windows
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-2.7.3-windows-amd64.zip -UseBasicParsing -OutFile influxdb2-client-2.7.3-windows-amd64.zip
+Expand-Archive .\influxdb2-client-2.7.3-windows-amd64.zip -DestinationPath 'C:\Program Files\InfluxData\influxdb2-client\'
+
+```
+
+
+### start
+- https://docs.influxdata.com/influxdb/v2.5/reference/cli/influxd/
+- https://docs.influxdata.com/influxdb/v2.5/reference/config-options/
+```shell
+influxd --http-bind-address=0.0.0.0:8086
+#influxd --http-bind-address=:8086
+
+#Environment variable
+#export INFLUXD_HTTP_BIND_ADDRESS=:8086
+
+```
+
+
+### query
+- https://docs.influxdata.com/influxdb/v1.7/write_protocols/line_protocol_reference/
+- https://docs.influxdata.com/flux/v0.x/data-types/basic/duration/
+- https://docs.influxdata.com/influxdb/v1.7/query_language/data_exploration/#time-syntax
+- https://docs.influxdata.com/flux/v0.x/stdlib/universe/range/
+- https://docs.influxdata.com/flux/v0.x/stdlib/universe/count/
+- https://docs.influxdata.com/influxdb/cloud/query-data/flux/query-fields/
 
 
 ### InfluxDB

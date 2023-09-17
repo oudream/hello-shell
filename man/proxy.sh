@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ### proxy
-git config --global http.proxy http://10.50.52.218:7890
-git config --global https.proxy https://10.50.52.218:7890
+git config --global http.proxy http://10.50.52.32:7890
+git config --global https.proxy https://10.50.52.32:7890
 git config --global http.proxy http://127.0.0.1:7890
 git config --global https.proxy https://127.0.0.1:7890
 

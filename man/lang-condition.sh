@@ -3,6 +3,7 @@
 # https://www.mkssoftware.com/docs/man1/test.1.asp
 # https://linuxacademy.com/blog/linux/conditions-in-bash-scripting-if-statements/
 
+
 s1=`(test -r /opt/fff/a.aa) && echo 'y' || echo 'n'` ## 判断文件
 s1=`[[ " ${arr1[*]} " == *"23.2"* ]] && echo 'y'`    ## 判断数组
 
@@ -151,7 +152,7 @@ exprA -o exprB # exprA is true or exprB is true
 #fi
 
 #1.2 判断第二种
-#if [条件判断一 -a(-o) 条件判断二 -a(-o) 条件判断三];then
+#if [ 条件判断一 -a(-o) 条件判断二 -a(-o) 条件判断三 ];then
 #	待执行命令一
 #elif [ 条件判断四 -a(-o) 条件判断五 ];then
 #	待执行命令二

@@ -104,6 +104,7 @@ mysql>source /opt/tmp/db1.sql
 # 性能瓶颈定位Show命令
 # 我们可以通过show命令查看MySQL状态及变量，找到系统的瓶颈：
 # Mysql>
+# SHOW CREATE TABLE tbl_name 以SQL语句的形式展示表结构
     help
     help show                    ;  # ——显示show的幫助信息
         SHOW {BINARY | MASTER} LOGS

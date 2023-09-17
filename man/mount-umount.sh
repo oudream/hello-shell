@@ -17,7 +17,7 @@ sshfs -C -o reconnect oudream@10.31.58.132:/ddd /fff/r132ddd
 
 
 # mount 远程共享文件夹
-sudo mount -o username=oudream,password=135246 //192.168.169.132/opt/ddd/ccpp/hello-cmake /opt/ddd/ccpp/hello-cmake
+sudo mount -o username=oudream,password=XXXXX //192.168.169.132/opt/ddd/ccpp/hello-cmake /opt/ddd/ccpp/hello-cmake
 
 sudo mount -t cifs -o username=administrator,password=ygct@12345678 //10.31.58.215/d /eee/215d
 
@@ -25,7 +25,7 @@ sudo mount -t cifs //10.35.191.11/ddd /eee/11d -o username=oudream,password=oudr
 
 sudo mount -t cifs //192.168.0.103/ddd /ddd -o username=oudream,password=oudream,nounix,sec=ntlmssp
 
-sudo mount -t cifs //144.202.65.220/fff/ceph /eee/ceph -o username=root,password=Z.a-135246-a.Z,nounix,sec=ntlmssp
+sudo mount -t cifs //144.202.65.220/fff/ceph /eee/ceph -o username=root,password=XXXXX,nounix,sec=ntlmssp
 
 
 # mount 215
