@@ -33,9 +33,15 @@ dconf write /org/gnome/desktop/remote-access/require-encryption false
 apt-get install -y terminator
 
 
-### install libs
-apt-get update -y ; apt-get upgrade -y && apt install -y terminator gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libgl1-mesa-dev net-tools
+### Ubuntu 镜像
+- https://developer.aliyun.com/mirror/ubuntu/
 
+
+### install libs
+apt update -y ; apt-get upgrade -y && apt install -y terminator gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev libopencv-dev python3-opencv libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libgl1-mesa-dev net-tools
+
+### pip
+pip install opencv-python pandas ultralytics matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 ### install linaro arm32
 cd /opt
@@ -47,6 +53,7 @@ wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-
 tar xvf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
 
 ### install qt
+apt install libxcb-xinerama0
 cd /opt/
 mkdir tmp
 wget https://download.qt.io/official_releases/qt/5.14/5.14.2/qt-opensource-linux-x64-5.14.2.run
@@ -108,7 +115,7 @@ cmake -D U_DEPLOY_PATH="/opt/dev/hello_iec104/build/deploy-linaro" -D CMAKE_TOOL
 make -j 8
 
 ### install node.js
-curl -fsSL https://deb.nodesource.com/setup_lts.x | -E bash -
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 apt install -y nodejs
 node -v
 npm -v

@@ -2,6 +2,11 @@
 
 # https://docs.conda.io/projects/conda/en/latest/commands.html
 
+# 创建名为python3.10，python版本为3.10的环境。
+conda create --name python3.10 python=3.10
+conda activate python3.10
+conda activate #回到base
+conda deactivate #退出当前环境
 
 conda install -c conda-forge opencv
 

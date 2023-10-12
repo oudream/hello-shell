@@ -1,5 +1,10 @@
 
 ### 命令创建项目
+- create-vue，即官方的项目脚手架工具，提供了搭建基于 Vite 且 TypeScript 就绪的 Vue 项目的选项。
+- https://github.com/vuejs/create-vue
+```shell
+npm create vue@latest
+```
 ```shell
 npm install -g vite
 

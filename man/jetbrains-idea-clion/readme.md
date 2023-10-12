@@ -2,11 +2,19 @@
 ### 破解
 - https://gitee.com/ja-netfilter/ja-netfilter
 - 在 idea64.exe.vmoptions 配置文件结尾添加如下配置
+- windows
 ```text
 # 补丁的绝对路径（可根据你实际的位置进行修改）,注意路径一定要填写正确，且不能包含中文，否则会导致 IDEA 无法启动
 -javaagent:/opt/jetbrains/ja-netfilter/ja-netfilter.jar
 --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
 --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
+```
+- linux
+```text
+--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
+--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
+
+-javaagent:/opt/jetbrains/Linux/ja-netfilter.jar=jetbrains
 ```
 - 重新打开 IDEA，填入下面的激活码，点击激活即可。
 - webstorm : 85KWOACE9J

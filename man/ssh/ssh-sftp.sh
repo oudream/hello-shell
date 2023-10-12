@@ -89,8 +89,7 @@ ssh-keygen -t rsa
 ### ssh 本地证书复制到远程，提示输入远程机密码的
 ssh-copy-id root@hy196
 ssh-copy-id root@hy148
-ssh-copy-id root@hy235
-ssh-copy-id root@zr193
+ssh-copy-id root@lm175
 
 ### 以后就可以 scp 免密码登录复制
 

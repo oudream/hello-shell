@@ -26,6 +26,10 @@ ldd --help
 arm-none-linux-gnueabi-readelf -a $1 | grep "Shared library:"
 
 
+### 添加库目录[例如：/usr/local/lib]到全局库房
+/etc/ld.so.conf.d/opencv.conf
+ldconfig -v
+
 ###
 # https://man.linuxde.net/ldconfig
 # https://linux.die.net/man/8/ldconfig

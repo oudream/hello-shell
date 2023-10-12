@@ -1,6 +1,8 @@
+# lm-vform3
+# https://www.npmjs.com/package/lm-vform3?activeTab=code
 
 ### 如何发布一个自己的npm包？
-- https://juejin.cn/post/6864776736812236808
+# https://juejin.cn/post/6864776736812236808
 # 在终端输入以下命令，npm-demo为包的目录，可以自己任意取名
 mkdir lm-vform3
 cd lm-vform3
