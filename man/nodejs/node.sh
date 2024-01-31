@@ -28,25 +28,13 @@ PATH_BAK=$PATH
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/node12/bin
 
 
-### Install Node.js 12 LTS on CentOS 7
-curl -sL https://rpm.nodesource.com/setup_18.x | sudo bash -
-curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
-curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash -
-sudo yum clean all && sudo yum makecache fast
-sudo yum install -y gcc-c++ make
-sudo yum install -y nodejs
+### nodejs 16.18
+yum install -y epel-release
+yum update -y
+yum install -y nodejs npm
 node -v
+npm -v
 
-
-### centos install node10
-sudo yum uninstall -y nodejs
-# 清理yum源缓存并选择最快的源重新生成缓存：
-curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-sudo yum clean all && sudo yum makecache fast
-# 安装编译环境：
-sudo yum install -y gcc-c++ make
-sudo yum install -y nodejs
-node -v
 
 
 ### on linux, debian, ubuntu

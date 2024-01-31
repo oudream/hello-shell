@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+### 清除last和history记录
+echo "">/var/log/wtmp
+last
+echo "">/var/log/btmp
+lastb
+history -c && history -w
+
 # 显示最近使用的10条历史命令
 history 10
 

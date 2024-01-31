@@ -53,6 +53,8 @@ ffmpeg -i input.mov -qscale 0 output.mp4
 ffmpeg -f image2 -i out%4d.png -r 25 video.mp4
 # 切分视频并生成M3U8文件
 ffmpeg -i input.mp4 -c:v libx264 -c:a aac -strict -2 -f hls -hls_time 20 -hls_list_size 0 -hls_wrap 0 output.m3u8
+# 把 GIF 转换为普通视频格式
+ffmpeg -f gif -i video.gif video.mp4
 
 
 ### 合并视频

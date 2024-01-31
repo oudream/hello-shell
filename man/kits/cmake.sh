@@ -7,6 +7,10 @@ cmake -S . -B"./build-cmake"
 cmake . -G "Visual Studio 12 2013" --build "C:\ddd\ccpp\googletest\googletest-master" -B"C:\ddd\ccpp\googletest\googletest-master\cmake-vs2013"
 cmake . -G "Visual Studio 14 2015" --build "C:\ddd\ccpp\googletest\googletest-master" -B"C:\ddd\ccpp\googletest\googletest-master\build\cmake-vs2015" -Dgtest_build_tests=ON -Dgtest_build_samples=ON -Dgmock_build_tests=ON
 cmake . -G "Xcode" --build "/ddd/communication/protobuf/protobuf/cmake" -B"/ddd/communication/protobuf/protobuf/cmake-xcode"
+cmake -G "Visual Studio 16 2019" -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF ./../CMakeLists.txt
+
+cmake -G "Visual Studio 16 2019" ./../CMakeLists.txt
+
 
 -DCMAKE_BUILD_TYPE=Debug -Dgtest_build_tests=ON -Dgtest_build_samples=ON -Dgmock_build_tests=ON
 -DCMAKE_BUILD_TYPE=Release -Dgtest_build_tests=ON -Dgtest_build_samples=ON -Dgmock_build_tests=ON

@@ -84,3 +84,10 @@ INSERT INTO `sc` VALUES ('3', '5', '52');
 INSERT INTO `sc` VALUES ('4', '3', '82');
 INSERT INTO `sc` VALUES ('4', '4', '99');
 INSERT INTO `sc` VALUES ('4', '5', '46');
+
+-- ----------------------------
+-- 数据迁移
+-- ----------------------------
+INSERT INTO iot_general_attr (id, created_at, updated_at, deleted_at, code, name, data_type, min_value, max_value, max_length, unit_name, general_tags, remark, serial_no)
+SELECT id, created_at, updated_at, deleted_at, code, name, data_type, CAST(min_value AS DECIMAL(20,0)), CAST(max_value AS DECIMAL(20,0)), max_length, unit_code, general_tags, remark, serial_no
+FROM general_attr;

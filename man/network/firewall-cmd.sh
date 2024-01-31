@@ -56,7 +56,7 @@ firewall-cmd --permanent --zone=public --add-port=801/tcp
 
 # 开启某个端口
 # 永久
-firewall-cmd --permanent --zone=public --add-port=8080-8081/tcp
+firewall-cmd --permanent --zone=public --add-port=10100-10200/tcp
 firewall-cmd --permanent --zone=public --add-port=5036/tcp
 # 临时
 firewall-cmd --zone=public --add-port=8080-8081/tcp

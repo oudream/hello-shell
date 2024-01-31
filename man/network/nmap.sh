@@ -4,6 +4,8 @@ nmap -sn 10.50.52.1-255
 nmap -sn 10.50.53.1-255
 nmap -sn 192.168.2.0/24
 
+nmap -sn 192.169.0.1-255
+
 nmap -p 1-65535 -v 192.168.2.45
 
 yum install nmap

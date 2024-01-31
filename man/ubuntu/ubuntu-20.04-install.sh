@@ -2,6 +2,10 @@
 passwd root
 
 
+### change hostname
+sudo hostnamectl set-hostname host.example.com
+
+
 ### ssh root
 apt install openssh-server
 # vim /etc/ssh/sshd_config
@@ -35,7 +39,23 @@ apt-get install -y terminator
 
 ### Ubuntu 镜像
 - https://developer.aliyun.com/mirror/ubuntu/
+- cp /etc/apt/sources.list /etc/apt/sources.list.backup
+- vim /etc/apt/sources.list 换成以下内容
+```text
+deb https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+# deb https://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+# deb-src https://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+```
 
+### 更换国内源后
+apt update -y ; apt-get upgrade -y
 
 ### install libs
 apt update -y ; apt-get upgrade -y && apt install -y terminator gcc g++ cmake build-essential gdb gdbserver git unixodbc unixodbc-dev libcurl4-openssl-dev uuid uuid-dev libssl-dev libncurses5-dev software-properties-common libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python3 python3-pip python3-dev libopencv-dev python3-opencv libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libgl1-mesa-dev net-tools

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# token
+git clone https://<username>:<token>@github.com/<username>/<repository>.git
 
 git update-index --chmod=+x path/to/file
 
@@ -8,9 +10,18 @@ alias.addnw=!sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignor
 git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
 
 # 简易的命令行入门教程:
+- https://rogerdudler.github.io/git-guide/index.zh.html
+- https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424
 # Git 全局设置:
 git config --global user.name "oudream"
 git config --global user.email "oudream@126.com"
+
+### git ip变更
+  #首先，您可以通过运行 git remote -v 查看当前的远程仓库配置。
+  #使用 git remote set-url 命令来更改远程仓库的 URL。例如，如果您的远程仓库名称是 origin，并且您要将其更改为新的 IP 地址，您可以使用以下命令：
+git remote set-url origin http://192.168.133.19:3080/software/cx-control-platform.git
+git remote set-url origin http://192.168.133.19:3080/wangweizhou/ct.git
+git remote set-url origin http://192.168.133.19:3080/software/cx-work-station.git
 
 # 创建 git 仓库:
 mkdir i3ds
@@ -79,10 +90,10 @@ git pull origin next:master
 ### 安装
 # https://docs.gitlab.com/ee/install/docker.html
 docker run --detach \
-  --hostname 10.50.52.218 \
-  -p 50443:443 \
-  -p 50080:80 \
-  -p 50022:22 \
+  --hostname 192.168.132.13 \
+  -p 3443:443 \
+  -p 3080:80 \
+  -p 3022:22 \
   --name gitlab \
   --restart always \
   -v /userdata/gitlab/config:/etc/gitlab \
@@ -95,7 +106,12 @@ docker pull gitlab/gitlab-ce:15.11.9-ce.0
 
 
 ### Git 培训实战
-# https://heis.gitee.io/git-training/#5credentialhelperselector-
+- https://heis.gitee.io/git-training/#5credentialhelperselector-
+- https://blog.csdn.net/justlpf/article/details/80681853
+- https://git-scm.com/book/zh/v2/Git-分支-分支的新建与合并
+
+### tortoisegit
+- https://tortoisegit.org/download/
 
 ### 项目源代码迁移到另一个gitlab的方法(保留原来的提交记录)
 cd existing_repo

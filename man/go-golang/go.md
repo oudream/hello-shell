@@ -1,4 +1,35 @@
 
+### install go
+> https://golang.org/dl/
+```shell script
+rm -rf /usr/local/go
+wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
+sudo tar -xvf go1.19.2.linux-amd64.tar.gz
+sudo mv go /usr/local
+
+cat >> /etc/profile << EOF
+export GOROOT=/usr/local/go
+export GOPATH=/root/gopath
+export PATH=\$GOPATH/bin:\$GOROOT/bin:\$PATH
+EOF
+
+# verification
+go version
+```
+
+### install goland
+```shell
+wget https://download.jetbrains.com/go/goland-2022.2.6.tar.gz
+tar zxvf goland-2022.2.6.tar.gz
+
+```
+
+### go mod
+```shell
+go mod vendor
+http_proxy=http://127.0.0.1:7890/ https_proxy=http://127.0.0.1:7890/ go mod vendor
+```
+
 ### go编译到 alpine
 - 运行 golang:alpine
 ```shell

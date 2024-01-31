@@ -17,6 +17,7 @@ docker run \
  --name gitlab \
  gitlab/gitlab-ce:15.6.7-ce.0
 
+
 docker run --detach \
   --hostname 10.8.8.6 \
   -p 9443:443 \
@@ -25,7 +26,7 @@ docker run --detach \
   --name gitlab \
   --restart always \
   -v /data/gitlab/config:/etc/gitlab \
-  -v /data/gitlab/logs:/var/log/gitlab \
+  -v docker/data/gitlab/logs:/var/log/gitlab \
   -v /data/gitlab/data:/var/opt/gitlab \
   -v /etc/localtime:/etc/localtime \
   gitlab/gitlab-ce:latest

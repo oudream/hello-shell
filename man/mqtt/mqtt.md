@@ -35,7 +35,7 @@ cp lib/libmosquitto.so.1 /opt/deploy/amd64/mosquitto/
 sudo apt install mosquitto mosquitto-clients
 # centos 
 sudo yum -y install epel-release
-sudo yum install mosquitto mosquitto-clients
+    sudo yum install mosquitto mosquitto-clients
 # service
 sudo systemctl enable mosquitto
 sudo systemctl restart mosquitto
@@ -149,7 +149,7 @@ mosquitto_pub -h 127.0.0.1 -p 1883 -t '$oc/devices/00000001/sys/events/up' -m '{
 mosquitto_pub -h 127.0.0.1 -p 1883 -t '$oc/devices/00000002/sys/events/up' -m '{"deviceid":"pdfcxd0003","action":"c"}'
 mosquitto_pub -h 127.0.0.1 -p 1883 -t '$oc/devices/00000002/sys/events/up' -m '{"deviceid":"pdfcxd0004","action":"d"}'
 
-./mosquitto_sub -h 172.16.48.242 -p 7805 -t '$oc/rtn/#' 
+./mosquitto_sub -h 172.17.0.1 -p 7805 -t '$oc/rtn/#' 
 ./mosquitto_sub -h 127.0.0.1 -p 7805 -t '$oc/dev/#' 
 ./mosquitto_sub -h 127.0.0.1 -p 7805 -t '$oc/dev/+/get/request/rt' 
 ./mosquitto_sub -h 127.0.0.1 -p 7805 -t '$oc/dev/00000000000000/get/request/rt' 

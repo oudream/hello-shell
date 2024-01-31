@@ -1,3 +1,24 @@
+
+### Syncthing 的特点包括去中心化、加密通信、跨平台支持和版本历史记录等
+- https://github.com/syncthing/syncthing
+### GUI
+- https://docs.syncthing.net/users/contrib.html#gui-wrappers
+### Windows tray utility / filesystem watcher / launcher for Syncthing
+- https://github.com/canton7/SyncTrayzor
+
+### windows rsync, DeltaCopy For rsync(Borland C++ Builder 2006 (BDS))
+- https://www.itefix.net/cwrsync
+- https://github.com/oudream/DeltaCopy
+- http://www.aboutmyip.com/AboutMyXApp/DisplayFAQ.do?fid=6
+
+### rsync, 官网
+- https://rsync.samba.org/download.html
+- https://github.com/WayneD/rsync
+
+### Go rsync implementation
+- https://github.com/gokrazy/rsync
+
+
 rsync -av --delete --exclude='deploy/amd64/hy3-*' -e 'ssh -p 5022' /opt/dev/device_communicator/ root@yun4:/opt/dev/device_communicator
 
 # rsync 默认使用 SSH 进行远程登录和数据传输。

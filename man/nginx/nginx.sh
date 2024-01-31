@@ -9,8 +9,11 @@ nginx -s reload
 # simple static content
 # https://hub.docker.com/_/nginx
 docker run --name nginx1 -p 80:80 -d nginx
+docker run --name nginx1 -p 80:80 -d nginx
 docker run --name nginx1 -p 80:80 -v /some/content:/usr/share/nginx/html:ro -d nginx
 docker run --name nginx1 -p 80:80 -v /host/path/nginx.conf:/etc/nginx/nginx.conf:ro -d nginx
+
+docker run --name nginx -d -p 80:80 -p 443:443 -v/opt/nginx:/etc/nginx -v /opt/sa_ce_test:/opt/sa_ce_test -v /opt/dev:/opt/dev nginx:1.25.3
 
 # news release
 open http://hg.nginx.org/nginx/
