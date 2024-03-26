@@ -1,34 +1,36 @@
-type Heartbeat struct {
-	ProgramId int64 `json:"ProgramId"`
-	PId       int   `json:"PId"`
-	Healthy   int   `json:"Healthy"`
-	Res1      int   `json:"Res1"`
-	Res2      int   `json:"Res2"`
-	Res3      int   `json:"Res3"`
-	Res4      int   `json:"Res4"`
-}
-
-
-public struct AoLeiStatus
-{
-int OvercurrentProtection;    // 过流保护
-int OvervoltageProtection;    // 过压保护
-int PowerSupplyAlarm;         // 电源报警指示
-int InterlockIndicator;       // 互锁指示
-int HighPressureOffIndicator; // 高压关状态指示
-int HighPressureOnIndicator;  // 高压开状态指示
-int RemoteModeIndicator;      // 远程模式指示
-int HighPressureOnIndicator2; // 高压开指示
-int OverPowerProtection;      // 过功率保护
-int LocalModeIndicator;       // 本地模式指示
-}
-            Console.WriteLine($"过流保护: {overcurrentProtection}");
-            Console.WriteLine($"过压保护: {overvoltageProtection}");
-            Console.WriteLine($"电源报警指示: {powerSupplyAlarm}");
-            Console.WriteLine($"互锁指示: {interlockIndicator}");
-            Console.WriteLine($"高压关状态指示: {highPressureOffIndicator}");
-            Console.WriteLine($"高压开状态指示: {highPressureOnIndicator}");
-            Console.WriteLine($"远程模式指示: {remoteModeIndicator}");
-            Console.WriteLine($"高压开指示: {highPressureOnIndicator2}");
-            Console.WriteLine($"过功率保护: {overPowerProtection}");
-            Console.WriteLine($"本地模式指示: {localModeIndicator}");
+DeviceName=a1;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=0;Address=0;StringLength=0
+DeviceName=a2;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=1;Address=1;StringLength=0
+DeviceName=a3;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=2;StringLength=0
+DeviceName=a4;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=4;StringLength=0
+DeviceName=a5;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=6;StringLength=0
+DeviceName=a6;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=10;StringLength=0
+DeviceName=a7;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=22;StringLength=0
+DeviceName=a8;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=4;Address=26;StringLength=0
+DeviceName=a9;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=5;Address=30;StringLength=0
+DeviceName=a11;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=38;StringLength=256
+DeviceName=a12;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=7;Address=294;StringLength=0
+DeviceName=a13;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=304;StringLength=0
+DeviceName=b1;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=0;Address=330;StringLength=0
+DeviceName=b2;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=1;Address=331;StringLength=0
+DeviceName=b3;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=332;StringLength=0
+DeviceName=b4;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=334;StringLength=0
+DeviceName=b5;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=336;StringLength=0
+DeviceName=b6;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=340;StringLength=0
+DeviceName=b7;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=352;StringLength=0
+DeviceName=b8;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=4;Address=356;StringLength=0
+DeviceName=b9;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=5;Address=360;StringLength=0
+DeviceName=b11;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=368;StringLength=256
+DeviceName=b12;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=7;Address=624;StringLength=0
+DeviceName=b13;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=6344;StringLength=0
+DeviceName=c1;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=0;Address=660;StringLength=0
+DeviceName=c2;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=1;Address=661;StringLength=0
+DeviceName=c3;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=662;StringLength=0
+DeviceName=c4;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=664;StringLength=0
+DeviceName=c5;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=666;StringLength=0
+DeviceName=c6;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=670;StringLength=0
+DeviceName=c7;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=682;StringLength=0
+DeviceName=c8;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=4;Address=686;StringLength=0
+DeviceName=c9;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=5;Address=690;StringLength=0
+DeviceName=c11;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=698;StringLength=256
+DeviceName=c12;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=7;Address=954;StringLength=0
+DeviceName=c13;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=964;StringLength=0

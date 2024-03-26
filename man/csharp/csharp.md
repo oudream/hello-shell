@@ -1,4 +1,13 @@
 
+### C#指南
+- https://learn.microsoft.com/zh-cn/dotnet/csharp/
+
+### C#编码规范
+- https://gist.github.com/zhuqling/a2700703d088b8746f0c
+- 
+### A Winform touch keyboard that automatically supports multiple international layouts
+- https://github.com/gcardi/TouchKB
+
 ### 主要控件名简写对照表
 - 控件名 => 简写
 - Label => lb
@@ -27,8 +36,3 @@
 - CrystalReportViewer => rptvew
 
 
-### C#指南
-- https://learn.microsoft.com/zh-cn/dotnet/csharp/
-
-### C#编码规范
-- https://gist.github.com/zhuqling/a2700703d088b8746f0c

@@ -33,11 +33,11 @@ git commit -m "first commit"
 git remote add origin https://gitee.com/oudream/i3ds.git
 git push -u origin "main"
 
-# 已有仓库?
-cd existing_git_repo
-git remote add dev http://10.50.52.235/iot/device_communicator.git
-git remote add origin https://github.com/oudream/iptables.git
-git push -u dev "main"
+# 已有仓库?、Git迁移新仓库并保存历史提交记录
+git clone https://gitee.com/oldxxx/oldxxx.git && cd oldxxx
+git remote remove origin
+git remote add origin https://gitee.com/newxxx/newxxx.git
+git push --set-upstream origin main
 
 ## 下述命令其实相当于 git fetch + git merge
 git pull origin master
@@ -90,7 +90,7 @@ git pull origin next:master
 ### 安装
 # https://docs.gitlab.com/ee/install/docker.html
 docker run --detach \
-  --hostname 192.168.132.13 \
+  --hostname 192.168.133.17 \
   -p 3443:443 \
   -p 3080:80 \
   -p 3022:22 \

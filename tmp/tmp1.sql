@@ -1,17 +1,35 @@
-CREATE TABLE `sys_role_group` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
-  `update_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
-  `delete_time` bigint(20) DEFAULT NULL COMMENT '删除时间',
-  `create_by` varchar(64) NOT NULL COMMENT '创建人',
-  `update_by` varchar(64) NOT NULL COMMENT '修改人',
-  `delete_by` varchar(64) NOT NULL COMMENT '删除人',
-  `tenant_id` bigint(20) DEFAULT NULL,
-  `code` varchar(64) NOT NULL COMMENT '组代码',
-  `name` varchar(64) NOT NULL COMMENT '组名',
-  `tags` varchar(255) DEFAULT NULL COMMENT '标签，如|A|B|分隔',
-  `role_ids` varchar(255) DEFAULT NULL COMMENT '多角色',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `idx_form_designer1_unique_code` (`code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色组';
+DeviceName=a1;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=0;Address=0;StringLength=0;ReadInterval=20
+DeviceName=a2;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=1;Address=1;StringLength=0;ReadInterval=20
+DeviceName=a3;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=2;StringLength=0;ReadInterval=500
+DeviceName=a4;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=4;StringLength=0;ReadInterval=500
+DeviceName=a5;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=6;StringLength=0;ReadInterval=1000
+DeviceName=a6;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=10;StringLength=0;ReadInterval=1000
+DeviceName=a7;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=22;StringLength=0;ReadInterval=1000
+DeviceName=a8;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=4;Address=26;StringLength=0;ReadInterval=1000
+DeviceName=a9;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=5;Address=30;StringLength=0;ReadInterval=1000
+DeviceName=a11;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=38;StringLength=254;ReadInterval=1000
+DeviceName=a12;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=7;Address=294;StringLength=8;ReadInterval=1000
+DeviceName=a13;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=304;StringLength=24;ReadInterval=1000
+DeviceName=b1;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=0;Address=330;StringLength=0;ReadInterval=20
+DeviceName=b2;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=1;Address=331;StringLength=0;ReadInterval=20
+DeviceName=b3;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=332;StringLength=0;ReadInterval=500
+DeviceName=b4;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=334;StringLength=0;ReadInterval=500
+DeviceName=b5;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=336;StringLength=0;ReadInterval=1000
+DeviceName=b6;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=340;StringLength=0;ReadInterval=1000
+DeviceName=b7;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=352;StringLength=0;ReadInterval=1000
+DeviceName=b8;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=4;Address=356;StringLength=0;ReadInterval=1000
+DeviceName=b9;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=5;Address=360;StringLength=0;ReadInterval=1000
+DeviceName=b11;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=368;StringLength=254;ReadInterval=1000
+DeviceName=b12;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=7;Address=624;StringLength=8;ReadInterval=1000
+DeviceName=b13;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=6;Address=634;StringLength=24;ReadInterval=1000
+DeviceName=c1;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=0;Address=660;StringLength=0;ReadInterval=20
+DeviceName=c2;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=1;Address=661;StringLength=0;ReadInterval=20
+DeviceName=c3;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=662;StringLength=0;ReadInterval=500
+DeviceName=c4;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=664;StringLength=0;ReadInterval=500
+DeviceName=c5;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=666;StringLength=0;ReadInterval=1000
+DeviceName=c6;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=2;Address=670;StringLength=0;ReadInterval=1000
+DeviceName=c7;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=682;StringLength=0;ReadInterval=1000
+DeviceName=c8;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=4;Address=686;StringLength=0;ReadInterval=1000
+DeviceName=c9;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=5;Address=690;StringLength=0;ReadInterval=1000
+DeviceName=static_31;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=694;StringLength=0;ReadInterval=1000
+DeviceName=static_32_1;VariableName=Value;CanRead=False;CanWrite=False;CanControl=False;CanEvent=False;DBArea=30;VariableType=3;Address=698;StringLength=0;ReadInterval=1000

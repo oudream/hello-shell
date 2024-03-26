@@ -15,7 +15,7 @@ systemctl list-unit-files
 # 列出所有运行中单元
 systemctl list-units
 # 列出所有失败单元
-systemctl –failed
+systemctl list-failed
 # 检查某个单元（如 crond.service）是否启用
 systemctl is-enabledcrond.service
 # 列出所有服务
@@ -37,7 +37,7 @@ wget –no-check-certificate  https://raw.githubusercontent.com/teddysun/shadows
 ### 服务 Systemd 服务生命周期
 sudo systemctl set-default multi-user.target # 开机后进入命令行界面：
 sudo systemctl set-default graphical.target # 开机后进入图形界面
-systemctl list-units --all --type=service --no-pager # List all services
+sudo systemctl list-units --all --type=service --no-pager # List all services
 sudo systemctl enable httpd # systemctl enable test.service # 开机启动
 sudo systemctl disable httpd # systemctl disable test.service # 开机不启动
 sudo systemctl start httpd # 启动服务
@@ -45,9 +45,9 @@ sudo systemctl restart httpd.service
 sudo systemctl status httpd # 查看服务的状态
 sudo systemctl stop httpd.service # 停止服务
 sudo systemctl kill httpd.service # 服务停不下来。这时候就不得不"杀进程"了
-systemctl is-active mysql.service
+sudo systemctl is-active mysql.service
 # 配置文件主要放在 /usr/lib/systemd/system 目录，也可能在 /etc/systemd/system
-systemctl cat sshd.service # 查看配置文件
+sudo systemctl cat sshd.service # 查看配置文件
 # [Unit] 区块：启动顺序与依赖关系
 #    Description 字段给出当前服务的简单描述，Documentation 字段给出文档位置
 #    After 和 Before 字段只涉及启动顺序，不涉及依赖关系
