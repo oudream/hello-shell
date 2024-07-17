@@ -37,7 +37,14 @@ git push -u origin "main"
 git clone https://gitee.com/oldxxx/oldxxx.git && cd oldxxx
 git remote remove origin
 git remote add origin https://gitee.com/newxxx/newxxx.git
+# 注意 main 还是 master
+# 从 2020 年 10 月 1 日开始，GitHub 上的所有新库都将用中性词「main」命名，取代原来的「master」
 git push --set-upstream origin main
+git push --set-upstream origin master
+
+# 注意 http 还是 https
+git remote add origin http://192.168.133.17:3080/software/CxPlatform.git
+
 
 ## 下述命令其实相当于 git fetch + git merge
 git pull origin master
@@ -95,14 +102,40 @@ docker run --detach \
   -p 3080:80 \
   -p 3022:22 \
   --name gitlab \
+  --memory=16G --shm-size=2G \
   --restart always \
+  --privileged=true \
   -v /userdata/gitlab/config:/etc/gitlab \
   -v /userdata/gitlab/logs:/var/log/gitlab \
   -v /userdata/gitlab/data:/var/opt/gitlab \
   -v /etc/localtime:/etc/localtime \
-  gitlab/gitlab-ce:15.11.9-ce.0
+  gitlab/gitlab-ce:15.11.13-ce.0
 
-docker pull gitlab/gitlab-ce:15.11.9-ce.0
+docker pull gitlab/gitlab-ce:15.11.13-ce.0
+docker inspect gitlab/gitlab-ce:15.11.13-ce.0 --format='{{.Config.Volumes}}'
+
+
+### 内存过多
+### vim /etc/gitlab/gitlab.rb
+### gitlab部署后内存占用过多 (puma['worker_processes'] = 4)(unicorn['worker_processes'] = 2)
+### 原因找到了，这个版本的gitlab不是使用的unicorn而是puma，所以应该修改的配置是
+puma['worker_processes'] = 2
+### 修改后然后重启服务，问题解决
+### 禁用prometheus，可以进一步减少内存占用，prometheus_monitoring['enable'] = false
+### 不禁用，可以更改buffer大小，postgresql['shared_buffers'] = 256M
+### 减少并发连接数：通过减少Puma和Sidekiq的并发连接数来降低内存使用
+puma['worker_processes'] = 2
+sidekiq['concurrency'] = 10
+### 调整内存限制：可以通过设置Puma和Sidekiq的内存限制来降低其使用的内存量
+puma['worker_memory_limit'] = '500M'
+sidekiq['max_memory_killer_max_rss'] = '500M'
+
+
+### 密码查看方式
+# Linux安装包方式：
+cat /etc/gitlab/initial_root_password
+# Docker Engine安装方式：
+docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
 
 
 ### Git 培训实战

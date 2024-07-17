@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set PATH=D:\Qt\Qt6.7.1\Tools\mingw1120_64\bin;%PATH%
+
 go env
 
 go build -v -work -o hello.exe
