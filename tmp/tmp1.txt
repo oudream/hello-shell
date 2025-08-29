@@ -1,24 +1,305 @@
-曝光周期图像的即时重叠
+dev_get_window (WindowHandle)
+IsHasWindow := WindowHandle != -1
+ErrMsg := ''
+DictAry:=[]
+DictAry_MeshShift:=[]
+gen_empty_obj (AiBBox)
 
-将具有不同曝光周期的多个图像叠加在一起，以获取更广泛的动态范围或更好的曝光。
-空间分辨率自动识别工具
+try
+    
+    if(AiBoxRes == [])
+        AiBoxRes := ''
+    endif
+    
+    *读取相机内参外参
+    get_cam_param_pose_pix2mm_ (CamParamIn, CamPoseIn, Pix2Mm)
+    
+    select_shape (MeshRegion, RegionsA, 'row', 'and', 0, 1536)
+    select_shape (MeshRegion, RegionsB, 'row', 'and', 1536, 3072)
+    count_obj (RegionsA, NumberA)
+    count_obj (RegionsB, NumberB)
+    if(NumberA == 2)
+        sort_region (RegionsA, SortedRegionsA, 'upper_left', 'true', 'row')
+        select_obj (SortedRegionsA, ObjectSelectedA1, 1)
+        select_obj (SortedRegionsA, ObjectSelectedA2, 2)
+        difference (ObjectSelectedA1, ObjectSelectedA2, MeshRegionA)
+    endif
+    if(NumberB == 2)
+        sort_region (RegionsB, SortedRegionsB, 'upper_left', 'true', 'row')
+        select_obj (SortedRegionsB, ObjectSelectedB1, 1)
+        select_obj (SortedRegionsB, ObjectSelectedB2, 2)
+        difference (ObjectSelectedB1, ObjectSelectedB2, MeshRegionB)
+    endif
+    
+    
+    HomMat2DScaleA := []
+    HomMat2DScaleB := []
+    IsV53 := -1
+    for Index := 0 to |FindShapeDict|-1 by 1
+        Dict := FindShapeDict[Index]
+        get_dict_tuple (Dict, 'IsV53', IsV53)
+        get_dict_tuple (Dict, 'Product', Product)
+        get_dict_tuple (Dict, 'HomMat2DScale', HomMat2DScale)
+        if(Product == 'A')
+            HomMat2DScaleA := HomMat2DScale
+        endif
+        if(Product == 'B')
+            HomMat2DScaleB := HomMat2DScale
+        endif
+    endfor
+    if(IsV53 == -1)
+        return()
+    endif
+    
+*     find_convex_point_missing_ (ImageE1, NgRegionRaised, FindShapeDict, IsV53, ErrMsg)
 
-通过自动识别图像中的特征或边缘来确定图像的空间分辨率。
-减法工具 - 与图像比较
+*     count_obj (NgRegionRaised, RaisedNumber)
+*     for ii := 1 to RaisedNumber by 1
+*         select_obj (NgRegionRaised, ObjectSelected, ii)
+*         smallest_rectangle1 (ObjectSelected, Row1, Col1, Row2, Col2)
+*         RaisedRes := '' + Col1+', ' + Row1+', ' + Col2+', ' + Row2+', ' + '0.9, 9\n'
+*         AiBoxRes := AiBoxRes + RaisedRes
+*     endfor
+    
+    *提取AI检测框
+    if(IsHasWindow)
+        dev_display (ImageD1)
+    endif
+    BBoxIds := [0, 0]
+    Keys := ['A', 'B']
+*     labelIds:=    [ 0,        1,            2,           3,             4,            5,              6,            7,                  8,                    9,         10]
+*     LabelNames := ['0#', 'Overflow_C', 'NozzleCrack',  'MeshCrease', 'Particle',   'WhiteDot',    'WeldDot',     'MeshShift',        'CoverAssemblyShift',  'Raised', '10#']
+*     AqLabels :=   ['0#', 'Overflow',   'NozzleCrack',  'MeshCrease', 'Particle',   'WhiteDot',    'WeldDot',     'MeshShift',        'CoverShift',          'Raised', '10#']                 
+*     labelIds:=    [ 0,        1,            2,           3,             4,            5,           6,              7,             8,                    9,                  10,     11]
+*     LabelNames := ['0#', 'Overflow_C', 'NozzleCrack',  'MeshCrease', 'Particle',  'WhiteDot',    'WeldDot',     'BlackDot',   'MeshShift',        'CoverAssemblyShift',  'Raised', '11#']
+*     AqLabels :=   ['0#', 'Overflow',   'NozzleCrack',  'MeshCrease', 'Particle',  'WhiteDot',    'WeldDot',     'BlackDot',   'MeshShift',        'CoverShift',          'Raised', '11#']     
+    labelIds:=    [ 0,        1,            2,           3,             4,            5,           6,             7,            8,           9,                  10,                   11,      12 ]
+    LabelNames := ['0#', 'Overflow_C', 'NozzleCrack',  'MeshCrease', 'Particle',  'WhiteDot',    'WeldDot',   'BlackDot',  'Overflow_A',  'MeshShift',        'CoverAssemblyShift',  'Raised', '12#']
+    AqLabels :=   ['0#', 'OverflowC',   'NozzleCrack',  'MeshCrease', 'Particle',  'WhiteDot',    'WeldDot',   'BlackDot',  'OverflowA',   'MeshShift',        'CoverShift',          'Raised', '12#']     
+    
+    
+    gen_empty_obj (BBox_MeshShift)
+    BoxResSplit := split(AiBoxRes, '\n')
+    for Idx := 0 to |BoxResSplit|-1 by 1
+        ResText := BoxResSplit[Idx]
+        if(strlen( ResText) < 5)
+            continue
+        endif
+        
+        tuple_regexp_test (ResText, 'Detection', NumMatches)
+        if(NumMatches == 1)
+            continue
+        endif
+        
+        tuple_split (ResText, ',', Substrings)
+        tuple_number (Substrings, ResNumber)
+        
+        tuple_regexp_test (ResText, 'aq_', NumMatches_aq)
+        if(NumMatches_aq == 1)
+            tuple_gen_sequence (1, |ResNumber|-1, 2, ColIds)
+            tuple_gen_sequence (2, |ResNumber|-1, 2, RowIds)
+            Rows:=ResNumber[RowIds]
+            Cols:=ResNumber[ColIds]
+            Score := 1.0
+            LabelId := 0
+            for nn := 1 to |AqLabels|-1 by 1
+                AqLabel := AqLabels[nn]
+                tuple_regexp_test (ResText, AqLabel, NumMatches_type)
+                if(NumMatches_type == 1)
+                    LabelId := nn
+                    break
+                endif
+            endfor
+            
+            LabelName := LabelNames[LabelId]
+            gen_region_polygon_filled (BBox_aq, Rows, Cols)
+            smallest_rectangle1 (BBox_aq, Ymin, Xmin, Ymax, Xmax)
+            gen_rectangle1 (BBox, Ymin, Xmin, Ymax, Xmax)
+        else
+            Xmin := ResNumber[0]
+            Ymin := ResNumber[1]
+            Xmax := ResNumber[2]
+            Ymax := ResNumber[3]
+            Score := ResNumber[4]
+            LabelId := ResNumber[5]
+            LabelName := LabelNames[LabelId]
+            gen_rectangle1 (BBox, Ymin, Xmin, Ymax, Xmax)
+        endif
 
-用于比较两个图像，可能是为了检测变化、识别目标或执行其他分析。
-校准工具 - 暗校准和完全校准
+        if(Score < 0.1)
+            continue
+        endif
+        
+        * 不显示焊点位置
+        if(FiltWeldDot and LabelName == 'WeldDot')
+            continue
+        endif
+        
+        area_center (BBox, Area, Row, Column)
+        if(Ymax <= 1536)
+            AoB := 0
+        else
+            AoB := 1
+        endif
+        
+        *过滤胶路，水口位置上的  (不用了)
+        if(0 and (LabelName == 'Particle' or LabelName == 'WhiteDot'))
+            if(AoB == 0)
+                MeshRegionUse := MeshRegionA
+            else
+                MeshRegionUse := MeshRegionB
+            endif
+            
+            intersection (BBox, MeshRegionUse, RegionIntersection)
+            area_center (RegionIntersection, Area1, _, _)
+            AreaSub := abs(Area - Area1)
+            if(AreaSub < 3)
+                continue
+            endif
+        endif
+        
+        *过滤网外的  (不用了)
+        if(0 and (LabelName == 'Overflow_C' or LabelName == 'MeshCrease'))
+            if(AoB == 0)
+                MeshRegionUse := ObjectSelectedA2
+            else
+                MeshRegionUse := ObjectSelectedB2
+            endif
+            dilation_circle (MeshRegionUse, RegionDilation, 5.5)
+            
+            intersection (BBox, RegionDilation, RegionIntersection)
+            area_center (RegionIntersection, Area1, _, _)
+            AreaSub := abs(Area - Area1)
+            if(AreaSub >= (Area*0.9))
+                continue
+            endif
+        endif
+        
+        *(不用了)
+        if(0 and LabelName == 'MeshShift') 
+            concat_obj (BBox_MeshShift, BBox, BBox_MeshShift)
+            continue
+        endif
+        
+        *bbox从E1图映射回D1图上
+        if(AoB == 0)
+            HomMat2DScaleUse := HomMat2DScaleA
+        else
+            HomMat2DScaleUse := HomMat2DScaleB
+        endif
+        if(HomMat2DScaleUse != [])
+            affine_trans_region (BBox, BBox_affine, HomMat2DScaleUse, 'nearest_neighbor')
+        else
+            BBox_affine := BBox
+        endif
+        
+        
+        concat_obj (AiBBox, BBox_affine, AiBBox)
+        BBoxIds[AoB] := BBoxIds[AoB] + 1
+        
+        height_width_ratio (BBox_affine, Height, Width, Ratio)
+        AreaMm := Area * Pix2Mm * Pix2Mm
+*         FontStr := BBoxIds[AoB] + ':' + AreaMm$'.1f' + 'mm²'
+*         FontStr := BBoxIds[AoB] + ':' + LabelName
+        FontStr := LabelName
+        FontPos := [Ymin-25, Xmin]
+        
+        *AI的C++传来的bbox单边扩大了3，这里要减掉
+        Height := Height - 6
+        Width := Width - 6
+        
+        create_dict (DictHandle)
+        set_dict_tuple (DictHandle, 'Product', Keys[AoB])
+        set_dict_tuple (DictHandle, 'BBoxId', BBoxIds[AoB])
+        set_dict_tuple (DictHandle, 'LabelId', LabelId)
+        set_dict_tuple (DictHandle, 'LabelName', LabelName)
+        set_dict_object (BBox_affine, DictHandle, 'BBox')
+        set_dict_tuple (DictHandle, 'Score', Score)
+        set_dict_tuple (DictHandle, 'Area', Area)
+        set_dict_tuple (DictHandle, 'Row', Row)
+        set_dict_tuple (DictHandle, 'Column', Column)
+        set_dict_tuple (DictHandle, 'AreaMm', AreaMm)
+        set_dict_tuple (DictHandle, 'Width', Width)
+        set_dict_tuple (DictHandle, 'Height', Height)
+        set_dict_tuple (DictHandle, 'FontRow', FontPos[0])
+        set_dict_tuple (DictHandle, 'FontCol', FontPos[1])
+        set_dict_tuple (DictHandle, 'FontStr', FontStr)
+        DictAry := [DictAry, DictHandle]
+        
+        if(IsHasWindow)
+            dev_display (BBox_affine)
+            dev_disp_text (FontStr, 'image', FontPos[0], FontPos[1], 'red', 'box', 'false')
+        endif
+    endfor
+    
+    
+    *合并相近的MeshShift  (不用了)
+    if(0)
+        LabelId := 7
+        Image2 := ImageE1
+        dilation_circle (BBox_MeshShift, RegionDilation2, 25.5)
+        union1 (RegionDilation2, RegionUnion2)
+        connection (RegionUnion2, ConnectedRegions2)
+        intersection (ConnectedRegions2, BBox_MeshShift, RegionIntersection2)
+        dilation_circle (RegionIntersection2, RegionDilation2b, 1.5)
+        shape_trans (RegionDilation2b, RegionTrans2, 'rectangle1')
+        
+        count_obj (RegionTrans2, Num2)
+        for Idx2 := 1 to Num2 by 1
+            select_obj (RegionTrans2, ObjectSelected2, Idx2)
+            smallest_rectangle1 (ObjectSelected2, Ymin, Xmin, Ymax, Xmax)
+            
+            gen_rectangle1 (BBox, Ymin, Xmin, Ymax, Xmax)
+            concat_obj (AiBBox, BBox, AiBBox)
+            
+            if(Ymax <= 1536)
+                AoB := 0
+            else
+                AoB := 1
+            endif
+            BBoxIds[AoB] := BBoxIds[AoB] + 1
+            area_center (BBox, Area, Row, Column)
+            height_width_ratio (BBox, Height, Width, Ratio)
+            
+            
+            LabelName := LabelNames[LabelId]
+            AreaMm := Area * Pix2Mm * Pix2Mm
+*             FontStr := BBoxIds[AoB2] + ':' + AreaMm$'.1f' + 'mm²'
+            FontStr := BBoxIds[AoB] + ':' + LabelName
+            FontPos := [Ymin-25, Xmin]
+            
+            create_dict (DictHandle)
+            set_dict_tuple (DictHandle, 'Product', Keys[AoB])
+            set_dict_tuple (DictHandle, 'BBoxId', BBoxIds[AoB])
+            set_dict_tuple (DictHandle, 'LabelId', LabelId)
+            set_dict_tuple (DictHandle, 'LabelName', LabelName)
+            set_dict_object (BBox, DictHandle, 'BBox')
+            set_dict_tuple (DictHandle, 'Score', Score)
+            set_dict_tuple (DictHandle, 'Area', Area)
+            set_dict_tuple (DictHandle, 'Row', Row)
+            set_dict_tuple (DictHandle, 'Column', Column)
+            set_dict_tuple (DictHandle, 'AreaMm', AreaMm)
+            set_dict_tuple (DictHandle, 'Width', Width)
+            set_dict_tuple (DictHandle, 'Height', Height)
+            set_dict_tuple (DictHandle, 'FontRow', FontPos[0])
+            set_dict_tuple (DictHandle, 'FontCol', FontPos[1])
+            set_dict_tuple (DictHandle, 'FontStr', FontStr)
+            DictAry := [DictAry, DictHandle]
+            
+            if(IsHasWindow)
+                dev_display (BBox)
+                dev_disp_text (FontStr, 'image', FontPos[0], FontPos[1], 'red', 'box', 'false')
+            endif
+        endfor
+    endif
+    
+catch (Exception)
+    Ex := Exception
+    ErrMsg := Ex[3]+':'+Ex[2] +'.发生在'+Ex[7]+'的行'+Ex[4]+'-->'+Ex[5]
+endtry
 
-提供校准功能，包括对暗信号进行校准以及对整个图像进行校准，以确保准确性和一致性。
-探针功能 - 识别无机材料中的有机材料
+if(ErrMsg != '' and WindowHandle != 1)
+    stop()
+endif
 
-用于在无机材料中识别有机材料，可能是通过特定的探测方法或分析技术。
-求和 - 在一张图像中累积多个面板的曝光
-
-将多个图像叠加在一起，以累积多个曝光或面板的信息。
-叠加 - 将具有不同曝光时间的两个图像合并到一个图像中
-
-将具有不同曝光时间的两个图像进行叠加，以获得更丰富的信息。
-平均信噪比降低工具
-
-用于降低图像的平均信噪比，可能是为了模拟低信噪比环境下的情况或进行特定类型的分析。
+return ()

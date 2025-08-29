@@ -135,7 +135,7 @@ cmake -D U_DEPLOY_PATH="/opt/dev/hello_iec104/build/deploy-linaro" -D CMAKE_TOOL
 make -j 8
 
 ### install node.js
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 apt install -y nodejs
 node -v
 npm -v
@@ -174,7 +174,7 @@ cd /opt/dev/mosquitto
 mkdir cmake-build-arm32 && cd cmake-build-arm32
 cmake -DWITH_CJSON=no -DWITH_TLS=no -DWITH_BUNDLED_DEPS=no -DWITH_DOCS=no -DDOCUMENTATION=OFF -D CMAKE_TOOLCHAIN_FILE="/opt/dev/hello_iec104/build/armv7/linaro/toolchainfile.cmake" ..
 make -j 8
-mkdir /opt/deploy/arm32/mosquitto/
+mkdir -p /opt/deploy/arm32/mosquitto/
 cp src/mosquitto /opt/deploy/arm32/mosquitto/
 cp client/mosquitto_pub /opt/deploy/arm32/mosquitto/
 cp client/mosquitto_rr /opt/deploy/arm32/mosquitto/

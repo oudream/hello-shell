@@ -1,4 +1,27 @@
 
+###
+git clone https://github.com/opencv/opencv.git  --recursive
+git checkout dad8af6 # 4.9
+mkdir build4.9; cd build4.9
+```shell
+cmake ..
+ -G "Visual Studio 17 2022" -A x64
+ -DCMAKE_BUILD_TYPE=Release
+ -DCMAKE_INSTALL_PREFIX=..\install
+ -DOPENCV_EXTRA_MODULES_PATH=..\opencv_contrib\modules
+ -DWITH_CUDA=ON
+ -DWITH_CUDNN=ON
+ -DOPENCV_DNN_CUDA=ON
+ -DWITH_CUBLAS=ON
+ -DENABLE_FAST_MATH=ON -DCUDA_FAST_MATH=ON
+ -DCUDA_ARCH_BIN="8.6"   
+ -DCUDA_ARCH_PTX=""
+ -DBUILD_opencv_world=ON
+ -DBUILD_EXAMPLES=ON
+ -DBUILD_opencv_python3=ON
+ -DPYTHON_EXECUTABLE="D:/Software/Python39/python.exe"
+```
+
 ### 
 git clone https://github.com/opencv/opencv.git
 cd opencv

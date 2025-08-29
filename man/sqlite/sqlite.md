@@ -1,4 +1,28 @@
 
+### 检测文件好坏
+- 返回ok 或 错误
+```sql
+PRAGMA integrity_check;
+```
+
+### sqlite3.db 2 sql
+- Dump and Restore the Database
+```sql
+sqlite3 corrupted.db ".dump" > backup.sql
+sqlite3 new.db < backup.sql
+```
+- sqlite3 备份 dump 出来的sql文件，要改一下最后一句为：COMMIT;
+```sql
+BEGIN TRANSACTION;
+INSERT INTO 表名 (列1, 列2) VALUES ('值1', '值2');
+COMMIT;
+```
+
+### 阻止并发
+```sql
+PRAGMA journal_mode=WAL;
+```
+
 ### open sqlite3 db
 ```shell
 ./sqlite3 xxx.db
@@ -14,7 +38,7 @@
 
 ###
 ```sql
-select * from METER_TABLE_03001DY00011052000006505;
+[select]([]()) * from METER_TABLE_03001DY00011052000006505;
 ```
 
 ### last row
@@ -25,9 +49,9 @@ SELECT * FROM TABLE WHERE ID = (SELECT MAX(ID) FROM TABLE);
 ### 分页
 ```sql
 --- 查询第一行起的5行数据，可以有两种语句： 
-select * from T_user limit 5 offset 0; 
+[select]([]()) * from T_user limit 5 offset 0; 
 -- or 
-select * from  T_user limit 0,5;
+[select]([]()) * from  T_user limit 0,5;
 ```
 
 ### 解决数据删除后占用空间不变的问题
@@ -37,7 +61,7 @@ VACUUM
 
 ### 判断表
 ```sql
-select * from sqlite_master
+SELECT * FROM sqlite_master
 SELECT COUNT(*) AS COUNTER FROM `sqlite_master` WHERE `type`='table' AND `name`='YC_POINT_TABLE';
 SELECT * FROM `sqlite_master` WHERE `type`='table';
 SELECT `type`, `name`, `tbl_name` FROM `sqlite_master` WHERE `type`='table';

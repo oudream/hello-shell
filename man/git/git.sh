@@ -16,6 +16,9 @@ git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-ze
 git config --global user.name "oudream"
 git config --global user.email "oudream@126.com"
 
+git config --global user.name "oudream"
+git config --global user.email "zhuo.wang@cygia.com"
+
 ### git ip变更
   #首先，您可以通过运行 git remote -v 查看当前的远程仓库配置。
   #使用 git remote set-url 命令来更改远程仓库的 URL。例如，如果您的远程仓库名称是 origin，并且您要将其更改为新的 IP 地址，您可以使用以下命令：

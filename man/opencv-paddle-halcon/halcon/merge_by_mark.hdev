@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<c>* ================== 参数 ==================</c>
+<l>GrayLow  := 9000</l>
+<l>GrayHigh := 11000</l>
+<c>* threshold_sub_pix 的等值线阈值（位于 9000~11000 之间）</c>
+<l>Iso      := 10000           </l>
+<c>* 环带外扩（像素）</c>
+<l>OuterR   := 25              </l>
+<c>* 环带内缩（像素）</c>
+<l>InnerR   := 6               </l>
+<c>* 轮廓最小长度过滤</c>
+<l>MinLen   := 40              </l>
+<c></c>
+<c>* ==========================================</c>
+<c></c>
+<c>* 读图（可改为你的路径）</c>
+<l>read_image (Image, 'E:/halcon/Merge9601/2-2__1101_0_5279_5_20250806114405_0_.tif')</l>
+<l>dev_display (Image)</l>
+<c></c>
+<c></c>
+<c>* 1) 粗分割：仅用于锁定 ROI（黑孔候选）</c>
+<l>threshold (Image, RegionDark, GrayLow, GrayHigh)</l>
+<l>connection (RegionDark, Conn)</l>
+<l>select_shape (Conn, MarksCoarse, 'area', 'and', 80, 5000)   </l>
+<c>* 面积按实际微调</c>
+<l>count_obj (MarksCoarse, N)</l>
+<c></c>
+<l>Rows := []</l>
+<l>Cols := []</l>
+<l>Rads := []</l>
+<c></c>
+<l>for i := 1 to N by 1</l>
+<l>    select_obj (MarksCoarse, RegI, i)</l>
+<c></c>
+<c>    * 2) 生成环形 ROI，保证跨过真实边缘</c>
+<l>    dilation_circle (RegI, RegOut, OuterR)</l>
+<l>    erosion_circle  (RegI, RegIn,  InnerR)</l>
+<l>    difference (RegOut, RegIn, RingROI)</l>
+<l>    reduce_domain (Image, RingROI, ImgROI)</l>
+<c></c>
+<c>    * ====== 方法A：灰度等值线（优先，稳定闭合） ======</c>
+<l>    threshold_sub_pix (ImgROI, Border, Iso)</l>
+<l>    select_contours_xld (Border, BorderClosed, 'closed', MinLen, 1e10, -0.5, 0.5)</l>
+<l>    length_xld (BorderClosed, Len)</l>
+<l>    IfUseFallback := false</l>
+<l>    if (|Len| &gt; 0)</l>
+<l>        tuple_max (Len, maxLen)</l>
+<c>        * 0-based</c>
+<l>        tuple_find (Len, maxLen, idxLongest)            </l>
+<c>        * 1-based</c>
+<l>        select_obj (BorderClosed, Cont, idxLongest+1)    </l>
+<l>    else</l>
+<l>        IfUseFallback := true</l>
+<l>    endif</l>
+<c></c>
+<l>    if (IfUseFallback)</l>
+<c>        * ====== 方法B：Canny亚像素边缘（回退） ======</c>
+<l>        edges_sub_pix (ImgROI, Edges, 'canny', 1.2, 20, 40)</l>
+<l>        union_adjacent_contours_xld (Edges, EdgesU, 10, 1, 'attr_keep')</l>
+<l>        select_contours_xld (EdgesU, Cont, 'contour_length', MinLen, 1e10, -0.5, 0.5)</l>
+<l>        length_xld (Cont, Len2)</l>
+<l>        if (|Len2| = 0)</l>
+<l>            continue</l>
+<l>        endif</l>
+<l>        tuple_max (Len2, maxLen2)</l>
+<l>        tuple_find (Len2, maxLen2, idxLongest2)</l>
+<l>        select_obj (Cont, Cont, idxLongest2+1)</l>
+<l>    endif</l>
+<c></c>
+<c>    * 安全检查：点数足够再拟合</c>
+<l>    get_contour_xld (Cont, RowPts, ColPts)</l>
+<l>    if (|RowPts| &lt; 10)</l>
+<l>        continue</l>
+<l>    endif</l>
+<c></c>
+<c>    * 3) 鲁棒圆拟合（亚像素）</c>
+<c>    * 参数依次是：算法、最大点数、最大闭合距离、端点裁剪、迭代次数、裁剪因子</c>
+<c>    * 最后 6 个是输出：RowC, ColC, Radius, StartPhi, EndPhi, PointOrder（注意是输出变量！）</c>
+<l>    fit_circle_contour_xld (Cont, 'geotukey', -1, 5.0, 0, 20, 2.0, RowC, ColC, Radius, StartPhi, EndPhi, PointOrder)</l>
+<c></c>
+<l>    Rows := [Rows, RowC]</l>
+<l>    Cols := [Cols, ColC]</l>
+<l>    Rads := [Rads, Radius]</l>
+<l>endfor</l>
+<c></c>
+<l>if (|Rows| &lt; 2)</l>
+<l>    dev_disp_text ('未找到足够的黑孔（&lt;2）。请微调 GrayLow/High、面积或环带参数。', 'window', 20, 20, 'red', [], [])</l>
+<l>    stop ()</l>
+<l>endif</l>
+<c></c>
+<c>* 4) 上/下排序（无需 sort_index）</c>
+<l>tuple_min (Rows, minRow)</l>
+<l>tuple_find (Rows, minRow, idxTop)</l>
+<l>tuple_max (Rows, maxRow)</l>
+<l>tuple_find (Rows, maxRow, idxBot)</l>
+<c></c>
+<l>RowTop := Rows[idxTop]</l>
+<l>ColTop := Cols[idxTop]</l>
+<l>RowBot := Rows[idxBot]</l>
+<l>ColBot := Cols[idxBot]</l>
+<c></c>
+<c>* 5) 可视化：圆与十字</c>
+<l>gen_circle_contour_xld (CircTop, RowTop, ColTop, Rads[idxTop], 0, 6.28318, 'positive', 1.5)</l>
+<l>gen_circle_contour_xld (CircBot, RowBot, ColBot, Rads[idxBot], 0, 6.28318, 'positive', 1.5)</l>
+<l>gen_cross_contour_xld (Cross, [RowTop, RowBot], [ColTop, ColBot], 30, 0)</l>
+<c></c>
+<l>dev_set_color ('magenta')</l>
+<l>dev_display (CircTop)</l>
+<l>dev_display (CircBot)</l>
+<l>dev_set_color ('yellow')</l>
+<l>dev_display (Cross)</l>
+<c></c>
+<l>dev_disp_text ('Top: (' + RowTop$'.2f' + ',' + ColTop$'.2f' + '),  R=' + Rads[idxTop]$'.2f',  'image', RowTop+40, ColTop+40, 'yellow', [], [])</l>
+<l>dev_disp_text ('Bot: (' + RowBot$'.2f' + ',' + ColBot$'.2f' + '),  R=' + Rads[idxBot]$'.2f',  'image', RowBot+40, ColBot+40, 'yellow', [], [])</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
