@@ -3,6 +3,21 @@
 # token
 git clone https://<username>:<token>@github.com/<username>/<repository>.git
 
+git checkout tag_name
+
+git fetch --all
+git reset --hard origin/master
+git pull // 拉
+git push // 提交
+git commit -m "first commit" // 本地提交
+
+git status # 运行 git status命令查看本地修改
+git remote -v # git 查看远程仓库地址命令
+
+git config --global user.name "oudream"
+git config --global user.email "oudream@126.com"
+
+
 git update-index --chmod=+x path/to/file
 
 # 只添加非空白更改
@@ -100,7 +115,7 @@ git pull origin next:master
 ### 安装
 # https://docs.gitlab.com/ee/install/docker.html
 docker run --detach \
-  --hostname 192.168.133.17 \
+  --hostname 172.15.21.25 \
   -p 3443:443 \
   -p 3080:80 \
   -p 3022:22 \
@@ -108,9 +123,9 @@ docker run --detach \
   --memory=16G --shm-size=2G \
   --restart always \
   --privileged=true \
-  -v /userdata/gitlab/config:/etc/gitlab \
-  -v /userdata/gitlab/logs:/var/log/gitlab \
-  -v /userdata/gitlab/data:/var/opt/gitlab \
+  -v /opt/gitlab/config:/etc/gitlab \
+  -v /opt/gitlab/logs:/var/log/gitlab \
+  -v /opt/gitlab/data:/var/opt/gitlab \
   -v /etc/localtime:/etc/localtime \
   gitlab/gitlab-ce:15.11.13-ce.0
 
@@ -132,6 +147,8 @@ sidekiq['concurrency'] = 10
 ### 调整内存限制：可以通过设置Puma和Sidekiq的内存限制来降低其使用的内存量
 puma['worker_memory_limit'] = '500M'
 sidekiq['max_memory_killer_max_rss'] = '500M'
+### 关闭Prometheus监控
+prometheus_monitoring['enable'] = false
 
 
 ### 密码查看方式
@@ -149,12 +166,27 @@ docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
 ### tortoisegit
 - https://tortoisegit.org/download/
 
+
+### 项目源代码迁移到另一个gitlab的方法(保留原来的提交记录)
+# 1) 克隆旧仓库（镜像方式：包含 refs）
+git clone --mirror https://github.com/username/old-repo.git
+cd old-repo.git
+# 2) GitLab 创建一个空项目（不要勾 README / .gitignore / License）
+# 拿到新项目地址后，设置新 remote
+git remote set-url origin http://172.15.21.25:3080/software/cx-vision-x2.git
+git remote set-url origin http://172.15.21.25:3080/software/cx-ct-x2.git
+git remote set-url origin http://172.15.21.25:3080/algorithm/cx-ct-algorithm.git
+git remote set-url origin http://172.15.21.25:3080/software/cx-platform.git
+# 3) 推送镜像到 GitLab（分支、tag、引用全部推过去）
+git push --mirror origin
+### 或者添加的方式（以下方式） ###
 ### 项目源代码迁移到另一个gitlab的方法(保留原来的提交记录)
 cd existing_repo
 git remote rename origin old-origin
 git remote add origin http://10.50.52.235:50080/iot/device_middle_end.git
 git push -u origin --all
 git push -u origin --tags
+
 
 ###
 echo "# wwwroot" >> README.md

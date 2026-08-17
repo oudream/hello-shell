@@ -1,0 +1,50 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "hello-ct2-debug",
+      "displayName": "Build with VTK OpenCV Projects And Examples",
+      "generator": "Ninja",
+      "description": "Build VTK with Qt support and examples",
+      "binaryDir": "${sourceDir}/cmake-build-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BENCHMARK_USE_BUNDLED_GTEST": "ON",
+        "BENCHMARK_DOWNLOAD_DEPENDENCIES": "ON",
+        "RTK_USE_CUDA": "OFF",
+        "Module_RTKCudaCommon": "OFF",
+        "ITK_USE_GPU": "OFF",
+        "Module_ITKGPUCommon": "OFF",
+        "VTK_BUILD_EXAMPLES": "ON",
+        "VTK_GROUP_ENABLE_qt": "WANT",
+        "VTK_MODULE_ENABLE_VTK_GUISupportQt": "WANT",
+        "VTK_MODULE_ENABLE_VTK_RenderingQt": "WANT",
+        "VTK_MODULE_ENABLE_VTK_ViewsQt": "WANT",
+        "VTK_QT_VERSION": "5",
+        "VTK_USE_QT": "ON",
+        "VTK_QT_VERSION_MAJOR": "5",
+        "VTK_QT_VERSION_MINOR": "15",
+        "Qt5_DIR": "D:/Software/Qt5.15/5.15.2/msvc2019_64/lib/cmake/Qt5",
+        "U_QT": "ON",
+        "CMAKE_PREFIX_PATH": "D:/3rd/zlib-1.3.1",
+        "ZLIB_ROOT": "D:/3rd/zlib-1.3.1",
+        "ZLIB_INCLUDE_DIR": "D:/3rd/zlib-1.3.1/include",
+        "ZLIB_LIBRARY": "D:/3rd/zlib-1.3.1/lib/zlib.lib",
+        "VTK_MODULE_USE_EXTERNAL_VTK_zlib": "ON",
+        "VTK_USE_SYSTEM_ZLIB": "ON",
+        "ITK_USE_SYSTEM_ZLIB": "ON",
+        "WITH_ZLIB": "ON",
+        "BUILD_ZLIB": "OFF",
+        "OPENCV_FORCE_3RDPARTY_BUILD": "OFF",
+        "OPENCV_SKIP_ZLIB_DOWNLOAD": "ON",
+        "BENCHMARK_ENABLE_GTEST_TESTS": "ON",
+        "BENCHMARK_ENABLE_TESTING": "ON"
+      }
+    }
+  ]
+}

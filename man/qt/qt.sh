@@ -27,3 +27,7 @@ chmod +x /opt/qtcreate.sh
 # scl -l
 scl enable devtoolset-9 bash
 /opt/qt5.14.2/Tools/QtCreator/bin/qtcreator.sh
+
+### qt 在 windows安装
+
+
